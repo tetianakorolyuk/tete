@@ -421,7 +421,6 @@
     @keyframes progress{ from{ width:0%; } to{ width:100%; } }
 
     @media (max-width: 760px){
-      /* mobile nav */
       .toplinks{ display:none; }
       .menuBtn{ display:inline-flex; align-items:center; justify-content:center; }
       .dots{ bottom:14px; }
@@ -544,23 +543,18 @@
       padding-top: 0;
     }
 
-    .projectMedia{
-      position: relative;
-    }
+    .projectMedia{ position: relative; }
 
     .projectGrid img.project{
       transition: filter .22s ease, transform .22s ease;
       will-change: filter, transform;
     }
 
+    /* Hover preview (blur) ONLY when not expanded */
     .projectMedia:hover img.project,
     .projectMedia:focus-within img.project{
       filter: blur(2px) saturate(1.02) contrast(1.04);
       transform: scale(1.005);
-    }
-
-    .projectBlock.isOpen img.project{
-      filter: blur(1.5px) saturate(1.02) contrast(1.04);
     }
 
     .projectOverlay{
@@ -716,15 +710,54 @@
       .projectFactsRow span{ text-align:left; }
     }
 
+    /* ===== FIX: no overlap + aligned + unblur when expanded ===== */
+
+    /* 1) When expanded, keep images crisp (no blur), even on hover/focus */
+    .projectBlock.isOpen img.project,
+    .projectBlock.isOpen .projectMedia:hover img.project,
+    .projectBlock.isOpen .projectMedia:focus-within img.project{
+      filter: none;
+      transform: none;
+    }
+
+    /* 2) When expanded, move the overlay card BELOW the images (so it never overlaps) */
+    .projectBlock.isOpen .projectOverlay{
+      position: static;
+      left: auto; right: auto; top: auto; bottom: auto;
+      margin-top: 10px;
+      opacity: 1;
+      transform: none;
+      pointer-events: auto;
+      align-items: stretch;
+    }
+
+    /* Card aligns with the grid width */
+    .projectBlock.isOpen .projectOverlayCard{
+      width: 100%;
+    }
+
+    /* 3) Prevent title/button collisions on small widths */
+    .projectOverlayTop{
+      flex-wrap: wrap;
+      row-gap: 10px;
+    }
+    .overlayBtn{
+      margin-left: auto;
+    }
+
+    /* Touch devices: keep everything NON-overlapping by default (overlay sits below images) */
     @media (hover: none){
       .projectOverlay{
+        position: static;
+        left:auto; right:auto; top:auto; bottom:auto;
+        margin-top: 10px;
         opacity: 1;
         transform: none;
         pointer-events: auto;
+        align-items: stretch;
       }
+      .projectOverlayCard{ width: 100%; background: rgba(251,250,247,.95); }
       .projectMedia img.project{ filter:none; transform:none; }
-      .projectBlock.isOpen img.project{ filter:none; transform:none; }
-      .projectOverlayCard{ background: rgba(251,250,247,.95); }
     }
 
     /* Substack list */
