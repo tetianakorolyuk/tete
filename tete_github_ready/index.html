@@ -209,17 +209,6 @@
 
     body.menuOpen{ overflow:hidden; }
 
-    @media (max-width: 760px){
-      /* mobile nav */
-      .toplinks{ display:none; }
-      .menuBtn{ display:inline-flex; align-items:center; justify-content:center; }
-      .dots{ bottom:14px; }
-      .dotBtn{ width:10px; height:10px; }
-
-      .brand .tag{ display:none; }
-      .btn{ padding:12px 12px; }
-    }
-
     /* ===== Full-bleed Hero Carousel ===== */
     .hero{
       position: relative;
@@ -248,7 +237,6 @@
     }
     .layer.isActive{ opacity:1; }
 
-    /* Premium overlay — keep text readable WITHOUT washing out the photo */
     .hero::before{
       content:"";
       position:absolute;
@@ -433,6 +421,13 @@
     @keyframes progress{ from{ width:0%; } to{ width:100%; } }
 
     @media (max-width: 760px){
+      /* mobile nav */
+      .toplinks{ display:none; }
+      .menuBtn{ display:inline-flex; align-items:center; justify-content:center; }
+      .dots{ bottom:14px; }
+      .dotBtn{ width:10px; height:10px; }
+
+      .brand .tag{ display:none; }
       .hero{ min-height: 86vh; }
       .heroInner{ min-height: 86vh; }
       .navBtn{ display:none; }
@@ -464,7 +459,7 @@
       justify-content:space-between;
       gap:12px;
       flex-wrap:wrap;
-      margin: 0 0 14px;
+      margin: 0 0 6px;
     }
     .sectionTitle h2{
       margin:0;
@@ -573,6 +568,89 @@
     .postTitle a:hover{
       border-bottom-color: var(--accent);
       color: var(--accent);
+    }
+
+    /* ===== Project "More" expander ===== */
+    details.more{
+      margin: 8px 0 14px;
+      border-top: 1px solid rgba(18,20,28,.10);
+      padding-top: 10px;
+    }
+    details.more summary{
+      list-style:none;
+      cursor:pointer;
+      user-select:none;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-family:var(--mono);
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color: var(--muted);
+      padding: 8px 0;
+      outline:none;
+    }
+    details.more summary::-webkit-details-marker{ display:none; }
+    details.more summary .chev{
+      display:inline-block;
+      transform: translateY(-1px);
+      transition: transform .18s ease, color .18s ease;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1;
+    }
+    details.more[open] summary .chev{
+      transform: rotate(90deg) translateY(-1px);
+      color: var(--accent);
+    }
+    details.more summary:hover,
+    details.more summary:hover .chev{
+      color: var(--accent);
+    }
+    .moreBody{
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 76ch;
+    }
+    .moreBody p{ margin: 0 0 10px; }
+    .moreBody .facts{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px 18px;
+      margin-top: 10px;
+      padding-top: 10px;
+      border-top: 1px solid rgba(18,20,28,.10);
+    }
+    .moreBody .facts div{
+      display:flex;
+      align-items:baseline;
+      justify-content:space-between;
+      gap: 10px;
+    }
+    .moreBody .facts b{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      white-space:nowrap;
+    }
+    .moreBody .facts span{
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.45;
+      text-align:right;
+    }
+    @media (max-width: 760px){
+      .moreBody .facts{ grid-template-columns: 1fr; }
+      .moreBody .facts span{ text-align:left; }
+    }
+    @media (min-width: 861px){
+      details.more{ text-align:right; }
+      details.more .moreBody{ margin-left:auto; text-align:left; }
     }
 
     footer{
@@ -702,6 +780,23 @@
             <h2>Project 01</h2>
             <div class="meta">Living / Kitchen</div>
           </div>
+
+          <details class="more">
+            <summary>More <span class="chev">›</span></summary>
+            <div class="moreBody">
+              <p>
+                A calm, light-filled living space with warm wood and tactile neutrals.
+                The layout is kept open for flow, with clean lines and soft, comfortable volumes.
+              </p>
+              <div class="facts">
+                <div><b>Focus</b><span>Layout + light</span></div>
+                <div><b>Palette</b><span>Natural oak, stone, soft linen</span></div>
+                <div><b>Details</b><span>Integrated storage, minimal hardware</span></div>
+                <div><b>Mood</b><span>Quiet, modern, warm</span></div>
+              </div>
+            </div>
+          </details>
+
           <div class="grid">
             <figure><img class="project" src="images/project-01-a.jpg" alt="Project 01 photo 1"></figure>
             <figure><img class="project" src="images/project-01-b.jpg" alt="Project 01 photo 2"></figure>
@@ -713,6 +808,23 @@
             <h2>Project 02</h2>
             <div class="meta">Residential</div>
           </div>
+
+          <details class="more">
+            <summary>More <span class="chev">›</span></summary>
+            <div class="moreBody">
+              <p>
+                A residential concept built around simplicity and proportion.
+                Materials stay honest and restrained, letting texture do the work.
+              </p>
+              <div class="facts">
+                <div><b>Focus</b><span>Comfort + proportion</span></div>
+                <div><b>Palette</b><span>Soft whites, warm timber, matte finishes</span></div>
+                <div><b>Details</b><span>Custom millwork, seamless transitions</span></div>
+                <div><b>Mood</b><span>Minimal, elevated, serene</span></div>
+              </div>
+            </div>
+          </details>
+
           <div class="grid">
             <figure><img class="project" src="images/project-02-a.jpg" alt="Project 02 photo 1"></figure>
             <figure><img class="project" src="images/project-02-b.jpg" alt="Project 02 photo 2"></figure>
@@ -724,6 +836,23 @@
             <h2>Project 03</h2>
             <div class="meta">Kitchen / Bar</div>
           </div>
+
+          <details class="more">
+            <summary>More <span class="chev">›</span></summary>
+            <div class="moreBody">
+              <p>
+                A kitchen and bar environment with a stronger, evening tone.
+                Contrast and lighting create a premium feel without visual noise.
+              </p>
+              <div class="facts">
+                <div><b>Focus</b><span>Material contrast</span></div>
+                <div><b>Palette</b><span>Dark wood, stone, soft amber light</span></div>
+                <div><b>Details</b><span>Linear lighting, refined edges</span></div>
+                <div><b>Mood</b><span>Bold, modern, intimate</span></div>
+              </div>
+            </div>
+          </details>
+
           <div class="grid">
             <figure><img class="project" src="images/project-03-a.jpg" alt="Project 03 photo 1"></figure>
             <figure><img class="project" src="images/project-03-b.jpg" alt="Project 03 photo 2"></figure>
