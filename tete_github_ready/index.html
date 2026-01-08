@@ -3,149 +3,182 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="tete — minimal interior design portfolio." />
-  <meta name="theme-color" content="#0f0f0f" />
-
   <title>tete — interior design</title>
+  <meta name="description" content="tete — interior design. Selected works." />
 
-  <!-- Fonts: keep it elegant and minimal -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg: #fbfaf7;
-      --ink: #121212;
-      --muted: rgba(18,18,18,.62);
-      --line: rgba(18,18,18,.12);
-      --accent: #ff7a18; /* orange accent */
-      --max: 1160px;
-      --pad: 22px;
+      --bg:#fbfaf7;
+      --paper:#ffffff;
+      --text:#0b0c10;
+      --muted:#606574;
+      --line:rgba(18,20,28,.14);
+      --soft:rgba(18,20,28,.06);
+      --accent:#ff9500;
+
+      --max:1100px;
+      --pad:22px;
+
+      --serif:"Instrument Serif", ui-serif, Georgia, "Times New Roman", Times, serif;
+      --sans:"Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      --mono:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
     }
 
-    *{ box-sizing: border-box; }
-    html, body{ height: 100%; }
+    *{ box-sizing:border-box; }
+    html,body{ height:100%; }
     body{
-      margin: 0;
-      background: var(--bg);
-      color: var(--ink);
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      margin:0;
+      background:var(--bg);
+      color:var(--text);
+      font-family:var(--sans);
+      font-size:18px;
+      line-height:1.75;
       -webkit-font-smoothing: antialiased;
-      text-rendering: optimizeLegibility;
+      text-rendering: geometricPrecision;
     }
-    a{ color: inherit; }
-    img{ max-width: 100%; display: block; }
+
+    a{ color:inherit; }
+    a:hover{ color:var(--accent); }
+    :focus-visible{ outline:none; box-shadow:0 0 0 2px var(--accent); }
+
     .wrap{
-      width: min(var(--max), 100%);
-      margin: 0 auto;
-      padding: 0 var(--pad);
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 var(--pad);
     }
 
     /* ===== Header ===== */
     header{
       position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 20;
-      background: linear-gradient(to bottom, rgba(251,250,247,.92), rgba(251,250,247,.55), rgba(251,250,247,0));
-      backdrop-filter: blur(6px);
+      top:0; left:0; right:0;
+      z-index: 50;
+      background: linear-gradient(to bottom, rgba(0,0,0,.70) 0%, rgba(0,0,0,.20) 72%, rgba(0,0,0,0) 100%);
+      transition: background .18s ease, border-color .18s ease;
+    }
+    header.scrolled{
+      background: rgba(251,250,247,.92);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      border-bottom:1px solid var(--line);
     }
     .head{
-      height: 64px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:14px 0;
     }
     .brand{
-      display: inline-flex;
-      align-items: baseline;
-      gap: 12px;
-      text-decoration: none;
-      letter-spacing: .02em;
+      display:flex;
+      align-items:baseline;
+      gap:12px;
+      min-width:140px;
+      text-decoration:none;
     }
     .brand .name{
-      font-family: "DM Serif Display", serif;
-      font-size: 28px;
-      line-height: 1;
-      letter-spacing: .02em;
+      font-family:var(--serif);
+      font-size:28px;
+      letter-spacing:-0.03em;
+      text-transform: lowercase;
+      line-height:1;
+      color: rgba(255,255,255,.98);
+    }
+    .brand .name::after{
+      content:"";
+      display:inline-block;
+      width:9px; height:9px;
+      margin-left:8px;
+      background:var(--accent);
+      vertical-align:middle;
     }
     .brand .tag{
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: .22em;
-      color: var(--muted);
-      padding-top: 6px;
-      display: none;
-    }
-    @media (min-width: 720px){
-      .brand .tag{ display: inline; }
+      font-family:var(--mono);
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      white-space:nowrap;
+      color: rgba(255,255,255,.82);
     }
 
-    .headLinks{
-      display: inline-flex;
-      align-items: center;
-      gap: 16px;
-      font-size: 13px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
+    .toplinks{
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+      justify-content:flex-end;
     }
-    .headLinks a{
-      text-decoration: none;
-      color: rgba(18,18,18,.72);
-      border-bottom: 1px solid transparent;
-      padding-bottom: 2px;
-      transition: border-color .2s ease, color .2s ease;
+    .btn{
+      display:inline-block;
+      border:1px solid rgba(255,255,255,.45);
+      background: rgba(0,0,0,.12);
+      padding:12px 14px;
+      text-decoration:none;
+      font-family:var(--mono);
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      border-radius:0;
+      line-height:1;
+      color: rgba(255,255,255,.92);
     }
-    .headLinks a:hover{
-      color: var(--ink);
-      border-bottom-color: rgba(18,18,18,.35);
+    header:not(.scrolled) .btn{
+      background: rgba(0,0,0,.16);
+      border-color: rgba(255,255,255,.52);
     }
-    .headLinks .cta{
-      border-bottom-color: rgba(255,122,24,.38);
-    }
-    .headLinks .cta:hover{
-      border-bottom-color: var(--accent);
+    .btn:hover{ border-color: var(--accent); color: var(--accent); }
+
+    header.scrolled .brand .name,
+    header.scrolled .brand .tag{ color: var(--text); }
+    header.scrolled .btn{
+      border-color: rgba(18,20,28,.22);
+      background: transparent;
+      color: var(--text);
     }
 
-    /* ===== Hero ===== */
+    @media (max-width: 760px){
+      .brand .tag{ display:none; }
+      .btn{ padding:12px 12px; }
+    }
+
+    /* ===== Full-bleed Hero Carousel ===== */
     .hero{
       position: relative;
-      min-height: 100vh;
-      overflow: hidden;
-      background: #0f0f0f;
+      min-height: 92vh;
+      overflow:hidden;
+      background:#0d0f14;
     }
 
-    /* Full-bleed images (no container) */
-    .heroSlides{
+    .stage{
       position:absolute;
       inset:0;
       z-index:0;
+      user-select:none;
+      touch-action: pan-y;
     }
-    .heroSlide{
+    .layer{
       position:absolute;
       inset:0;
-      background-size: cover;
-      background-position: center;
-      opacity: 0;
+      width:100%;
+      height:100%;
+      object-fit:cover;
+      opacity:0;
+      transition: opacity .55s ease;
       transform: scale(1.02);
-      transition: opacity 900ms ease, transform 1400ms ease;
-      will-change: opacity, transform;
-      filter: saturate(1.03) contrast(1.03);
+      filter: saturate(1.04) contrast(1.05);
     }
-    .heroSlide.isActive{
-      opacity: 1;
-      transform: scale(1);
-    }
+    .layer.isActive{ opacity:1; }
 
-    /* Premium overlay — readable text, keep photo visible */
+    /* Premium overlay — keep text readable WITHOUT washing out the photo */
     .hero::before{
       content:"";
       position:absolute;
       inset:0;
       z-index:1;
+      /* Top scrim fades to transparent by mid-hero */
       background: linear-gradient(
         to bottom,
         rgba(0,0,0,.58) 0%,
@@ -161,6 +194,7 @@
       left:0; right:0; bottom:0;
       height: 170px;
       z-index:1;
+      /* Only the last bit blends into the page background */
       background: linear-gradient(
         to bottom,
         rgba(251,250,247,0) 0%,
@@ -172,19 +206,19 @@
     .heroInner{
       position:relative;
       z-index:2;
-      padding-top: 96px;
+      padding-top: 96px; /* header room */
       padding-bottom: 34px;
       min-height: 92vh;
       display:flex;
       align-items:flex-end;
     }
-    /* subtle left-side scrim behind text only */
     .heroInner::before{
       content:"";
       position:absolute;
       left:0; top:0; bottom:0;
       width: min(720px, 85vw);
       z-index:0;
+      /* Subtle horizontal scrim behind text area only */
       background: linear-gradient(
         to right,
         rgba(0,0,0,.26) 0%,
@@ -199,405 +233,319 @@
     }
 
     .kicker{
+      font-family:var(--mono);
+      font-size:12px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color: rgba(255,255,255,.84);
       display:flex;
       align-items:center;
-      gap: 14px;
-      color: rgba(255,255,255,.78);
-      text-transform: uppercase;
-      letter-spacing: .22em;
-      font-size: 12px;
+      gap:12px;
+      margin:0 0 12px;
     }
-    .kicker .dash{
-      width: 64px;
-      height: 2px;
+    .kicker .rule{
+      height:1px;
+      width:56px;
       background: var(--accent);
     }
 
     h1{
-      margin: 14px 0 10px;
-      font-family: "DM Serif Display", serif;
-      font-weight: 400;
-      color: #fff;
-      font-size: clamp(52px, 7vw, 98px);
-      letter-spacing: .02em;
-      line-height: .95;
+      margin:0;
+      font-family:var(--serif);
+      font-weight:400;
+      letter-spacing:-0.05em;
+      font-size: clamp(58px, 7vw, 96px);
+      line-height:.92;
+      text-transform: lowercase;
+      color:#fff;
     }
-    .subhead{
-      margin: 0;
-      color: rgba(255,255,255,.86);
-      font-weight: 300;
-      font-size: clamp(16px, 2.2vw, 22px);
-      line-height: 1.5;
-      max-width: 50ch;
+    .lead{
+      margin:14px 0 0;
+      color: rgba(255,255,255,.84);
+      max-width: 74ch;
     }
 
-    .heroMeta{
-      margin-top: 18px;
+    .heroBar{
+      margin-top:18px;
       display:flex;
       align-items:center;
-      gap: 18px;
-      flex-wrap: wrap;
-      color: rgba(255,255,255,.72);
-      font-size: 12px;
-      letter-spacing: .18em;
-      text-transform: uppercase;
-    }
-    .heroMeta .dot{
-      width: 4px;
-      height: 4px;
-      background: rgba(255,255,255,.35);
-      border-radius: 999px;
+      justify-content:space-between;
+      gap:14px;
+      flex-wrap:wrap;
     }
 
-    .heroControls{
-      margin-top: 24px;
+    .hint{
+      font-family:var(--mono);
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color: rgba(255,255,255,.78);
       display:flex;
       align-items:center;
-      justify-content: space-between;
-      gap: 14px;
-      color: rgba(255,255,255,.72);
-      font-size: 12px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      user-select: none;
+      gap:10px;
     }
-    .heroControls .scroll{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-    }
-    .heroControls .scroll .sq{
-      width: 10px;
-      height: 10px;
+    .hint .dot{
+      width:8px; height:8px;
       background: var(--accent);
+      display:inline-block;
     }
+
+    .caption{
+      margin:0;
+      font-family:var(--mono);
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color: rgba(255,255,255,.74);
+    }
+
+    /* Minimal on-image controls */
+    .heroUI{
+      position:absolute;
+      inset:0;
+      z-index:3;
+      pointer-events:none;
+    }
+    .navBtn{
+      pointer-events:auto;
+      position:absolute;
+      top:50%;
+      transform: translateY(-50%);
+      border:1px solid rgba(255,255,255,.45);
+      background: rgba(0,0,0,.18);
+      backdrop-filter: blur(6px);
+      -webkit-backdrop-filter: blur(6px);
+      border-radius:0;
+      padding:14px 14px;
+      font-family:var(--mono);
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      cursor:pointer;
+      line-height:1;
+      color: rgba(255,255,255,.92);
+    }
+    .navBtn:hover{ border-color: var(--accent); color: var(--accent); }
+    .navBtn.prev{ left:18px; }
+    .navBtn.next{ right:18px; }
+
     .dots{
+      position:absolute;
+      left:50%;
+      bottom:18px;
+      transform: translateX(-50%);
       display:flex;
+      gap:10px;
       align-items:center;
-      gap: 10px;
+      justify-content:center;
+      pointer-events:auto;
     }
     .dotBtn{
-      width: 12px;
-      height: 12px;
-      border: 1px solid rgba(255,255,255,.35);
+      width:11px; height:11px;
+      border:1px solid rgba(255,255,255,.55);
       background: transparent;
-      padding: 0;
-      cursor: pointer;
-      transition: border-color .2s ease, background .2s ease;
+      border-radius:0;
+      padding:0;
+      cursor:pointer;
     }
-    .dotBtn.isActive{
-      border-color: var(--accent);
+    .dotBtn[aria-current="true"]{
       background: var(--accent);
+      border-color: var(--accent);
     }
 
+    /* Thin progress line (premium, subtle) */
     .progress{
-      height: 2px;
-      background: rgba(255,255,255,.18);
-      margin-top: 10px;
-      position: relative;
-      overflow: hidden;
-    }
-    .progressBar{
       position:absolute;
-      top:0; left:0; bottom:0;
-      width: 0%;
+      left:0; right:0;
+      bottom:0;
+      height:2px;
+      z-index:4;
+      background: rgba(255,255,255,.16);
+      pointer-events:none;
+    }
+    .progressFill{
+      height:100%;
+      width:0%;
       background: var(--accent);
-      transition: width 80ms linear;
+      transform-origin:left;
+    }
+    .progressFill.run{
+      animation: progress linear forwards;
+    }
+    @keyframes progress{
+      from{ width:0%; }
+      to{ width:100%; }
+    }
+
+    @media (max-width: 760px){
+      .hero{ min-height: 86vh; }
+      .heroInner{ min-height: 86vh; }
+      .navBtn{ display:none; } /* keep it super simple on mobile */
     }
 
     /* ===== Sections ===== */
-    main{
-      padding-top: 30px;
-    }
     .section{
-      padding: 72px 0;
-    }
-    .sectionHead{
-      display:flex;
-      align-items:flex-end;
-      justify-content: space-between;
-      gap: 16px;
-    }
-    h2{
-      margin: 0;
-      font-family: "DM Serif Display", serif;
-      font-weight: 400;
-      font-size: 38px;
-      letter-spacing: .01em;
-      line-height: 1;
-    }
-    .rule{
-      flex: 1;
-      height: 1px;
-      background: var(--line);
-      transform: translateY(-10px);
+      padding: 26px 0;
+      border-top: 1px solid var(--line);
+      background: var(--bg);
     }
 
-    .muted{
+    .subkicker{
+      font-family:var(--mono);
+      font-size:12px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
       color: var(--muted);
-    }
-    .small{ font-size: 13px; letter-spacing: .02em; }
-
-    /* ===== Projects ===== */
-    .projects{
-      padding-top: 34px;
-      display:grid;
-      gap: 40px;
-    }
-    .project{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap: 24px;
-      align-items: start;
-      padding-top: 18px;
-      border-top: 1px solid var(--line);
-    }
-    .project:first-child{
-      border-top: none;
-      padding-top: 0;
-    }
-    @media (max-width: 980px){
-      .project{
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .projectTitle{
-      margin: 0 0 10px;
-      font-size: 22px;
-      font-weight: 500;
-      letter-spacing: .01em;
-    }
-    .projectMeta{
       display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: .18em;
-      color: rgba(18,18,18,.62);
-    }
-    .pill{
-      display:inline-flex;
       align-items:center;
-      gap: 8px;
+      gap:12px;
+      margin: 0 0 12px;
     }
-    .pill::before{
-      content:"";
-      width: 6px;
-      height: 6px;
+    .subkicker .rule{
+      height:1px;
+      width:56px;
       background: var(--accent);
-      border-radius: 999px;
-      transform: translateY(-.5px);
-    }
-    .projectDesc{
-      margin: 12px 0 0;
-      color: rgba(18,18,18,.78);
-      line-height: 1.65;
-      font-size: 15px;
-      max-width: 66ch;
     }
 
-    .projectGallery{
-      display:grid;
-      gap: 14px;
+    .sectionTitle{
+      display:flex;
+      align-items:baseline;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin: 0 0 14px;
     }
-    .projectGallery img{
-      width: 100%;
-      height: auto;
-      border-radius: 0; /* sharp, premium */
+    .sectionTitle h2{
+      margin:0;
+      font-family:var(--serif);
+      font-weight:400;
+      letter-spacing:-0.03em;
+      font-size: clamp(34px, 3.3vw, 46px);
+      line-height:1.05;
+    }
+    .sectionTitle .meta{
+      font-family:var(--mono);
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color: var(--muted);
+      white-space:nowrap;
     }
 
-    /* ===== Buttons ===== */
-    .btnRow{
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 16px;
-    }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap: 10px;
-      padding: 12px 14px;
-      border: 1px solid rgba(18,18,18,.18);
-      background: transparent;
-      color: var(--ink);
-      text-decoration: none;
-      font-size: 12px;
-      text-transform: uppercase;
-      letter-spacing: .18em;
-      transition: border-color .2s ease, transform .15s ease;
-    }
-    .btn:hover{
-      border-color: rgba(18,18,18,.4);
-      transform: translateY(-1px);
-    }
-    .btnPrimary{
-      border-color: rgba(255,122,24,.45);
-    }
-    .btnPrimary:hover{
-      border-color: var(--accent);
-    }
-
-    /* ===== Journal (Substack) ===== */
-    .journalGrid{
-      display:grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 28px;
-      align-items:start;
-      padding-top: 10px;
-    }
-    @media (max-width: 920px){
-      .journalGrid{ grid-template-columns: 1fr; }
-    }
-    .journalIntro .muted{ max-width: 56ch; }
-    .journalCtas{
-      display:flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin: 16px 0 10px;
-    }
-    .journalFeed{
-      border-top: 1px solid rgba(20,20,20,.12);
-      padding-top: 14px;
-    }
-    .feedState{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      color: rgba(20,20,20,.72);
-      font-size: 14px;
-      letter-spacing: .02em;
-      text-transform: none;
-      padding: 12px 0;
-    }
-    .spinner{
-      width: 16px;
-      height: 16px;
-      border: 2px solid rgba(20,20,20,.18);
-      border-top-color: var(--accent);
-      border-radius: 999px;
-      animation: spin 1s linear infinite;
-      flex: 0 0 auto;
-    }
-    @keyframes spin{ to { transform: rotate(360deg); } }
-
-    .feedList{
-      display:flex;
-      flex-direction: column;
-      gap: 14px;
-    }
-    .feedItem{
-      display:grid;
-      grid-template-columns: 1fr;
-      gap: 6px;
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(20,20,20,.10);
-    }
-    .feedItem:last-child{ border-bottom: none; }
-    .feedMeta{
-      display:flex;
-      align-items:center;
-      gap: 10px;
-      font-size: 12px;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: rgba(20,20,20,.62);
-    }
-    .feedDot{
-      width: 4px;
-      height: 4px;
-      background: rgba(20,20,20,.35);
-      border-radius: 999px;
-    }
-    .feedTitle{
-      font-size: 20px;
-      line-height: 1.18;
-      letter-spacing: -0.01em;
-      margin: 0;
-    }
-    @media (max-width: 520px){
-      .feedTitle{ font-size: 18px; }
-    }
-    .feedTitle a{
-      color: var(--ink);
-      text-decoration: none;
-      display:inline;
-      background: linear-gradient(to right, var(--accent), var(--accent)) 0 100% / 0 2px no-repeat;
-      transition: background-size .22s ease;
-      padding-bottom: 2px;
-    }
-    .feedTitle a:hover{ background-size: 100% 2px; }
-    .feedExcerpt{
-      margin: 0;
-      color: rgba(20,20,20,.72);
-      font-size: 15px;
-      line-height: 1.55;
-      max-width: 78ch;
-    }
-    .link{
-      color: var(--ink);
-      text-decoration: none;
-      border-bottom: 1px solid rgba(20,20,20,.32);
-      padding-bottom: 2px;
-    }
-    .link:hover{ border-bottom-color: var(--accent); }
-
-    /* ===== Footer ===== */
-    footer{
-      padding: 56px 0;
-      border-top: 1px solid var(--line);
-    }
-    .footGrid{
+    .grid{
       display:grid;
       grid-template-columns: 1fr 1fr;
-      gap: 22px;
-      align-items: start;
+      gap:14px;
+      align-items:start;
     }
-    @media (max-width: 720px){
-      .footGrid{ grid-template-columns: 1fr; }
-    }
-    .footTitle{
-      margin: 0 0 10px;
-      font-size: 14px;
-      letter-spacing: .22em;
-      text-transform: uppercase;
-      color: rgba(18,18,18,.72);
-    }
-    .footLink{
-      display:inline-block;
-      text-decoration: none;
-      border-bottom: 1px solid rgba(18,18,18,.28);
-      padding-bottom: 2px;
-      margin-right: 14px;
-      margin-top: 10px;
-    }
-    .footLink:hover{
-      border-bottom-color: var(--accent);
-    }
-    .copyright{
-      margin-top: 26px;
-      font-size: 12px;
-      color: rgba(18,18,18,.55);
-      letter-spacing: .08em;
-      text-transform: uppercase;
+    @media (max-width: 860px){
+      .grid{ grid-template-columns: 1fr; }
     }
 
-    /* Accessibility helpers */
-    .srOnly{
-      position:absolute !important;
-      width:1px; height:1px;
-      padding:0; margin:-1px;
-      overflow:hidden; clip:rect(0,0,0,0);
-      white-space:nowrap; border:0;
+    figure{
+      margin:0;
+      background: transparent;
+      border:1px solid var(--line);
+      padding:10px;
+    }
+    img.project{
+      width:100%;
+      height:auto;
+      display:block;
+      border:1px solid var(--line);
+      background: var(--soft);
+    }
+
+    .contact{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+    }
+    @media (max-width: 860px){
+      .contact{ grid-template-columns: 1fr; }
+    }
+    .card{
+      border:1px solid var(--line);
+      background: var(--paper);
+      padding:16px;
+    }
+    .card h3{
+      margin:0 0 10px;
+      font-family:var(--mono);
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color: var(--muted);
+      position:relative;
+      padding-bottom:10px;
+    }
+    .card h3::after{
+      content:"";
+      position:absolute;
+      left:0; bottom:0;
+      width:56px; height:2px;
+      background: var(--accent);
+    }
+    .small{ color: var(--muted); font-size:16px; }
+
+    /* ===== Substack posts (minimal, sharp) ===== */
+    .postList{
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      margin-top:6px;
+    }
+    .postItem{
+      padding:12px 0;
+      border-top:1px solid var(--line);
+    }
+    .postItem:first-child{ border-top:none; padding-top:0; }
+    .postMeta{
+      font-family:var(--mono);
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color: var(--muted);
+      margin:0 0 8px;
+    }
+    .postTitle{
+      margin:0;
+      font-size:18px;
+      line-height:1.35;
+      letter-spacing:-0.01em;
+    }
+    .postTitle a{
+      text-decoration:none;
+      border-bottom:1px solid rgba(18,20,28,.22);
+      padding-bottom:2px;
+    }
+    .postTitle a:hover{
+      border-bottom-color: var(--accent);
+      color: var(--accent);
+    }
+
+    footer{
+      padding: 26px 0 52px;
+      border-top:1px solid var(--line);
+      text-align:center;
+      font-family:var(--mono);
+      font-size:12px;
+      letter-spacing:.14em;
+      text-transform:uppercase;
+      color: var(--muted);
+      background: var(--bg);
+    }
+    footer b{ color: var(--accent); }
+
+    @media (prefers-reduced-motion: reduce){
+      .layer{ transition:none; }
+      .progressFill.run{ animation:none; }
+      html{ scroll-behavior:auto; }
     }
   </style>
 </head>
 
-<body id="top">
-
+<body>
   <header id="siteHeader">
     <div class="wrap">
       <div class="head">
@@ -606,251 +554,161 @@
           <span class="tag">interior design</span>
         </a>
 
-        <div class="headLinks" aria-label="Primary">
-          <a href="#projects">Projects</a>
-          <a href="#journal">Journal</a>
-          <a href="#contact">Contact</a>
-          <a class="cta" href="#" id="emailBtn">Email</a>
+        <div class="toplinks">
+          <a class="btn" href="#projects">Projects</a>
+          <a class="btn" href="#journal">Journal</a>
+          <a class="btn" href="#contact">Contact</a>
+          <a class="btn" id="emailBtn" href="#">Email</a>
         </div>
       </div>
     </div>
   </header>
 
-  <section class="hero" id="hero" aria-label="Featured images">
-    <div class="heroSlides" id="heroSlides">
-      <!-- Slides injected by JS -->
-      <div class="srOnly">Hero image carousel</div>
+  <section class="hero" id="top" aria-label="Featured images">
+    <div class="stage" id="stage" tabindex="0" aria-label="Carousel. Use left and right arrows to change image.">
+      <img id="imgA" class="layer isActive" src="images/project-01-a.jpg" alt="Interior design image 1">
+      <img id="imgB" class="layer" src="images/project-01-b.jpg" alt="Interior design image 2">
+    </div>
+
+    <div class="heroUI">
+      <button class="navBtn prev" id="prevBtn" type="button" aria-label="Previous image">← Prev</button>
+      <button class="navBtn next" id="nextBtn" type="button" aria-label="Next image">Next →</button>
+      <div class="dots" id="dots" aria-label="Carousel pagination"></div>
+      <div class="progress" aria-hidden="true"><div class="progressFill" id="progressFill"></div></div>
     </div>
 
     <div class="heroInner">
       <div class="wrap">
-        <div class="kicker">
-          <span class="dash"></span>
-          <span>Selected works</span>
-        </div>
-
+        <p class="kicker"><span class="rule"></span><span>Selected works</span></p>
         <h1>tete</h1>
+        <p class="lead">Minimal interior design. Three projects below.</p>
 
-        <p class="subhead">
-          Minimal interior design. Three projects below.
-        </p>
-
-        <div class="heroMeta" aria-label="Hero details">
-          <span>Toronto</span>
-          <span class="dot" aria-hidden="true"></span>
-          <span>Residential</span>
-          <span class="dot" aria-hidden="true"></span>
-          <span>Commercial</span>
-        </div>
-
-        <div class="heroControls">
-          <div class="scroll">
-            <span class="sq" aria-hidden="true"></span>
-            <span>Scroll</span>
-          </div>
-
-          <div aria-label="Carousel indicators">
-            <span id="heroCounter">Image 1 of 6</span>
-          </div>
-        </div>
-
-        <div class="dots" id="heroDots" aria-label="Select hero image">
-          <!-- dots injected by JS -->
-        </div>
-
-        <div class="progress" aria-hidden="true">
-          <div class="progressBar" id="progressBar"></div>
+        <div class="heroBar">
+          <div class="hint"><span class="dot"></span><span>Scroll</span></div>
+          <p class="caption" id="caption">Image 1 of 6</p>
         </div>
       </div>
     </div>
   </section>
 
   <main>
-    <!-- ===== Projects ===== -->
-    <section id="projects" class="section">
+    <section id="projects" class="section" aria-label="Projects">
       <div class="wrap">
-        <div class="sectionHead">
-          <h2>Projects</h2>
-          <div class="rule"></div>
-        </div>
+        <p class="subkicker"><span class="rule"></span><span>Projects</span></p>
 
-        <div class="projects" aria-label="Selected projects">
-          <!-- Project 01 -->
-          <article class="project" aria-label="Project 1">
-            <div>
-              <h3 class="projectTitle">Warm Minimal Residence</h3>
-              <div class="projectMeta">
-                <span class="pill">Residential</span>
-                <span class="pill">Toronto</span>
-              </div>
-              <p class="projectDesc">
-                Soft neutrals, natural timber, and clean geometry. A calm, bright interior that feels
-                effortless and precise — minimal without feeling cold.
-              </p>
-
-              <div class="btnRow">
-                <a class="btn btnPrimary" href="#contact">Request details</a>
-                <a class="btn" href="#journal">Read the journal</a>
-              </div>
-            </div>
-
-            <div class="projectGallery" aria-label="Project 1 images">
-              <img src="images/project-01-a.jpg" alt="Project 1 — image A" loading="lazy">
-              <img src="images/project-01-b.jpg" alt="Project 1 — image B" loading="lazy">
-            </div>
-          </article>
-
-          <!-- Project 02 -->
-          <article class="project" aria-label="Project 2">
-            <div>
-              <h3 class="projectTitle">Lakeview Living</h3>
-              <div class="projectMeta">
-                <span class="pill">Residential</span>
-                <span class="pill">Canada</span>
-              </div>
-              <p class="projectDesc">
-                A light palette with warm texture and strong lines. The space frames the view and keeps
-                the composition quiet — every element placed with intention.
-              </p>
-
-              <div class="btnRow">
-                <a class="btn btnPrimary" href="#contact">Request details</a>
-                <a class="btn" href="#journal">Read the journal</a>
-              </div>
-            </div>
-
-            <div class="projectGallery" aria-label="Project 2 images">
-              <img src="images/project-02-a.jpg" alt="Project 2 — image A" loading="lazy">
-              <img src="images/project-02-b.jpg" alt="Project 2 — image B" loading="lazy">
-            </div>
-          </article>
-
-          <!-- Project 03 -->
-          <article class="project" aria-label="Project 3">
-            <div>
-              <h3 class="projectTitle">Dark Stone Kitchen</h3>
-              <div class="projectMeta">
-                <span class="pill">Kitchen</span>
-                <span class="pill">Boutique</span>
-              </div>
-              <p class="projectDesc">
-                Deep stone, refined lighting, and clean detailing. A premium atmosphere that feels
-                grounded, bold, and timeless — dramatic without noise.
-              </p>
-
-              <div class="btnRow">
-                <a class="btn btnPrimary" href="#contact">Request details</a>
-                <a class="btn" href="#journal">Read the journal</a>
-              </div>
-            </div>
-
-            <div class="projectGallery" aria-label="Project 3 images">
-              <img src="images/project-03-a.jpg" alt="Project 3 — image A" loading="lazy">
-              <img src="images/project-03-b.jpg" alt="Project 3 — image B" loading="lazy">
-            </div>
-          </article>
-
-        </div>
-      </div>
-    </section>
-
-    <!-- ===== Journal / Substack ===== -->
-    <section id="journal" class="section journal">
-      <div class="wrap">
-        <div class="sectionHead">
-          <h2>Journal</h2>
-          <div class="rule"></div>
-        </div>
-
-        <div class="journalGrid">
-          <div class="journalIntro">
-            <p class="muted">
-              Recent notes, guides, and curated finds — published on Substack.
-            </p>
-
-            <div class="journalCtas">
-              <a class="btn btnPrimary" href="https://tekofm.substack.com/?utm_campaign=profile_chips" target="_blank" rel="noreferrer">Read on Substack</a>
-              <a class="btn" href="https://substack.com/@tekorolyuk?utm_source=explore_sidebar" target="_blank" rel="noreferrer">Profile</a>
-            </div>
-
-            <p class="small muted">
-              Updates automatically (latest posts).
-            </p>
+        <div class="section" style="border-top:none; padding-top:0;">
+          <div class="sectionTitle">
+            <h2>Project 01</h2>
+            <div class="meta">Living / Kitchen</div>
           </div>
+          <div class="grid">
+            <figure><img class="project" src="images/project-01-a.jpg" alt="Project 01 photo 1"></figure>
+            <figure><img class="project" src="images/project-01-b.jpg" alt="Project 01 photo 2"></figure>
+          </div>
+        </div>
 
-          <div class="journalFeed" aria-live="polite">
-            <div class="feedState" id="feedLoading">
-              <span class="spinner" aria-hidden="true"></span>
-              <span>Loading latest posts…</span>
-            </div>
+        <div class="section">
+          <div class="sectionTitle">
+            <h2>Project 02</h2>
+            <div class="meta">Residential</div>
+          </div>
+          <div class="grid">
+            <figure><img class="project" src="images/project-02-a.jpg" alt="Project 02 photo 1"></figure>
+            <figure><img class="project" src="images/project-02-b.jpg" alt="Project 02 photo 2"></figure>
+          </div>
+        </div>
 
-            <div class="feedList" id="feedList" hidden></div>
-
-            <div class="feedState" id="feedError" hidden>
-              <span>Couldn’t load posts right now.</span>
-              <a class="link" href="https://tekofm.substack.com/?utm_campaign=profile_chips" target="_blank" rel="noreferrer">Open Substack →</a>
-            </div>
+        <div class="section">
+          <div class="sectionTitle">
+            <h2>Project 03</h2>
+            <div class="meta">Kitchen / Bar</div>
+          </div>
+          <div class="grid">
+            <figure><img class="project" src="images/project-03-a.jpg" alt="Project 03 photo 1"></figure>
+            <figure><img class="project" src="images/project-03-b.jpg" alt="Project 03 photo 2"></figure>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===== Contact ===== -->
-    <section id="contact" class="section">
+    <section id="journal" class="section" aria-label="Journal">
       <div class="wrap">
-        <div class="sectionHead">
-          <h2>Contact</h2>
-          <div class="rule"></div>
+        <p class="subkicker"><span class="rule"></span><span>Journal</span></p>
+
+        <div class="contact">
+          <div class="card">
+            <h3>Substack</h3>
+            <div class="small" style="margin-bottom:12px;">
+              Recent posts from Tetiana’s Substack — updated automatically.
+            </div>
+
+            <div class="small">
+              <a class="btn" style="display:inline-block; margin-right:10px;" href="https://tekofm.substack.com/" target="_blank" rel="noreferrer">Open</a>
+              <a class="btn" style="display:inline-block;" href="https://substack.com/@tekorolyuk" target="_blank" rel="noreferrer">Profile</a>
+            </div>
+
+            <div class="small" style="margin-top:14px; color:var(--muted);">
+              If posts don’t load on first try, the links above always work.
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Latest posts</h3>
+
+            <div id="postsLoading" class="small" style="color:var(--muted);">
+              Loading…
+            </div>
+
+            <div id="postsError" class="small" style="display:none; color:var(--muted);">
+              Couldn’t load posts right now. Please use the Substack links.
+            </div>
+
+            <div id="posts" style="display:none;"></div>
+          </div>
         </div>
-
-        <p class="muted" style="max-width: 64ch; margin-top: 18px; line-height: 1.65;">
-          For collaborations, consultations, or project inquiries, send a short note with your location,
-          timeline, and a few references. Simple is perfect.
-        </p>
-
-        <div class="btnRow" style="margin-top: 18px;">
-          <a class="btn btnPrimary" id="mailtoLink" href="mailto:tetiana.korolyuk@gmail.com">Email</a>
-          <a class="btn" href="https://tekofm.substack.com/?utm_campaign=profile_chips" target="_blank" rel="noreferrer">Substack</a>
-        </div>
-
-        <p class="small muted" style="margin-top: 12px;">
-          Email: <strong style="font-weight: 600; color: rgba(18,18,18,.82);">tetiana.korolyuk@gmail.com</strong>
-        </p>
       </div>
     </section>
+
+    <section id="contact" class="section" aria-label="Contact">
+      <div class="wrap">
+        <p class="subkicker"><span class="rule"></span><span>Contact</span></p>
+
+        <div class="contact">
+          <div class="card">
+            <h3>Email</h3>
+            <div class="small"><a id="emailLink" href="#">tetiana.korolyuk@gmail.com</a></div>
+          </div>
+          <div class="card">
+            <h3>Location</h3>
+            <div class="small">Toronto / Remote</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      © <span id="year"></span> <b>tete</b>
+    </footer>
   </main>
 
-  <footer>
-    <div class="wrap">
-      <div class="footGrid">
-        <div>
-          <p class="footTitle">tete</p>
-          <p class="muted" style="margin:0; max-width: 56ch; line-height:1.65;">
-            Minimal interiors with warmth, clarity, and strong composition.
-          </p>
-        </div>
-
-        <div>
-          <p class="footTitle">Links</p>
-          <a class="footLink" href="#projects">Projects</a>
-          <a class="footLink" href="#journal">Journal</a>
-          <a class="footLink" href="#contact">Contact</a>
-          <a class="footLink" href="https://tekofm.substack.com/?utm_campaign=profile_chips" target="_blank" rel="noreferrer">Substack</a>
-        </div>
-      </div>
-
-      <div class="copyright">
-        © <span id="year"></span> tete
-      </div>
-    </div>
-  </footer>
-
   <script>
-    // ===== Config =====
+    // ===== EDIT THIS (her email) =====
     const EMAIL = "tetiana.korolyuk@gmail.com";
+    const mailto = `mailto:${encodeURIComponent(EMAIL)}?subject=${encodeURIComponent("Project Inquiry — tete")}`;
+    document.getElementById("emailBtn").href = mailto;
+    const emailLink = document.getElementById("emailLink");
+    emailLink.href = mailto;
+    emailLink.textContent = EMAIL;
+    document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Hero images (same ones used in projects)
-    const HERO_IMAGES = [
+    // Header style on scroll
+    const header = document.getElementById("siteHeader");
+    function updateHeader(){ header.classList.toggle("scrolled", window.scrollY > 10); }
+    window.addEventListener("scroll", updateHeader, { passive: true });
+    updateHeader();
+
+    // ===== Full-bleed hero carousel (auto-rotate + premium crossfade) =====
+    const slides = [
       { src: "images/project-01-a.jpg", alt: "Interior design image 1" },
       { src: "images/project-01-b.jpg", alt: "Interior design image 2" },
       { src: "images/project-02-a.jpg", alt: "Interior design image 3" },
@@ -859,182 +717,150 @@
       { src: "images/project-03-b.jpg", alt: "Interior design image 6" }
     ];
 
-    const ROTATE_MS = 5200;
+    const imgA = document.getElementById("imgA");
+    const imgB = document.getElementById("imgB");
+    const caption = document.getElementById("caption");
+    const dotsEl = document.getElementById("dots");
+    const stage = document.getElementById("stage");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const progressFill = document.getElementById("progressFill");
 
-    // ===== Header email =====
-    const emailBtn = document.getElementById("emailBtn");
-    const mailtoLink = document.getElementById("mailtoLink");
-    emailBtn?.addEventListener("click", (e) => {
-      e.preventDefault();
-      window.location.href = `mailto:${EMAIL}`;
-    });
-    if (mailtoLink) mailtoLink.href = `mailto:${EMAIL}`;
+    const DURATION_MS = 5200;
+    let index = 0;
+    let showingA = true;
+    let timer = null;
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-    // ===== Footer year =====
-    document.getElementById("year").textContent = String(new Date().getFullYear());
-
-    // ===== Hero Carousel =====
-    const heroSlides = document.getElementById("heroSlides");
-    const heroDots = document.getElementById("heroDots");
-    const heroCounter = document.getElementById("heroCounter");
-    const progressBar = document.getElementById("progressBar");
-
-    let current = 0;
-    let lastTick = performance.now();
-    let animId = null;
-    let paused = false;
-
-    function buildCarousel(){
-      // slides
-      HERO_IMAGES.forEach((img, idx) => {
-        const s = document.createElement("div");
-        s.className = "heroSlide" + (idx === 0 ? " isActive" : "");
-        s.style.backgroundImage = `url("${img.src}")`;
-        s.setAttribute("role", "img");
-        s.setAttribute("aria-label", img.alt);
-        heroSlides.appendChild(s);
-
-        // dots
+    function buildDots(){
+      dotsEl.innerHTML = "";
+      slides.forEach((_, i) => {
         const b = document.createElement("button");
-        b.className = "dotBtn" + (idx === 0 ? " isActive" : "");
+        b.className = "dotBtn";
         b.type = "button";
-        b.setAttribute("aria-label", `Show image ${idx + 1}`);
-        b.addEventListener("click", () => goTo(idx, true));
-        heroDots.appendChild(b);
+        b.setAttribute("aria-label", `Go to image ${i + 1}`);
+        b.setAttribute("aria-current", i === 0 ? "true" : "false");
+        b.addEventListener("click", () => setSlide(i, true));
+        dotsEl.appendChild(b);
       });
-
-      updateCounter();
     }
 
-    function updateCounter(){
-      heroCounter.textContent = `Image ${current + 1} of ${HERO_IMAGES.length}`;
-      const dotBtns = heroDots.querySelectorAll(".dotBtn");
-      dotBtns.forEach((d, i) => d.classList.toggle("isActive", i === current));
+    function setDots(){
+      [...dotsEl.children].forEach((d, di) => d.setAttribute("aria-current", di === index ? "true" : "false"));
     }
 
-    function goTo(index, resetTimer=false){
-      const slides = heroSlides.querySelectorAll(".heroSlide");
-      slides.forEach((s, i) => s.classList.toggle("isActive", i === index));
-      current = index;
-      updateCounter();
-      if (resetTimer){
-        lastTick = performance.now();
-        progressBar.style.width = "0%";
-      }
+    function runProgress(){
+      progressFill.classList.remove("run");
+      void progressFill.offsetWidth;
+      progressFill.style.animationDuration = DURATION_MS + "ms";
+      progressFill.classList.add("run");
     }
 
-    function next(){
-      const nxt = (current + 1) % HERO_IMAGES.length;
-      goTo(nxt, true);
+    function crossfadeTo(src, alt){
+      const pre = new Image();
+      pre.onload = () => {
+        const incoming = showingA ? imgB : imgA;
+        const outgoing = showingA ? imgA : imgB;
+
+        incoming.src = src;
+        incoming.alt = alt;
+
+        incoming.classList.add("isActive");
+        outgoing.classList.remove("isActive");
+
+        showingA = !showingA;
+      };
+      pre.src = src;
     }
 
-    function loop(now){
-      if (!paused){
-        const elapsed = now - lastTick;
-        const pct = Math.min(100, (elapsed / ROTATE_MS) * 100);
-        progressBar.style.width = pct.toFixed(2) + "%";
-        if (elapsed >= ROTATE_MS){
-          next();
-        }
-      }
-      animId = requestAnimationFrame(loop);
+    function setSlide(i, fromUser=false){
+      index = (i + slides.length) % slides.length;
+      const s = slides[index];
+
+      crossfadeTo(s.src, s.alt);
+      caption.textContent = `Image ${index + 1} of ${slides.length}`;
+      setDots();
+
+      if (!prefersReducedMotion) runProgress();
+      if (fromUser) restart();
     }
 
-    function setPaused(v){
-      paused = v;
-      if (!paused){
-        // restart timer smoothly
-        lastTick = performance.now();
-        progressBar.style.width = "0%";
-      }
-    }
+    function next(fromUser=false){ setSlide(index + 1, fromUser); }
+    function prev(fromUser=false){ setSlide(index - 1, fromUser); }
 
-    // Pause when tab not visible
-    document.addEventListener("visibilitychange", () => {
-      setPaused(document.hidden);
+    prevBtn.addEventListener("click", () => prev(true));
+    nextBtn.addEventListener("click", () => next(true));
+
+    stage.addEventListener("keydown", (e) => {
+      if (e.key === "ArrowLeft") { e.preventDefault(); prev(true); }
+      if (e.key === "ArrowRight") { e.preventDefault(); next(true); }
     });
 
-    // Pause on hover (desktop)
-    const hero = document.getElementById("hero");
-    hero.addEventListener("mouseenter", () => setPaused(true));
-    hero.addEventListener("mouseleave", () => setPaused(false));
+    let startX = null;
+    stage.addEventListener("pointerdown", (e) => { startX = e.clientX; stage.setPointerCapture(e.pointerId); });
+    stage.addEventListener("pointerup", (e) => {
+      if (startX === null) return;
+      const dx = e.clientX - startX;
+      startX = null;
+      const threshold = 40;
+      if (dx > threshold) prev(true);
+      else if (dx < -threshold) next(true);
+    });
 
-    // Touch: pause while touching/dragging
-    let touchActive = false;
-    hero.addEventListener("touchstart", () => { touchActive = true; setPaused(true); }, { passive: true });
-    hero.addEventListener("touchend", () => { touchActive = false; setPaused(false); }, { passive: true });
+    function start(){
+      if (prefersReducedMotion) return;
+      if (timer) return;
+      runProgress();
+      timer = setInterval(() => next(false), DURATION_MS);
+    }
+    function stop(){
+      if (!timer) return;
+      clearInterval(timer);
+      timer = null;
+      progressFill.classList.remove("run");
+    }
+    function restart(){ stop(); start(); }
 
-    // Simple swipe
-    let startX = 0;
-    hero.addEventListener("touchstart", (e) => {
-      startX = e.touches[0].clientX;
-    }, { passive: true });
-    hero.addEventListener("touchend", (e) => {
-      const endX = e.changedTouches[0].clientX;
-      const dx = endX - startX;
-      if (Math.abs(dx) > 40){
-        if (dx < 0) next();
-        else{
-          const prev = (current - 1 + HERO_IMAGES.length) % HERO_IMAGES.length;
-          goTo(prev, true);
-        }
-      }
-    }, { passive: true });
+    stage.addEventListener("mouseenter", stop);
+    stage.addEventListener("mouseleave", start);
+    stage.addEventListener("focusin", stop);
+    stage.addEventListener("focusout", start);
 
-    buildCarousel();
-    animId = requestAnimationFrame(loop);
+    // Init
+    buildDots();
+    imgA.src = slides[0].src; imgA.alt = slides[0].alt;
+    imgB.src = slides[1].src; imgB.alt = slides[1].alt;
+    index = 0;
+    caption.textContent = `Image 1 of ${slides.length}`;
+    setDots();
+    start();
 
     // ===== Substack (latest posts) =====
-    const SUBSTACK_PUBLICATION = "tekofm";
-    const SUBSTACK_FEED = `https://${SUBSTACK_PUBLICATION}.substack.com/feed`;
+    // Substack RSS is typically available at /feed.
+    // On GitHub Pages, direct fetch may be blocked by CORS, so we use a simple public relay.
+    const SUBSTACK_FEED = "https://tekofm.substack.com/feed";
+    const CORS_RELAY = "https://api.allorigins.win/raw?url="; // if this ever fails, swap to another relay
+    const POSTS_MAX = 3;
+    const CACHE_KEY = "tete_substack_cache_v1";
+    const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
 
-    const FEED_CACHE_KEY = "tete_substack_cache_v1";
-    const FEED_CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6h
+    const elPosts = document.getElementById("posts");
+    const elLoading = document.getElementById("postsLoading");
+    const elError = document.getElementById("postsError");
 
-    const elLoading = document.getElementById("feedLoading");
-    const elList = document.getElementById("feedList");
-    const elError = document.getElementById("feedError");
-
-    function stripHtml(htmlText){
-      const tmp = document.createElement("div");
-      tmp.innerHTML = htmlText || "";
-      return (tmp.textContent || tmp.innerText || "").replace(/\s+/g, " ").trim();
+    function formatDate(d){
+      try{
+        return new Date(d).toLocaleDateString(undefined, { year:"numeric", month:"short", day:"numeric" });
+      }catch(_){ return ""; }
     }
 
-    function formatDate(isoOrRfc){
-      const d = new Date(isoOrRfc);
-      if (isNaN(d.getTime())) return "";
-      return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "numeric" });
-    }
-
-    function renderFeed(items){
-      elList.innerHTML = "";
-      const max = Math.min(items.length, 3);
-
-      for (let i = 0; i < max; i++){
-        const it = items[i];
-        const title = it.title || "Untitled";
-        const link = it.link || `https://${SUBSTACK_PUBLICATION}.substack.com/`;
-        const date = it.pubDate ? formatDate(it.pubDate) : "";
-        const excerpt = stripHtml(it.description || it.content || "").slice(0, 190);
-
-        const row = document.createElement("article");
-        row.className = "feedItem";
-        row.innerHTML = `
-          <div class="feedMeta">
-            <span>Substack</span>
-            <span class="feedDot" aria-hidden="true"></span>
-            <span>${date}</span>
-          </div>
-          <h3 class="feedTitle"><a href="${link}" target="_blank" rel="noreferrer">${title}</a></h3>
-          <p class="feedExcerpt">${excerpt}${excerpt.length >= 190 ? "…" : ""}</p>
-        `;
-        elList.appendChild(row);
-      }
-
-      elLoading.hidden = true;
-      elError.hidden = true;
-      elList.hidden = false;
+    function escapeHtml(str){
+      return (str || "")
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
     }
 
     function parseRss(xmlText){
@@ -1042,42 +868,59 @@
       const items = Array.from(doc.querySelectorAll("item")).map(item => ({
         title: item.querySelector("title")?.textContent || "",
         link: item.querySelector("link")?.textContent || "",
-        pubDate: item.querySelector("pubDate")?.textContent || "",
-        description: item.querySelector("description")?.textContent || ""
+        pubDate: item.querySelector("pubDate")?.textContent || ""
       }));
       return items;
     }
 
-    async function loadSubstack(){
+    function renderPosts(items){
+      const take = items.slice(0, POSTS_MAX);
+
+      const list = document.createElement("div");
+      list.className = "postList";
+      list.innerHTML = take.map(it => `
+        <div class="postItem">
+          <p class="postMeta">${escapeHtml(formatDate(it.pubDate))}</p>
+          <h4 class="postTitle"><a href="${escapeHtml(it.link)}" target="_blank" rel="noreferrer">${escapeHtml(it.title)}</a></h4>
+        </div>
+      `).join("");
+
+      elPosts.innerHTML = "";
+      elPosts.appendChild(list);
+
+      elLoading.style.display = "none";
+      elError.style.display = "none";
+      elPosts.style.display = "block";
+    }
+
+    async function loadPosts(){
       try{
-        // Cache first
-        const cachedRaw = localStorage.getItem(FEED_CACHE_KEY);
+        // cache first
+        const cachedRaw = localStorage.getItem(CACHE_KEY);
         if (cachedRaw){
           const cached = JSON.parse(cachedRaw);
-          if (cached?.ts && (Date.now() - cached.ts) < FEED_CACHE_TTL_MS && Array.isArray(cached.items) && cached.items.length){
-            renderFeed(cached.items);
+          if (cached?.ts && Array.isArray(cached?.items) && (Date.now() - cached.ts) < CACHE_TTL_MS){
+            renderPosts(cached.items);
             return;
           }
         }
 
-        // Fetch via public CORS relay (needed on many static hosts)
-        const relay = "https://api.allorigins.win/raw?url=" + encodeURIComponent(SUBSTACK_FEED);
-        const res = await fetch(relay, { cache: "no-store" });
-        if (!res.ok) throw new Error("feed fetch failed");
+        const url = CORS_RELAY + encodeURIComponent(SUBSTACK_FEED);
+        const res = await fetch(url, { cache: "no-store" });
+        if (!res.ok) throw new Error("fetch failed");
         const xmlText = await res.text();
         const items = parseRss(xmlText);
-
         if (!items.length) throw new Error("no items");
-        localStorage.setItem(FEED_CACHE_KEY, JSON.stringify({ ts: Date.now(), items }));
-        renderFeed(items);
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), items }));
+        renderPosts(items);
       }catch(e){
-        elLoading.hidden = true;
-        elList.hidden = true;
-        elError.hidden = false;
+        elLoading.style.display = "none";
+        elPosts.style.display = "none";
+        elError.style.display = "block";
       }
     }
 
-    loadSubstack();
+    loadPosts();
   </script>
 </body>
 </html>
