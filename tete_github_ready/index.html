@@ -139,7 +139,83 @@
       color: var(--text);
     }
 
+    /* Hamburger + mobile menu */
+    .menuBtn{
+      display:none;
+      border:1px solid rgba(255,255,255,.52);
+      background: rgba(0,0,0,.12);
+      padding: 12px 12px;
+      border-radius:0;
+      line-height:1;
+      color: rgba(255,255,255,.92);
+      cursor:pointer;
+    }
+    .menuBtn:hover{ border-color: var(--accent); color: var(--accent); }
+
+    header.scrolled .menuBtn{
+      border-color: rgba(18,20,28,.22);
+      background: transparent;
+      color: var(--text);
+    }
+
+    .menuOverlay{
+      position: fixed;
+      inset: 0;
+      z-index: 45;
+      background: rgba(0,0,0,.28);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+
+    .mobileMenu{
+      position: fixed;
+      left: 0;
+      right: 0;
+      top: 64px;
+      z-index: 46;
+      background: rgba(251,250,247,.96);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--line);
+    }
+    .mobileMenu .wrap{
+      padding-top: 10px;
+      padding-bottom: 12px;
+      display:flex;
+      flex-direction:column;
+      gap: 2px;
+    }
+    .mitem{
+      display:flex;
+      align-items:center;
+      gap: 12px;
+      padding: 14px 6px;
+      text-decoration:none;
+      color: var(--text);
+      border-top: 1px solid rgba(18,20,28,.08);
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+    .mitem:first-child{ border-top:none; }
+    .mitem:hover{ color: var(--accent); }
+    .mitem .ico{
+      width: 22px;
+      display:inline-flex;
+      justify-content:center;
+      opacity: .9;
+    }
+
+    body.menuOpen{ overflow:hidden; }
+
     @media (max-width: 760px){
+      /* mobile nav */
+      .toplinks{ display:none; }
+      .menuBtn{ display:inline-flex; align-items:center; justify-content:center; }
+      .dots{ bottom:14px; }
+      .dotBtn{ width:10px; height:10px; }
+
       .brand .tag{ display:none; }
       .btn{ padding:12px 12px; }
     }
@@ -178,7 +254,6 @@
       position:absolute;
       inset:0;
       z-index:1;
-      /* Top scrim fades to transparent by mid-hero */
       background: linear-gradient(
         to bottom,
         rgba(0,0,0,.58) 0%,
@@ -194,7 +269,6 @@
       left:0; right:0; bottom:0;
       height: 170px;
       z-index:1;
-      /* Only the last bit blends into the page background */
       background: linear-gradient(
         to bottom,
         rgba(251,250,247,0) 0%,
@@ -206,7 +280,7 @@
     .heroInner{
       position:relative;
       z-index:2;
-      padding-top: 96px; /* header room */
+      padding-top: 96px;
       padding-bottom: 34px;
       min-height: 92vh;
       display:flex;
@@ -218,7 +292,6 @@
       left:0; top:0; bottom:0;
       width: min(720px, 85vw);
       z-index:0;
-      /* Subtle horizontal scrim behind text area only */
       background: linear-gradient(
         to right,
         rgba(0,0,0,.26) 0%,
@@ -227,10 +300,7 @@
       );
       pointer-events:none;
     }
-    .heroInner > .wrap{
-      position: relative;
-      z-index: 1;
-    }
+    .heroInner > .wrap{ position: relative; z-index: 1; }
 
     .kicker{
       font-family:var(--mono);
@@ -243,11 +313,7 @@
       gap:12px;
       margin:0 0 12px;
     }
-    .kicker .rule{
-      height:1px;
-      width:56px;
-      background: var(--accent);
-    }
+    .kicker .rule{ height:1px; width:56px; background: var(--accent); }
 
     h1{
       margin:0;
@@ -284,11 +350,7 @@
       align-items:center;
       gap:10px;
     }
-    .hint .dot{
-      width:8px; height:8px;
-      background: var(--accent);
-      display:inline-block;
-    }
+    .hint .dot{ width:8px; height:8px; background: var(--accent); display:inline-block; }
 
     .caption{
       margin:0;
@@ -299,7 +361,6 @@
       color: rgba(255,255,255,.74);
     }
 
-    /* Minimal on-image controls */
     .heroUI{
       position:absolute;
       inset:0;
@@ -353,7 +414,6 @@
       border-color: var(--accent);
     }
 
-    /* Thin progress line (premium, subtle) */
     .progress{
       position:absolute;
       left:0; right:0;
@@ -369,18 +429,13 @@
       background: var(--accent);
       transform-origin:left;
     }
-    .progressFill.run{
-      animation: progress linear forwards;
-    }
-    @keyframes progress{
-      from{ width:0%; }
-      to{ width:100%; }
-    }
+    .progressFill.run{ animation: progress linear forwards; }
+    @keyframes progress{ from{ width:0%; } to{ width:100%; } }
 
     @media (max-width: 760px){
       .hero{ min-height: 86vh; }
       .heroInner{ min-height: 86vh; }
-      .navBtn{ display:none; } /* keep it super simple on mobile */
+      .navBtn{ display:none; }
     }
 
     /* ===== Sections ===== */
@@ -401,11 +456,7 @@
       gap:12px;
       margin: 0 0 12px;
     }
-    .subkicker .rule{
-      height:1px;
-      width:56px;
-      background: var(--accent);
-    }
+    .subkicker .rule{ height:1px; width:56px; background: var(--accent); }
 
     .sectionTitle{
       display:flex;
@@ -488,7 +539,7 @@
     }
     .small{ color: var(--muted); font-size:16px; }
 
-    /* ===== Substack posts (minimal, sharp) ===== */
+    /* Substack list */
     .postList{
       display:flex;
       flex-direction:column;
@@ -560,9 +611,59 @@
           <a class="btn" href="#contact">Contact</a>
           <a class="btn" id="emailBtn" href="#">Email</a>
         </div>
+
+        <button class="menuBtn" id="menuBtn" type="button" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+            <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </button>
       </div>
     </div>
   </header>
+
+  <div class="menuOverlay" id="menuOverlay" hidden></div>
+
+  <nav class="mobileMenu" id="mobileMenu" aria-label="Menu" hidden>
+    <div class="wrap">
+      <a class="mitem" href="#projects">
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18">
+            <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span>Projects</span>
+      </a>
+
+      <a class="mitem" href="#journal">
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18">
+            <path d="M8 20h8M7 17l10-10 2 2-10 10H7v-2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span>Journal</span>
+      </a>
+
+      <a class="mitem" href="#contact">
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18">
+            <path d="M20 21v-1a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <path d="M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </span>
+        <span>Contact</span>
+      </a>
+
+      <a class="mitem" id="emailBtnMobile" href="#">
+        <span class="ico" aria-hidden="true">
+          <svg viewBox="0 0 24 24" width="18" height="18">
+            <path d="M4 7h16v10H4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
+            <path d="M4 8l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </span>
+        <span>Email</span>
+      </a>
+    </div>
+  </nav>
 
   <section class="hero" id="top" aria-label="Featured images">
     <div class="stage" id="stage" tabindex="0" aria-label="Carousel. Use left and right arrows to change image.">
@@ -707,6 +808,50 @@
     window.addEventListener("scroll", updateHeader, { passive: true });
     updateHeader();
 
+    // ===== Mobile hamburger menu =====
+    const menuBtn = document.getElementById("menuBtn");
+    const mobileMenu = document.getElementById("mobileMenu");
+    const menuOverlay = document.getElementById("menuOverlay");
+    const emailBtnMobile = document.getElementById("emailBtnMobile");
+    if (emailBtnMobile) emailBtnMobile.href = mailto;
+
+    function openMenu(){
+      document.body.classList.add("menuOpen");
+      menuBtn?.setAttribute("aria-expanded", "true");
+      menuBtn?.setAttribute("aria-label", "Close menu");
+      mobileMenu.hidden = false;
+      menuOverlay.hidden = false;
+      const first = mobileMenu.querySelector("a");
+      first && first.focus({ preventScroll: true });
+    }
+    function closeMenu(){
+      document.body.classList.remove("menuOpen");
+      menuBtn?.setAttribute("aria-expanded", "false");
+      menuBtn?.setAttribute("aria-label", "Open menu");
+      mobileMenu.hidden = true;
+      menuOverlay.hidden = true;
+    }
+    function toggleMenu(){
+      const open = document.body.classList.contains("menuOpen");
+      open ? closeMenu() : openMenu();
+    }
+
+    menuBtn?.addEventListener("click", toggleMenu);
+    menuOverlay?.addEventListener("click", closeMenu);
+
+    mobileMenu?.addEventListener("click", (e) => {
+      const a = e.target.closest("a");
+      if (a) closeMenu();
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape" && document.body.classList.contains("menuOpen")) closeMenu();
+    });
+
+    window.addEventListener("resize", () => {
+      if (window.innerWidth > 760 && document.body.classList.contains("menuOpen")) closeMenu();
+    });
+
     // ===== Full-bleed hero carousel (auto-rotate + premium crossfade) =====
     const slides = [
       { src: "images/project-01-a.jpg", alt: "Interior design image 1" },
@@ -826,7 +971,6 @@
     stage.addEventListener("focusin", stop);
     stage.addEventListener("focusout", start);
 
-    // Init
     buildDots();
     imgA.src = slides[0].src; imgA.alt = slides[0].alt;
     imgB.src = slides[1].src; imgB.alt = slides[1].alt;
@@ -836,13 +980,11 @@
     start();
 
     // ===== Substack (latest posts) =====
-    // Substack RSS is typically available at /feed.
-    // On GitHub Pages, direct fetch may be blocked by CORS, so we use a simple public relay.
     const SUBSTACK_FEED = "https://tekofm.substack.com/feed";
-    const CORS_RELAY = "https://api.allorigins.win/raw?url="; // if this ever fails, swap to another relay
+    const CORS_RELAY = "https://api.allorigins.win/raw?url=";
     const POSTS_MAX = 3;
     const CACHE_KEY = "tete_substack_cache_v1";
-    const CACHE_TTL_MS = 6 * 60 * 60 * 1000; // 6 hours
+    const CACHE_TTL_MS = 6 * 60 * 60 * 1000;
 
     const elPosts = document.getElementById("posts");
     const elLoading = document.getElementById("postsLoading");
@@ -895,7 +1037,6 @@
 
     async function loadPosts(){
       try{
-        // cache first
         const cachedRaw = localStorage.getItem(CACHE_KEY);
         if (cachedRaw){
           const cached = JSON.parse(cachedRaw);
