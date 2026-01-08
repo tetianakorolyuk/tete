@@ -459,7 +459,7 @@
       justify-content:space-between;
       gap:12px;
       flex-wrap:wrap;
-      margin: 0 0 6px;
+      margin: 0 0 10px;
     }
     .sectionTitle h2{
       margin:0;
@@ -534,6 +534,199 @@
     }
     .small{ color: var(--muted); font-size:16px; }
 
+    /* ===== Project hover overlay + expandable details ===== */
+    .projectBlock{
+      border-top: 1px solid rgba(18,20,28,.10);
+      padding-top: 14px;
+    }
+    .projectBlock:first-child{
+      border-top: none;
+      padding-top: 0;
+    }
+
+    .projectMedia{
+      position: relative;
+    }
+
+    .projectGrid img.project{
+      transition: filter .22s ease, transform .22s ease;
+      will-change: filter, transform;
+    }
+
+    .projectMedia:hover img.project,
+    .projectMedia:focus-within img.project{
+      filter: blur(2px) saturate(1.02) contrast(1.04);
+      transform: scale(1.005);
+    }
+
+    .projectBlock.isOpen img.project{
+      filter: blur(1.5px) saturate(1.02) contrast(1.04);
+    }
+
+    .projectOverlay{
+      position: absolute;
+      left: 10px;
+      right: 10px;
+      top: 10px;
+      bottom: 10px;
+      display:flex;
+      align-items:flex-end;
+      pointer-events: none;
+      opacity: 0;
+      transform: translateY(6px);
+      transition: opacity .22s ease, transform .22s ease;
+    }
+    .projectMedia:hover .projectOverlay,
+    .projectMedia:focus-within .projectOverlay,
+    .projectBlock.isOpen .projectOverlay{
+      opacity: 1;
+      transform: none;
+    }
+
+    .projectOverlayCard{
+      width: min(680px, 100%);
+      border: 1px solid rgba(18,20,28,.18);
+      background: rgba(251,250,247,.90);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      padding: 14px 14px 12px;
+      border-radius: 0;
+      pointer-events: auto;
+      box-shadow: 0 1px 0 rgba(18,20,28,.06);
+    }
+
+    .projectOverlayTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .projectOverlayTitle{
+      margin: 0;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--text);
+      display:flex;
+      align-items:center;
+      gap: 10px;
+    }
+    .projectOverlayTitle .pin{
+      width: 7px; height: 7px;
+      background: var(--accent);
+      display:inline-block;
+    }
+
+    .overlayBtn{
+      border: 1px solid rgba(18,20,28,.18);
+      background: transparent;
+      color: var(--text);
+      border-radius: 0;
+      cursor: pointer;
+      padding: 10px 10px;
+      display:inline-flex;
+      align-items:center;
+      gap: 10px;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .overlayBtn:hover{
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .overlayBtn .ico{
+      display:inline-flex;
+      width: 16px;
+      height: 16px;
+      align-items:center;
+      justify-content:center;
+    }
+    .overlayBtn svg{ display:block; }
+
+    .projectOverlayText{
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.6;
+      max-width: 68ch;
+    }
+
+    .projectExpand{
+      border-top: 1px solid rgba(18,20,28,.10);
+      margin-top: 12px;
+      padding-top: 12px;
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height .32s ease;
+    }
+
+    .projectExpandInner{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 14px;
+      padding-bottom: 2px;
+    }
+    @media (max-width: 860px){
+      .projectExpandInner{ grid-template-columns: 1fr; }
+    }
+
+    .projectDesc{
+      margin: 0;
+      color: var(--muted);
+      font-size: 16px;
+    }
+
+    .projectFacts{
+      border: 1px solid rgba(18,20,28,.12);
+      background: var(--paper);
+      padding: 12px;
+    }
+    .projectFactsRow{
+      display:flex;
+      align-items:baseline;
+      justify-content:space-between;
+      gap: 10px;
+      padding: 8px 0;
+      border-top: 1px solid rgba(18,20,28,.10);
+    }
+    .projectFactsRow:first-child{ border-top: none; padding-top: 0; }
+    .projectFactsRow b{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-weight: 600;
+      white-space:nowrap;
+    }
+    .projectFactsRow span{
+      color: var(--text);
+      font-size: 14px;
+      line-height: 1.45;
+      text-align:right;
+    }
+    @media (max-width: 760px){
+      .projectFactsRow{ flex-direction:column; align-items:flex-start; }
+      .projectFactsRow span{ text-align:left; }
+    }
+
+    @media (hover: none){
+      .projectOverlay{
+        opacity: 1;
+        transform: none;
+        pointer-events: auto;
+      }
+      .projectMedia img.project{ filter:none; transform:none; }
+      .projectBlock.isOpen img.project{ filter:none; transform:none; }
+      .projectOverlayCard{ background: rgba(251,250,247,.95); }
+    }
+
     /* Substack list */
     .postList{
       display:flex;
@@ -568,89 +761,6 @@
     .postTitle a:hover{
       border-bottom-color: var(--accent);
       color: var(--accent);
-    }
-
-    /* ===== Project "More" expander ===== */
-    details.more{
-      margin: 8px 0 14px;
-      border-top: 1px solid rgba(18,20,28,.10);
-      padding-top: 10px;
-    }
-    details.more summary{
-      list-style:none;
-      cursor:pointer;
-      user-select:none;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      font-family:var(--mono);
-      font-size:12px;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color: var(--muted);
-      padding: 8px 0;
-      outline:none;
-    }
-    details.more summary::-webkit-details-marker{ display:none; }
-    details.more summary .chev{
-      display:inline-block;
-      transform: translateY(-1px);
-      transition: transform .18s ease, color .18s ease;
-      color: var(--muted);
-      font-size: 16px;
-      line-height: 1;
-    }
-    details.more[open] summary .chev{
-      transform: rotate(90deg) translateY(-1px);
-      color: var(--accent);
-    }
-    details.more summary:hover,
-    details.more summary:hover .chev{
-      color: var(--accent);
-    }
-    .moreBody{
-      margin-top: 4px;
-      color: var(--muted);
-      font-size: 16px;
-      max-width: 76ch;
-    }
-    .moreBody p{ margin: 0 0 10px; }
-    .moreBody .facts{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 8px 18px;
-      margin-top: 10px;
-      padding-top: 10px;
-      border-top: 1px solid rgba(18,20,28,.10);
-    }
-    .moreBody .facts div{
-      display:flex;
-      align-items:baseline;
-      justify-content:space-between;
-      gap: 10px;
-    }
-    .moreBody .facts b{
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-      color: var(--muted);
-      font-weight: 600;
-      white-space:nowrap;
-    }
-    .moreBody .facts span{
-      color: var(--text);
-      font-size: 14px;
-      line-height: 1.45;
-      text-align:right;
-    }
-    @media (max-width: 760px){
-      .moreBody .facts{ grid-template-columns: 1fr; }
-      .moreBody .facts span{ text-align:left; }
-    }
-    @media (min-width: 861px){
-      details.more{ text-align:right; }
-      details.more .moreBody{ margin-left:auto; text-align:left; }
     }
 
     footer{
@@ -776,88 +886,143 @@
         <p class="subkicker"><span class="rule"></span><span>Projects</span></p>
 
         <div class="section" style="border-top:none; padding-top:0;">
-          <div class="sectionTitle">
-            <h2>Project 01</h2>
-            <div class="meta">Living / Kitchen</div>
-          </div>
+          <div class="projectBlock" id="p1">
+            <div class="sectionTitle">
+              <h2>Project 01</h2>
+              <div class="meta">Living / Kitchen</div>
+            </div>
 
-          <details class="more">
-            <summary>More <span class="chev">›</span></summary>
-            <div class="moreBody">
-              <p>
-                A calm, light-filled living space with warm wood and tactile neutrals.
-                The layout is kept open for flow, with clean lines and soft, comfortable volumes.
-              </p>
-              <div class="facts">
-                <div><b>Focus</b><span>Layout + light</span></div>
-                <div><b>Palette</b><span>Natural oak, stone, soft linen</span></div>
-                <div><b>Details</b><span>Integrated storage, minimal hardware</span></div>
-                <div><b>Mood</b><span>Quiet, modern, warm</span></div>
+            <div class="projectMedia">
+              <div class="grid projectGrid">
+                <figure><img class="project" src="images/project-01-a.jpg" alt="Project 01 photo 1"></figure>
+                <figure><img class="project" src="images/project-01-b.jpg" alt="Project 01 photo 2"></figure>
+              </div>
+
+              <div class="projectOverlay" aria-hidden="false">
+                <div class="projectOverlayCard">
+                  <div class="projectOverlayTop">
+                    <p class="projectOverlayTitle"><span class="pin"></span><span>Project 01</span></p>
+                    <button class="overlayBtn" type="button" data-toggle="project" aria-expanded="false" aria-controls="projectExpand1">
+                      <span>More</span>
+                      <span class="ico" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                          <path d="M9 18l6-6-6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
+                  <p class="projectOverlayText">A calm, light-filled living space with warm wood and tactile neutrals.</p>
+                </div>
+              </div>
+
+              <div class="projectExpand" id="projectExpand1">
+                <div class="projectExpandInner">
+                  <p class="projectDesc">A calm, light-filled living space with warm wood and tactile neutrals. The layout is kept open for flow, with clean lines and soft, comfortable volumes.</p>
+                  <div class="projectFacts" aria-label="Project 01 facts">
+                    <div class="projectFactsRow"><b>Focus</b><span>Layout + light</span></div>
+                    <div class="projectFactsRow"><b>Palette</b><span>Natural oak, stone, soft linen</span></div>
+                    <div class="projectFactsRow"><b>Details</b><span>Integrated storage, minimal hardware</span></div>
+                    <div class="projectFactsRow"><b>Mood</b><span>Quiet, modern, warm</span></div>
+                  </div>
+                </div>
               </div>
             </div>
-          </details>
 
-          <div class="grid">
-            <figure><img class="project" src="images/project-01-a.jpg" alt="Project 01 photo 1"></figure>
-            <figure><img class="project" src="images/project-01-b.jpg" alt="Project 01 photo 2"></figure>
           </div>
         </div>
 
         <div class="section">
-          <div class="sectionTitle">
-            <h2>Project 02</h2>
-            <div class="meta">Residential</div>
-          </div>
+          <div class="projectBlock" id="p2">
+            <div class="sectionTitle">
+              <h2>Project 02</h2>
+              <div class="meta">Residential</div>
+            </div>
 
-          <details class="more">
-            <summary>More <span class="chev">›</span></summary>
-            <div class="moreBody">
-              <p>
-                A residential concept built around simplicity and proportion.
-                Materials stay honest and restrained, letting texture do the work.
-              </p>
-              <div class="facts">
-                <div><b>Focus</b><span>Comfort + proportion</span></div>
-                <div><b>Palette</b><span>Soft whites, warm timber, matte finishes</span></div>
-                <div><b>Details</b><span>Custom millwork, seamless transitions</span></div>
-                <div><b>Mood</b><span>Minimal, elevated, serene</span></div>
+            <div class="projectMedia">
+              <div class="grid projectGrid">
+                <figure><img class="project" src="images/project-02-a.jpg" alt="Project 02 photo 1"></figure>
+                <figure><img class="project" src="images/project-02-b.jpg" alt="Project 02 photo 2"></figure>
+              </div>
+
+              <div class="projectOverlay" aria-hidden="false">
+                <div class="projectOverlayCard">
+                  <div class="projectOverlayTop">
+                    <p class="projectOverlayTitle"><span class="pin"></span><span>Project 02</span></p>
+                    <button class="overlayBtn" type="button" data-toggle="project" aria-expanded="false" aria-controls="projectExpand2">
+                      <span>More</span>
+                      <span class="ico" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                          <path d="M9 18l6-6-6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
+                  <p class="projectOverlayText">A residential concept built around simplicity and proportion.</p>
+                </div>
+              </div>
+
+              <div class="projectExpand" id="projectExpand2">
+                <div class="projectExpandInner">
+                  <p class="projectDesc">A residential concept built around simplicity and proportion. Materials stay honest and restrained, letting texture do the work.</p>
+                  <div class="projectFacts" aria-label="Project 02 facts">
+                    <div class="projectFactsRow"><b>Focus</b><span>Comfort + proportion</span></div>
+                    <div class="projectFactsRow"><b>Palette</b><span>Soft whites, warm timber, matte finishes</span></div>
+                    <div class="projectFactsRow"><b>Details</b><span>Custom millwork, seamless transitions</span></div>
+                    <div class="projectFactsRow"><b>Mood</b><span>Minimal, elevated, serene</span></div>
+                  </div>
+                </div>
               </div>
             </div>
-          </details>
 
-          <div class="grid">
-            <figure><img class="project" src="images/project-02-a.jpg" alt="Project 02 photo 1"></figure>
-            <figure><img class="project" src="images/project-02-b.jpg" alt="Project 02 photo 2"></figure>
           </div>
         </div>
 
         <div class="section">
-          <div class="sectionTitle">
-            <h2>Project 03</h2>
-            <div class="meta">Kitchen / Bar</div>
-          </div>
+          <div class="projectBlock" id="p3">
+            <div class="sectionTitle">
+              <h2>Project 03</h2>
+              <div class="meta">Kitchen / Bar</div>
+            </div>
 
-          <details class="more">
-            <summary>More <span class="chev">›</span></summary>
-            <div class="moreBody">
-              <p>
-                A kitchen and bar environment with a stronger, evening tone.
-                Contrast and lighting create a premium feel without visual noise.
-              </p>
-              <div class="facts">
-                <div><b>Focus</b><span>Material contrast</span></div>
-                <div><b>Palette</b><span>Dark wood, stone, soft amber light</span></div>
-                <div><b>Details</b><span>Linear lighting, refined edges</span></div>
-                <div><b>Mood</b><span>Bold, modern, intimate</span></div>
+            <div class="projectMedia">
+              <div class="grid projectGrid">
+                <figure><img class="project" src="images/project-03-a.jpg" alt="Project 03 photo 1"></figure>
+                <figure><img class="project" src="images/project-03-b.jpg" alt="Project 03 photo 2"></figure>
+              </div>
+
+              <div class="projectOverlay" aria-hidden="false">
+                <div class="projectOverlayCard">
+                  <div class="projectOverlayTop">
+                    <p class="projectOverlayTitle"><span class="pin"></span><span>Project 03</span></p>
+                    <button class="overlayBtn" type="button" data-toggle="project" aria-expanded="false" aria-controls="projectExpand3">
+                      <span>More</span>
+                      <span class="ico" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="16" height="16">
+                          <path d="M9 18l6-6-6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </span>
+                    </button>
+                  </div>
+                  <p class="projectOverlayText">A kitchen and bar environment with a stronger, evening tone.</p>
+                </div>
+              </div>
+
+              <div class="projectExpand" id="projectExpand3">
+                <div class="projectExpandInner">
+                  <p class="projectDesc">A kitchen and bar environment with a stronger, evening tone. Contrast and lighting create a premium feel without visual noise.</p>
+                  <div class="projectFacts" aria-label="Project 03 facts">
+                    <div class="projectFactsRow"><b>Focus</b><span>Material contrast</span></div>
+                    <div class="projectFactsRow"><b>Palette</b><span>Dark wood, stone, soft amber light</span></div>
+                    <div class="projectFactsRow"><b>Details</b><span>Linear lighting, refined edges</span></div>
+                    <div class="projectFactsRow"><b>Mood</b><span>Bold, modern, intimate</span></div>
+                  </div>
+                </div>
               </div>
             </div>
-          </details>
 
-          <div class="grid">
-            <figure><img class="project" src="images/project-03-a.jpg" alt="Project 03 photo 1"></figure>
-            <figure><img class="project" src="images/project-03-b.jpg" alt="Project 03 photo 2"></figure>
           </div>
         </div>
+
       </div>
     </section>
 
@@ -1107,6 +1272,64 @@
     caption.textContent = `Image 1 of ${slides.length}`;
     setDots();
     start();
+
+    // ===== Project overlay "More" toggles =====
+    function setExpand(el, open){
+      const expand = el.querySelector(".projectExpand");
+      const btn = el.querySelector('[data-toggle="project"]');
+      if (!expand || !btn) return;
+
+      const labelSpan = btn.querySelector("span");
+      if (open){
+        el.classList.add("isOpen");
+        btn.setAttribute("aria-expanded","true");
+        if (labelSpan) labelSpan.textContent = "Close";
+        expand.style.maxHeight = expand.scrollHeight + "px";
+      }else{
+        el.classList.remove("isOpen");
+        btn.setAttribute("aria-expanded","false");
+        if (labelSpan) labelSpan.textContent = "More";
+        expand.style.maxHeight = "0px";
+      }
+    }
+
+    function toggleProject(el){
+      const isOpen = el.classList.contains("isOpen");
+      setExpand(el, !isOpen);
+    }
+
+    document.querySelectorAll(".projectBlock").forEach((block) => {
+      const btn = block.querySelector('[data-toggle="project"]');
+      const overlayCard = block.querySelector(".projectOverlayCard");
+      const expand = block.querySelector(".projectExpand");
+
+      if (expand) expand.style.maxHeight = "0px";
+
+      btn && btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        toggleProject(block);
+      });
+
+      overlayCard && overlayCard.addEventListener("click", (e) => {
+        const insideBtn = e.target.closest("button");
+        if (insideBtn) return;
+        toggleProject(block);
+      });
+
+      overlayCard && overlayCard.setAttribute("tabindex","0");
+      overlayCard && overlayCard.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === " "){
+          e.preventDefault();
+          toggleProject(block);
+        }
+      });
+    });
+
+    window.addEventListener("resize", () => {
+      document.querySelectorAll(".projectBlock.isOpen .projectExpand").forEach((expand) => {
+        expand.style.maxHeight = expand.scrollHeight + "px";
+      });
+    });
 
     // ===== Substack (latest posts) =====
     const SUBSTACK_FEED = "https://tekofm.substack.com/feed";
