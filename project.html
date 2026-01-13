@@ -51,7 +51,7 @@
       padding:0 var(--pad);
     }
 
-    /* Header (same visual language as index) */
+    /* Header */
     header{
       position: fixed;
       top:0; left:0; right:0;
@@ -123,8 +123,6 @@
     }
     .btn:hover{ border-color: var(--accent); color: var(--accent); }
 
-    .menuBtn{ display:none; }
-
     @media (max-width: 760px){
       .toplinks{ display:none; }
       .brand .tag{ display:none; }
@@ -149,6 +147,19 @@
       border:1px solid var(--line);
       padding:10px;
     }
+
+    /* Clickable image button (for lightbox) */
+    .imgBtn{
+      display:block;
+      width:100%;
+      padding:0;
+      border:0;
+      background:transparent;
+      cursor: zoom-in;
+      border-radius:0;
+    }
+    .imgBtn:focus-visible{ box-shadow:0 0 0 2px var(--accent); }
+
     img.project{
       width:100%;
       height:auto;
@@ -157,7 +168,6 @@
       background: var(--soft);
     }
 
-    /* Project layout */
     main{
       padding-top: 92px;
       padding-bottom: 26px;
@@ -215,6 +225,7 @@
       flex-wrap:wrap;
     }
 
+    /* Hero image stays big — now clickable to expand */
     .heroFigure img{
       max-height: 72vh;
       object-fit: cover;
@@ -281,6 +292,7 @@
       .factsRow span{ text-align:left; }
     }
 
+    /* Gallery grid (your “small images”) — now each one expands on click */
     .galleryGrid{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -330,6 +342,137 @@
       background: var(--bg);
     }
     footer b{ color: var(--accent); }
+
+    /* =========================
+       LIGHTBOX (FULL SCREEN VIEW)
+       ========================= */
+    .lb{
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+      display: none;
+      background: rgba(11,12,16,.92);
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+    }
+    .lb.open{ display:block; }
+    .lbInner{
+      position:absolute;
+      inset: 0;
+      display:flex;
+      flex-direction:column;
+    }
+    .lbTop{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+    }
+    .lbMeta{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.82);
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+    .lbMeta .pin{ width:7px; height:7px; background: var(--accent); display:inline-block; }
+
+    .lbBtn{
+      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(0,0,0,.18);
+      color: rgba(255,255,255,.90);
+      padding: 10px 10px;
+      border-radius:0;
+      cursor:pointer;
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .lbBtn:hover{ border-color: var(--accent); color: var(--accent); }
+    .lbBtn svg{ display:block; }
+
+    .lbStage{
+      position: relative;
+      flex: 1;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding: 18px;
+    }
+    .lbImg{
+      max-width: min(1200px, 96vw);
+      max-height: 78vh;
+      width:auto;
+      height:auto;
+      display:block;
+      border:1px solid rgba(255,255,255,.16);
+      background: rgba(255,255,255,.04);
+      border-radius:0;
+      object-fit: contain;
+    }
+
+    .lbNav{
+      position:absolute;
+      top:50%;
+      transform: translateY(-50%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      width: 48px;
+      height: 48px;
+      border: 1px solid rgba(255,255,255,.22);
+      background: rgba(0,0,0,.18);
+      color: rgba(255,255,255,.90);
+      cursor:pointer;
+    }
+    .lbNav:hover{ border-color: var(--accent); color: var(--accent); }
+    .lbNav.prev{ left: 14px; }
+    .lbNav.next{ right: 14px; }
+
+    .lbBottom{
+      padding: 12px 16px 16px;
+      border-top: 1px solid rgba(255,255,255,.10);
+      display:flex;
+      justify-content:space-between;
+      gap:12px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+    }
+    .lbCaption{
+      color: rgba(255,255,255,.76);
+      max-width: 90ch;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+    .lbHelp{
+      font-family: var(--mono);
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.60);
+      white-space:nowrap;
+    }
+
+    @media (max-width: 760px){
+      .lbNav{ display:none; } /* swipe/tap still works */
+      .lbImg{ max-height: 74vh; }
+      .lbHelp{ display:none; }
+    }
+
+    @media (prefers-reduced-motion: reduce){
+      .lb{ backdrop-filter:none; -webkit-backdrop-filter:none; }
+    }
   </style>
 </head>
 
@@ -360,6 +503,45 @@
     © <span id="year"></span> <b>tete</b>
   </footer>
 
+  <!-- Lightbox overlay -->
+  <div class="lb" id="lb" aria-hidden="true">
+    <div class="lbInner" role="dialog" aria-modal="true" aria-label="Image viewer">
+      <div class="lbTop">
+        <div class="lbMeta" id="lbMeta">
+          <span class="pin"></span>
+          <span id="lbCount">Image</span>
+        </div>
+        <button class="lbBtn" id="lbClose" type="button" aria-label="Close viewer">
+          <span>Close</span>
+          <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
+            <path d="M6 6l12 12M18 6L6 18" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="lbStage" id="lbStage">
+        <button class="lbNav prev" id="lbPrev" type="button" aria-label="Previous image">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+        <img class="lbImg" id="lbImg" src="" alt="Expanded image" />
+
+        <button class="lbNav next" id="lbNext" type="button" aria-label="Next image">
+          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
+            <path d="M9 18l6-6-6-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+      </div>
+
+      <div class="lbBottom">
+        <div class="lbCaption" id="lbCaption"></div>
+        <div class="lbHelp">ESC to close · ← → to navigate</div>
+      </div>
+    </div>
+  </div>
+
   <script src="projects.js"></script>
   <script>
     // Email
@@ -388,6 +570,21 @@
       .replaceAll('"',"&quot;")
       .replaceAll("'","&#039;");
 
+    // Build unique list for lightbox (hero + gallery, dedup by src)
+    function buildLightboxList(heroSrc, heroAlt, gallery){
+      const seen = new Set();
+      const out = [];
+      function add(src, alt){
+        if (!src) return;
+        if (seen.has(src)) return;
+        seen.add(src);
+        out.push({ src, alt: alt || "" });
+      }
+      add(heroSrc, heroAlt);
+      (gallery || []).forEach(g => add(g.src, g.alt || ""));
+      return out.length ? out : [{ src: heroSrc, alt: heroAlt }];
+    }
+
     if (!project){
       app.innerHTML = `
         <div class="box" style="margin-top:20px;">
@@ -402,18 +599,22 @@
       const prev = projects[idx - 1] || null;
       const next = projects[idx + 1] || null;
 
+      const heroSrc = project.hero?.src || project.gallery?.[0]?.src || "";
+      const heroAlt = project.hero?.alt || project.title || "Project image";
+
+      const lbList = buildLightboxList(heroSrc, heroAlt, project.gallery);
+
       const factsHtml = (project.facts || []).map(([k,v]) => `
         <div class="factsRow"><b>${escapeHtml(k)}</b><span>${escapeHtml(v)}</span></div>
       `).join("");
 
-      const galleryHtml = (project.gallery || []).map(g => `
+      const galleryHtml = (project.gallery || []).map((g, i) => `
         <figure>
-          <img class="project" src="${escapeHtml(g.src)}" alt="${escapeHtml(g.alt || project.title)}" loading="lazy">
+          <button type="button" class="imgBtn" data-lb-open="${escapeHtml(g.src)}" aria-label="Expand image">
+            <img class="project" src="${escapeHtml(g.src)}" alt="${escapeHtml(g.alt || project.title)}" loading="lazy">
+          </button>
         </figure>
       `).join("");
-
-      const heroSrc = project.hero?.src || project.gallery?.[0]?.src || "";
-      const heroAlt = project.hero?.alt || project.title || "Project image";
 
       app.innerHTML = `
         <div class="backRow">
@@ -431,7 +632,9 @@
         </div>
 
         <figure class="heroFigure" style="margin-top:16px;">
-          <img class="project" src="${escapeHtml(heroSrc)}" alt="${escapeHtml(heroAlt)}" />
+          <button type="button" class="imgBtn" data-lb-open="${escapeHtml(heroSrc)}" aria-label="Expand hero image">
+            <img class="project" src="${escapeHtml(heroSrc)}" alt="${escapeHtml(heroAlt)}" />
+          </button>
         </figure>
 
         <div class="contentGrid">
@@ -462,6 +665,93 @@
           </div>
         </div>
       `;
+
+      // ===== Lightbox logic =====
+      const lb = document.getElementById("lb");
+      const lbImg = document.getElementById("lbImg");
+      const lbCaption = document.getElementById("lbCaption");
+      const lbCount = document.getElementById("lbCount");
+      const lbClose = document.getElementById("lbClose");
+      const lbPrev = document.getElementById("lbPrev");
+      const lbNext = document.getElementById("lbNext");
+      const lbStage = document.getElementById("lbStage");
+
+      let lbIndex = 0;
+      let lastFocus = null;
+
+      function openBySrc(src){
+        const i = lbList.findIndex(x => x.src === src);
+        openLB(i >= 0 ? i : 0);
+      }
+
+      function renderLB(){
+        const item = lbList[lbIndex];
+        lbImg.src = item.src;
+        lbImg.alt = item.alt || "Expanded image";
+        lbCaption.textContent = item.alt || "";
+        lbCount.textContent = `Image ${lbIndex + 1} of ${lbList.length}`;
+      }
+
+      function openLB(i){
+        lbIndex = (i + lbList.length) % lbList.length;
+        lastFocus = document.activeElement;
+
+        renderLB();
+        lb.classList.add("open");
+        lb.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+
+        // Focus close button for accessibility
+        lbClose.focus({ preventScroll: true });
+      }
+
+      function closeLB(){
+        lb.classList.remove("open");
+        lb.setAttribute("aria-hidden", "true");
+        document.body.style.overflow = "";
+
+        if (lastFocus && typeof lastFocus.focus === "function"){
+          lastFocus.focus({ preventScroll: true });
+        }
+      }
+
+      function nextLB(){ lbIndex = (lbIndex + 1) % lbList.length; renderLB(); }
+      function prevLB(){ lbIndex = (lbIndex - 1 + lbList.length) % lbList.length; renderLB(); }
+
+      // Click handlers for images
+      app.querySelectorAll("[data-lb-open]").forEach(btn => {
+        btn.addEventListener("click", () => openBySrc(btn.getAttribute("data-lb-open")));
+      });
+
+      // Buttons
+      lbClose.addEventListener("click", closeLB);
+      lbNext.addEventListener("click", nextLB);
+      lbPrev.addEventListener("click", prevLB);
+
+      // Click outside image closes (stage background)
+      lb.addEventListener("click", (e) => {
+        if (e.target === lb) closeLB();
+      });
+
+      // Keyboard
+      document.addEventListener("keydown", (e) => {
+        if (!lb.classList.contains("open")) return;
+        if (e.key === "Escape") { e.preventDefault(); closeLB(); }
+        if (e.key === "ArrowRight") { e.preventDefault(); nextLB(); }
+        if (e.key === "ArrowLeft") { e.preventDefault(); prevLB(); }
+      });
+
+      // Swipe on mobile
+      let startX = null;
+      lbStage.addEventListener("pointerdown", (e) => { startX = e.clientX; lbStage.setPointerCapture(e.pointerId); });
+      lbStage.addEventListener("pointerup", (e) => {
+        if (startX === null) return;
+        const dx = e.clientX - startX;
+        startX = null;
+        const threshold = 45;
+        if (dx < -threshold) nextLB();
+        else if (dx > threshold) prevLB();
+      });
     }
   </script>
 </body>
