@@ -1,20 +1,18 @@
-<!-- tete/project.html -->
 <!doctype html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title id="pageTitle">tete — Project</title>
-  <meta name="description" content="tete — Selected interior design works." />
+  <title>tete — project</title>
+
   <style>
     :root{
       --bg:#0b0b0b;
-      --paper:#0f0f0f;
       --ink:#f4f4f4;
-      --muted:rgba(244,244,244,.72);
-      --hair:rgba(244,244,244,.14);
+      --muted:rgba(244,244,244,.74);
+      --hair:rgba(244,244,244,.12);
       --accent:#ff9500;
-      --max:1100px;
+      --max:1120px;
     }
     *{box-sizing:border-box}
     html,body{height:100%}
@@ -23,421 +21,237 @@
       background:var(--bg);
       color:var(--ink);
       font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      letter-spacing:.2px;
     }
-    a{color:inherit; text-decoration:none}
-    .wrap{max-width:var(--max); margin:0 auto; padding:0 20px}
-    .top{
-      position:sticky; top:0; z-index:20;
-      background:linear-gradient(to bottom, rgba(11,11,11,.92), rgba(11,11,11,.72), rgba(11,11,11,0));
-      backdrop-filter:saturate(130%) blur(10px);
-      border-bottom:1px solid rgba(255,255,255,.06);
-    }
-    .bar{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 0;
-      gap:16px;
-    }
-    .brand{
-      display:flex; align-items:baseline; gap:10px;
-      font-weight:600;
-      letter-spacing:.08em;
-      text-transform:lowercase;
-      font-size:20px;
-    }
-    .brand .dot{
-      width:6px; height:6px; background:var(--accent);
-      display:inline-block;
-      transform:translateY(-3px);
-    }
-    .nav{
-      display:flex; gap:18px; align-items:center;
-      font-size:12px; letter-spacing:.18em; text-transform:uppercase;
-      color:var(--muted);
-    }
-    .nav a{
-      padding:8px 0;
-      border-bottom:1px solid transparent;
-    }
-    .nav a:hover{color:var(--ink); border-bottom-color:var(--accent)}
-    .menuBtn{
-      display:none;
-      width:42px; height:38px;
-      background:transparent;
-      color:var(--ink);
-      border:1px solid rgba(255,255,255,.14);
-      border-radius:0;
-      cursor:pointer;
-    }
-    .menuBtn:hover{border-color:rgba(255,255,255,.28)}
-    .mobileNav{
-      display:none;
-      border-top:1px solid rgba(255,255,255,.08);
-      padding:10px 0 16px;
-    }
-    .mobileNav.open{display:block}
-    .mobileNav a{
-      display:block;
-      padding:12px 0;
-      font-size:12px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      color:var(--muted);
-      border-bottom:1px solid rgba(255,255,255,.06);
-    }
-    .mobileNav a:hover{color:var(--ink)}
-    @media (max-width: 760px){
-      .nav{display:none}
-      .menuBtn{display:inline-flex; align-items:center; justify-content:center}
-    }
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 18px}
 
-    /* HERO FULL WIDTH */
-    .hero{
-      position:relative;
-      width:100%;
-      height:min(72vh, 720px);
-      border-bottom:1px solid rgba(255,255,255,.06);
-      overflow:hidden;
-    }
-    .hero img{
-      width:100%;
-      height:100%;
-      object-fit:cover;
-      display:block;
-      cursor:zoom-in;
-      filter:saturate(105%) contrast(103%);
-    }
+    /* HERO */
+    .hero{position:relative;height:min(72vh,720px);border-bottom:1px solid rgba(255,255,255,.06);overflow:hidden}
+    .hero img{width:100%;height:100%;object-fit:cover;display:block;cursor:zoom-in;filter:saturate(108%) contrast(106%)}
     .hero::after{
-      content:"";
-      position:absolute; inset:0;
+      content:"";position:absolute;inset:0;
       background:
-        linear-gradient(to top, rgba(11,11,11,.78) 0%, rgba(11,11,11,.28) 55%, rgba(11,11,11,.22) 100%);
-      pointer-events:none;
+        linear-gradient(to top, rgba(0,0,0,.86) 0%, rgba(0,0,0,.30) 58%, rgba(0,0,0,.18) 100%);
+      pointer-events:none
     }
-    .heroInner{
-      position:absolute; inset:0;
-      display:flex;
-      align-items:flex-end;
-    }
-    .heroBox{
-      width:100%;
-      padding:28px 0 26px;
-    }
-    .kicker{
-      display:flex; align-items:center; gap:12px;
-      font-size:12px; letter-spacing:.22em; text-transform:uppercase;
-      color:rgba(244,244,244,.78);
-    }
-    .kicker .line{
-      width:60px; height:1px; background:var(--accent);
-      display:inline-block;
-    }
-    h1{
-      margin:12px 0 10px;
-      font-size: clamp(40px, 5.2vw, 72px);
-      line-height: .95;
-      letter-spacing:-0.02em;
-      font-weight:650;
-    }
-    .desc{
-      margin:0;
-      max-width: 62ch;
-      color:rgba(244,244,244,.85);
-      font-size: clamp(15px, 1.35vw, 18px);
-      line-height:1.55;
-    }
-    .heroActions{
-      margin-top:16px;
-      display:flex; gap:14px; align-items:center; flex-wrap:wrap;
-    }
-    .btn{
-      border-radius:0;
-      border:1px solid rgba(255,255,255,.18);
-      background:rgba(11,11,11,.35);
-      color:var(--ink);
-      padding:10px 14px;
-      font-size:12px;
-      letter-spacing:.18em;
-      text-transform:uppercase;
-      cursor:pointer;
-    }
-    .btn:hover{border-color:rgba(255,255,255,.34)}
-    .btnAccent{
-      border-color:rgba(255,149,0,.55);
-      box-shadow:none;
-    }
-    .btnAccent:hover{border-color:rgba(255,149,0,.85)}
+    .heroOverlay{position:absolute;left:0;right:0;bottom:0;padding:22px 0 20px}
+    .kicker{display:flex;align-items:center;gap:12px;font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.78)}
+    .kicker .line{width:60px;height:1px;background:var(--accent)}
+    h1{margin:10px 0 10px;font-size:clamp(40px,5vw,74px);line-height:.95;letter-spacing:-.02em}
+    .desc{margin:0;max-width:62ch;color:rgba(255,255,255,.88);line-height:1.55}
+    .meta{margin-top:14px;display:flex;gap:14px;flex-wrap:wrap;font-size:12px;letter-spacing:.12em;color:rgba(255,255,255,.72)}
+    .meta b{color:var(--accent);font-weight:700}
 
     /* CONTENT */
-    main{padding:26px 0 40px}
-    .meta{
-      display:grid;
-      grid-template-columns: 1.1fr .9fr;
-      gap:24px;
-      border-top:1px solid rgba(255,255,255,.08);
-      padding-top:20px;
-    }
-    @media (max-width: 900px){
-      .meta{grid-template-columns: 1fr}
-    }
-    .metaCard{
-      border:1px solid rgba(255,255,255,.08);
-      background:rgba(255,255,255,.02);
-      padding:18px;
-    }
-    .metaTitle{
-      font-size:12px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color:rgba(244,244,244,.72);
-      margin:0 0 10px;
-    }
-    .metaRow{
-      display:flex;
-      justify-content:space-between;
-      gap:14px;
-      padding:10px 0;
-      border-top:1px solid rgba(255,255,255,.06);
-      font-size:14px;
-      color:rgba(244,244,244,.88);
-    }
-    .metaRow:first-of-type{border-top:0}
-    .metaKey{color:rgba(244,244,244,.62)}
-    .hint{
-      margin:14px 0 0;
-      font-size:12px;
-      color:rgba(244,244,244,.65);
-      letter-spacing:.06em;
-    }
-    .hint b{color:var(--accent); font-weight:650}
+    main{padding:22px 0 40px}
+    .gTitle{display:flex;align-items:center;gap:12px;color:rgba(255,255,255,.72);font-size:12px;letter-spacing:.22em;text-transform:uppercase;margin:0 0 12px}
+    .gTitle .line{width:44px;height:1px;background:var(--accent)}
+    .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+    @media(max-width:980px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:620px){.grid{grid-template-columns:1fr}}
 
-    /* THUMB GRID */
-    .gridTitle{
-      margin:28px 0 12px;
-      font-size:12px;
-      letter-spacing:.22em;
-      text-transform:uppercase;
-      color:rgba(244,244,244,.72);
-      display:flex; align-items:center; gap:12px;
-    }
-    .gridTitle .line{width:44px;height:1px;background:var(--accent)}
-    .thumbGrid{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:14px;
-    }
-    @media (max-width: 980px){
-      .thumbGrid{grid-template-columns: repeat(2, 1fr)}
-    }
-    @media (max-width: 620px){
-      .thumbGrid{grid-template-columns: 1fr}
-    }
-    .thumb{
-      position:relative;
-      border:0;
-      padding:0;
-      background:transparent;
-      cursor:zoom-in;
-      outline:none;
-    }
+    .thumb{border:0;background:transparent;padding:0;position:relative;cursor:zoom-in}
     .thumb img{
       width:100%;
       height:260px;
       object-fit:cover;
-      display:block;
       border:1px solid rgba(255,255,255,.10);
-      filter:saturate(105%) contrast(103%);
-      transition: transform .22s ease, filter .22s ease, border-color .22s ease;
+      display:block;
+      transition:transform .18s ease, border-color .18s ease, filter .18s ease;
+      filter:saturate(108%) contrast(106%);
     }
     .thumb:hover img{
-      transform: scale(1.01);
-      border-color: rgba(255,149,0,.45);
-      filter:saturate(108%) contrast(105%);
+      border-color:rgba(255,149,0,.48);
+      transform:scale(1.01);
     }
-    .zoomMark{
-      position:absolute; right:10px; bottom:10px;
-      width:34px; height:34px;
+    .zoom{
+      position:absolute;right:10px;bottom:10px;
+      width:34px;height:34px;
       border:1px solid rgba(255,255,255,.18);
-      background:rgba(11,11,11,.34);
-      display:flex; align-items:center; justify-content:center;
-      opacity:0;
-      transform:translateY(4px);
-      transition: opacity .18s ease, transform .18s ease, border-color .18s ease;
+      display:flex;align-items:center;justify-content:center;
+      background:rgba(0,0,0,.35);
+      opacity:0;transform:translateY(3px);
+      transition:opacity .18s ease, transform .18s ease, border-color .18s ease;
       pointer-events:none;
+      font-size:18px; line-height:1;
     }
-    .thumb:hover .zoomMark{
-      opacity:1;
-      transform:translateY(0);
-      border-color: rgba(255,149,0,.55);
-    }
-    .zoomMark svg{width:18px;height:18px;fill:rgba(244,244,244,.9)}
+    .thumb:hover .zoom{opacity:1;transform:translateY(0);border-color:rgba(255,149,0,.55)}
 
-    footer{
-      border-top:1px solid rgba(255,255,255,.08);
-      color:rgba(244,244,244,.62);
-      padding:22px 0 34px;
+    .build{
+      margin-top:14px;
+      color:rgba(255,255,255,.55);
       font-size:12px;
-      letter-spacing:.08em;
+      letter-spacing:.12em;
     }
-    footer a{color:rgba(244,244,244,.85)}
-    footer a:hover{color:var(--accent)}
 
     /* LIGHTBOX */
-    .lb{display:none}
-    body.lbOpen .lb{display:block}
+    #lightbox{display:none}
+    body.lbOpen #lightbox{display:block}
     body.lbOpen{overflow:hidden}
 
-    .lbScrim{
-      position:fixed; inset:0;
-      background:rgba(0,0,0,.86);
-      z-index:9998;
-    }
+    .lbScrim{position:fixed;inset:0;background:rgba(0,0,0,.88);z-index:9998}
     .lbFrame{
-      position:fixed; inset:0;
-      z-index:9999;
-      display:grid;
-      grid-template-columns: 64px 1fr 64px;
-      align-items:center;
-      padding:24px;
+      position:fixed; inset:0; z-index:9999;
+      display:grid; grid-template-columns:64px 1fr 64px;
+      align-items:center; padding:22px;
     }
-    @media (max-width: 700px){
-      .lbFrame{grid-template-columns: 52px 1fr 52px; padding:14px}
-    }
-    .lbFigure{
-      margin:0;
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-    }
+    @media(max-width:700px){.lbFrame{grid-template-columns:52px 1fr 52px;padding:14px}}
+    .lbFigure{margin:0;display:flex;flex-direction:column;align-items:center;gap:10px}
     .lbImg{
-      max-width:min(1100px, 88vw);
+      max-width:min(1100px,88vw);
       max-height:82vh;
-      width:auto;
-      height:auto;
-      object-fit:contain;
       border:1px solid rgba(255,255,255,.12);
       background:rgba(255,255,255,.02);
+      object-fit:contain;
     }
-    .lbCap{
-      font-size:12px;
-      color:rgba(244,244,244,.72);
-      letter-spacing:.08em;
-      text-align:center;
-      padding:0 10px;
-    }
+    .lbCap{font-size:12px;color:rgba(255,255,255,.72);text-align:center;letter-spacing:.08em}
     .lbClose{
-      position:fixed;
-      top:14px; right:14px;
-      width:44px; height:40px;
-      border-radius:0;
+      position:fixed;top:14px;right:14px;width:44px;height:40px;
       border:1px solid rgba(255,255,255,.18);
-      background:rgba(11,11,11,.35);
-      color:var(--ink);
-      cursor:pointer;
-      z-index:10000;
+      background:rgba(0,0,0,.35);
+      color:#fff;cursor:pointer;z-index:10000;
     }
-    .lbClose:hover{border-color:rgba(255,149,0,.55)}
     .lbNav{
-      width:52px; height:52px;
-      border-radius:0;
+      width:52px;height:52px;
       border:1px solid rgba(255,255,255,.18);
-      background:rgba(11,11,11,.35);
-      color:var(--ink);
-      cursor:pointer;
-      justify-self:center;
+      background:rgba(0,0,0,.35);
+      color:#fff;cursor:pointer;justify-self:center;
+      font-size:20px;
     }
-    .lbNav:hover{border-color:rgba(255,149,0,.55)}
-    .lbNav span{font-size:22px; line-height:1}
+    .lbClose:hover,.lbNav:hover{border-color:rgba(255,149,0,.55)}
   </style>
 </head>
 
 <body>
-  <header class="top">
-    <div class="wrap">
-      <div class="bar">
-        <a class="brand" href="./index.html" aria-label="Back to home">
-          <span>tete</span><span class="dot" aria-hidden="true"></span>
-        </a>
-
-        <nav class="nav" aria-label="Primary">
-          <a href="./index.html#works">Projects</a>
-          <a href="./journal.html">Journal</a>
-          <a href="./contact.html">Contact</a>
-        </nav>
-
-        <button id="menuBtn" class="menuBtn" type="button" aria-label="Open menu" aria-expanded="false">
-          ☰
-        </button>
-      </div>
-
-      <div id="mobileNav" class="mobileNav" aria-label="Mobile navigation">
-        <a href="./index.html#works">Projects</a>
-        <a href="./journal.html">Journal</a>
-        <a href="./contact.html">Contact</a>
-      </div>
-    </div>
-  </header>
-
   <section class="hero">
     <img id="heroImg" src="./images/project-01-a.jpg" alt="Project image" />
-    <div class="heroInner">
-      <div class="wrap heroBox">
-        <div class="kicker">
-          <span class="line" aria-hidden="true"></span>
-          <span id="projSubtitle">Selected Works</span>
-        </div>
-
-        <h1 id="projTitle">Project</h1>
-        <p id="projDesc" class="desc">Minimal interior design.</p>
-
-        <div class="heroActions">
-          <button id="heroBtn" class="btn btnAccent" type="button">View full screen</button>
-          <span class="hint">Tip: click any image to <b>expand</b>.</span>
+    <div class="heroOverlay">
+      <div class="wrap">
+        <div class="kicker"><span class="line"></span><span id="subtitle">Selected Works</span></div>
+        <h1 id="title">Project</h1>
+        <p id="desc" class="desc"></p>
+        <div class="meta">
+          <span><b>Year</b> <span id="year">—</span></span>
+          <span><b>Location</b> <span id="location">—</span></span>
+          <span><b>Scope</b> <span id="scope">—</span></span>
         </div>
       </div>
     </div>
   </section>
 
   <main class="wrap">
-    <section class="meta">
-      <div>
-        <div class="gridTitle"><span class="line" aria-hidden="true"></span>Gallery</div>
-        <div id="thumbGrid" class="thumbGrid"></div>
-      </div>
-
-      <aside class="metaCard" aria-label="Project details">
-        <p class="metaTitle">Details</p>
-        <div class="metaRow"><span class="metaKey">Year</span><span id="metaYear">—</span></div>
-        <div class="metaRow"><span class="metaKey">Location</span><span id="metaLoc">—</span></div>
-        <div class="metaRow"><span class="metaKey">Scope</span><span id="metaScope">—</span></div>
-        <p class="hint" style="margin-top:14px">
-          Use <b>←</b> <b>→</b> to navigate, <b>Esc</b> to close.
-        </p>
-      </aside>
-    </section>
+    <div class="gTitle"><span class="line"></span><span>Gallery</span></div>
+    <div class="grid" id="grid"></div>
+    <div class="build">BUILD: v4 (click any image to expand)</div>
   </main>
 
-  <footer>
-    <div class="wrap">
-      <div style="display:flex; justify-content:space-between; gap:14px; flex-wrap:wrap">
-        <div>© <span id="yearNow"></span> tete</div>
-        <div>
-          <a href="./index.html#works">Projects</a> ·
-          <a href="./contact.html">Contact</a>
-        </div>
-      </div>
+  <!-- Lightbox (static, not injected) -->
+  <div id="lightbox" aria-hidden="true">
+    <div class="lbScrim" id="lbCloseScrim"></div>
+    <div class="lbFrame" role="dialog" aria-modal="true" aria-label="Image viewer">
+      <button class="lbNav" id="lbPrev" type="button" aria-label="Previous">←</button>
+      <figure class="lbFigure">
+        <img class="lbImg" id="lbImg" src="" alt="" />
+        <figcaption class="lbCap" id="lbCap"></figcaption>
+      </figure>
+      <button class="lbNav" id="lbNext" type="button" aria-label="Next">→</button>
+
+      <button class="lbClose" id="lbCloseBtn" type="button" aria-label="Close">✕</button>
     </div>
-  </footer>
+  </div>
 
-  <!-- Lightbox container created by project.js -->
-
+  <script src="./projects.js"></script>
   <script>
-    document.getElementById("yearNow").textContent = new Date().getFullYear();
-  </script>
+    const $ = (s) => document.querySelector(s);
 
-  <script src="./projects.js" defer></script>
-  <script src="./project.js" defer></script>
+    function getParam(name){
+      const u = new URL(location.href);
+      return (u.searchParams.get(name) || "").trim();
+    }
+
+    function pickProject(){
+      const list = Array.isArray(window.PROJECTS) ? window.PROJECTS : [];
+      const key = getParam("p");
+      return list.find(p => p.slug === key) || list[0] || null;
+    }
+
+    const project = pickProject();
+    if (!project) {
+      document.body.innerHTML = "<div style='padding:24px;font-family:system-ui'>No projects found.</div>";
+      throw new Error("No projects found.");
+    }
+
+    // Fill hero
+    document.title = `tete — ${project.title}`;
+    $("#subtitle").textContent = project.subtitle || "Selected Works";
+    $("#title").textContent = project.title || "Project";
+    $("#desc").textContent = project.description || "";
+    $("#year").textContent = project.year || "—";
+    $("#location").textContent = project.location || "—";
+    $("#scope").textContent = (project.scope || []).join(" · ") || "—";
+
+    const images = (project.images || []).filter(Boolean);
+    const hero = images[0];
+    if (hero) {
+      $("#heroImg").src = hero.src;
+      $("#heroImg").alt = hero.alt || project.title || "Project image";
+    }
+
+    // Build grid
+    const grid = $("#grid");
+    grid.innerHTML = images.map((img, i) => `
+      <button class="thumb" type="button" data-i="${i}">
+        <img src="${img.src}" alt="${img.alt || ""}" loading="lazy" decoding="async" />
+        <span class="zoom">+</span>
+      </button>
+    `).join("");
+
+    // Lightbox logic
+    let idx = 0;
+    const lb = $("#lightbox");
+    const lbImg = $("#lbImg");
+    const lbCap = $("#lbCap");
+
+    function openLB(i){
+      idx = (i + images.length) % images.length;
+      const it = images[idx];
+      lbImg.src = it.src;
+      lbImg.alt = it.alt || "";
+      lbCap.textContent = `Image ${idx + 1} of ${images.length}${it.alt ? " — " + it.alt : ""}`;
+      document.body.classList.add("lbOpen");
+      lb.setAttribute("aria-hidden","false");
+    }
+    function closeLB(){
+      document.body.classList.remove("lbOpen");
+      lb.setAttribute("aria-hidden","true");
+    }
+    function next(){ openLB(idx + 1); }
+    function prev(){ openLB(idx - 1); }
+
+    // Click hero opens
+    $("#heroImg").addEventListener("click", () => openLB(0));
+
+    // Click thumbs open
+    grid.addEventListener("click", (e) => {
+      const btn = e.target.closest(".thumb");
+      if (!btn) return;
+      openLB(Number(btn.getAttribute("data-i") || "0"));
+    });
+
+    // Controls
+    $("#lbCloseScrim").addEventListener("click", closeLB);
+    $("#lbCloseBtn").addEventListener("click", closeLB);
+    $("#lbNext").addEventListener("click", next);
+    $("#lbPrev").addEventListener("click", prev);
+
+    document.addEventListener("keydown", (e) => {
+      if (!document.body.classList.contains("lbOpen")) return;
+      if (e.key === "Escape") closeLB();
+      if (e.key === "ArrowRight") next();
+      if (e.key === "ArrowLeft") prev();
+    });
+
+    console.log("[tete] project.html lightbox v4 loaded");
+  </script>
 </body>
 </html>
