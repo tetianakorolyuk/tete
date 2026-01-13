@@ -4,9 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>tete — project</title>
-  <meta name="description" content="tete — project details." />
 
-  <!-- build: 2026-01-13 / lightbox + hover -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -46,13 +44,8 @@
     a:hover{ color:var(--accent); }
     :focus-visible{ outline:none; box-shadow:0 0 0 2px var(--accent); }
 
-    .wrap{
-      max-width:var(--max);
-      margin:0 auto;
-      padding:0 var(--pad);
-    }
+    .wrap{ max-width:var(--max); margin:0 auto; padding:0 var(--pad); }
 
-    /* Header */
     header{
       position: fixed;
       top:0; left:0; right:0;
@@ -129,23 +122,7 @@
       .brand .tag{ display:none; }
     }
 
-    .subkicker{
-      font-family:var(--mono);
-      font-size:12px;
-      letter-spacing:.16em;
-      text-transform:uppercase;
-      color: var(--muted);
-      display:flex;
-      align-items:center;
-      gap:12px;
-      margin: 0 0 12px;
-    }
-    .subkicker .rule{ height:1px; width:56px; background: var(--accent); }
-
-    main{
-      padding-top: 92px;
-      padding-bottom: 26px;
-    }
+    main{ padding-top: 92px; padding-bottom: 26px; }
 
     .backRow{
       display:flex;
@@ -192,46 +169,30 @@
       line-height: .95;
       color: var(--text);
     }
-    .metaRow{
-      margin-top: 10px;
-      display:flex;
-      gap: 10px;
-      flex-wrap:wrap;
-    }
+    .metaRow{ margin-top:10px; display:flex; gap:10px; flex-wrap:wrap; }
 
-    /* Figures + images */
     figure{
       margin:0;
       background: transparent;
       border:1px solid var(--line);
       padding:10px;
       position: relative;
-      overflow: hidden; /* for hover micro-line */
+      overflow:hidden;
     }
 
-    /* clickable wrapper (for lightbox) */
-    .imgBtn{
-      display:block;
-      width:100%;
-      padding:0;
-      border:0;
-      background:transparent;
-      cursor: zoom-in;
-      border-radius:0;
-    }
-    .imgBtn:focus-visible{ box-shadow:0 0 0 2px var(--accent); }
-
+    /* THE IMAGES */
     img.project{
       width:100%;
       height:auto;
       display:block;
       border:1px solid var(--line);
       background: var(--soft);
+      cursor: zoom-in;
       transition: transform .55s ease, filter .55s ease;
       will-change: transform, filter;
     }
 
-    /* ===== Premium hover (subtle, sharp) ===== */
+    /* Premium hover */
     figure::after{
       content:"";
       position:absolute;
@@ -251,24 +212,20 @@
       filter: saturate(1.06) contrast(1.06);
     }
 
-    /* hero figure */
-    .heroFigure img{
-      max-height: 72vh;
-      object-fit: cover;
-    }
+    .heroFigure img{ max-height:72vh; object-fit:cover; }
 
     .contentGrid{
       display:grid;
       grid-template-columns: 1.2fr .8fr;
-      gap: 14px;
-      margin-top: 18px;
+      gap:14px;
+      margin-top:18px;
     }
-    @media (max-width: 860px){ .contentGrid{ grid-template-columns: 1fr; } }
+    @media (max-width: 860px){ .contentGrid{ grid-template-columns:1fr; } }
 
     .box{
       border:1px solid rgba(18,20,28,.12);
       background: var(--paper);
-      padding: 16px;
+      padding:16px;
     }
     .box h2{
       margin:0 0 10px;
@@ -294,7 +251,7 @@
       align-items:baseline;
       justify-content:space-between;
       gap:10px;
-      padding: 8px 0;
+      padding:8px 0;
       border-top:1px solid rgba(18,20,28,.10);
     }
     .factsRow:first-child{ border-top:none; padding-top:0; }
@@ -318,22 +275,35 @@
       .factsRow span{ text-align:left; }
     }
 
+    .subkicker{
+      font-family:var(--mono);
+      font-size:12px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      color: var(--muted);
+      display:flex;
+      align-items:center;
+      gap:12px;
+      margin: 0 0 12px;
+    }
+    .subkicker .rule{ height:1px; width:56px; background: var(--accent); }
+
     .galleryGrid{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 10px;
+      gap:14px;
+      margin-top:10px;
     }
     @media (max-width: 980px){ .galleryGrid{ grid-template-columns: repeat(2, 1fr); } }
     @media (max-width: 620px){ .galleryGrid{ grid-template-columns: 1fr; } }
 
     .navProjects{
       display:flex;
-      gap: 12px;
+      gap:12px;
       align-items:center;
       justify-content:space-between;
       flex-wrap:wrap;
-      margin-top: 18px;
+      margin-top:18px;
     }
     .cta{
       border:1px solid rgba(18,20,28,.18);
@@ -368,14 +338,12 @@
     }
     footer b{ color: var(--accent); }
 
-    /* =========================
-       LIGHTBOX (FULL SCREEN VIEW)
-       ========================= */
+    /* ===== Lightbox ===== */
     .lb{
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      display: none;
+      position:fixed;
+      inset:0;
+      z-index:9999;
+      display:none;
       background: rgba(11,12,16,.92);
       backdrop-filter: blur(2px);
       -webkit-backdrop-filter: blur(2px);
@@ -385,25 +353,19 @@
     .lbBackdrop{
       position:absolute;
       inset:0;
-      z-index:0;
       border:0;
       padding:0;
-      background: transparent;
+      background:transparent;
       cursor: zoom-out;
     }
 
     .lbInner{
       position:absolute;
-      inset: 0;
-      z-index:1;
+      inset:0;
       display:flex;
       flex-direction:column;
-      pointer-events:none; /* enable only inner controls */
+      z-index:1;
     }
-
-    .lbTop,
-    .lbStage,
-    .lbBottom{ pointer-events:auto; }
 
     .lbTop{
       display:flex;
@@ -443,25 +405,23 @@
       line-height: 1;
     }
     .lbBtn:hover{ border-color: var(--accent); color: var(--accent); }
-    .lbBtn svg{ display:block; }
 
     .lbStage{
-      position: relative;
-      flex: 1;
+      position:relative;
+      flex:1;
       display:flex;
       align-items:center;
       justify-content:center;
-      padding: 18px;
+      padding:18px;
     }
     .lbImg{
-      max-width: min(1200px, 96vw);
-      max-height: 78vh;
+      max-width:min(1200px, 96vw);
+      max-height:78vh;
       width:auto;
       height:auto;
       display:block;
       border:1px solid rgba(255,255,255,.16);
       background: rgba(255,255,255,.04);
-      border-radius:0;
       object-fit: contain;
     }
 
@@ -469,19 +429,19 @@
       position:absolute;
       top:50%;
       transform: translateY(-50%);
+      width:48px;
+      height:48px;
       display:flex;
       align-items:center;
       justify-content:center;
-      width: 48px;
-      height: 48px;
-      border: 1px solid rgba(255,255,255,.22);
+      border:1px solid rgba(255,255,255,.22);
       background: rgba(0,0,0,.18);
       color: rgba(255,255,255,.90);
       cursor:pointer;
     }
     .lbNav:hover{ border-color: var(--accent); color: var(--accent); }
-    .lbNav.prev{ left: 14px; }
-    .lbNav.next{ right: 14px; }
+    .lbNav.prev{ left:14px; }
+    .lbNav.next{ right:14px; }
 
     .lbBottom{
       padding: 12px 16px 16px;
@@ -495,8 +455,8 @@
     .lbCaption{
       color: rgba(255,255,255,.76);
       max-width: 90ch;
-      font-size: 14px;
-      line-height: 1.55;
+      font-size:14px;
+      line-height:1.55;
     }
     .lbHelp{
       font-family: var(--mono);
@@ -508,8 +468,8 @@
     }
 
     @media (max-width: 760px){
-      .lbNav{ display:none; } /* swipe still works */
-      .lbImg{ max-height: 74vh; }
+      .lbNav{ display:none; }
+      .lbImg{ max-height:74vh; }
       .lbHelp{ display:none; }
     }
 
@@ -548,7 +508,7 @@
     © <span id="year"></span> <b>tete</b>
   </footer>
 
-  <!-- Lightbox overlay -->
+  <!-- Lightbox -->
   <div class="lb" id="lb" aria-hidden="true">
     <button class="lbBackdrop" id="lbBackdrop" type="button" aria-label="Close viewer"></button>
 
@@ -591,45 +551,38 @@
 
   <script src="projects.js"></script>
   <script>
-    // Email
+    // Email + footer year
     const EMAIL = "tetiana.korolyuk@gmail.com";
-    const mailto = `mailto:${encodeURIComponent(EMAIL)}?subject=${encodeURIComponent("Project Inquiry — tete")}`;
-    document.getElementById("emailBtn").href = mailto;
+    document.getElementById("emailBtn").href =
+      `mailto:${encodeURIComponent(EMAIL)}?subject=${encodeURIComponent("Project Inquiry — tete")}`;
     document.getElementById("year").textContent = new Date().getFullYear();
 
-    // Get project by query param
+    // Support BOTH styles:
+    // - window.PROJECTS = [...]
+    // - const PROJECTS = [...]
+    const projects = (window.PROJECTS && Array.isArray(window.PROJECTS))
+      ? window.PROJECTS
+      : (typeof PROJECTS !== "undefined" && Array.isArray(PROJECTS))
+        ? PROJECTS
+        : [];
+
     const params = new URLSearchParams(location.search);
     const slug = params.get("p");
-    const projects = window.PROJECTS || [];
+
     const idx = projects.findIndex(p => p.slug === slug);
     const project = idx >= 0 ? projects[idx] : null;
-
     const app = document.getElementById("app");
 
     const iconArrow = (dir="right") => dir === "left"
       ? `<svg viewBox="0 0 24 24" width="16" height="16"><path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`
       : `<svg viewBox="0 0 24 24" width="16" height="16"><path d="M9 18l6-6-6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
 
-    const escapeHtml = (str="") => (str || "")
+    const esc = (s="") => (s || "")
       .replaceAll("&","&amp;")
       .replaceAll("<","&lt;")
       .replaceAll(">","&gt;")
       .replaceAll('"',"&quot;")
       .replaceAll("'","&#039;");
-
-    function buildLightboxList(heroSrc, heroAlt, gallery){
-      const seen = new Set();
-      const out = [];
-      const add = (src, alt) => {
-        if (!src) return;
-        if (seen.has(src)) return;
-        seen.add(src);
-        out.push({ src, alt: alt || "" });
-      };
-      add(heroSrc, heroAlt);
-      (gallery || []).forEach(g => add(g.src, g.alt || ""));
-      return out.length ? out : [{ src: heroSrc, alt: heroAlt }];
-    }
 
     if (!project){
       app.innerHTML = `
@@ -648,45 +601,39 @@
       const heroSrc = project.hero?.src || project.gallery?.[0]?.src || "";
       const heroAlt = project.hero?.alt || project.title || "Project image";
 
-      const lbList = buildLightboxList(heroSrc, heroAlt, project.gallery);
-
       const factsHtml = (project.facts || []).map(([k,v]) => `
-        <div class="factsRow"><b>${escapeHtml(k)}</b><span>${escapeHtml(v)}</span></div>
+        <div class="factsRow"><b>${esc(k)}</b><span>${esc(v)}</span></div>
       `).join("");
 
       const galleryHtml = (project.gallery || []).map(g => `
         <figure>
-          <button type="button" class="imgBtn" data-lb-open="${escapeHtml(g.src)}" aria-label="Expand image">
-            <img class="project" src="${escapeHtml(g.src)}" alt="${escapeHtml(g.alt || project.title)}" loading="lazy">
-          </button>
+          <img class="project" src="${esc(g.src)}" alt="${esc(g.alt || project.title)}" loading="lazy">
         </figure>
       `).join("");
 
       app.innerHTML = `
         <div class="backRow">
           <a class="backLink" href="index.html#projects">${iconArrow("left")} Back</a>
-          <span class="chip"><b>${escapeHtml(project.shortTitle || ("Project " + project.number))}</b></span>
+          <span class="chip"><b>${esc(project.shortTitle || ("Project " + project.number))}</b></span>
         </div>
 
         <div class="projectHeading">
-          <h1>${escapeHtml(project.title)}</h1>
+          <h1>${esc(project.title)}</h1>
           <div class="metaRow">
-            <span class="chip"><b>Year</b> ${escapeHtml(project.year || "")}</span>
-            <span class="chip"><b>Location</b> ${escapeHtml(project.location || "")}</span>
-            <span class="chip"><b>Role</b> ${escapeHtml(project.role || "")}</span>
+            <span class="chip"><b>Year</b> ${esc(project.year || "")}</span>
+            <span class="chip"><b>Location</b> ${esc(project.location || "")}</span>
+            <span class="chip"><b>Role</b> ${esc(project.role || "")}</span>
           </div>
         </div>
 
         <figure class="heroFigure" style="margin-top:16px;">
-          <button type="button" class="imgBtn" data-lb-open="${escapeHtml(heroSrc)}" aria-label="Expand hero image">
-            <img class="project" src="${escapeHtml(heroSrc)}" alt="${escapeHtml(heroAlt)}" />
-          </button>
+          <img class="project" src="${esc(heroSrc)}" alt="${esc(heroAlt)}" />
         </figure>
 
         <div class="contentGrid">
           <div class="box">
             <h2>Overview</h2>
-            <p>${escapeHtml(project.description || project.blurb || "")}</p>
+            <p>${esc(project.description || project.blurb || "")}</p>
           </div>
 
           <div class="box">
@@ -711,107 +658,125 @@
           </div>
         </div>
       `;
-
-      // ===== Lightbox logic =====
-      const lb = document.getElementById("lb");
-      const lbImg = document.getElementById("lbImg");
-      const lbCaption = document.getElementById("lbCaption");
-      const lbCount = document.getElementById("lbCount");
-      const lbClose = document.getElementById("lbClose");
-      const lbPrev = document.getElementById("lbPrev");
-      const lbNext = document.getElementById("lbNext");
-      const lbBackdrop = document.getElementById("lbBackdrop");
-      const lbStage = document.getElementById("lbStage");
-
-      let lbIndex = 0;
-      let lastFocus = null;
-
-      function renderLB(){
-        const item = lbList[lbIndex];
-        lbImg.src = item.src;
-        lbImg.alt = item.alt || "Expanded image";
-        lbCaption.textContent = item.alt || "";
-        lbCount.textContent = `Image ${lbIndex + 1} of ${lbList.length}`;
-
-        const showNav = lbList.length > 1;
-        lbPrev.style.display = showNav ? "" : "none";
-        lbNext.style.display = showNav ? "" : "none";
-      }
-
-      function openLB(i){
-        lbIndex = (i + lbList.length) % lbList.length;
-        lastFocus = document.activeElement;
-
-        renderLB();
-        lb.classList.add("open");
-        lb.setAttribute("aria-hidden", "false");
-        document.body.style.overflow = "hidden";
-
-        lbClose.focus({ preventScroll: true });
-      }
-
-      function closeLB(){
-        lb.classList.remove("open");
-        lb.setAttribute("aria-hidden", "true");
-        document.body.style.overflow = "";
-
-        if (lastFocus && typeof lastFocus.focus === "function"){
-          lastFocus.focus({ preventScroll: true });
-        }
-      }
-
-      function nextLB(){ lbIndex = (lbIndex + 1) % lbList.length; renderLB(); }
-      function prevLB(){ lbIndex = (lbIndex - 1 + lbList.length) % lbList.length; renderLB(); }
-
-      function openBySrc(src){
-        const i = lbList.findIndex(x => x.src === src);
-        openLB(i >= 0 ? i : 0);
-      }
-
-      // Click handlers for images
-      app.querySelectorAll("[data-lb-open]").forEach(btn => {
-        btn.addEventListener("click", () => openBySrc(btn.getAttribute("data-lb-open")));
-      });
-
-      // Buttons + backdrop
-      lbClose.addEventListener("click", closeLB);
-      lbBackdrop.addEventListener("click", closeLB);
-      lbNext.addEventListener("click", nextLB);
-      lbPrev.addEventListener("click", prevLB);
-
-      // Keyboard
-      document.addEventListener("keydown", (e) => {
-        if (!lb.classList.contains("open")) return;
-        if (e.key === "Escape") { e.preventDefault(); closeLB(); }
-        if (e.key === "ArrowRight") { e.preventDefault(); nextLB(); }
-        if (e.key === "ArrowLeft") { e.preventDefault(); prevLB(); }
-      });
-
-      // Swipe on mobile
-      let startX = null;
-      let moved = false;
-
-      lbStage.addEventListener("pointerdown", (e) => {
-        startX = e.clientX;
-        moved = false;
-        lbStage.setPointerCapture(e.pointerId);
-      });
-
-      lbStage.addEventListener("pointermove", (e) => {
-        if (startX === null) return;
-        if (Math.abs(e.clientX - startX) > 10) moved = true;
-      });
-
-      lbStage.addEventListener("pointerup", (e) => {
-        if (startX === null) return;
-        const dx = e.clientX - startX;
-        startX = null;
-
-        const threshold = 45;
-        if (moved && dx < -threshold) nextLB();
-        else if (moved && dx > threshold) prevLB();
-      });
     }
+
+    // ===== Lightbox (delegated, works no matter what) =====
+    const lb = document.getElementById("lb");
+    const lbImg = document.getElementById("lbImg");
+    const lbCaption = document.getElementById("lbCaption");
+    const lbCount = document.getElementById("lbCount");
+    const lbClose = document.getElementById("lbClose");
+    const lbPrev = document.getElementById("lbPrev");
+    const lbNext = document.getElementById("lbNext");
+    const lbBackdrop = document.getElementById("lbBackdrop");
+    const lbStage = document.getElementById("lbStage");
+
+    let list = [];
+    let current = 0;
+    let lastFocus = null;
+
+    function rebuildList(){
+      const imgs = Array.from(document.querySelectorAll("#app img.project"))
+        .filter(img => img.getAttribute("src"));
+
+      const seen = new Set();
+      const out = [];
+      for (const img of imgs){
+        const srcAbs = img.currentSrc || img.src;
+        if (!srcAbs || seen.has(srcAbs)) continue;
+        seen.add(srcAbs);
+        out.push({ src: srcAbs, alt: img.alt || "" });
+      }
+      list = out;
+    }
+
+    function render(){
+      if (!list.length) return;
+      const item = list[current];
+      lbImg.src = item.src;
+      lbImg.alt = item.alt || "Expanded image";
+      lbCaption.textContent = item.alt || "";
+      lbCount.textContent = `Image ${current + 1} of ${list.length}`;
+
+      const showNav = list.length > 1;
+      lbPrev.style.display = showNav ? "" : "none";
+      lbNext.style.display = showNav ? "" : "none";
+    }
+
+    function openAt(i){
+      rebuildList();
+      if (!list.length) return;
+
+      current = (i + list.length) % list.length;
+      lastFocus = document.activeElement;
+
+      render();
+      lb.classList.add("open");
+      lb.setAttribute("aria-hidden","false");
+      document.body.style.overflow = "hidden";
+      lbClose.focus({ preventScroll:true });
+    }
+
+    function close(){
+      lb.classList.remove("open");
+      lb.setAttribute("aria-hidden","true");
+      document.body.style.overflow = "";
+      if (lastFocus && typeof lastFocus.focus === "function"){
+        lastFocus.focus({ preventScroll:true });
+      }
+    }
+
+    function next(){ if (!list.length) return; current = (current + 1) % list.length; render(); }
+    function prev(){ if (!list.length) return; current = (current - 1 + list.length) % list.length; render(); }
+
+    // Delegated click: any image opens
+    document.addEventListener("click", (e) => {
+      const img = e.target && e.target.closest ? e.target.closest("#app img.project") : null;
+      if (!img) return;
+
+      rebuildList();
+      const srcAbs = img.currentSrc || img.src;
+      const i = list.findIndex(x => x.src === srcAbs);
+      openAt(i >= 0 ? i : 0);
+    });
+
+    lbClose.addEventListener("click", close);
+    lbBackdrop.addEventListener("click", close);
+    lbNext.addEventListener("click", next);
+    lbPrev.addEventListener("click", prev);
+
+    document.addEventListener("keydown", (e) => {
+      if (!lb.classList.contains("open")) return;
+      if (e.key === "Escape") { e.preventDefault(); close(); }
+      if (e.key === "ArrowRight") { e.preventDefault(); next(); }
+      if (e.key === "ArrowLeft") { e.preventDefault(); prev(); }
+    });
+
+    // Swipe (mobile)
+    let startX = null;
+    let moved = false;
+    lbStage.addEventListener("pointerdown", (e) => {
+      startX = e.clientX;
+      moved = false;
+      lbStage.setPointerCapture(e.pointerId);
+    });
+    lbStage.addEventListener("pointermove", (e) => {
+      if (startX === null) return;
+      if (Math.abs(e.clientX - startX) > 10) moved = true;
+    });
+    lbStage.addEventListener("pointerup", (e) => {
+      if (startX === null) return;
+      const dx = e.clientX - startX;
+      startX = null;
+      const t = 45;
+      if (moved && dx < -t) next();
+      else if (moved && dx > t) prev();
+    });
+
+    // If images are injected later for any reason, keep list fresh
+    const obs = new MutationObserver(() => rebuildList());
+    obs.observe(document.getElementById("app"), { childList:true, subtree:true });
+    rebuildList();
   </script>
 </body>
 </html>
