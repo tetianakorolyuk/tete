@@ -1,0 +1,161 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Project — tete</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+
+  <header class="header">
+    <div class="wrap">
+      <nav class="nav" aria-label="Primary">
+        <a class="brand" href="./">
+          <span class="logo">tete</span>
+          <span class="tag">interior design</span>
+        </a>
+
+        <div class="navRight">
+          <div class="navLinks">
+            <a href="./#projects">Projects</a>
+            <a href="./#journal">Journal</a>
+            <a href="./#contact">Contact</a>
+          </div>
+
+          <a class="iconLink" href="mailto:tetiana.korolyuk@gmail.com" aria-label="Email">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="1.6"/>
+              <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.6"/>
+            </svg>
+            Email
+          </a>
+
+          <button class="hamburger" type="button" data-nav-toggle aria-expanded="false" aria-label="Open menu">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 7h14M5 12h14M5 17h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/>
+            </svg>
+          </button>
+        </div>
+      </nav>
+
+      <div class="mobilePanel" data-nav>
+        <a href="./#projects">Projects</a>
+        <a href="./#journal">Journal</a>
+        <a href="./#contact">Contact</a>
+        <a href="mailto:tetiana.korolyuk@gmail.com">Email</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="content">
+    <section class="section">
+      <div class="wrap">
+        <p class="breadcrumbs">
+          <a href="./#projects">Selected Works</a>
+          <span aria-hidden="true">/</span>
+          <span id="crumbsTitle">Project</span>
+        </p>
+
+        <div class="pageHero">
+          <h1 id="projectTitle">Project</h1>
+          <p class="sub">
+            <span id="projectSubtitle"></span>
+            <span aria-hidden="true"> · </span>
+            <span id="projectLocation"></span>
+            <span aria-hidden="true"> · </span>
+            <span id="projectYear"></span>
+          </p>
+
+          <div class="heroImageWrap">
+            <img id="heroImg" class="heroImage" src="" alt="" tabindex="0" />
+          </div>
+
+          <div class="thumbGrid" id="thumbGrid" aria-label="Project gallery thumbnails"></div>
+
+          <div class="projectInfoGrid">
+            <p class="projectDesc" id="projectDescription"></p>
+            <div class="factsGrid" id="factsGrid" aria-label="Project facts"></div>
+          </div>
+
+          <div class="pager" aria-label="Project navigation">
+            <a id="prevProject" href="#">
+              <span class="ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M14.5 6.5 9 12l5.5 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/>
+                </svg>
+              </span>
+              Prev
+            </a>
+            <a id="nextProject" href="#">
+              Next
+              <span class="ico" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none">
+                  <path d="M9.5 6.5 15 12l-5.5 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/>
+                </svg>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="contact">
+      <div class="wrap">
+        <p class="subkicker"><span class="rule"></span>Contact</p>
+        <div class="sectionTitleLine">
+          <h2>Let’s talk.</h2>
+          <div class="meta">Toronto · available for collaborations</div>
+        </div>
+        <div style="margin-top:18px;">
+          <a class="iconLink" href="mailto:tetiana.korolyuk@gmail.com">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="1.6"/>
+              <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.6"/>
+            </svg>
+            tetiana.korolyuk@gmail.com
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footerRow">
+        <div>tete — interior design</div>
+        <div>
+          <a href="https://tekofm.substack.com/" target="_blank" rel="noopener">Substack</a>
+          &nbsp;·&nbsp;
+          <a href="./#projects">Selected Works</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
+    <div class="lightboxInner">
+      <div class="lbTop">
+        <div class="lbCaption" id="lbCaption">Image</div>
+        <div class="lbBtns">
+          <button class="lbBtn" id="lbPrev" type="button">Prev</button>
+          <button class="lbBtn" id="lbNext" type="button">Next</button>
+          <button class="lbBtn" id="lbClose" type="button">Close</button>
+        </div>
+      </div>
+      <img class="lbImg" id="lbImg" src="" alt="" />
+    </div>
+  </div>
+
+  <script src="projects.js"></script>
+  <script src="site.js"></script>
+  <script src="project.js"></script>
+</body>
+</html>
