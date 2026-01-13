@@ -6,6 +6,7 @@
   <title>tete — project</title>
   <meta name="description" content="tete — project details." />
 
+  <!-- build: 2026-01-13 / lightbox + hover -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -141,33 +142,6 @@
     }
     .subkicker .rule{ height:1px; width:56px; background: var(--accent); }
 
-    figure{
-      margin:0;
-      background: transparent;
-      border:1px solid var(--line);
-      padding:10px;
-    }
-
-    /* Clickable image button (for lightbox) */
-    .imgBtn{
-      display:block;
-      width:100%;
-      padding:0;
-      border:0;
-      background:transparent;
-      cursor: zoom-in;
-      border-radius:0;
-    }
-    .imgBtn:focus-visible{ box-shadow:0 0 0 2px var(--accent); }
-
-    img.project{
-      width:100%;
-      height:auto;
-      display:block;
-      border:1px solid var(--line);
-      background: var(--soft);
-    }
-
     main{
       padding-top: 92px;
       padding-bottom: 26px;
@@ -225,7 +199,59 @@
       flex-wrap:wrap;
     }
 
-    /* Hero image stays big — now clickable to expand */
+    /* Figures + images */
+    figure{
+      margin:0;
+      background: transparent;
+      border:1px solid var(--line);
+      padding:10px;
+      position: relative;
+      overflow: hidden; /* for hover micro-line */
+    }
+
+    /* clickable wrapper (for lightbox) */
+    .imgBtn{
+      display:block;
+      width:100%;
+      padding:0;
+      border:0;
+      background:transparent;
+      cursor: zoom-in;
+      border-radius:0;
+    }
+    .imgBtn:focus-visible{ box-shadow:0 0 0 2px var(--accent); }
+
+    img.project{
+      width:100%;
+      height:auto;
+      display:block;
+      border:1px solid var(--line);
+      background: var(--soft);
+      transition: transform .55s ease, filter .55s ease;
+      will-change: transform, filter;
+    }
+
+    /* ===== Premium hover (subtle, sharp) ===== */
+    figure::after{
+      content:"";
+      position:absolute;
+      left:10px;
+      right:10px;
+      bottom:10px;
+      height:2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin:left;
+      transition: transform .35s ease;
+      pointer-events:none;
+    }
+    figure:hover::after{ transform: scaleX(1); }
+    figure:hover img.project{
+      transform: scale(1.03);
+      filter: saturate(1.06) contrast(1.06);
+    }
+
+    /* hero figure */
     .heroFigure img{
       max-height: 72vh;
       object-fit: cover;
@@ -292,7 +318,6 @@
       .factsRow span{ text-align:left; }
     }
 
-    /* Gallery grid (your “small images”) — now each one expands on click */
     .galleryGrid{
       display:grid;
       grid-template-columns: repeat(3, 1fr);
@@ -356,12 +381,30 @@
       -webkit-backdrop-filter: blur(2px);
     }
     .lb.open{ display:block; }
+
+    .lbBackdrop{
+      position:absolute;
+      inset:0;
+      z-index:0;
+      border:0;
+      padding:0;
+      background: transparent;
+      cursor: zoom-out;
+    }
+
     .lbInner{
       position:absolute;
       inset: 0;
+      z-index:1;
       display:flex;
       flex-direction:column;
+      pointer-events:none; /* enable only inner controls */
     }
+
+    .lbTop,
+    .lbStage,
+    .lbBottom{ pointer-events:auto; }
+
     .lbTop{
       display:flex;
       align-items:center;
@@ -465,12 +508,14 @@
     }
 
     @media (max-width: 760px){
-      .lbNav{ display:none; } /* swipe/tap still works */
+      .lbNav{ display:none; } /* swipe still works */
       .lbImg{ max-height: 74vh; }
       .lbHelp{ display:none; }
     }
 
     @media (prefers-reduced-motion: reduce){
+      img.project{ transition:none; }
+      figure::after{ transition:none; }
       .lb{ backdrop-filter:none; -webkit-backdrop-filter:none; }
     }
   </style>
@@ -505,10 +550,12 @@
 
   <!-- Lightbox overlay -->
   <div class="lb" id="lb" aria-hidden="true">
+    <button class="lbBackdrop" id="lbBackdrop" type="button" aria-label="Close viewer"></button>
+
     <div class="lbInner" role="dialog" aria-modal="true" aria-label="Image viewer">
       <div class="lbTop">
-        <div class="lbMeta" id="lbMeta">
-          <span class="pin"></span>
+        <div class="lbMeta">
+          <span class="pin" aria-hidden="true"></span>
           <span id="lbCount">Image</span>
         </div>
         <button class="lbBtn" id="lbClose" type="button" aria-label="Close viewer">
@@ -570,16 +617,15 @@
       .replaceAll('"',"&quot;")
       .replaceAll("'","&#039;");
 
-    // Build unique list for lightbox (hero + gallery, dedup by src)
     function buildLightboxList(heroSrc, heroAlt, gallery){
       const seen = new Set();
       const out = [];
-      function add(src, alt){
+      const add = (src, alt) => {
         if (!src) return;
         if (seen.has(src)) return;
         seen.add(src);
         out.push({ src, alt: alt || "" });
-      }
+      };
       add(heroSrc, heroAlt);
       (gallery || []).forEach(g => add(g.src, g.alt || ""));
       return out.length ? out : [{ src: heroSrc, alt: heroAlt }];
@@ -608,7 +654,7 @@
         <div class="factsRow"><b>${escapeHtml(k)}</b><span>${escapeHtml(v)}</span></div>
       `).join("");
 
-      const galleryHtml = (project.gallery || []).map((g, i) => `
+      const galleryHtml = (project.gallery || []).map(g => `
         <figure>
           <button type="button" class="imgBtn" data-lb-open="${escapeHtml(g.src)}" aria-label="Expand image">
             <img class="project" src="${escapeHtml(g.src)}" alt="${escapeHtml(g.alt || project.title)}" loading="lazy">
@@ -674,15 +720,11 @@
       const lbClose = document.getElementById("lbClose");
       const lbPrev = document.getElementById("lbPrev");
       const lbNext = document.getElementById("lbNext");
+      const lbBackdrop = document.getElementById("lbBackdrop");
       const lbStage = document.getElementById("lbStage");
 
       let lbIndex = 0;
       let lastFocus = null;
-
-      function openBySrc(src){
-        const i = lbList.findIndex(x => x.src === src);
-        openLB(i >= 0 ? i : 0);
-      }
 
       function renderLB(){
         const item = lbList[lbIndex];
@@ -690,6 +732,10 @@
         lbImg.alt = item.alt || "Expanded image";
         lbCaption.textContent = item.alt || "";
         lbCount.textContent = `Image ${lbIndex + 1} of ${lbList.length}`;
+
+        const showNav = lbList.length > 1;
+        lbPrev.style.display = showNav ? "" : "none";
+        lbNext.style.display = showNav ? "" : "none";
       }
 
       function openLB(i){
@@ -701,7 +747,6 @@
         lb.setAttribute("aria-hidden", "false");
         document.body.style.overflow = "hidden";
 
-        // Focus close button for accessibility
         lbClose.focus({ preventScroll: true });
       }
 
@@ -718,20 +763,21 @@
       function nextLB(){ lbIndex = (lbIndex + 1) % lbList.length; renderLB(); }
       function prevLB(){ lbIndex = (lbIndex - 1 + lbList.length) % lbList.length; renderLB(); }
 
+      function openBySrc(src){
+        const i = lbList.findIndex(x => x.src === src);
+        openLB(i >= 0 ? i : 0);
+      }
+
       // Click handlers for images
       app.querySelectorAll("[data-lb-open]").forEach(btn => {
         btn.addEventListener("click", () => openBySrc(btn.getAttribute("data-lb-open")));
       });
 
-      // Buttons
+      // Buttons + backdrop
       lbClose.addEventListener("click", closeLB);
+      lbBackdrop.addEventListener("click", closeLB);
       lbNext.addEventListener("click", nextLB);
       lbPrev.addEventListener("click", prevLB);
-
-      // Click outside image closes (stage background)
-      lb.addEventListener("click", (e) => {
-        if (e.target === lb) closeLB();
-      });
 
       // Keyboard
       document.addEventListener("keydown", (e) => {
@@ -743,14 +789,27 @@
 
       // Swipe on mobile
       let startX = null;
-      lbStage.addEventListener("pointerdown", (e) => { startX = e.clientX; lbStage.setPointerCapture(e.pointerId); });
+      let moved = false;
+
+      lbStage.addEventListener("pointerdown", (e) => {
+        startX = e.clientX;
+        moved = false;
+        lbStage.setPointerCapture(e.pointerId);
+      });
+
+      lbStage.addEventListener("pointermove", (e) => {
+        if (startX === null) return;
+        if (Math.abs(e.clientX - startX) > 10) moved = true;
+      });
+
       lbStage.addEventListener("pointerup", (e) => {
         if (startX === null) return;
         const dx = e.clientX - startX;
         startX = null;
+
         const threshold = 45;
-        if (dx < -threshold) nextLB();
-        else if (dx > threshold) prevLB();
+        if (moved && dx < -threshold) nextLB();
+        else if (moved && dx > threshold) prevLB();
       });
     }
   </script>
