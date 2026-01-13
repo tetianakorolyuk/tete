@@ -2,1033 +2,458 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>tete — interior design</title>
-  <meta name="description" content="tete — interior design. Selected works." />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <style>
-    :root{
-      --bg:#fbfaf7;
-      --paper:#ffffff;
-      --text:#0b0c10;
-      --muted:#606574;
-      --line:rgba(18,20,28,.14);
-      --soft:rgba(18,20,28,.06);
-      --accent:#ff9500;
-
-      --max:1100px;
-      --pad:22px;
-
-      --serif:"Instrument Serif", ui-serif, Georgia, "Times New Roman", Times, serif;
-      --sans:"Inter", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      --mono:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-    }
-
-    *{ box-sizing:border-box; }
-    html,body{ height:100%; }
-    body{
-      margin:0;
-      background:var(--bg);
-      color:var(--text);
-      font-family:var(--sans);
-      font-size:18px;
-      line-height:1.75;
-      -webkit-font-smoothing: antialiased;
-      text-rendering: geometricPrecision;
-    }
-
-    a{ color:inherit; }
-    a:hover{ color:var(--accent); }
-    :focus-visible{ outline:none; box-shadow:0 0 0 2px var(--accent); }
-
-    .wrap{
-      max-width:var(--max);
-      margin:0 auto;
-      padding:0 var(--pad);
-    }
-
-    /* ===== Header ===== */
-    header{
-      position: fixed;
-      top:0; left:0; right:0;
-      z-index: 50;
-      background: linear-gradient(to bottom, rgba(0,0,0,.70) 0%, rgba(0,0,0,.20) 72%, rgba(0,0,0,0) 100%);
-      transition: background .18s ease, border-color .18s ease;
-    }
-    header.scrolled{
-      background: rgba(251,250,247,.92);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      border-bottom:1px solid var(--line);
-    }
-    .head{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      padding:14px 0;
-    }
-    .brand{
-      display:flex;
-      align-items:baseline;
-      gap:12px;
-      min-width:140px;
-      text-decoration:none;
-    }
-    .brand .name{
-      font-family:var(--serif);
-      font-size:28px;
-      letter-spacing:-0.03em;
-      text-transform: lowercase;
-      line-height:1;
-      color: rgba(255,255,255,.98);
-    }
-    .brand .name::after{
-      content:"";
-      display:inline-block;
-      width:9px; height:9px;
-      margin-left:8px;
-      background:var(--accent);
-      vertical-align:middle;
-    }
-    .brand .tag{
-      font-family:var(--mono);
-      font-size:12px;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      white-space:nowrap;
-      color: rgba(255,255,255,.82);
-    }
-
-    .toplinks{
-      display:flex;
-      gap:12px;
-      align-items:center;
-      flex-wrap:wrap;
-      justify-content:flex-end;
-    }
-    .btn{
-      display:inline-block;
-      border:1px solid rgba(255,255,255,.45);
-      background: rgba(0,0,0,.12);
-      padding:12px 14px;
-      text-decoration:none;
-      font-family:var(--mono);
-      font-size:12px;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      border-radius:0;
-      line-height:1;
-      color: rgba(255,255,255,.92);
-    }
-    header:not(.scrolled) .btn{
-      background: rgba(0,0,0,.16);
-      border-color: rgba(255,255,255,.52);
-    }
-    .btn:hover{ border-color: var(--accent); color: var(--accent); }
-
-    header.scrolled .brand .name,
-    header.scrolled .brand .tag{ color: var(--text); }
-    header.scrolled .btn{
-      border-color: rgba(18,20,28,.22);
-      background: transparent;
-      color: var(--text);
-    }
-
-    /* Hamburger + mobile menu */
-    .menuBtn{
-      display:none;
-      border:1px solid rgba(255,255,255,.52);
-      background: rgba(0,0,0,.12);
-      padding: 12px 12px;
-      border-radius:0;
-      line-height:1;
-      color: rgba(255,255,255,.92);
-      cursor:pointer;
-    }
-    .menuBtn:hover{ border-color: var(--accent); color: var(--accent); }
-    header.scrolled .menuBtn{
-      border-color: rgba(18,20,28,.22);
-      background: transparent;
-      color: var(--text);
-    }
-
-    .menuOverlay{
-      position: fixed;
-      inset: 0;
-      z-index: 45;
-      background: rgba(0,0,0,.28);
-      backdrop-filter: blur(2px);
-      -webkit-backdrop-filter: blur(2px);
-    }
-
-    .mobileMenu{
-      position: fixed;
-      left: 0;
-      right: 0;
-      top: 64px;
-      z-index: 46;
-      background: rgba(251,250,247,.96);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--line);
-    }
-    .mobileMenu .wrap{
-      padding-top: 10px;
-      padding-bottom: 12px;
-      display:flex;
-      flex-direction:column;
-      gap: 2px;
-    }
-    .mitem{
-      display:flex;
-      align-items:center;
-      gap: 12px;
-      padding: 14px 6px;
-      text-decoration:none;
-      color: var(--text);
-      border-top: 1px solid rgba(18,20,28,.08);
-      font-family: var(--mono);
-      font-size: 12px;
-      letter-spacing: .14em;
-      text-transform: uppercase;
-    }
-    .mitem:first-child{ border-top:none; }
-    .mitem:hover{ color: var(--accent); }
-    .mitem .ico{
-      width: 22px;
-      display:inline-flex;
-      justify-content:center;
-      opacity: .9;
-    }
-    body.menuOpen{ overflow:hidden; }
-
-    /* ===== Sections / Typography ===== */
-    .section{
-      padding: 26px 0;
-      border-top: 1px solid var(--line);
-      background: var(--bg);
-    }
-    .subkicker{
-      font-family:var(--mono);
-      font-size:12px;
-      letter-spacing:.16em;
-      text-transform:uppercase;
-      color: var(--muted);
-      display:flex;
-      align-items:center;
-      gap:12px;
-      margin: 0 0 12px;
-    }
-    .subkicker .rule{ height:1px; width:56px; background: var(--accent); }
-
-    .sectionTitle{
-      display:flex;
-      align-items:baseline;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
-      margin: 0 0 10px;
-    }
-    .sectionTitle h2{
-      margin:0;
-      font-family:var(--serif);
-      font-weight:400;
-      letter-spacing:-0.03em;
-      font-size: clamp(34px, 3.3vw, 46px);
-      line-height:1.05;
-    }
-    .sectionTitle .meta{
-      font-family:var(--mono);
-      font-size:12px;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color: var(--muted);
-      white-space:nowrap;
-    }
-
-    .grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-      align-items:start;
-    }
-    @media (max-width: 860px){ .grid{ grid-template-columns: 1fr; } }
-
-    figure{
-      margin:0;
-      background: transparent;
-      border:1px solid var(--line);
-      padding:10px;
-    }
-    img.project{
-      width:100%;
-      height:auto;
-      display:block;
-      border:1px solid var(--line);
-      background: var(--soft);
-    }
-
-    .contact{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-    }
-    @media (max-width: 860px){ .contact{ grid-template-columns: 1fr; } }
-
-    .card{
-      border:1px solid var(--line);
-      background: var(--paper);
-      padding:16px;
-    }
-    .card h3{
-      margin:0 0 10px;
-      font-family:var(--mono);
-      font-size:12px;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color: var(--muted);
-      position:relative;
-      padding-bottom:10px;
-    }
-    .card h3::after{
-      content:"";
-      position:absolute;
-      left:0; bottom:0;
-      width:56px; height:2px;
-      background: var(--accent);
-    }
-    .small{ color: var(--muted); font-size:16px; }
-
-    footer{
-      padding: 26px 0 52px;
-      border-top:1px solid var(--line);
-      text-align:center;
-      font-family:var(--mono);
-      font-size:12px;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color: var(--muted);
-      background: var(--bg);
-    }
-    footer b{ color: var(--accent); }
-
-    /* ===== Full-bleed Hero Carousel ===== */
-    .hero{
-      position: relative;
-      min-height: 92vh;
-      overflow:hidden;
-      background:#0d0f14;
-    }
-    .stage{
-      position:absolute; inset:0; z-index:0;
-      user-select:none; touch-action: pan-y;
-    }
-    .layer{
-      position:absolute; inset:0;
-      width:100%; height:100%;
-      object-fit:cover;
-      opacity:0;
-      transition: opacity .55s ease;
-      transform: scale(1.02);
-      filter: saturate(1.04) contrast(1.05);
-    }
-    .layer.isActive{ opacity:1; }
-
-    .hero::before{
-      content:"";
-      position:absolute; inset:0; z-index:1;
-      background: linear-gradient(to bottom,
-        rgba(0,0,0,.58) 0%,
-        rgba(0,0,0,.24) 26%,
-        rgba(0,0,0,.06) 52%,
-        rgba(0,0,0,0) 70%);
-      pointer-events:none;
-    }
-    .hero::after{
-      content:"";
-      position:absolute;
-      left:0; right:0; bottom:0;
-      height: 170px; z-index:1;
-      background: linear-gradient(to bottom,
-        rgba(251,250,247,0) 0%,
-        rgba(251,250,247,.95) 100%);
-      pointer-events:none;
-    }
-
-    .heroInner{
-      position:relative; z-index:2;
-      padding-top: 96px;
-      padding-bottom: 34px;
-      min-height: 92vh;
-      display:flex;
-      align-items:flex-end;
-    }
-    .heroInner::before{
-      content:"";
-      position:absolute; left:0; top:0; bottom:0;
-      width: min(720px, 85vw);
-      z-index:0;
-      background: linear-gradient(to right,
-        rgba(0,0,0,.26) 0%,
-        rgba(0,0,0,.14) 40%,
-        rgba(0,0,0,0) 100%);
-      pointer-events:none;
-    }
-    .heroInner > .wrap{ position: relative; z-index: 1; }
-
-    .kicker{
-      font-family:var(--mono);
-      font-size:12px;
-      letter-spacing:.16em;
-      text-transform:uppercase;
-      color: rgba(255,255,255,.84);
-      display:flex; align-items:center; gap:12px;
-      margin:0 0 12px;
-    }
-    .kicker .rule{ height:1px; width:56px; background: var(--accent); }
-
-    h1{
-      margin:0;
-      font-family:var(--serif);
-      font-weight:400;
-      letter-spacing:-0.05em;
-      font-size: clamp(58px, 7vw, 96px);
-      line-height:.92;
-      text-transform: lowercase;
-      color:#fff;
-    }
-    .lead{
-      margin:14px 0 0;
-      color: rgba(255,255,255,.84);
-      max-width: 74ch;
-    }
-    .heroBar{
-      margin-top:18px;
-      display:flex; align-items:center; justify-content:space-between;
-      gap:14px; flex-wrap:wrap;
-    }
-    .hint{
-      font-family:var(--mono);
-      font-size:12px;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color: rgba(255,255,255,.78);
-      display:flex; align-items:center; gap:10px;
-    }
-    .hint .dot{ width:8px; height:8px; background: var(--accent); display:inline-block; }
-    .caption{
-      margin:0;
-      font-family:var(--mono);
-      font-size:12px;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      color: rgba(255,255,255,.74);
-    }
-
-    .heroUI{ position:absolute; inset:0; z-index:3; pointer-events:none; }
-    .navBtn{
-      pointer-events:auto;
-      position:absolute; top:50%; transform: translateY(-50%);
-      border:1px solid rgba(255,255,255,.45);
-      background: rgba(0,0,0,.18);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      border-radius:0;
-      padding:14px 14px;
-      font-family:var(--mono);
-      font-size:12px;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      cursor:pointer;
-      line-height:1;
-      color: rgba(255,255,255,.92);
-    }
-    .navBtn:hover{ border-color: var(--accent); color: var(--accent); }
-    .navBtn.prev{ left:18px; }
-    .navBtn.next{ right:18px; }
-
-    .dots{
-      position:absolute;
-      left:50%;
-      bottom:18px;
-      transform: translateX(-50%);
-      display:flex; gap:10px; align-items:center; justify-content:center;
-      pointer-events:auto;
-    }
-    .dotBtn{
-      width:11px; height:11px;
-      border:1px solid rgba(255,255,255,.55);
-      background: transparent;
-      border-radius:0;
-      padding:0;
-      cursor:pointer;
-    }
-    .dotBtn[aria-current="true"]{ background: var(--accent); border-color: var(--accent); }
-
-    .progress{ position:absolute; left:0; right:0; bottom:0; height:2px; z-index:4; background: rgba(255,255,255,.16); pointer-events:none; }
-    .progressFill{ height:100%; width:0%; background: var(--accent); transform-origin:left; }
-    .progressFill.run{ animation: progress linear forwards; }
-    @keyframes progress{ from{ width:0%; } to{ width:100%; } }
-
-    @media (max-width: 760px){
-      .toplinks{ display:none; }
-      .menuBtn{ display:inline-flex; align-items:center; justify-content:center; }
-      .dots{ bottom:14px; }
-      .dotBtn{ width:10px; height:10px; }
-      .brand .tag{ display:none; }
-      .hero{ min-height: 86vh; }
-      .heroInner{ min-height: 86vh; }
-      .navBtn{ display:none; }
-    }
-
-    /* ===== Projects (simple + premium) ===== */
-    .projectList{ display:flex; flex-direction:column; gap: 26px; }
-    .projectCard{ border-top: 1px solid rgba(18,20,28,.10); padding-top: 18px; }
-    .projectCard:first-child{ border-top:none; padding-top:0; }
-
-    .projectMedia{ position: relative; }
-    .projectMedia img.project{ transition: filter .22s ease, transform .22s ease; will-change: filter, transform; }
-    .projectMedia:hover img.project,
-    .projectMedia:focus-within img.project{ filter: blur(2px) saturate(1.02) contrast(1.04); transform: scale(1.005); }
-
-    .projectOverlay{
-      position: absolute; left:10px; right:10px; top:10px; bottom:10px;
-      display:flex; align-items:flex-end;
-      pointer-events:none;
-      opacity:0; transform: translateY(6px);
-      transition: opacity .22s ease, transform .22s ease;
-    }
-    .projectMedia:hover .projectOverlay,
-    .projectMedia:focus-within .projectOverlay{ opacity:1; transform:none; }
-
-    .projectOverlayCard{
-      width:min(720px, 100%);
-      border:1px solid rgba(18,20,28,.18);
-      background: rgba(251,250,247,.92);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      padding: 14px 14px 12px;
-      pointer-events:auto;
-      box-shadow: 0 1px 0 rgba(18,20,28,.06);
-    }
-    .projectOverlayTop{ display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:8px; flex-wrap:wrap; row-gap:10px; }
-    .projectOverlayTitle{ margin:0; font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color: var(--text); display:flex; align-items:center; gap:10px; }
-    .projectOverlayTitle .pin{ width:7px; height:7px; background: var(--accent); display:inline-block; }
-    .projectOverlayText{ margin:0; color: var(--muted); font-size:16px; line-height:1.6; max-width: 70ch; }
-
-    .cta{
-      border:1px solid rgba(18,20,28,.18);
-      background: transparent;
-      color: var(--text);
-      border-radius:0;
-      cursor:pointer;
-      padding:10px 10px;
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      font-family:var(--mono);
-      font-size:12px;
-      letter-spacing:.14em;
-      text-transform:uppercase;
-      line-height:1;
-      text-decoration:none;
-    }
-    .cta:hover{ border-color: var(--accent); color: var(--accent); }
-    .cta svg{ display:block; }
-
-    /* Touch devices: overlay becomes BELOW images (never overlaps) */
-    @media (hover: none){
-      .projectOverlay{
-        position: static;
-        margin-top: 10px;
-        opacity:1; transform:none;
-        pointer-events:auto;
-        align-items: stretch;
-      }
-      .projectOverlayCard{ width:100%; background: rgba(251,250,247,.95); }
-      .projectMedia img.project{ filter:none; transform:none; }
-    }
-
-    /* Substack list */
-    .postList{ display:flex; flex-direction:column; gap:12px; margin-top:6px; }
-    .postItem{ padding:12px 0; border-top:1px solid var(--line); }
-    .postItem:first-child{ border-top:none; padding-top:0; }
-    .postMeta{ font-family:var(--mono); font-size:12px; letter-spacing:.14em; text-transform:uppercase; color: var(--muted); margin:0 0 8px; }
-    .postTitle{ margin:0; font-size:18px; line-height:1.35; letter-spacing:-0.01em; }
-    .postTitle a{ text-decoration:none; border-bottom:1px solid rgba(18,20,28,.22); padding-bottom:2px; }
-    .postTitle a:hover{ border-bottom-color: var(--accent); color: var(--accent); }
-
-    @media (prefers-reduced-motion: reduce){
-      .layer{ transition:none; }
-      .progressFill.run{ animation:none; }
-      html{ scroll-behavior:auto; }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css" />
 </head>
-
 <body>
-  <header id="siteHeader">
+  <a class="skip" href="#content">Skip to content</a>
+
+  <header class="header">
     <div class="wrap">
-      <div class="head">
-        <a class="brand" href="#top" aria-label="Go to top">
-          <span class="name">tete</span>
+      <nav class="nav" aria-label="Primary">
+        <a class="brand" href="./">
+          <span class="logo">tete</span>
           <span class="tag">interior design</span>
         </a>
 
-        <div class="toplinks">
-          <a class="btn" href="#projects">Projects</a>
-          <a class="btn" href="#journal">Journal</a>
-          <a class="btn" href="#contact">Contact</a>
-          <a class="btn" id="emailBtn" href="#">Email</a>
-        </div>
+        <div class="navRight">
+          <div class="navLinks">
+            <a href="#projects">Projects</a>
+            <a href="#journal">Journal</a>
+            <a href="#contact">Contact</a>
+          </div>
 
-        <button class="menuBtn" id="menuBtn" type="button" aria-label="Open menu" aria-controls="mobileMenu" aria-expanded="false">
-          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
-            <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-          </svg>
-        </button>
+          <a class="iconLink" href="mailto:tetiana.korolyuk@gmail.com" aria-label="Email">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="1.6"/>
+              <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.6"/>
+            </svg>
+            Email
+          </a>
+
+          <button class="hamburger" type="button" data-nav-toggle aria-expanded="false" aria-label="Open menu">
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M5 7h14M5 12h14M5 17h14" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/>
+            </svg>
+          </button>
+        </div>
+      </nav>
+
+      <div class="mobilePanel" data-nav>
+        <a href="#projects">Projects</a>
+        <a href="#journal">Journal</a>
+        <a href="#contact">Contact</a>
+        <a href="mailto:tetiana.korolyuk@gmail.com">Email</a>
       </div>
     </div>
   </header>
 
-  <div class="menuOverlay" id="menuOverlay" hidden></div>
-
-  <nav class="mobileMenu" id="mobileMenu" aria-label="Menu" hidden>
-    <div class="wrap">
-      <a class="mitem" href="#projects">
-        <span class="ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="18" height="18">
-            <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-          </svg>
-        </span>
-        <span>Projects</span>
-      </a>
-
-      <a class="mitem" href="#journal">
-        <span class="ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="18" height="18">
-            <path d="M8 20h8M7 17l10-10 2 2-10 10H7v-2z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-        <span>Journal</span>
-      </a>
-
-      <a class="mitem" href="#contact">
-        <span class="ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="18" height="18">
-            <path d="M20 21v-1a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v1" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-            <path d="M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
-          </svg>
-        </span>
-        <span>Contact</span>
-      </a>
-
-      <a class="mitem" id="emailBtnMobile" href="#">
-        <span class="ico" aria-hidden="true">
-          <svg viewBox="0 0 24 24" width="18" height="18">
-            <path d="M4 7h16v10H4z" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/>
-            <path d="M4 8l8 6 8-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-          </svg>
-        </span>
-        <span>Email</span>
-      </a>
-    </div>
-  </nav>
-
-  <section class="hero" id="top" aria-label="Featured images">
-    <div class="stage" id="stage" tabindex="0" aria-label="Carousel. Use left and right arrows to change image.">
-      <img id="imgA" class="layer isActive" src="images/project-01-a.jpg" alt="Interior design image 1">
-      <img id="imgB" class="layer" src="images/project-01-b.jpg" alt="Interior design image 2">
-    </div>
-
-    <div class="heroUI">
-      <button class="navBtn prev" id="prevBtn" type="button" aria-label="Previous image">← Prev</button>
-      <button class="navBtn next" id="nextBtn" type="button" aria-label="Next image">Next →</button>
-      <div class="dots" id="dots" aria-label="Carousel pagination"></div>
-      <div class="progress" aria-hidden="true"><div class="progressFill" id="progressFill"></div></div>
+  <!-- Full-bleed hero carousel (no container) -->
+  <section class="hero" aria-label="Featured images">
+    <div class="stage" aria-hidden="true">
+      <img id="imgA" class="layer isActive" src="images/project-01-a.jpg" alt="" />
+      <img id="imgB" class="layer" src="images/project-01-b.jpg" alt="" />
     </div>
 
     <div class="heroInner">
       <div class="wrap">
-        <p class="kicker"><span class="rule"></span><span>Selected works</span></p>
+        <p class="kicker"><span class="rule"></span>Selected works</p>
         <h1>tete</h1>
-        <p class="lead">Minimal interior design. Selected projects below.</p>
+        <p class="lead">Minimal interior design. Projects below.</p>
 
         <div class="heroBar">
-          <div class="hint"><span class="dot"></span><span>Scroll</span></div>
-          <p class="caption" id="caption">Image 1</p>
+          <div class="hint"><span class="dot" aria-hidden="true"></span>Scroll</div>
+          <p class="caption" id="heroCaption">Image 1 of 6</p>
+          <div class="progress" aria-hidden="true"><div class="progressFill" id="progressFill"></div></div>
         </div>
       </div>
     </div>
+
+    <div class="heroUI">
+      <button class="navBtn" id="prevSlide" type="button">Prev</button>
+      <div class="dots" id="dots" aria-label="Carousel navigation"></div>
+      <button class="navBtn" id="nextSlide" type="button">Next</button>
+    </div>
   </section>
 
-  <main>
-    <section id="projects" class="section" aria-label="Projects">
+  <main id="content">
+    <section class="section" id="projects">
       <div class="wrap">
-        <p class="subkicker"><span class="rule"></span><span>Projects</span></p>
-        <div id="projectList" class="projectList"></div>
+        <p class="subkicker"><span class="rule"></span>Projects</p>
+        <div class="sectionTitleLine">
+          <h2>Selected Works</h2>
+          <div class="meta">Click a project to expand or open</div>
+        </div>
+
+        <div id="projectsMount"></div>
       </div>
     </section>
 
-    <section id="journal" class="section" aria-label="Journal">
+    <section class="section" id="journal">
       <div class="wrap">
-        <p class="subkicker"><span class="rule"></span><span>Journal</span></p>
-
-        <div class="contact">
-          <div class="card">
-            <h3>Substack</h3>
-            <div class="small" style="margin-bottom:12px;">
-              Recent posts from Tetiana’s Substack — updated automatically.
-            </div>
-
-            <div class="small">
-              <a class="btn" style="display:inline-block; margin-right:10px;" href="https://tekofm.substack.com/" target="_blank" rel="noreferrer">Open</a>
-              <a class="btn" style="display:inline-block;" href="https://substack.com/@tekorolyuk" target="_blank" rel="noreferrer">Profile</a>
-            </div>
-
-            <div class="small" style="margin-top:14px; color:var(--muted);">
-              If posts don’t load on first try, the links above always work.
-            </div>
+        <p class="subkicker"><span class="rule"></span>Journal</p>
+        <div class="sectionTitleLine">
+          <h2>Latest writing</h2>
+          <div class="meta">
+            <a href="https://tekofm.substack.com/" target="_blank" rel="noopener">tekofm.substack.com</a>
           </div>
+        </div>
 
-          <div class="card">
-            <h3>Latest posts</h3>
-
-            <div id="postsLoading" class="small" style="color:var(--muted);">
-              Loading…
-            </div>
-
-            <div id="postsError" class="small" style="display:none; color:var(--muted);">
-              Couldn’t load posts right now. Please use the Substack links.
-            </div>
-
-            <div id="posts" style="display:none;"></div>
-          </div>
+        <div style="margin-top:18px;" id="postsMount" class="posts">
+          <div class="postsEmpty">Loading posts…</div>
         </div>
       </div>
     </section>
 
-    <section id="contact" class="section" aria-label="Contact">
+    <section class="section" id="contact">
       <div class="wrap">
-        <p class="subkicker"><span class="rule"></span><span>Contact</span></p>
-
-        <div class="contact">
-          <div class="card">
-            <h3>Email</h3>
-            <div class="small"><a id="emailLink" href="#">tetiana.korolyuk@gmail.com</a></div>
-          </div>
-          <div class="card">
-            <h3>Location</h3>
-            <div class="small">Toronto / Remote</div>
-          </div>
+        <p class="subkicker"><span class="rule"></span>Contact</p>
+        <div class="sectionTitleLine">
+          <h2>Let’s talk.</h2>
+          <div class="meta">Toronto · available for collaborations</div>
+        </div>
+        <div style="margin-top:18px;">
+          <a class="iconLink" href="mailto:tetiana.korolyuk@gmail.com">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+              <path d="M4 6h16v12H4V6Z" stroke="currentColor" stroke-width="1.6"/>
+              <path d="m4 7 8 6 8-6" stroke="currentColor" stroke-width="1.6"/>
+            </svg>
+            tetiana.korolyuk@gmail.com
+          </a>
         </div>
       </div>
     </section>
-
-    <footer>
-      © <span id="year"></span> <b>tete</b>
-    </footer>
   </main>
 
+  <footer class="footer">
+    <div class="wrap">
+      <div class="footerRow">
+        <div>tete — interior design</div>
+        <div>
+          <a href="https://substack.com/@tekorolyuk" target="_blank" rel="noopener">Substack profile</a>
+          &nbsp;·&nbsp;
+          <a href="#projects">Selected Works</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Lightbox (shared) -->
+  <div class="lightbox" id="lightbox" aria-hidden="true" role="dialog" aria-label="Image viewer">
+    <div class="lightboxInner">
+      <div class="lbTop">
+        <div class="lbCaption" id="lbCaption">Image</div>
+        <div class="lbBtns">
+          <button class="lbBtn" id="lbPrev" type="button">Prev</button>
+          <button class="lbBtn" id="lbNext" type="button">Next</button>
+          <button class="lbBtn" id="lbClose" type="button">Close</button>
+        </div>
+      </div>
+      <img class="lbImg" id="lbImg" src="" alt="" />
+    </div>
+  </div>
+
   <script src="projects.js"></script>
+  <script src="site.js"></script>
   <script>
-    // ===== Email =====
-    const EMAIL = "tetiana.korolyuk@gmail.com";
-    const mailto = `mailto:${encodeURIComponent(EMAIL)}?subject=${encodeURIComponent("Project Inquiry — tete")}`;
-    document.getElementById("emailBtn").href = mailto;
-    const emailLink = document.getElementById("emailLink");
-    emailLink.href = mailto;
-    emailLink.textContent = EMAIL;
-    document.getElementById("year").textContent = new Date().getFullYear();
+    (function () {
+      const PROJECTS = Array.isArray(window.PROJECTS) ? window.PROJECTS : [];
 
-    // Header style on scroll
-    const header = document.getElementById("siteHeader");
-    function updateHeader(){ header.classList.toggle("scrolled", window.scrollY > 10); }
-    window.addEventListener("scroll", updateHeader, { passive: true });
-    updateHeader();
+      // --- HERO CAROUSEL ---
+      const imgA = document.getElementById("imgA");
+      const imgB = document.getElementById("imgB");
+      const caption = document.getElementById("heroCaption");
+      const prevBtn = document.getElementById("prevSlide");
+      const nextBtn = document.getElementById("nextSlide");
+      const dotsEl = document.getElementById("dots");
+      const progressFill = document.getElementById("progressFill");
 
-    // ===== Mobile hamburger menu =====
-    const menuBtn = document.getElementById("menuBtn");
-    const mobileMenu = document.getElementById("mobileMenu");
-    const menuOverlay = document.getElementById("menuOverlay");
-    const emailBtnMobile = document.getElementById("emailBtnMobile");
-    if (emailBtnMobile) emailBtnMobile.href = mailto;
+      const slides = PROJECTS.flatMap(p => (p.images || []).map((src, i) => ({
+        src,
+        text: `${p.title} — ${p.subtitle || ""}`.replace(" — ", p.subtitle ? " — " : ""),
+        alt: `${p.title} photo ${i + 1}`
+      })));
 
-    function openMenu(){
-      document.body.classList.add("menuOpen");
-      menuBtn?.setAttribute("aria-expanded", "true");
-      menuBtn?.setAttribute("aria-label", "Close menu");
-      mobileMenu.hidden = false;
-      menuOverlay.hidden = false;
-      const first = mobileMenu.querySelector("a");
-      first && first.focus({ preventScroll: true });
-    }
-    function closeMenu(){
-      document.body.classList.remove("menuOpen");
-      menuBtn?.setAttribute("aria-expanded", "false");
-      menuBtn?.setAttribute("aria-label", "Open menu");
-      mobileMenu.hidden = true;
-      menuOverlay.hidden = true;
-    }
-    function toggleMenu(){
-      const open = document.body.classList.contains("menuOpen");
-      open ? closeMenu() : openMenu();
-    }
+      let idx = 0;
+      let showingA = true;
+      const intervalMs = 5200;
+      let t0 = performance.now();
+      let timer = null;
 
-    menuBtn?.addEventListener("click", toggleMenu);
-    menuOverlay?.addEventListener("click", closeMenu);
-    mobileMenu?.addEventListener("click", (e) => {
-      const a = e.target.closest("a");
-      if (a) closeMenu();
-    });
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape" && document.body.classList.contains("menuOpen")) closeMenu();
-    });
-    window.addEventListener("resize", () => {
-      if (window.innerWidth > 760 && document.body.classList.contains("menuOpen")) closeMenu();
-    });
+      function setActive(i) {
+        if (!slides.length) return;
+        idx = (i + slides.length) % slides.length;
+        const s = slides[idx];
 
-    // ===== Render Projects from projects.js =====
-    const list = document.getElementById("projectList");
+        const active = showingA ? imgA : imgB;
+        const idle = showingA ? imgB : imgA;
 
-    function projectCard(p){
-      const href = `project.html?p=${encodeURIComponent(p.slug)}`;
-      const imgA = p.gallery?.[0]?.src || p.hero?.src || "";
-      const imgB = p.gallery?.[1]?.src || p.gallery?.[0]?.src || p.hero?.src || "";
+        idle.src = s.src;
+        idle.alt = s.alt || "";
+        idle.classList.add("isActive");
+        active.classList.remove("isActive");
+        showingA = !showingA;
 
-      return `
-        <div class="projectCard" id="p-${p.slug}">
-          <div class="sectionTitle">
-            <h2>${p.shortTitle || ("Project " + p.number)}</h2>
-            <div class="meta">${p.title}</div>
-          </div>
+        if (caption) caption.textContent = `Image ${idx + 1} of ${slides.length}`;
+        [...dotsEl.children].forEach((b, k) => b.classList.toggle("isActive", k === idx));
+        t0 = performance.now();
+      }
 
-          <div class="projectMedia">
-            <div class="grid">
-              <figure><img class="project" src="${imgA}" alt="${(p.gallery?.[0]?.alt || p.title)}"></figure>
-              <figure><img class="project" src="${imgB}" alt="${(p.gallery?.[1]?.alt || p.title)}"></figure>
-            </div>
+      function buildDots() {
+        if (!dotsEl) return;
+        dotsEl.innerHTML = slides.map((_, i) => `<button class="dotBtn ${i===0?"isActive":""}" type="button" aria-label="Go to image ${i+1}"></button>`).join("");
+        [...dotsEl.children].forEach((b, i) => b.addEventListener("click", () => {
+          setActive(i);
+          restart();
+        }));
+      }
 
-            <div class="projectOverlay">
-              <div class="projectOverlayCard">
-                <div class="projectOverlayTop">
-                  <p class="projectOverlayTitle"><span class="pin"></span><span>${p.shortTitle || ("Project " + p.number)}</span></p>
-                  <a class="cta" href="${href}">
-                    <span>View</span>
-                    <svg viewBox="0 0 24 24" width="16" height="16" aria-hidden="true">
-                      <path d="M9 18l6-6-6-6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                    </svg>
-                  </a>
+      function tick(now) {
+        const elapsed = now - t0;
+        const pct = Math.min(1, elapsed / intervalMs);
+        if (progressFill) progressFill.style.width = (pct * 100) + "%";
+        if (pct >= 1) {
+          setActive(idx + 1);
+        }
+        requestAnimationFrame(tick);
+      }
+
+      function restart() {
+        clearInterval(timer);
+        timer = setInterval(() => setActive(idx + 1), intervalMs);
+      }
+
+      if (slides.length) {
+        imgA.src = slides[0].src;
+        imgA.alt = slides[0].alt || "";
+        imgB.src = slides[1] ? slides[1].src : slides[0].src;
+        imgB.alt = slides[1] ? (slides[1].alt || "") : (slides[0].alt || "");
+        buildDots();
+        restart();
+        requestAnimationFrame(tick);
+      }
+
+      prevBtn?.addEventListener("click", () => { setActive(idx - 1); restart(); });
+      nextBtn?.addEventListener("click", () => { setActive(idx + 1); restart(); });
+
+      // --- PROJECTS RENDER ---
+      const mount = document.getElementById("projectsMount");
+      if (mount) {
+        mount.innerHTML = PROJECTS.map((p, i) => {
+          const img1 = (p.images && p.images[0]) ? p.images[0] : "";
+          const img2 = (p.images && p.images[1]) ? p.images[1] : img1;
+
+          const facts = Array.isArray(p.facts) ? p.facts : [];
+          const factsHtml = facts.map(([k,v]) => `
+            <div class="factRow"><b>${escapeHtml(k)}</b><span>${escapeHtml(v)}</span></div>
+          `).join("");
+
+          const expandId = `expand-${p.slug}`;
+
+          return `
+            <article class="projectBlock" data-slug="${escapeHtml(p.slug)}">
+              <div class="sectionTitleLine">
+                <h2>${escapeHtml(p.title)}</h2>
+                <div class="meta">${escapeHtml(p.subtitle || "")}</div>
+              </div>
+
+              <div class="projectMedia" tabindex="-1">
+                <div class="grid2">
+                  <img class="projectImg" data-lightbox="${i}" data-i="0" src="${escapeHtml(img1)}" alt="${escapeHtml(p.title)} image 1">
+                  <img class="projectImg" data-lightbox="${i}" data-i="1" src="${escapeHtml(img2)}" alt="${escapeHtml(p.title)} image 2">
                 </div>
-                <p class="projectOverlayText">${p.blurb || ""}</p>
-                <div class="small" style="margin-top:10px; font-size:14px;">
-                  <span style="font-family:var(--mono); letter-spacing:.14em; text-transform:uppercase;">${p.year || ""}</span>
-                  <span style="opacity:.5;"> — </span>
-                  <span>${p.location || ""}</span>
+
+                <div class="projectOverlay">
+                  <div class="projectOverlayCard">
+                    <div>
+                      <p class="projectOverlayTitle"><span class="pin" aria-hidden="true"></span>${escapeHtml(p.title)} — ${escapeHtml(p.subtitle || "")}</p>
+                      <p class="projectOverlayText">${escapeHtml(p.description || "")}</p>
+                    </div>
+                    <div class="overlayActions">
+                      <button class="overlayBtn" type="button" data-toggle="${escapeHtml(p.slug)}" aria-expanded="false" aria-controls="${expandId}">
+                        More
+                        <span class="ico" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" fill="none"><path d="M9 6.5 15 12l-6 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg>
+                        </span>
+                      </button>
+                      <a class="overlayLink" href="project.html?p=${encodeURIComponent(p.slug)}">
+                        Open
+                        <span class="ico" aria-hidden="true">
+                          <svg viewBox="0 0 24 24" fill="none"><path d="M9 6.5 15 12l-6 5.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="square"/></svg>
+                        </span>
+                      </a>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      `;
-    }
 
-    list.innerHTML = (window.PROJECTS || []).map(projectCard).join("");
+              <div class="projectExpand" id="${expandId}">
+                <div class="projectExpandInner">
+                  <p class="projectDesc">${escapeHtml(p.description || "")}</p>
+                  <div class="facts">${factsHtml || "<div class='factRow'><b>Info</b><span>—</span></div>"}</div>
+                </div>
+              </div>
+            </article>
+          `;
+        }).join("");
+      }
 
-    // ===== Hero carousel uses first 6 images from projects data =====
-    const slides = (window.PROJECTS || [])
-      .flatMap(p => (p.gallery || []).slice(0,2))
-      .slice(0, 6)
-      .map((g, idx) => ({ src: g.src, alt: g.alt || ("Interior design image " + (idx+1)) }));
+      // --- More toggles (no overlap, aligned) ---
+      document.addEventListener("click", (e) => {
+        const btn = e.target.closest("[data-toggle]");
+        if (!btn) return;
 
-    if (slides.length < 2){
-      slides.push({ src: "images/project-01-a.jpg", alt: "Interior design image 1" });
-      slides.push({ src: "images/project-01-b.jpg", alt: "Interior design image 2" });
-    }
+        const slug = btn.getAttribute("data-toggle");
+        const block = btn.closest(".projectBlock");
+        const panel = document.getElementById(`expand-${slug}`);
+        if (!block || !panel) return;
 
-    const imgElA = document.getElementById("imgA");
-    const imgElB = document.getElementById("imgB");
-    const caption = document.getElementById("caption");
-    const dotsEl = document.getElementById("dots");
-    const stage = document.getElementById("stage");
-    const prevBtn = document.getElementById("prevBtn");
-    const nextBtn = document.getElementById("nextBtn");
-    const progressFill = document.getElementById("progressFill");
+        const open = !block.classList.contains("isOpen");
 
-    const DURATION_MS = 5200;
-    let index = 0;
-    let showingA = true;
-    let timer = null;
-    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+        // close others
+        document.querySelectorAll(".projectBlock.isOpen").forEach(b => {
+          if (b !== block) {
+            b.classList.remove("isOpen");
+            const bbtn = b.querySelector("[data-toggle]");
+            if (bbtn) bbtn.setAttribute("aria-expanded", "false");
+          }
+        });
 
-    function buildDots(){
-      dotsEl.innerHTML = "";
-      slides.forEach((_, i) => {
-        const b = document.createElement("button");
-        b.className = "dotBtn";
-        b.type = "button";
-        b.setAttribute("aria-label", `Go to image ${i + 1}`);
-        b.setAttribute("aria-current", i === 0 ? "true" : "false");
-        b.addEventListener("click", () => setSlide(i, true));
-        dotsEl.appendChild(b);
+        block.classList.toggle("isOpen", open);
+        btn.setAttribute("aria-expanded", open ? "true" : "false");
+
+        if (open) {
+          const y = block.getBoundingClientRect().top + window.scrollY - 92;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
       });
-    }
-    function setDots(){
-      [...dotsEl.children].forEach((d, di) => d.setAttribute("aria-current", di === index ? "true" : "false"));
-    }
-    function runProgress(){
-      progressFill.classList.remove("run");
-      void progressFill.offsetWidth;
-      progressFill.style.animationDuration = DURATION_MS + "ms";
-      progressFill.classList.add("run");
-    }
-    function crossfadeTo(src, alt){
-      const pre = new Image();
-      pre.onload = () => {
-        const incoming = showingA ? imgElB : imgElA;
-        const outgoing = showingA ? imgElA : imgElB;
-        incoming.src = src;
-        incoming.alt = alt;
-        incoming.classList.add("isActive");
-        outgoing.classList.remove("isActive");
-        showingA = !showingA;
-      };
-      pre.src = src;
-    }
-    function setSlide(i, fromUser=false){
-      index = (i + slides.length) % slides.length;
-      const s = slides[index];
-      crossfadeTo(s.src, s.alt);
-      caption.textContent = `Image ${index + 1} of ${slides.length}`;
-      setDots();
-      if (!prefersReducedMotion) runProgress();
-      if (fromUser) restart();
-    }
-    function next(fromUser=false){ setSlide(index + 1, fromUser); }
-    function prev(fromUser=false){ setSlide(index - 1, fromUser); }
 
-    prevBtn.addEventListener("click", () => prev(true));
-    nextBtn.addEventListener("click", () => next(true));
-    stage.addEventListener("keydown", (e) => {
-      if (e.key === "ArrowLeft") { e.preventDefault(); prev(true); }
-      if (e.key === "ArrowRight") { e.preventDefault(); next(true); }
-    });
+      // --- Lightbox (click any project image) ---
+      const lb = document.getElementById("lightbox");
+      const lbImg = document.getElementById("lbImg");
+      const lbCaption = document.getElementById("lbCaption");
+      const lbPrev = document.getElementById("lbPrev");
+      const lbNext = document.getElementById("lbNext");
+      const lbClose = document.getElementById("lbClose");
 
-    let startX = null;
-    stage.addEventListener("pointerdown", (e) => { startX = e.clientX; stage.setPointerCapture(e.pointerId); });
-    stage.addEventListener("pointerup", (e) => {
-      if (startX === null) return;
-      const dx = e.clientX - startX;
-      startX = null;
-      const threshold = 40;
-      if (dx > threshold) prev(true);
-      else if (dx < -threshold) next(true);
-    });
+      let activeProjectIndex = 0;
+      let activeImageIndex = 0;
 
-    function start(){
-      if (prefersReducedMotion) return;
-      if (timer) return;
-      runProgress();
-      timer = setInterval(() => next(false), DURATION_MS);
-    }
-    function stop(){
-      if (!timer) return;
-      clearInterval(timer);
-      timer = null;
-      progressFill.classList.remove("run");
-    }
-    function restart(){ stop(); start(); }
+      function imagesForProject(pi) {
+        return (PROJECTS[pi] && Array.isArray(PROJECTS[pi].images)) ? PROJECTS[pi].images : [];
+      }
 
-    stage.addEventListener("mouseenter", stop);
-    stage.addEventListener("mouseleave", start);
-    stage.addEventListener("focusin", stop);
-    stage.addEventListener("focusout", start);
+      function openLightbox(pi, ii) {
+        const imgs = imagesForProject(pi);
+        if (!imgs.length) return;
 
-    buildDots();
-    imgElA.src = slides[0].src; imgElA.alt = slides[0].alt;
-    imgElB.src = slides[1].src; imgElB.alt = slides[1].alt;
-    index = 0;
-    caption.textContent = `Image 1 of ${slides.length}`;
-    setDots();
-    start();
+        activeProjectIndex = pi;
+        activeImageIndex = Math.max(0, Math.min(imgs.length - 1, ii));
 
-    // ===== Substack (latest posts) =====
-    const SUBSTACK_FEED = "https://tekofm.substack.com/feed";
-    const CORS_RELAY = "https://api.allorigins.win/raw?url=";
-    const POSTS_MAX = 3;
-    const CACHE_KEY = "tete_substack_cache_v2";
-    const CACHE_TTL_MS = 6 * 60 * 60 * 1000;
+        lbImg.src = imgs[activeImageIndex];
+        lbImg.alt = `${PROJECTS[pi].title} — image ${activeImageIndex + 1}`;
+        lbCaption.textContent = `${PROJECTS[pi].title} — ${activeImageIndex + 1} / ${imgs.length}`;
 
-    const elPosts = document.getElementById("posts");
-    const elLoading = document.getElementById("postsLoading");
-    const elError = document.getElementById("postsError");
+        lb.classList.add("isOpen");
+        lb.setAttribute("aria-hidden", "false");
+        document.documentElement.classList.add("noScroll");
+      }
 
-    function formatDate(d){
-      try{ return new Date(d).toLocaleDateString(undefined, { year:"numeric", month:"short", day:"numeric" }); }
-      catch(_){ return ""; }
-    }
-    function escapeHtml(str){
-      return (str || "")
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
-    }
-    function parseRss(xmlText){
-      const doc = new DOMParser().parseFromString(xmlText, "text/xml");
-      return Array.from(doc.querySelectorAll("item")).map(item => ({
-        title: item.querySelector("title")?.textContent || "",
-        link: item.querySelector("link")?.textContent || "",
-        pubDate: item.querySelector("pubDate")?.textContent || ""
-      }));
-    }
-    function renderPosts(items){
-      const take = items.slice(0, POSTS_MAX);
-      const list = document.createElement("div");
-      list.className = "postList";
-      list.innerHTML = take.map(it => `
-        <div class="postItem">
-          <p class="postMeta">${escapeHtml(formatDate(it.pubDate))}</p>
-          <h4 class="postTitle"><a href="${escapeHtml(it.link)}" target="_blank" rel="noreferrer">${escapeHtml(it.title)}</a></h4>
-        </div>
-      `).join("");
-      elPosts.innerHTML = "";
-      elPosts.appendChild(list);
-      elLoading.style.display = "none";
-      elError.style.display = "none";
-      elPosts.style.display = "block";
-    }
-    async function loadPosts(){
-      try{
-        const cachedRaw = localStorage.getItem(CACHE_KEY);
-        if (cachedRaw){
-          const cached = JSON.parse(cachedRaw);
-          if (cached?.ts && Array.isArray(cached?.items) && (Date.now() - cached.ts) < CACHE_TTL_MS){
-            renderPosts(cached.items);
+      function closeLightbox() {
+        lb.classList.remove("isOpen");
+        lb.setAttribute("aria-hidden", "true");
+        document.documentElement.classList.remove("noScroll");
+      }
+
+      function step(dir) {
+        const imgs = imagesForProject(activeProjectIndex);
+        if (!imgs.length) return;
+        const next = (activeImageIndex + dir + imgs.length) % imgs.length;
+        openLightbox(activeProjectIndex, next);
+      }
+
+      document.addEventListener("click", (e) => {
+        const img = e.target.closest("[data-lightbox]");
+        if (!img) return;
+        const pi = Number(img.getAttribute("data-lightbox") || "0");
+        const ii = Number(img.getAttribute("data-i") || "0");
+        openLightbox(pi, ii);
+      });
+
+      lbClose?.addEventListener("click", closeLightbox);
+      lb?.addEventListener("click", (e) => { if (e.target === lb) closeLightbox(); });
+      lbPrev?.addEventListener("click", () => step(-1));
+      lbNext?.addEventListener("click", () => step(1));
+
+      window.addEventListener("keydown", (e) => {
+        if (!lb.classList.contains("isOpen")) return;
+        if (e.key === "Escape") closeLightbox();
+        if (e.key === "ArrowLeft") step(-1);
+        if (e.key === "ArrowRight") step(1);
+      });
+
+      function escapeHtml(str) {
+        return (str || "")
+          .replaceAll("&", "&amp;")
+          .replaceAll("<", "&lt;")
+          .replaceAll(">", "&gt;")
+          .replaceAll('"', "&quot;")
+          .replaceAll("'", "&#039;");
+      }
+
+      // --- Substack (RSS via CORS-friendly proxy) ---
+      async function loadSubstack() {
+        const mount = document.getElementById("postsMount");
+        if (!mount) return;
+
+        const feedUrl = "https://tekofm.substack.com/feed";
+        // Jina proxy returns text with CORS enabled. If it ever fails, the section gracefully degrades.
+        const proxy = "https://r.jina.ai/http(s)://";
+        const url = proxy + feedUrl.replace(/^https?:\/\//, "");
+
+        try {
+          const res = await fetch(url);
+          const xmlText = await res.text();
+
+          // extract the raw feed XML from the proxy response
+          const xmlStart = xmlText.indexOf("<?xml");
+          const xml = xmlStart >= 0 ? xmlText.slice(xmlStart) : xmlText;
+
+          const doc = new DOMParser().parseFromString(xml, "text/xml");
+          const items = [...doc.querySelectorAll("item")].slice(0, 6);
+
+          if (!items.length) {
+            mount.innerHTML = `<div class="postsEmpty">No posts found yet.</div>`;
             return;
           }
+
+          mount.innerHTML = items.map(it => {
+            const title = it.querySelector("title")?.textContent?.trim() || "Post";
+            const link = it.querySelector("link")?.textContent?.trim() || "https://tekofm.substack.com/";
+            const pubDate = it.querySelector("pubDate")?.textContent?.trim() || "";
+            const d = pubDate ? new Date(pubDate) : null;
+            const dateStr = d && !isNaN(d) ? d.toLocaleDateString(undefined, { year:"numeric", month:"short", day:"2-digit" }) : "";
+
+            return `
+              <article class="postItem">
+                <p class="postMeta">${escapeHtml(dateStr || "Substack")}</p>
+                <h3 class="postTitle"><a href="${escapeHtml(link)}" target="_blank" rel="noopener">${escapeHtml(title)}</a></h3>
+              </article>
+            `;
+          }).join("");
+        } catch (err) {
+          mount.innerHTML = `<div class="postsEmpty">Couldn’t load posts right now. <a href="https://tekofm.substack.com/" target="_blank" rel="noopener">Open Substack</a>.</div>`;
         }
-        const url = CORS_RELAY + encodeURIComponent(SUBSTACK_FEED);
-        const res = await fetch(url, { cache: "no-store" });
-        if (!res.ok) throw new Error("fetch failed");
-        const xmlText = await res.text();
-        const items = parseRss(xmlText);
-        if (!items.length) throw new Error("no items");
-        localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), items }));
-        renderPosts(items);
-      }catch(e){
-        elLoading.style.display = "none";
-        elPosts.style.display = "none";
-        elError.style.display = "block";
       }
-    }
-    loadPosts();
+
+      loadSubstack();
+    })();
   </script>
 </body>
 </html>

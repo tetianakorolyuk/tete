@@ -1,49 +1,65 @@
 // projects.js
-(() => {
-  const LIST = [
-    {
-      slug: "project-01",
-      title: "Noir Marble Bar",
-      subtitle: "Selected Works",
-      year: "2024",
-      location: "Toronto, ON",
-      scope: ["Interior Design", "Concept", "Visualization"],
-      description:
-        "A dramatic, high-contrast space where stone and shadow do the talking. Warm linear lighting reveals texture and depth while keeping the overall feel quiet and premium.",
-      images: [
-        { src: "./images/project-01-a.jpg", alt: "Dark marble bar with backlit shelving" },
-        { src: "./images/project-01-b.jpg", alt: "Concrete and wood open-plan living space" }
-      ]
-    },
-    {
-      slug: "project-02",
-      title: "Arches Suite",
-      subtitle: "Selected Works",
-      year: "2024",
-      location: "Private Residence",
-      scope: ["Interior Design", "Styling", "Visualization"],
-      description:
-        "Soft light, natural textures, and calm geometry. Minimal palette, timeless feel.",
-      images: [
-        { src: "./images/project-02-a.jpg", alt: "Minimal suite with arched portals and warm light" },
-        { src: "./images/project-02-b.jpg", alt: "Minimal kitchen with warm wood and stone island" }
-      ]
-    },
-    {
-      slug: "project-03",
-      title: "Lakeside Living",
-      subtitle: "Selected Works",
-      year: "2023",
-      location: "Private Residence",
-      scope: ["Interior Design", "FF&E", "Visualization"],
-      description:
-        "Designed around the view. Calm layers of neutrals keep the landscape the hero.",
-      images: [
-        { src: "./images/project-03-a.jpg", alt: "Modern living space with soft modular sofa" },
-        { src: "./images/project-03-b.jpg", alt: "Living room with fireplace and mountain view" }
-      ]
-    }
-  ];
+// Edit this file to add more projects. The site updates automatically.
 
-  window.PROJECTS = LIST;
-})();
+window.PROJECTS = [
+  {
+    slug: "project-01",
+    title: "Project 01",
+    subtitle: "Living / Kitchen",
+    year: "2025",
+    location: "Toronto",
+    description: "A calm, light-filled living space with warm wood and tactile neutrals. The layout stays open for flow, with clean lines and soft volumes.",
+    images: [
+      "images/project-01-a.jpg",
+      "images/project-01-b.jpg"
+    ],
+    facts: [
+      ["Focus", "Layout + light"],
+      ["Palette", "Natural oak, stone, soft linen"],
+      ["Details", "Integrated storage, minimal hardware"],
+      ["Mood", "Quiet, modern, warm"]
+    ]
+  },
+  {
+    slug: "project-02",
+    title: "Project 02",
+    subtitle: "Residential",
+    year: "2025",
+    location: "Toronto",
+    description: "A residential concept built around simplicity and proportion. Materials stay honest and restrained, letting texture do the work.",
+    images: [
+      "images/project-02-a.jpg",
+      "images/project-02-b.jpg"
+    ],
+    facts: [
+      ["Focus", "Comfort + proportion"],
+      ["Palette", "Soft whites, warm timber, matte finishes"],
+      ["Details", "Custom millwork, seamless transitions"],
+      ["Mood", "Minimal, elevated, serene"]
+    ]
+  },
+  {
+    slug: "project-03",
+    title: "Project 03",
+    subtitle: "Kitchen / Bar",
+    year: "2025",
+    location: "Toronto",
+    description: "A kitchen and bar environment with a stronger, evening tone. Dark surfaces, warm highlights, and a confident material contrast.",
+    images: [
+      "images/project-03-a.jpg",
+      "images/project-03-b.jpg"
+    ],
+    facts: [
+      ["Focus", "Material contrast"],
+      ["Palette", "Deep stone, warm bronze, soft light"],
+      ["Details", "Linear lighting, hidden storage"],
+      ["Mood", "Bold, refined, night-ready"]
+    ]
+  }
+];
+
+// Convenience index (slug -> project), used by project.js
+window.PROJECTS_BY_SLUG = window.PROJECTS.reduce((acc, p) => {
+  acc[p.slug] = p;
+  return acc;
+}, {});

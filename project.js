@@ -1,240 +1,183 @@
-/* tete/project.js */
-(() => {
-  "use strict";
-
-  const $ = (s) => document.querySelector(s);
-  const $$ = (s) => Array.from(document.querySelectorAll(s));
+// project.js
+(function () {
+  const $ = (sel, root = document) => root.querySelector(sel);
 
   function getParam(name) {
     const url = new URL(window.location.href);
     return url.searchParams.get(name) || "";
   }
 
-  function normalizeKey(v) {
-    return String(v || "")
-      .trim()
-      .toLowerCase()
-      .replace(/\s+/g, "-")
-      .replace(/_/g, "-");
+  function setText(el, txt) {
+    if (!el) return;
+    el.textContent = txt || "";
   }
 
-  function pickProjectKey() {
-    const raw = getParam("p");
-    const key = normalizeKey(raw);
-    const projects = window.PROJECTS || {};
-    if (projects[key]) return key;
-
-    // If someone passes "project01" or "01" etc
-    const alt1 = key.replace(/project(\d+)/, "project-$1");
-    if (projects[alt1]) return alt1;
-
-    const alt2 = key.replace(/project-?0?(\d+)/, (_, n) => `project-${String(n).padStart(2, "0")}`);
-    if (projects[alt2]) return alt2;
-
-    // fallback: first project
-    return Object.keys(projects)[0] || "";
+  function escapeHtml(str) {
+    return (str || "")
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
   }
 
-  function setText(sel, text) {
-    const el = $(sel);
-    if (el) el.textContent = text;
+  const projects = Array.isArray(window.PROJECTS) ? window.PROJECTS : [];
+  const bySlug = window.PROJECTS_BY_SLUG || {};
+
+  const slug = getParam("p") || projects[0]?.slug || "";
+  const project = bySlug[slug] || projects.find(p => p.slug === slug);
+
+  const els = {
+    title: $("#projectTitle"),
+    subtitle: $("#projectSubtitle"),
+    year: $("#projectYear"),
+    location: $("#projectLocation"),
+    desc: $("#projectDescription"),
+    hero: $("#heroImg"),
+    thumbGrid: $("#thumbGrid"),
+    crumbsTitle: $("#crumbsTitle"),
+    prev: $("#prevProject"),
+    next: $("#nextProject"),
+    lightbox: $("#lightbox"),
+    lbImg: $("#lbImg"),
+    lbCaption: $("#lbCaption"),
+    lbPrev: $("#lbPrev"),
+    lbNext: $("#lbNext"),
+    lbClose: $("#lbClose"),
+    facts: $("#factsGrid"),
+  };
+
+  function renderNotFound() {
+    document.title = "Project — tete";
+    setText(els.title, "Project not found");
+    setText(els.subtitle, "");
+    setText(els.desc, "This link is missing or the project slug is wrong.");
+    if (els.thumbGrid) els.thumbGrid.innerHTML = "";
   }
 
-  function buildThumbs(images) {
-    const wrap = $("#thumbGrid");
-    wrap.innerHTML = "";
-
-    images.forEach((img, idx) => {
-      const b = document.createElement("button");
-      b.className = "thumb";
-      b.type = "button";
-      b.setAttribute("data-idx", String(idx));
-      b.setAttribute("aria-label", `Open image ${idx + 1} of ${images.length}`);
-
-      const im = document.createElement("img");
-      im.src = img.src;
-      im.alt = img.alt || "";
-      im.loading = "lazy";
-      im.decoding = "async";
-
-      const icon = document.createElement("span");
-      icon.className = "zoomMark";
-      icon.innerHTML = `
-        <svg viewBox="0 0 24 24" aria-hidden="true">
-          <path d="M10.5 3a7.5 7.5 0 105.07 13.02l3.7 3.7a1 1 0 001.41-1.42l-3.7-3.7A7.5 7.5 0 0010.5 3zm0 2a5.5 5.5 0 110 11 5.5 5.5 0 010-11z"/>
-          <path d="M10.5 7a1 1 0 011 1v1.5H13a1 1 0 110 2h-1.5V13a1 1 0 11-2 0v-1.5H8a1 1 0 110-2h1.5V8a1 1 0 011-1z"/>
-        </svg>
-      `;
-
-      b.appendChild(im);
-      b.appendChild(icon);
-      wrap.appendChild(b);
-    });
+  if (!project) {
+    renderNotFound();
+    return;
   }
 
-  // ----- Lightbox -----
-  let LB = null;
-  let LB_INDEX = 0;
-  let LB_IMAGES = [];
+  document.title = `${project.title} — tete`;
 
-  function ensureLightbox() {
-    if (LB) return;
+  setText(els.title, project.title);
+  setText(els.subtitle, project.subtitle || "");
+  setText(els.year, project.year || "");
+  setText(els.location, project.location || "");
+  setText(els.desc, project.description || "");
+  setText(els.crumbsTitle, project.title);
 
-    LB = document.createElement("div");
-    LB.id = "lightbox";
-    LB.className = "lb";
-    LB.innerHTML = `
-      <div class="lbScrim" data-close="1"></div>
+  const images = Array.isArray(project.images) ? project.images : [];
+  const heroSrc = images[0] || "";
 
-      <div class="lbFrame" role="dialog" aria-modal="true" aria-label="Image viewer">
-        <button class="lbClose" type="button" aria-label="Close (Esc)" data-close="1">
-          <span aria-hidden="true">✕</span>
-        </button>
+  if (els.hero) {
+    els.hero.src = heroSrc;
+    els.hero.alt = `${project.title} — hero image`;
+  }
 
-        <button class="lbNav lbPrev" type="button" aria-label="Previous (←)">
-          <span aria-hidden="true">←</span>
-        </button>
-
-        <figure class="lbFigure">
-          <img class="lbImg" alt="" />
-          <figcaption class="lbCap">
-            <span class="lbCount"></span>
-            <span class="lbAlt"></span>
-          </figcaption>
-        </figure>
-
-        <button class="lbNav lbNext" type="button" aria-label="Next (→)">
-          <span aria-hidden="true">→</span>
-        </button>
+  // Facts
+  if (els.facts) {
+    const facts = Array.isArray(project.facts) ? project.facts : [];
+    els.facts.innerHTML = facts.map(([k, v]) => `
+      <div class="fact">
+        <div class="factKey">${escapeHtml(k)}</div>
+        <div class="factVal">${escapeHtml(v)}</div>
       </div>
-    `;
-
-    document.body.appendChild(LB);
-
-    LB.addEventListener("click", (e) => {
-      const t = e.target;
-      if (t && t.closest && t.closest("[data-close='1']")) closeLightbox();
-    });
-
-    $(".lbPrev").addEventListener("click", () => showLightbox(LB_INDEX - 1));
-    $(".lbNext").addEventListener("click", () => showLightbox(LB_INDEX + 1));
-
-    document.addEventListener("keydown", (e) => {
-      if (!document.body.classList.contains("lbOpen")) return;
-      if (e.key === "Escape") closeLightbox();
-      if (e.key === "ArrowLeft") showLightbox(LB_INDEX - 1);
-      if (e.key === "ArrowRight") showLightbox(LB_INDEX + 1);
-    });
+    `).join("");
   }
 
-  function openLightbox(images, startIndex) {
-    ensureLightbox();
-    LB_IMAGES = images || [];
-    showLightbox(startIndex || 0);
-    document.body.classList.add("lbOpen");
+  // Thumbs
+  if (els.thumbGrid) {
+    els.thumbGrid.innerHTML = images.map((src, i) => `
+      <button class="thumb" type="button" data-i="${i}" aria-label="Open image ${i + 1}">
+        <img src="${escapeHtml(src)}" alt="${escapeHtml(project.title)} photo ${i + 1}">
+      </button>
+    `).join("");
+  }
+
+  // Prev / next projects
+  const idx = projects.findIndex(p => p.slug === project.slug);
+  const prevP = projects[(idx - 1 + projects.length) % projects.length];
+  const nextP = projects[(idx + 1) % projects.length];
+
+  if (els.prev) {
+    els.prev.href = `project.html?p=${encodeURIComponent(prevP.slug)}`;
+    els.prev.setAttribute("aria-label", `Previous project: ${prevP.title}`);
+  }
+  if (els.next) {
+    els.next.href = `project.html?p=${encodeURIComponent(nextP.slug)}`;
+    els.next.setAttribute("aria-label", `Next project: ${nextP.title}`);
+  }
+
+  // Lightbox
+  let activeIndex = 0;
+
+  function openLightbox(i) {
+    activeIndex = Math.max(0, Math.min(images.length - 1, i));
+    if (!els.lightbox || !els.lbImg) return;
+
+    els.lbImg.src = images[activeIndex];
+    els.lbImg.alt = `${project.title} — image ${activeIndex + 1}`;
+    if (els.lbCaption) {
+      els.lbCaption.textContent = `${project.title} — ${activeIndex + 1} / ${images.length}`;
+    }
+    els.lightbox.classList.add("isOpen");
+    els.lightbox.setAttribute("aria-hidden", "false");
+    document.documentElement.classList.add("noScroll");
   }
 
   function closeLightbox() {
-    document.body.classList.remove("lbOpen");
+    if (!els.lightbox) return;
+    els.lightbox.classList.remove("isOpen");
+    els.lightbox.setAttribute("aria-hidden", "true");
+    document.documentElement.classList.remove("noScroll");
   }
 
-  function showLightbox(i) {
-    if (!LB_IMAGES.length) return;
-    const max = LB_IMAGES.length;
-    LB_INDEX = (i + max) % max;
-
-    const item = LB_IMAGES[LB_INDEX];
-    const imgEl = $(".lbImg");
-    imgEl.src = item.src;
-    imgEl.alt = item.alt || "";
-
-    $(".lbCount").textContent = `Image ${LB_INDEX + 1} of ${max}`;
-    $(".lbAlt").textContent = item.alt ? ` — ${item.alt}` : "";
+  function step(dir) {
+    if (!images.length) return;
+    const next = (activeIndex + dir + images.length) % images.length;
+    openLightbox(next);
   }
 
-  function bindGallery(images) {
-    // Click hero
-    $("#heroBtn").addEventListener("click", () => openLightbox(images, 0));
-    $("#heroImg").addEventListener("click", () => openLightbox(images, 0));
+  // Click hero -> open
+  if (els.hero) {
+    els.hero.addEventListener("click", () => openLightbox(activeIndex));
+    els.hero.addEventListener("keydown", (e) => {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openLightbox(activeIndex);
+      }
+    });
+  }
 
-    // Click thumbs
-    $("#thumbGrid").addEventListener("click", (e) => {
+  // Click thumbs -> swap hero + open
+  if (els.thumbGrid) {
+    els.thumbGrid.addEventListener("click", (e) => {
       const btn = e.target.closest(".thumb");
       if (!btn) return;
-      const idx = Number(btn.getAttribute("data-idx") || "0");
-      openLightbox(images, idx);
+      const i = Number(btn.dataset.i || "0");
+      if (els.hero) {
+        activeIndex = i;
+        els.hero.src = images[i];
+      }
+      openLightbox(i);
     });
   }
 
-  function render() {
-    const projects = window.PROJECTS || {};
-    const key = pickProjectKey();
-    const p = projects[key];
+  // Lightbox controls
+  els.lbClose?.addEventListener("click", closeLightbox);
+  els.lightbox?.addEventListener("click", (e) => {
+    if (e.target === els.lightbox) closeLightbox();
+  });
+  els.lbPrev?.addEventListener("click", () => step(-1));
+  els.lbNext?.addEventListener("click", () => step(1));
 
-    if (!p) {
-      // fail-safe: show something readable
-      document.body.innerHTML = "<div style='padding:24px;font-family:system-ui'>Project not found.</div>";
-      return;
-    }
-
-    // Header
-    setText("#pageTitle", p.title);
-    setText("#projTitle", p.title);
-    setText("#projSubtitle", p.subtitle || "Selected Works");
-    setText("#projDesc", p.description || "");
-
-    setText("#metaYear", p.year || "");
-    setText("#metaLoc", p.location || "");
-    setText("#metaScope", (p.scope || []).join(" · "));
-
-    // Hero image = first image
-    const hero = p.images && p.images[0] ? p.images[0] : null;
-    if (hero) {
-      const hi = $("#heroImg");
-      hi.src = hero.src;
-      hi.alt = hero.alt || p.title || "Project image";
-    }
-
-    // Thumbnails = all images
-    const images = (p.images || []).filter(Boolean);
-    buildThumbs(images);
-    bindGallery(images);
-
-    // Highlight current project link if you have multiple
-    $$(".projLink").forEach((a) => {
-      if (a.getAttribute("href")?.includes(`p=${key}`)) a.classList.add("active");
-    });
-  }
-
-  // Hamburger
-  function bindMenu() {
-    const btn = $("#menuBtn");
-    const panel = $("#mobileNav");
-    if (!btn || !panel) return;
-
-    const close = () => {
-      panel.classList.remove("open");
-      btn.setAttribute("aria-expanded", "false");
-    };
-
-    btn.addEventListener("click", () => {
-      const open = !panel.classList.contains("open");
-      panel.classList.toggle("open", open);
-      btn.setAttribute("aria-expanded", String(open));
-    });
-
-    panel.addEventListener("click", (e) => {
-      const a = e.target.closest("a");
-      if (a) close();
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") close();
-    });
-  }
-
-  document.addEventListener("DOMContentLoaded", () => {
-    bindMenu();
-    render();
+  window.addEventListener("keydown", (e) => {
+    if (!els.lightbox?.classList.contains("isOpen")) return;
+    if (e.key === "Escape") closeLightbox();
+    if (e.key === "ArrowLeft") step(-1);
+    if (e.key === "ArrowRight") step(1);
   });
 })();
