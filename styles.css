@@ -37,8 +37,9 @@ a:hover{color:var(--ink)}
 .header{
   position:fixed; top:0; left:0; right:0;
   z-index:50;
-  background:linear-gradient(to bottom, rgba(251,250,247,.92), rgba(251,250,247,.72), rgba(251,250,247,0));
+  background: rgba(251,250,247,.72);
   backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0,0,0,.06);
 }
 .nav{
   display:flex; align-items:center; justify-content:space-between;
@@ -305,8 +306,7 @@ img{max-width:100%; display:block}
 }
 .projectOverlay{
   position:absolute; left:12px; right:12px; bottom:12px;
-  opacity:0;
-  transition:opacity 240ms ease;
+  opacity:1;
   pointer-events:none;
 }
 .projectMedia:hover .projectOverlay,
@@ -319,8 +319,17 @@ img{max-width:100%; display:block}
   display:flex; align-items:flex-start; justify-content:space-between;
   gap:12px;
   padding:14px 14px 12px;
-  background:rgba(251,250,247,.92);
+  background:rgba(251,250,247,.78);
   border:1px solid var(--line);
+  backdrop-filter: blur(0px);
+  transition: background 240ms ease, border-color 240ms ease, backdrop-filter 240ms ease;
+}
+.projectMedia:hover .projectOverlayCard,
+.projectMedia:focus-within .projectOverlayCard,
+.projectBlock.isOpen .projectOverlayCard{
+  background:rgba(251,250,247,.66);
+  backdrop-filter: blur(12px);
+  border-color: rgba(255,149,0,.30);
 }
 .projectOverlayTitle{
   margin:0;
