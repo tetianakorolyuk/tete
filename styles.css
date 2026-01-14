@@ -49,8 +49,9 @@ a:hover{color:var(--ink)}
   display:flex; align-items:baseline; gap:10px;
 }
 .brand .logo{
-  font-family:"Instrument Serif", serif;
+  font-family:"Roboto Slab", serif;
   font-size:44px;
+  font-weight:300;
   letter-spacing:.2px;
   line-height:1;
 }
@@ -172,8 +173,9 @@ main{padding-top:92px}
 }
 .heroInner .wrap{width:100%}
 .hero h1{
-  font-family:"Instrument Serif", serif;
-  font-size:92px;
+  font-family:"Roboto Slab", serif;
+  font-weight:300;
+  font-size:88px;
   margin:12px 0 10px;
   color:#fff;
   line-height:.9;
@@ -250,8 +252,9 @@ main{padding-top:92px}
 .subkicker .rule{background:var(--accent)}
 h2{
   margin:0;
+  font-family:"Roboto Slab", serif;
+  font-weight:300;
   font-size:34px;
-  font-weight:500;
   letter-spacing:.02em;
 }
 .meta{
@@ -260,6 +263,27 @@ h2{
   letter-spacing:.14em;
   text-transform:uppercase;
 }
+.metaRow{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  justify-content:flex-end;
+  flex-wrap:wrap;
+}
+.postsRefresh{
+  border:0;
+  background:transparent;
+  padding:0;
+  cursor:pointer;
+  font:inherit;
+  color:var(--muted);
+  font-size:12px;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  border-bottom:1px solid rgba(21,19,17,.22);
+}
+.postsRefresh:hover{ color:var(--ink); border-color:var(--accent); }
+.postsRefresh:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
 .grid2{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -386,8 +410,9 @@ img{max-width:100%; display:block}
   padding:34px 0 18px;
 }
 .pageHero h1{
-  font-family:"Instrument Serif", serif;
+  font-family:"Roboto Slab", serif;
   font-size:66px;
+  font-weight:300;
   margin:0;
   line-height:.95;
 }
@@ -492,7 +517,7 @@ img{max-width:100%; display:block}
 }
 .postTitle a{opacity:.92}
 .postTitle a:hover{opacity:1; color:var(--ink)}
-.postsEmpty{color:var(--muted); font-size:14px}
+.postsEmpty{color:var(--muted); font-size:14px; grid-column:1 / -1}
 
 /* FOOTER */
 .footer{

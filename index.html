@@ -7,7 +7,7 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@200;300;400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -88,7 +88,7 @@
         <p class="subkicker"><span class="rule"></span>Projects</p>
         <div class="sectionTitleLine">
           <h2>Selected Works</h2>
-          <div class="meta">Click a project to expand or open</div>
+          <div class="meta metaRow">Click a project to expand or open</div>
         </div>
 
         <div id="projectsMount"></div>
@@ -100,9 +100,9 @@
         <p class="subkicker"><span class="rule"></span>Journal</p>
         <div class="sectionTitleLine">
           <h2>Latest writing</h2>
-          <div class="meta">
+          <div class="meta metaRow">
             <a href="https://tekofm.substack.com/" target="_blank" rel="noopener">tekofm.substack.com</a>
-          </div>
+          <button class="postsRefresh" id="postsRefresh" type="button" aria-label="Refresh posts">Refresh</button></div>
         </div>
 
         <div style="margin-top:18px;" id="postsMount" class="posts">
@@ -407,52 +407,119 @@
           .replaceAll("'", "&#039;");
       }
 
-      // --- Substack (RSS via CORS-friendly proxy) ---
-      async function loadSubstack() {
-        const mount = document.getElementById("postsMount");
-        if (!mount) return;
+      
+// --- Substack (latest posts) ---
+// Uses AllOrigins (CORS relay) + a short local cache so GitHub Pages always feels snappy,
+// and a cache-buster so you reliably get the newest posts.
+async function loadSubstack(force = false) {
+  const mount = document.getElementById("postsMount");
+  if (!mount) return;
 
-        const feedUrl = "https://tekofm.substack.com/feed";
-        // Jina proxy returns text with CORS enabled. If it ever fails, the section gracefully degrades.
-        const proxy = "https://r.jina.ai/http(s)://";
-        const url = proxy + feedUrl.replace(/^https?:\/\//, "");
+  const refreshBtn = document.getElementById("postsRefresh");
 
-        try {
-          const res = await fetch(url);
-          const xmlText = await res.text();
+  const FEED = "https://tekofm.substack.com/feed";
+  const RELAY = "https://api.allorigins.win/raw?url=";
+  const POSTS_MAX = 6;
 
-          // extract the raw feed XML from the proxy response
-          const xmlStart = xmlText.indexOf("<?xml");
-          const xml = xmlStart >= 0 ? xmlText.slice(xmlStart) : xmlText;
+  const CACHE_KEY = "tete_substack_cache_v4";
+  const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes
 
-          const doc = new DOMParser().parseFromString(xml, "text/xml");
-          const items = [...doc.querySelectorAll("item")].slice(0, 6);
+  const escapeHtml = (str) => (str || "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 
-          if (!items.length) {
-            mount.innerHTML = `<div class="postsEmpty">No posts found yet.</div>`;
-            return;
+  const formatDate = (pub) => {
+    try {
+      const d = new Date(pub);
+      if (Number.isNaN(d.getTime())) return pub || "";
+      return d.toLocaleDateString(undefined, { year: "numeric", month: "short", day: "2-digit" });
+    } catch {
+      return pub || "";
+    }
+  };
+
+  const render = (items, note) => {
+    const take = (items || []).slice(0, POSTS_MAX);
+    if (!take.length) {
+      mount.innerHTML = `<div class="postsEmpty">No posts found. <a href="https://tekofm.substack.com/" target="_blank" rel="noopener">Open Substack</a>.</div>`;
+      return;
+    }
+
+    mount.innerHTML = take.map((it) => {
+      const title = it.title || "Untitled";
+      const link = it.link || "https://tekofm.substack.com/";
+      const pub = it.pubDate || "";
+      return `
+        <article class="postItem">
+          <p class="postMeta">${escapeHtml(formatDate(pub))}${note ? ` · ${escapeHtml(note)}` : ""}</p>
+          <h3 class="postTitle"><a href="${escapeHtml(link)}" target="_blank" rel="noopener">${escapeHtml(title)}</a></h3>
+        </article>
+      `;
+    }).join("");
+  };
+
+  const setLoading = (msg = "Loading posts…") => {
+    mount.innerHTML = `<div class="postsEmpty">${escapeHtml(msg)}</div>`;
+  };
+
+  // Hook up refresh button once
+  if (refreshBtn && !refreshBtn.dataset.bound) {
+    refreshBtn.dataset.bound = "1";
+    refreshBtn.addEventListener("click", () => {
+      try { localStorage.removeItem(CACHE_KEY); } catch {}
+      loadSubstack(true);
+    });
+  }
+
+  try {
+    // Try cache first (unless forced)
+    if (!force) {
+      try {
+        const raw = localStorage.getItem(CACHE_KEY);
+        if (raw) {
+          const cached = JSON.parse(raw);
+          if (cached?.ts && Array.isArray(cached?.items) && (Date.now() - cached.ts) < CACHE_TTL_MS) {
+            render(cached.items, "cached");
+            // Continue in background to refresh quietly
+            // (doesn't block rendering)
           }
-
-          mount.innerHTML = items.map(it => {
-            const title = it.querySelector("title")?.textContent?.trim() || "Post";
-            const link = it.querySelector("link")?.textContent?.trim() || "https://tekofm.substack.com/";
-            const pubDate = it.querySelector("pubDate")?.textContent?.trim() || "";
-            const d = pubDate ? new Date(pubDate) : null;
-            const dateStr = d && !isNaN(d) ? d.toLocaleDateString(undefined, { year:"numeric", month:"short", day:"2-digit" }) : "";
-
-            return `
-              <article class="postItem">
-                <p class="postMeta">${escapeHtml(dateStr || "Substack")}</p>
-                <h3 class="postTitle"><a href="${escapeHtml(link)}" target="_blank" rel="noopener">${escapeHtml(title)}</a></h3>
-              </article>
-            `;
-          }).join("");
-        } catch (err) {
-          mount.innerHTML = `<div class="postsEmpty">Couldn’t load posts right now. <a href="https://tekofm.substack.com/" target="_blank" rel="noopener">Open Substack</a>.</div>`;
         }
-      }
+      } catch {}
+    }
 
-      loadSubstack();
+    setLoading("Loading latest posts…");
+
+    // Cache-buster to avoid stale RSS on GH Pages / proxies
+    const bust = Date.now();
+    const url = RELAY + encodeURIComponent(`${FEED}?_=${bust}`);
+
+    const res = await fetch(url, { cache: "no-store" });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const xmlText = await res.text();
+
+    const doc = new DOMParser().parseFromString(xmlText, "text/xml");
+    const items = [...doc.querySelectorAll("item")].map((item) => ({
+      title: item.querySelector("title")?.textContent || "",
+      link: item.querySelector("link")?.textContent || "",
+      pubDate: item.querySelector("pubDate")?.textContent || ""
+    }));
+
+    if (!items.length) throw new Error("No RSS items");
+
+    try {
+      localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), items }));
+    } catch {}
+
+    render(items, "updated");
+  } catch (err) {
+    mount.innerHTML = `<div class="postsEmpty">Couldn’t load posts right now. <a href="https://tekofm.substack.com/" target="_blank" rel="noopener">Open Substack</a>.</div>`;
+  }
+}
+
+loadSubstack();
     })();
   </script>
 </body>
