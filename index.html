@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@200;300;400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css?v=3" />
+  <link rel="stylesheet" href="styles.css?v=33" />
 </head>
 <body>
   <a class="skip" href="#content">Skip to content</a>
@@ -70,7 +70,7 @@
         <div class="heroBar">
           <div class="hint"><span class="dot" aria-hidden="true"></span>Scroll</div>
           <p class="caption" id="heroCaption">Image 1 of 6</p>
-          <div class="progress" aria-hidden="true"><div class="progressFill" id="progressFill"></div></div>
+          
         </div>
       </div>
     </div>
@@ -80,6 +80,12 @@
       <div class="dots" id="dots" aria-label="Carousel navigation"></div>
       <button class="navBtn" id="nextSlide" type="button">Next</button>
     </div>
+  
+
+    <div class="progress progressBottom" aria-hidden="true">
+      <div class="progressFill" id="progressFill"></div>
+    </div>
+
   </section>
 
   <main id="content">
@@ -159,8 +165,8 @@
     </div>
   </div>
 
-  <script src="projects.js?v=3"></script>
-  <script src="site.js?v=3"></script>
+  <script src="projects.js?v=33"></script>
+  <script src="site.js?v=33"></script>
   <script>
     (function () {
       const PROJECTS = Array.isArray(window.PROJECTS) ? window.PROJECTS : [];
@@ -263,7 +269,7 @@
                 <div class="meta">${escapeHtml(p.subtitle || "")}</div>
               </div>
 
-              <div class="projectMedia" tabindex="-1">
+              <div class="projectMedia" tabindex="0">
                 <div class="grid2">
                   <img class="projectImg" data-lightbox="${i}" data-i="0" src="${escapeHtml(img1)}" alt="${escapeHtml(p.title)} image 1">
                   <img class="projectImg" data-lightbox="${i}" data-i="1" src="${escapeHtml(img2)}" alt="${escapeHtml(p.title)} image 2">
