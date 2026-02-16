@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Tete Editor</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@200;300;400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="editor.css?v=1" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="wrap">
+      <div class="brand">
+        <div class="logo">tete</div>
+        <div class="sub">Editor (Projects + Images)</div>
+      </div>
+
+      <div class="actions">
+        <button class="btn ghost" id="btnHelp" type="button">How to use</button>
+        <button class="btn" id="btnDownload" type="button">Download update zip</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="main">
+    <aside class="side">
+      <div class="sideHead">
+        <div class="sideTitle">Projects</div>
+        <button class="btn small" id="btnAdd" type="button">+ Add</button>
+      </div>
+
+      <div id="projectList" class="projectList" aria-label="Project list"></div>
+
+      <div class="sideFoot">
+        <button class="btn small ghost" id="btnDuplicate" type="button">Duplicate</button>
+        <button class="btn small ghost" id="btnMoveUp" type="button">Move up</button>
+        <button class="btn small ghost" id="btnMoveDown" type="button">Move down</button>
+        <button class="btn small danger" id="btnDelete" type="button">Delete</button>
+      </div>
+    </aside>
+
+    <section class="panel">
+      <div class="panelHead">
+        <h1 id="panelTitle">Edit project</h1>
+        <p class="muted" id="panelHint">Tip: drag & drop images into the image box.</p>
+      </div>
+
+      <form id="form" class="form" autocomplete="off">
+        <div class="row two">
+          <label class="field">
+            <span>Title</span>
+            <input id="fTitle" type="text" placeholder="e.g. Downtown Condo" />
+          </label>
+
+          <label class="field">
+            <span>Subtitle</span>
+            <input id="fSubtitle" type="text" placeholder="e.g. Living / Kitchen" />
+          </label>
+        </div>
+
+        <div class="row three">
+          <label class="field">
+            <span>Year</span>
+            <input id="fYear" type="text" placeholder="2026" />
+          </label>
+
+          <label class="field">
+            <span>Location</span>
+            <input id="fLocation" type="text" placeholder="Toronto" />
+          </label>
+
+          <label class="field">
+            <span>Slug (auto)</span>
+            <input id="fSlug" type="text" disabled />
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Description</span>
+          <textarea id="fDescription" rows="5" placeholder="Short description..."></textarea>
+        </label>
+
+        <div class="row two">
+          <div class="block">
+            <div class="blockHead">
+              <div class="blockTitle">Images</div>
+              <div class="blockTools">
+                <button class="btn small ghost" id="btnAddImages" type="button">Add images</button>
+              </div>
+            </div>
+
+            <div id="dropZone" class="dropZone" tabindex="0">
+              <div class="dropText">
+                <div class="dropTitle">Drop images here</div>
+                <div class="dropSub">or click “Add images”.</div>
+              </div>
+              <input id="fileInput" type="file" accept="image/*" multiple hidden />
+            </div>
+
+            <div id="imageList" class="imageList" aria-label="Image list"></div>
+            <p class="tiny muted">Reorder with ↑ ↓. First image is the cover on the home page.</p>
+          </div>
+
+          <div class="block">
+            <div class="blockHead">
+              <div class="blockTitle">Facts (optional)</div>
+              <div class="blockTools">
+                <button class="btn small ghost" id="btnAddFact" type="button">+ Add fact</button>
+              </div>
+            </div>
+
+            <div id="factsList" class="factsList" aria-label="Facts list"></div>
+            <p class="tiny muted">Examples: Focus, Palette, Details, Mood.</p>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="note">
+            <strong>What the zip contains:</strong>
+            <ul>
+              <li>Updated <code>projects.js</code></li>
+              <li>All images referenced by your projects (inside <code>/images</code>)</li>
+            </ul>
+            <span class="muted">After you download: unzip → upload/replace those files in GitHub.</span>
+          </div>
+        </div>
+      </form>
+    </section>
+  </main>
+
+  <div id="modal" class="modal" hidden>
+    <div class="modalCard">
+      <div class="modalHead">
+        <div class="modalTitle">How to use</div>
+        <button class="iconBtn" id="btnClose" type="button" aria-label="Close">✕</button>
+      </div>
+      <div class="modalBody">
+        <ol>
+          <li>Select a project on the left.</li>
+          <li>Edit text on the right.</li>
+          <li>Add photos by dragging them into the image box.</li>
+          <li>Click <strong>Download update zip</strong>.</li>
+        </ol>
+
+        <div class="hr"></div>
+
+        <p class="muted">
+          If you opened this file locally and the download fails, open it from the live website
+          (GitHub Pages) or run a local server:
+        </p>
+        <pre><code>python3 -m http.server 8000</code></pre>
+        <p class="muted">Then open: <code>http://localhost:8000/editor.html</code></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="projects.js?v=33"></script>
+  <script src="editor.js?v=1"></script>
+</body>
+</html>
