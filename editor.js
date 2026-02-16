@@ -6,6 +6,13 @@
   const btnHelp = $("#btnHelp");
   const btnClose = $("#btnClose");
 
+  // Show a simple warning when opened as a local file (file://)
+  const localWarning = $("#localWarning");
+  if (localWarning && location.protocol === "file:") {
+    localWarning.hidden = false;
+  }
+
+
   btnHelp?.addEventListener("click", () => { modal.hidden = false; });
   btnClose?.addEventListener("click", () => { modal.hidden = true; });
   modal?.addEventListener("click", (e) => { if (e.target === modal) modal.hidden = true; });
