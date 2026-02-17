@@ -92,7 +92,10 @@
     },
     {
       "slug": "hello",
-      "title": "test"
+      "title": "test",
+      "images": [
+        "/images/uploads/generated-image-january-11-2026-4_25pm.jpeg"
+      ]
     }
   ]
 }
