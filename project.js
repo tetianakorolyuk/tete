@@ -1,4 +1,5 @@
 // project.js
+(window.__projectsReady || Promise.resolve()).then(() => {
 (function () {
   const $ = (sel, root = document) => root.querySelector(sel);
 
@@ -80,7 +81,12 @@
   // Facts
   if (els.facts) {
     const facts = Array.isArray(project.facts) ? project.facts : [];
-    els.facts.innerHTML = facts.map(([k, v]) => `
+    const norm = facts.map((item) => {
+      if (Array.isArray(item)) return { k: item[0], v: item[1] };
+      if (item && typeof item === "object") return { k: item.label || item.key || "", v: item.value || "" };
+      return { k: "", v: "" };
+    }).filter(x => x.k || x.v);
+    els.facts.innerHTML = norm.map(({k, v}) => `
       <div class="fact">
         <div class="factKey">${escapeHtml(k)}</div>
         <div class="factVal">${escapeHtml(v)}</div>
@@ -181,3 +187,4 @@
     if (e.key === "ArrowRight") step(1);
   });
 })();
+});

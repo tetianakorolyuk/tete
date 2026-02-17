@@ -5,7 +5,23 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>tete — interior design</title>
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
+  
+
+  <meta name="description" content="Minimal interior design portfolio. Selected works, journal, and contact." />
+  <meta name="theme-color" content="#ff9500" />
+
+  <meta property="og:title" content="tete — interior design" />
+  <meta property="og:description" content="Minimal interior design portfolio. Selected works, journal, and contact." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="images/og.jpg" />
+
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="manifest" href="site.webmanifest">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@200;300;400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
@@ -165,10 +181,11 @@
     </div>
   </div>
 
-  <script src="projects.js?v=33"></script>
+  <script src="content-loader.js"></script>
   <script src="site.js?v=33"></script>
   <script>
-    (function () {
+    (window.__projectsReady || Promise.resolve()).then(() => {
+      (function () {
       const PROJECTS = Array.isArray(window.PROJECTS) ? window.PROJECTS : [];
 
       // --- HERO CAROUSEL ---
@@ -526,7 +543,8 @@ async function loadSubstack(force = false) {
 }
 
 loadSubstack();
-    })();
+          })();
+    });
   </script>
 </body>
 </html>

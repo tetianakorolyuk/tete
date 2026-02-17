@@ -1,0 +1,94 @@
+{
+  "projects": [
+    {
+      "slug": "project-01",
+      "title": "Project 01",
+      "subtitle": "Living / Kitchen",
+      "year": "2025",
+      "location": "Toronto",
+      "description": "A calm, light-filled living space with warm wood and tactile neutrals. The layout stays open for flow, with clean lines and soft volumes.",
+      "images": [
+        "images/project-01-a.jpg",
+        "images/project-01-b.jpg"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Layout + light"
+        },
+        {
+          "label": "Palette",
+          "value": "Natural oak, stone, soft linen"
+        },
+        {
+          "label": "Details",
+          "value": "Integrated storage, minimal hardware"
+        },
+        {
+          "label": "Mood",
+          "value": "Quiet, modern, warm"
+        }
+      ]
+    },
+    {
+      "slug": "project-02",
+      "title": "Project 02",
+      "subtitle": "Residential",
+      "year": "2025",
+      "location": "Toronto",
+      "description": "A residential concept built around simplicity and proportion. Materials stay honest and restrained, letting texture do the work.",
+      "images": [
+        "images/project-02-a.jpg",
+        "images/project-02-b.jpg"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Comfort + proportion"
+        },
+        {
+          "label": "Palette",
+          "value": "Soft whites, warm timber, matte finishes"
+        },
+        {
+          "label": "Details",
+          "value": "Custom millwork, seamless transitions"
+        },
+        {
+          "label": "Mood",
+          "value": "Minimal, elevated, serene"
+        }
+      ]
+    },
+    {
+      "slug": "project-03",
+      "title": "Project 03",
+      "subtitle": "Kitchen / Bar",
+      "year": "2025",
+      "location": "Toronto",
+      "description": "A kitchen and bar environment with a stronger, evening tone. Dark surfaces, warm highlights, and a confident material contrast.",
+      "images": [
+        "images/project-03-a.jpg",
+        "images/project-03-b.jpg"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Material contrast"
+        },
+        {
+          "label": "Palette",
+          "value": "Deep stone, warm bronze, soft light"
+        },
+        {
+          "label": "Details",
+          "value": "Linear lighting, hidden storage"
+        },
+        {
+          "label": "Mood",
+          "value": "Bold, refined, night-ready"
+        }
+      ]
+    }
+  ]
+}

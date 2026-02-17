@@ -372,3 +372,37 @@ button.iconLink:disabled{
   color: var(--ink);
 }
 code{ font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 12.5px; }
+
+
+/* Editor UI helpers */
+.savePill{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 10px;
+  border-radius:999px;
+  font-size:12px;
+  line-height:1;
+  border:1px solid rgba(0,0,0,.10);
+  background: rgba(0,0,0,.04);
+  color: var(--ink);
+  white-space:nowrap;
+}
+.savePill.isDirty{
+  border-color: rgba(255,149,0,.45);
+  background: rgba(255,149,0,.10);
+}
+.savePill.isSaved{
+  border-color: rgba(0,0,0,.12);
+  background: rgba(0,0,0,.03);
+}
+
+.infoBar{
+  margin: 12px 0 0;
+  padding: 10px 12px;
+  border:1px solid rgba(0,0,0,.10);
+  background: rgba(0,0,0,.03);
+  border-radius: 16px;
+  font-size: 13px;
+  color: var(--ink);
+}
