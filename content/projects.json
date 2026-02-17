@@ -89,6 +89,10 @@
           "value": "Bold, refined, night-ready"
         }
       ]
+    },
+    {
+      "slug": "hello",
+      "title": "test"
     }
   ]
 }
