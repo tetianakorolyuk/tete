@@ -315,6 +315,15 @@
     .art-f{margin-top:auto;padding-top:14px;border-top:1px solid var(--brown-xs);display:flex;justify-content:space-between;align-items:center;gap:10px}
     .art-f time{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--brown-s)}
 
+    /* skeleton */
+    .sk-art{pointer-events:none}
+    .sk-img{aspect-ratio:1.15/1;width:100%;background:var(--linen-2)}
+    .sk-line{border-radius:2px;background:var(--linen-2)}
+    @keyframes skpulse{0%,100%{opacity:1}50%{opacity:.4}}
+    .sk-pulse{animation:skpulse 1.6s ease infinite}
+    .sk-art:nth-child(2) .sk-pulse{animation-delay:.2s}
+    .sk-art:nth-child(3) .sk-pulse{animation-delay:.4s}
+
     /* contact */
     .contact{padding:100px 0 120px}
     .cont-in{width:var(--w);margin:0 auto}
@@ -450,12 +459,15 @@
 
   <!-- editor toolbar -->
   <div id="eBar">
-    <div class="eb-badge"><div class="dot"></div>Editor Mode</div>
+    <div class="eb-badge"><div class="dot"></div>Editor Mode <span id="eSaveStatus" style="margin-left:8px;opacity:.5;font-size:8px;letter-spacing:.1em"></span></div>
     <button class="eb-btn" id="eAddProj">
       <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M12 5v14M5 12h14"/></svg>Add Project
     </button>
     <button class="eb-btn" id="eExport">
       <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Export HTML
+    </button>
+    <button class="eb-btn" id="eClear">
+      <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6"/></svg>Clear saves
     </button>
     <button class="eb-btn danger" id="eExit">
       <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg>Exit Editor
@@ -493,7 +505,7 @@
         </nav>
         <div class="mfoot">
           <a href="#">Instagram</a><a href="#">Substack</a>
-          <a href="#">Toronto</a><a href="mailto:hello@tete.design">hello@tete.design</a>
+          <a href="#">Toronto</a><a href="/cdn-cgi/l/email-protection#2e464b4242416e5a4b5a4b004a4b5d474940"><span class="__cf_email__" data-cfemail="1b737e7777745b6f7e6f7e357f7e68727c75">[email&#160;protected]</span></a>
         </div>
       </div>
       <div class="mright">
@@ -723,45 +735,25 @@
     <div class="jour-in">
       <div class="jour-hd">
         <div class="reveal-clip"><h2 class="rc-inner">Journal, references &amp; <em>Substack</em> thoughts.</h2></div>
-        <p class="reveal">Editorial writing on design, atmosphere, and the spaces that shape how we live.</p>
+        <div class="reveal" style="display:flex;flex-direction:column;gap:14px;align-items:flex-start">
+          <p>Latest from <a href="https://tekofm.substack.com" target="_blank" rel="noopener" style="color:var(--apricot);text-decoration:none;border-bottom:1px solid rgba(183,105,74,.3);">tekofm.substack.com</a> — editorial writing on design, atmosphere, and the spaces that shape how we live.</p>
+          <a href="https://tekofm.substack.com" target="_blank" rel="noopener" class="al" style="color:var(--brown)"><span class="aln"></span>Subscribe on Substack</a>
+        </div>
       </div>
-      <div class="jour-g stagger">
-        <article class="art reveal">
-          <div class="art-m eimg">
-            <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80" alt="">
-            <div class="eov"><div class="eov-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg><span>Change image</span></div></div>
-          </div>
-          <div class="art-c">
-            <div class="sc" contenteditable="false">Journal</div>
-            <h3 contenteditable="false">Designing calm spaces that still feel emotionally rich.</h3>
-            <p contenteditable="false">A short reflection on warmth, restraint, and architectural intimacy in contemporary interiors.</p>
-            <div class="art-f"><time contenteditable="false">March 2026</time><a class="al" href="#"><span class="aln"></span>Read</a></div>
-          </div>
-        </article>
-        <article class="art reveal">
-          <div class="art-m eimg">
-            <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=900&q=80" alt="">
-            <div class="eov"><div class="eov-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg><span>Change image</span></div></div>
-          </div>
-          <div class="art-c">
-            <div class="sc" contenteditable="false">Substack</div>
-            <h3 contenteditable="false">Why low-contrast palettes can still feel dramatic.</h3>
-            <p contenteditable="false">On dark luxury interiors, atmospheric lighting, and how material choices shape emotional depth.</p>
-            <div class="art-f"><time contenteditable="false">February 2026</time><a class="al" href="#"><span class="aln"></span>Read</a></div>
-          </div>
-        </article>
-        <article class="art reveal">
-          <div class="art-m eimg">
-            <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=900&q=80" alt="">
-            <div class="eov"><div class="eov-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg><span>Change image</span></div></div>
-          </div>
-          <div class="art-c">
-            <div class="sc" contenteditable="false">Notes</div>
-            <h3 contenteditable="false">The intimacy of architecture seen through interiors.</h3>
-            <p contenteditable="false">A project note about scale, silence, reflection, and the tension between softness and precision.</p>
-            <div class="art-f"><time contenteditable="false">January 2026</time><a class="al" href="#"><span class="aln"></span>Read</a></div>
-          </div>
-        </article>
+
+      <!-- loading skeleton -->
+      <div class="jour-g" id="journalSkeleton">
+        <div class="art sk-art"><div class="sk-img sk-pulse"></div><div class="art-c" style="gap:10px"><div class="sk-line sk-pulse" style="width:40%;height:9px"></div><div class="sk-line sk-pulse" style="width:90%;height:22px;margin-top:4px"></div><div class="sk-line sk-pulse" style="width:75%;height:22px"></div><div class="sk-line sk-pulse" style="width:80%;height:13px;margin-top:8px"></div></div></div>
+        <div class="art sk-art"><div class="sk-img sk-pulse"></div><div class="art-c" style="gap:10px"><div class="sk-line sk-pulse" style="width:40%;height:9px"></div><div class="sk-line sk-pulse" style="width:88%;height:22px;margin-top:4px"></div><div class="sk-line sk-pulse" style="width:65%;height:22px"></div><div class="sk-line sk-pulse" style="width:70%;height:13px;margin-top:8px"></div></div></div>
+        <div class="art sk-art"><div class="sk-img sk-pulse"></div><div class="art-c" style="gap:10px"><div class="sk-line sk-pulse" style="width:40%;height:9px"></div><div class="sk-line sk-pulse" style="width:92%;height:22px;margin-top:4px"></div><div class="sk-line sk-pulse" style="width:70%;height:22px"></div><div class="sk-line sk-pulse" style="width:85%;height:13px;margin-top:8px"></div></div></div>
+      </div>
+
+      <!-- live feed -->
+      <div class="jour-g stagger" id="journalGrid" style="display:none"></div>
+
+      <!-- error fallback -->
+      <div id="journalError" style="display:none;padding:32px;border:1px solid var(--brown-xs);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.14em;color:var(--brown-s);text-align:center">
+        Could not load posts — <a href="https://tekofm.substack.com" target="_blank" style="color:var(--apricot)">read on Substack →</a>
       </div>
     </div>
   </section>
@@ -792,7 +784,7 @@
           </div>
           <div class="cbot">
             <span>Toronto, Canada</span>
-            <a href="mailto:hello@tete.design">hello@tete.design</a>
+            <a href="/cdn-cgi/l/email-protection#442c2128282b04302130216a2021372d232a"><span class="__cf_email__" data-cfemail="c8a0ada4a4a788bcadbcade6acadbba1afa6">[email&#160;protected]</span></a>
             <a href="#">Instagram</a><a href="#">Substack</a>
           </div>
         </div>
@@ -827,6 +819,123 @@
 
   <script>
   (() => {
+    /* ══════════════════════════════════════════════════════
+       LOCALSTORAGE PERSISTENCE
+       Saves all text edits + image swaps, restores on load
+    ══════════════════════════════════════════════════════ */
+    const STORE = 'tete_v1';
+
+    const assignIds = () => {
+      document.querySelectorAll('[contenteditable]').forEach((el,i)=>{ if(!el.dataset.eid) el.dataset.eid='txt'+i; });
+      document.querySelectorAll('.eimg img').forEach((el,i)=>{ if(!el.dataset.eid) el.dataset.eid='img'+i; });
+    };
+
+    const loadSaved = () => {
+      try {
+        const s = JSON.parse(localStorage.getItem(STORE)||'{}');
+        if(s.t) Object.entries(s.t).forEach(([id,html])=>{ const el=document.querySelector(`[data-eid="${id}"]`); if(el&&el.tagName!=='IMG') el.innerHTML=html; });
+        if(s.i) Object.entries(s.i).forEach(([id,src])=>{ const el=document.querySelector(`[data-eid="${id}"]`); if(el&&el.tagName==='IMG') el.src=src; });
+      } catch(e){}
+    };
+
+    const saveAll = () => {
+      try {
+        const t={},i={};
+        document.querySelectorAll('[data-eid]').forEach(el=>{ if(el.tagName==='IMG') i[el.dataset.eid]=el.src; else t[el.dataset.eid]=el.innerHTML; });
+        localStorage.setItem(STORE, JSON.stringify({t,i}));
+        const ss=document.getElementById('eSaveStatus');
+        if(ss){ ss.textContent='· Saved'; setTimeout(()=>ss.textContent='',2000); }
+      } catch(e){}
+    };
+
+    let saveTimer;
+    const dSave = ()=>{ clearTimeout(saveTimer); saveTimer=setTimeout(saveAll,500); };
+
+    /* run once DOM is ready */
+    assignIds();
+    loadSaved();
+    document.addEventListener('input', e=>{ if(e.target.hasAttribute('contenteditable')) dSave(); });
+
+    /* ══════════════════════════════════════
+       SUBSTACK RSS → JOURNAL
+       Feed: https://tekofm.substack.com/feed
+       Via: rss2json.com free tier (CORS-safe)
+    ══════════════════════════════════════ */
+    const RSS = 'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Ftekofm.substack.com%2Ffeed&count=3';
+    const FALLBACK_IMG = 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80';
+
+    const stripHtml = html => { const d=document.createElement('div'); d.innerHTML=html; return d.textContent||d.innerText||''; };
+
+    const fmtDate = str => {
+      try { return new Date(str).toLocaleDateString('en-CA',{month:'long',year:'numeric'}); } catch(e){ return str; }
+    };
+
+    /* extract best thumbnail from feed item */
+    const getThumb = item => {
+      if(item.thumbnail && item.thumbnail.startsWith('http')) return item.thumbnail;
+      /* try to find first img in content */
+      try {
+        const tmp=document.createElement('div'); tmp.innerHTML=item.content||'';
+        const img=tmp.querySelector('img'); if(img&&img.src) return img.src;
+      } catch(e){}
+      /* try enclosure */
+      if(item.enclosure&&item.enclosure.link) return item.enclosure.link;
+      return FALLBACK_IMG;
+    };
+
+    const renderJournal = items => {
+      const grid = document.getElementById('journalGrid');
+      const skel = document.getElementById('journalSkeleton');
+      grid.innerHTML = '';
+      items.forEach((item,idx) => {
+        const thumb = getThumb(item);
+        const title = item.title || 'Untitled';
+        const desc  = item.description ? stripHtml(item.description).slice(0,120)+'…' : '';
+        const date  = fmtDate(item.pubDate);
+        const link  = item.link || 'https://tekofm.substack.com';
+        const cat   = (item.categories&&item.categories[0]) ? item.categories[0] : 'Substack';
+        const art = document.createElement('article');
+        art.className = 'art reveal';
+        art.innerHTML = `
+          <div class="art-m">
+            <a href="${link}" target="_blank" rel="noopener" tabindex="-1">
+              <img src="${thumb}" alt="${title}" onerror="this.src='${FALLBACK_IMG}'" loading="lazy">
+            </a>
+          </div>
+          <div class="art-c">
+            <div class="sc">${cat}</div>
+            <a href="${link}" target="_blank" rel="noopener"><h3>${title}</h3></a>
+            <p>${desc}</p>
+            <div class="art-f">
+              <time>${date}</time>
+              <a class="al" href="${link}" target="_blank" rel="noopener"><span class="aln"></span>Read on Substack</a>
+            </div>
+          </div>`;
+        grid.appendChild(art);
+        /* stagger reveal */
+        setTimeout(()=>{
+          const o=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');o.unobserve(x.target)}})},{threshold:.1});
+          o.observe(art);
+        }, idx*60);
+      });
+      skel.style.display = 'none';
+      grid.style.display = 'grid';
+    };
+
+    fetch(RSS)
+      .then(r=>r.json())
+      .then(data=>{
+        if(data.status==='ok'&&data.items&&data.items.length){
+          renderJournal(data.items.slice(0,3));
+        } else {
+          throw new Error('bad feed');
+        }
+      })
+      .catch(()=>{
+        document.getElementById('journalSkeleton').style.display='none';
+        document.getElementById('journalError').style.display='block';
+      });
+
     /* cursor */
     const dot=document.getElementById('cursorDot'),ring=document.getElementById('cursorRing');
     let mx=0,my=0,rx=0,ry=0;
@@ -929,7 +1038,7 @@
     });
     document.getElementById('iApply').addEventListener('click',()=>{
       const u=iInp.value.trim();
-      if(u&&imgTarget)imgTarget.src=u;
+      if(u&&imgTarget){ imgTarget.src=u; saveAll(); }
       iPop.classList.remove('show');imgTarget=null;
     });
     iInp.addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('iApply').click();if(e.key==='Escape')document.getElementById('iCancel').click()});
@@ -975,19 +1084,30 @@
       btn.addEventListener('click',()=>{if(confirm('Remove this project?'))btn.closest('.project-row').remove()});
     });
 
-    /* export */
+    /* export — saves current state, strips editor UI, downloads clean HTML */
     document.getElementById('eExport').addEventListener('click',()=>{
+      saveAll(); /* ensure latest saved */
+      /* snapshot cleanly */
       document.querySelectorAll('[contenteditable]').forEach(el=>el.setAttribute('contenteditable','false'));
-      document.body.classList.remove('em');eBar.classList.remove('on');
+      document.body.classList.remove('em'); eBar.classList.remove('on');
+      iPop.classList.remove('show');
       const html='<!DOCTYPE html>\n'+document.documentElement.outerHTML;
+      /* restore */
       document.querySelectorAll('[contenteditable]').forEach(el=>el.setAttribute('contenteditable','true'));
-      document.body.classList.add('em');eBar.classList.add('on');
+      document.body.classList.add('em'); eBar.classList.add('on');
       const a=document.createElement('a');
       a.href=URL.createObjectURL(new Blob([html],{type:'text/html'}));
-      a.download='tete-website.html';a.click();URL.revokeObjectURL(a.href);
+      a.download='tete-website.html'; a.click(); URL.revokeObjectURL(a.href);
     });
 
-    document.addEventListener('keydown',e=>{if(e.key==='Escape'&&editorOn)disableEditor()});
+    /* clear saved data button in editor bar */
+    document.getElementById('eClear').addEventListener('click',()=>{
+      if(confirm('Clear all saved edits and reload the original content?')){
+        localStorage.removeItem(STORE); location.reload();
+      }
+    });
+
+    document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&editorOn) disableEditor(); });
   })();
   </script>
 </body>
