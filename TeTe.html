@@ -116,37 +116,134 @@
     body.em [contenteditable]:hover{box-shadow:0 0 0 2px rgba(183,105,74,.3),inset 0 0 0 2000px rgba(183,105,74,.04)}
     body.em [contenteditable]:focus{box-shadow:0 0 0 2px var(--apricot),inset 0 0 0 2000px rgba(183,105,74,.07)}
 
-    /* image overlay */
-    body.em .eimg{cursor:pointer;position:relative}
-    .eimg .eov{position:absolute;inset:0;z-index:20;display:flex;align-items:center;justify-content:center;background:rgba(61,35,21,.5);opacity:0;transition:opacity .25s ease;pointer-events:none}
-    body.em .eimg:hover .eov{opacity:1;pointer-events:auto}
-    .eov-inner{background:var(--brown);border:1px solid rgba(240,234,226,.18);padding:18px 22px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:10px}
-    .eov-inner svg{width:22px;height:22px;stroke:var(--apricot);fill:none}
-    .eov-inner span{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--white-m)}
+    /* ── editor: image edit button (simple, foolproof) ── */
+    body.em .eimg{position:relative}
+    .img-btn{
+      display:none;
+      position:absolute;top:14px;left:14px;z-index:50;
+      background:var(--apricot);color:var(--linen);border:none;
+      padding:8px 14px;gap:7px;align-items:center;
+      font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;
+      cursor:pointer;transition:background .25s;box-shadow:0 4px 16px rgba(0,0,0,.3);
+    }
+    .img-btn svg{width:13px;height:13px;stroke:currentColor;fill:none;flex-shrink:0}
+    .img-btn:hover{background:var(--apricot-d)}
+    body.em .eimg .img-btn{display:flex}
 
-    /* img url popup */
-    #iPopup{position:fixed;z-index:9600;background:var(--brown);border:1px solid rgba(240,234,226,.18);padding:20px 22px;box-shadow:0 20px 50px rgba(0,0,0,.4);display:none;min-width:340px}
+    /* ── img url popup ── */
+    #iPopup{position:fixed;z-index:9600;background:var(--brown);border:1px solid rgba(240,234,226,.18);padding:22px 24px;box-shadow:0 20px 50px rgba(0,0,0,.5);display:none;min-width:360px;max-width:92vw}
     #iPopup.show{display:block}
     #iPopup label{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:rgba(240,234,226,.44);display:block;margin-bottom:8px}
-    #iInput{width:100%;background:rgba(240,234,226,.08);border:1px solid rgba(240,234,226,.18);padding:9px 12px;font-size:12px;color:var(--linen);font-family:'DM Sans',sans-serif}
+    #iPopup .pop-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:300;color:var(--linen);margin-bottom:16px}
+    #iInput{width:100%;background:rgba(240,234,226,.08);border:1px solid rgba(240,234,226,.18);padding:10px 13px;font-size:12px;color:var(--linen);font-family:'DM Sans',sans-serif}
     #iInput:focus{outline:none;border-color:var(--apricot)}
-    .ipop-btns{display:flex;gap:8px;margin-top:10px}
-    .ipop-btns button{flex:1;padding:8px;border:none;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer}
+    .ipop-hint{font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.1em;color:rgba(240,234,226,.28);margin-top:6px}
+    .ipop-btns{display:flex;gap:8px;margin-top:14px}
+    .ipop-btns button{flex:1;padding:10px;border:none;font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;cursor:pointer;transition:.2s}
     #iApply{background:var(--apricot);color:var(--linen)}
+    #iApply:hover{background:var(--apricot-d)}
     #iCancel{background:rgba(240,234,226,.08);color:rgba(240,234,226,.52);border:1px solid rgba(240,234,226,.12)!important}
 
-    /* add project btn */
+    /* ── add project btn ── */
     #addProjBtn{display:none;width:100%;padding:22px;border:2px dashed rgba(183,105,74,.36);background:rgba(183,105,74,.04);font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--apricot);cursor:pointer;text-align:center;transition:background .3s,border-color .3s;margin-top:20px}
     #addProjBtn:hover{background:rgba(183,105,74,.1);border-color:rgba(183,105,74,.6)}
     body.em #addProjBtn{display:block}
-    .del-btn{display:none;position:absolute;top:18px;right:18px;z-index:20;width:36px;height:36px;background:rgba(183,105,74,.9);border:none;align-items:center;justify-content:center;cursor:pointer;color:var(--linen);transition:background .25s}
+    .del-btn{display:none;position:absolute;top:14px;right:14px;z-index:50;width:36px;height:36px;background:rgba(183,105,74,.9);border:none;align-items:center;justify-content:center;cursor:pointer;color:var(--linen);transition:background .25s}
     .del-btn svg{width:14px;height:14px;stroke:currentColor;fill:none}
     .del-btn:hover{background:var(--apricot-d)}
     body.em .project-row .del-btn{display:flex}
 
-    /* secret dot */
+    /* ── secret dot ── */
     #sDot{display:inline-block;width:10px;height:10px;cursor:default;opacity:0;vertical-align:middle;user-select:none;border-radius:50%;transition:opacity .3s,box-shadow .3s}
     body.em #sDot{opacity:1;background:var(--apricot);box-shadow:0 0 6px rgba(183,105,74,.7)}
+
+    /* ════════════════════════════════════════
+       PROJECT DETAIL MODAL
+    ════════════════════════════════════════ */
+    #projModal{
+      position:fixed;inset:0;z-index:8000;
+      background:var(--linen);
+      transform:translateY(100%);
+      transition:transform .7s cubic-bezier(.76,0,.24,1);
+      overflow-y:auto;
+      overflow-x:hidden;
+    }
+    #projModal.open{transform:none}
+
+    .pm-bar{
+      position:sticky;top:0;z-index:10;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:18px 5%;
+      background:rgba(240,234,226,.92);
+      backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+      border-bottom:1px solid var(--brown-xs);
+    }
+    .pm-bar-left{display:flex;align-items:center;gap:20px}
+    .pm-bar-cat{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--apricot)}
+    .pm-bar-title{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;letter-spacing:-.03em;color:var(--brown)}
+    .pm-close{
+      width:44px;height:44px;border:1px solid var(--brown-xs);
+      background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;
+      transition:background .25s;flex-shrink:0;
+    }
+    .pm-close:hover{background:rgba(61,35,21,.06)}
+    .pm-close svg{stroke:var(--brown);fill:none;width:16px;height:16px}
+
+    .pm-hero{
+      position:relative;height:72svh;overflow:hidden;background:var(--linen-2);
+    }
+    .pm-hero img{width:100%;height:100%;object-fit:cover}
+    .pm-hero-overlay{
+      position:absolute;inset:0;
+      background:linear-gradient(to top,rgba(40,22,12,.58) 0%,rgba(40,22,12,.04) 44%);
+      pointer-events:none;
+    }
+    .pm-hero-copy{
+      position:absolute;left:5%;bottom:6%;z-index:2;
+    }
+    .pm-hero-copy h2{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(52px,7vw,108px);
+      line-height:.88;font-weight:300;letter-spacing:-.06em;
+      color:var(--linen);
+    }
+    .pm-hero-copy h2 em{font-style:italic;color:rgba(240,234,226,.7)}
+
+    .pm-body{
+      width:var(--w);margin:0 auto;
+      padding:72px 0 100px;
+    }
+    .pm-meta-row{
+      display:flex;flex-wrap:wrap;gap:32px;
+      padding-bottom:36px;margin-bottom:48px;
+      border-bottom:1px solid var(--brown-xs);
+    }
+    .pm-meta-item{}
+    .pm-meta-item dt{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--brown-s);margin-bottom:6px}
+    .pm-meta-item dd{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;letter-spacing:-.03em;color:var(--brown)}
+
+    .pm-content{display:grid;grid-template-columns:1fr .72fr;gap:60px;align-items:start;margin-bottom:60px}
+    .pm-desc{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,2vw,28px);line-height:1.52;font-weight:300;letter-spacing:-.02em;color:var(--brown)}
+    .pm-details{display:flex;flex-direction:column;gap:18px}
+    .pm-detail-block{padding:18px 0;border-top:1px solid var(--brown-xs)}
+    .pm-detail-block h4{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--brown-s);margin-bottom:8px}
+    .pm-detail-block p{font-size:14px;color:var(--brown-m);line-height:1.65}
+
+    .pm-gallery{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:48px}
+    .pm-gimg{
+      position:relative;overflow:hidden;
+      aspect-ratio:3/4;background:var(--linen-2);
+    }
+    .pm-gimg img{width:100%;height:100%;object-fit:cover;transition:transform .8s var(--ease)}
+    .pm-gimg:hover img{transform:scale(1.04)}
+
+    .pm-cta{display:flex;align-items:center;gap:16px}
+
+    @media(max-width:860px){
+      .pm-content{grid-template-columns:1fr}
+      .pm-gallery{grid-template-columns:1fr 1fr}
+      .pm-hero{height:52svh}
+    }
 
     /* ═══ NAV ═══ */
     #topbar{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:24px 42px;transition:padding .4s var(--ease),background .4s,backdrop-filter .4s}
@@ -591,11 +688,19 @@
       </div>
       <div class="proj-list" id="projList">
 
-        <article class="project-row ph reveal">
+        <article class="project-row ph reveal"
+          data-title="The Teté Apartment"
+          data-cat="Residential Interior"
+          data-loc="Toronto"
+          data-year="2024"
+          data-desc="A calm but dramatic interior shaped around warmth, restraint, and architectural intimacy. Every material choice was made to feel both precise and deeply personal — from the warm oak joinery to the hand-plastered walls that catch the afternoon light."
+          data-materials="Warm oak, hand-applied plaster, natural linen, brushed bronze hardware, hand-knotted wool rugs."
+          data-approach="Light was the primary design material. The layout was opened to allow a single wash of afternoon sun to move through the main living spaces, defining the mood of each hour."
+          data-gallery="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80,https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80,https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80">
           <button class="del-btn"><svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
           <div class="piw eimg">
             <img class="pm" src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1800&q=80" alt="">
-            <div class="eov"><div class="eov-inner"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg><span>Change image</span></div></div>
+            <button class="img-btn"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>Change image</button>
           </div>
           <div class="pc">
             <div class="pnum" contenteditable="false">01 — Residential interior</div>
@@ -604,18 +709,26 @@
               <div class="pm2">
                 <div class="sc li" contenteditable="false">Residential · Toronto</div>
                 <p contenteditable="false">A calm but dramatic interior with layered texture, sculptural lighting, and a cinematic sense of atmosphere.</p>
-                <a class="al" href="#contact"><span class="aln"></span>View project</a>
+                <button class="al view-proj-btn" style="background:none;border:none;cursor:pointer;padding:0;font:inherit;color:var(--linen)"><span class="aln"></span>View project</button>
               </div>
             </div>
           </div>
           <div class="hlabel">View<br>Project</div>
         </article>
 
-        <article class="project-row ph reveal">
+        <article class="project-row ph reveal"
+          data-title="Monolith Penthouse"
+          data-cat="Private Residence"
+          data-loc="Concept"
+          data-year="2024"
+          data-desc="Clean geometries, reflective materials, and warm low-contrast lighting create a strong architectural presence. The project explores the tension between hard-edged form and intimate human scale — a penthouse that feels like sculpture to live inside."
+          data-materials="Polished black marble, satin steel, smoked glass, ivory plaster, custom blackened-oak cabinetry."
+          data-approach="The brief called for drama without excess. Every room was resolved as a single strong gesture — one material, one light source, one focal point."
+          data-gallery="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80,https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80,https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80">
           <button class="del-btn"><svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
           <div class="piw eimg">
             <img class="pm" src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1800&q=80" alt="">
-            <div class="eov"><div class="eov-inner"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg><span>Change image</span></div></div>
+            <button class="img-btn"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>Change image</button>
           </div>
           <div class="pc">
             <div class="pnum" contenteditable="false">02 — Private client</div>
@@ -624,18 +737,26 @@
               <div class="pm2">
                 <div class="sc li" contenteditable="false">Private client · Concept</div>
                 <p contenteditable="false">Clean geometries, reflective materials, and warm low-contrast lighting create a strong architectural presence.</p>
-                <a class="al" href="#contact"><span class="aln"></span>View project</a>
+                <button class="al view-proj-btn" style="background:none;border:none;cursor:pointer;padding:0;font:inherit;color:var(--linen)"><span class="aln"></span>View project</button>
               </div>
             </div>
           </div>
           <div class="hlabel">View<br>Project</div>
         </article>
 
-        <article class="project-row ph reveal">
+        <article class="project-row ph reveal"
+          data-title="Quiet Form Residence"
+          data-cat="Interior Styling"
+          data-loc="Toronto"
+          data-year="2023"
+          data-desc="A study in warm minimalism — where softness and precision exist in careful dialogue. The brief was simple: a home that breathes. The result is a series of quiet rooms, each one resolved around a single material truth and a considered relationship with natural light."
+          data-materials="Pale limestone, raw linen, aged brass, matte white plaster, bleached timber floors."
+          data-approach="Restraint as a discipline. The design process removed until only the essential remained — then found beauty in what was left."
+          data-gallery="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80,https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80,https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80">
           <button class="del-btn"><svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
           <div class="piw eimg">
             <img class="pm" src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1800&q=80" alt="">
-            <div class="eov"><div class="eov-inner"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg><span>Change image</span></div></div>
+            <button class="img-btn"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>Change image</button>
           </div>
           <div class="pc">
             <div class="pnum" contenteditable="false">03 — Interior styling</div>
@@ -644,18 +765,26 @@
               <div class="pm2">
                 <div class="sc li" contenteditable="false">Interior Styling</div>
                 <p contenteditable="false">A study in warm minimalism, intimacy, and soft transitions between material, light, and proportion.</p>
-                <a class="al" href="#contact"><span class="aln"></span>View project</a>
+                <button class="al view-proj-btn" style="background:none;border:none;cursor:pointer;padding:0;font:inherit;color:var(--linen)"><span class="aln"></span>View project</button>
               </div>
             </div>
           </div>
           <div class="hlabel">View<br>Project</div>
         </article>
 
-        <article class="project-row ph reveal">
+        <article class="project-row ph reveal"
+          data-title="Charismatic Luxury Mansion"
+          data-cat="Large-Scale Residence"
+          data-loc="Toronto"
+          data-year="2023"
+          data-desc="Spatial drama, muted richness, and a gallery-like composition for a refined high-end living experience. The mansion demanded a language of permanence — materials that age beautifully, proportions that feel inevitable, and spaces that hold both grand entertaining and private retreat."
+          data-materials="Travertine, dark walnut panelling, aged copper, velvet, hand-woven silk, museum-quality art lighting."
+          data-approach="Scale was the design challenge. Each room was choreographed as a sequence — arrival, transition, reveal — so that the house unfolds as a spatial narrative."
+          data-gallery="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1200&q=80,https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80,https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80">
           <button class="del-btn"><svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
           <div class="piw eimg">
             <img class="pm" src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1800&q=80" alt="">
-            <div class="eov"><div class="eov-inner"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg><span>Change image</span></div></div>
+            <button class="img-btn"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>Change image</button>
           </div>
           <div class="pc">
             <div class="pnum" contenteditable="false">04 — Large-scale residence</div>
@@ -664,18 +793,19 @@
               <div class="pm2">
                 <div class="sc li" contenteditable="false">Large-Scale Residence</div>
                 <p contenteditable="false">Spatial drama, muted richness, and a gallery-like composition for a refined high-end living experience.</p>
-                <a class="al" href="#contact"><span class="aln"></span>View project</a>
+                <button class="al view-proj-btn" style="background:none;border:none;cursor:pointer;padding:0;font:inherit;color:var(--linen)"><span class="aln"></span>View project</button>
               </div>
             </div>
           </div>
           <div class="hlabel">View<br>Project</div>
         </article>
 
-      </div>
-      <button id="addProjBtn">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:inline;vertical-align:middle;margin-right:8px"><path d="M12 5v14M5 12h14"/></svg>
-        Add New Project
-      </button>
+        <button id="addProjBtn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" style="display:inline;vertical-align:middle;margin-right:8px"><path d="M12 5v14M5 12h14"/></svg>
+          Add New Project
+        </button>
+
+      </div><!-- /proj-list -->
     </div>
   </section>
 
@@ -700,7 +830,7 @@
         </article>
         <div class="stimg reveal eimg">
           <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1400&q=80" alt="Studio">
-          <div class="eov"><div class="eov-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg><span>Change image</span></div></div>
+          <button class="img-btn"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>Change image</button>
           <div class="stlabel"><small>Est. 2020 · Toronto</small>Tatiana<br>Koroliuk</div>
         </div>
       </div>
@@ -764,7 +894,7 @@
       <div class="cwrap reveal">
         <div class="cbg eimg">
           <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1800&q=80" alt="">
-          <div class="eov"><div class="eov-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg><span>Change image</span></div></div>
+          <button class="img-btn"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>Change image</button>
         </div>
         <div class="cbody">
           <div>
@@ -799,6 +929,50 @@
       </div>
     </div>
   </section>
+
+  <!-- ═══ PROJECT DETAIL MODAL ═══ -->
+  <div id="projModal" role="dialog" aria-modal="true">
+    <div class="pm-bar">
+      <div class="pm-bar-left">
+        <span class="pm-bar-cat" id="pmCat">Residential</span>
+        <span class="pm-bar-title" id="pmBarTitle">Project Title</span>
+      </div>
+      <button class="pm-close" id="pmClose">
+        <svg viewBox="0 0 24 24" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="pm-hero eimg" id="pmHeroWrap">
+      <img id="pmHeroImg" src="" alt="">
+      <button class="img-btn" data-target="pmHeroImg"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>Change hero</button>
+      <div class="pm-hero-overlay"></div>
+      <div class="pm-hero-copy"><h2 id="pmHeroTitle">Project<br><em>Title</em></h2></div>
+    </div>
+    <div class="pm-body">
+      <div class="pm-meta-row">
+        <div class="pm-meta-item"><dt>Category</dt><dd id="pmMetaCat" contenteditable="false">—</dd></div>
+        <div class="pm-meta-item"><dt>Location</dt><dd id="pmMetaLoc" contenteditable="false">—</dd></div>
+        <div class="pm-meta-item"><dt>Year</dt><dd id="pmMetaYear" contenteditable="false">2025</dd></div>
+        <div class="pm-meta-item"><dt>Scope</dt><dd id="pmMetaScope" contenteditable="false">Full Interior</dd></div>
+      </div>
+      <div class="pm-content">
+        <p class="pm-desc" id="pmDesc" contenteditable="false">A considered interior shaped around light, material, and the quiet intelligence of proportion. Every surface, every threshold, every shadow was composed to create a space that feels both architecturally precise and deeply personal.</p>
+        <div class="pm-details">
+          <div class="pm-detail-block"><h4>Materials &amp; Palette</h4><p id="pmMaterials" contenteditable="false">Warm oak, brushed brass, natural linen, and polished plaster — a palette built around tactility and restraint.</p></div>
+          <div class="pm-detail-block"><h4>Design Approach</h4><p id="pmApproach" contenteditable="false">Each decision considered light first — how it enters, how it moves, and how it shapes the emotional character of every room.</p></div>
+          <div class="pm-detail-block"><h4>Photography</h4><p id="pmPhoto" contenteditable="false">Interior photography by studio. All images © Teté Design.</p></div>
+        </div>
+      </div>
+      <div class="pm-gallery">
+        <div class="pm-gimg eimg"><img id="pmGImg0" src="" alt="" onerror="this.parentElement.style.display='none'"><button class="img-btn" data-target="pmGImg0"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>Change</button></div>
+        <div class="pm-gimg eimg"><img id="pmGImg1" src="" alt="" onerror="this.parentElement.style.display='none'"><button class="img-btn" data-target="pmGImg1"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>Change</button></div>
+        <div class="pm-gimg eimg"><img id="pmGImg2" src="" alt="" onerror="this.parentElement.style.display='none'"><button class="img-btn" data-target="pmGImg2"><svg viewBox="0 0 24 24"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>Change</button></div>
+      </div>
+      <div class="pm-cta">
+        <button class="pill" id="pmBack">← Back to projects</button>
+        <button class="pill" id="pmRequest">Request similar project</button>
+      </div>
+    </div>
+  </div>
 
   <!-- FOOTER — secret trigger: triple-click the tiny invisible dot after the copyright -->
   <footer>
@@ -858,82 +1032,93 @@
 
     /* ══════════════════════════════════════
        SUBSTACK RSS → JOURNAL
-       Feed: https://tekofm.substack.com/feed
-       Via: rss2json.com free tier (CORS-safe)
+       Uses allorigins.win CORS proxy to fetch
+       raw XML, then parses with DOMParser
     ══════════════════════════════════════ */
-    const RSS = 'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Ftekofm.substack.com%2Ffeed&count=3';
-    const FALLBACK_IMG = 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80';
+    const RSS_URL  = 'https://tekofm.substack.com/feed';
+    const PROXY    = 'https://api.allorigins.win/get?url=' + encodeURIComponent(RSS_URL);
+    const FB_IMG   = 'https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=900&q=80';
 
-    const stripHtml = html => { const d=document.createElement('div'); d.innerHTML=html; return d.textContent||d.innerText||''; };
+    const stripTags = s => { const d=document.createElement('div'); d.innerHTML=s||''; return (d.textContent||d.innerText||'').trim(); };
+    const niceDate  = s => { try { return new Date(s).toLocaleDateString('en-CA',{month:'long',year:'numeric'}); } catch(e){ return s||''; } };
 
-    const fmtDate = str => {
-      try { return new Date(str).toLocaleDateString('en-CA',{month:'long',year:'numeric'}); } catch(e){ return str; }
+    const thumbFrom = item => {
+      /* 1. <media:content url="…"> */
+      const mc = item.querySelector('content');
+      if(mc && mc.getAttribute('url')) return mc.getAttribute('url');
+      /* 2. <enclosure url="…"> */
+      const enc = item.querySelector('enclosure');
+      if(enc && enc.getAttribute('url') && /\.(jpg|jpeg|png|webp)/i.test(enc.getAttribute('url'))) return enc.getAttribute('url');
+      /* 3. first <img> inside description/content:encoded */
+      const raw = item.querySelector('encoded')?.textContent || item.querySelector('description')?.textContent || '';
+      const m   = raw.match(/<img[^>]+src=["']([^"']+)["']/i);
+      if(m) return m[1];
+      return FB_IMG;
     };
 
-    /* extract best thumbnail from feed item */
-    const getThumb = item => {
-      if(item.thumbnail && item.thumbnail.startsWith('http')) return item.thumbnail;
-      /* try to find first img in content */
-      try {
-        const tmp=document.createElement('div'); tmp.innerHTML=item.content||'';
-        const img=tmp.querySelector('img'); if(img&&img.src) return img.src;
-      } catch(e){}
-      /* try enclosure */
-      if(item.enclosure&&item.enclosure.link) return item.enclosure.link;
-      return FALLBACK_IMG;
-    };
-
-    const renderJournal = items => {
+    const renderJournal = xmlStr => {
       const grid = document.getElementById('journalGrid');
       const skel = document.getElementById('journalSkeleton');
+      let doc;
+      try { doc = new DOMParser().parseFromString(xmlStr, 'text/xml'); } catch(e) { throw e; }
+      const items = Array.from(doc.querySelectorAll('channel > item')).slice(0,3);
+      if(!items.length) throw new Error('no items');
+
       grid.innerHTML = '';
-      items.forEach((item,idx) => {
-        const thumb = getThumb(item);
-        const title = item.title || 'Untitled';
-        const desc  = item.description ? stripHtml(item.description).slice(0,120)+'…' : '';
-        const date  = fmtDate(item.pubDate);
-        const link  = item.link || 'https://tekofm.substack.com';
-        const cat   = (item.categories&&item.categories[0]) ? item.categories[0] : 'Substack';
+      items.forEach((item, idx) => {
+        const title  = stripTags(item.querySelector('title')?.textContent);
+        const link   = item.querySelector('link')?.nextSibling?.nodeValue?.trim()
+                    || item.querySelector('link')?.textContent?.trim()
+                    || 'https://tekofm.substack.com';
+        const date   = niceDate(item.querySelector('pubDate')?.textContent);
+        const raw    = item.querySelector('encoded')?.textContent || item.querySelector('description')?.textContent || '';
+        const desc   = stripTags(raw).replace(/\s+/g,' ').slice(0,130) + '…';
+        const thumb  = thumbFrom(item);
+        const cats   = Array.from(item.querySelectorAll('category')).map(c=>c.textContent).filter(Boolean);
+        const cat    = cats[0] || 'Substack';
+
         const art = document.createElement('article');
         art.className = 'art reveal';
+        art.style.opacity = '0';
+        art.style.transform = 'translateY(32px)';
         art.innerHTML = `
           <div class="art-m">
             <a href="${link}" target="_blank" rel="noopener" tabindex="-1">
-              <img src="${thumb}" alt="${title}" onerror="this.src='${FALLBACK_IMG}'" loading="lazy">
+              <img src="${thumb}" alt="" onerror="this.src='${FB_IMG}'" loading="lazy" style="width:100%;height:100%;object-fit:cover">
             </a>
           </div>
           <div class="art-c">
             <div class="sc">${cat}</div>
-            <a href="${link}" target="_blank" rel="noopener"><h3>${title}</h3></a>
-            <p>${desc}</p>
+            <a href="${link}" target="_blank" rel="noopener" style="color:var(--brown)"><h3 style="font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:400;letter-spacing:-.04em;line-height:.96;max-width:14ch">${title}</h3></a>
+            <p style="font-size:13px;color:var(--brown-m);line-height:1.65;max-width:34ch">${desc}</p>
             <div class="art-f">
-              <time>${date}</time>
-              <a class="al" href="${link}" target="_blank" rel="noopener"><span class="aln"></span>Read on Substack</a>
+              <time style="font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--brown-s)">${date}</time>
+              <a class="al" href="${link}" target="_blank" rel="noopener" style="font-size:9px;color:var(--brown)"><span class="aln"></span>Read</a>
             </div>
           </div>`;
         grid.appendChild(art);
-        /* stagger reveal */
+        /* animate in with stagger */
         setTimeout(()=>{
-          const o=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('in');o.unobserve(x.target)}})},{threshold:.1});
-          o.observe(art);
-        }, idx*60);
+          art.style.transition = 'opacity .8s cubic-bezier(.76,0,.24,1), transform .8s cubic-bezier(.76,0,.24,1)';
+          art.style.opacity = '1';
+          art.style.transform = 'none';
+        }, 100 + idx * 120);
       });
+
       skel.style.display = 'none';
       grid.style.display = 'grid';
     };
 
-    fetch(RSS)
-      .then(r=>r.json())
-      .then(data=>{
-        if(data.status==='ok'&&data.items&&data.items.length){
-          renderJournal(data.items.slice(0,3));
-        } else {
-          throw new Error('bad feed');
-        }
+    fetch(PROXY)
+      .then(r => { if(!r.ok) throw new Error(r.status); return r.json(); })
+      .then(data => {
+        if(!data.contents) throw new Error('empty');
+        renderJournal(data.contents);
       })
-      .catch(()=>{
-        document.getElementById('journalSkeleton').style.display='none';
-        document.getElementById('journalError').style.display='block';
+      .catch(err => {
+        console.warn('Substack feed error:', err);
+        document.getElementById('journalSkeleton').style.display = 'none';
+        document.getElementById('journalError').style.display   = 'block';
       });
 
     /* cursor */
@@ -995,22 +1180,23 @@
        EDITOR MODE
        Secret: triple-click the hidden dot in the footer
     ══════════════════════════════ */
-    const eBar=document.getElementById('eBar'),sDot=document.getElementById('sDot');
-    let clicks=0,clkTimer=null,editorOn=false,imgTarget=null;
+    const eBar=document.getElementById('eBar'), sDot=document.getElementById('sDot');
+    const iPop=document.getElementById('iPopup'), iInp=document.getElementById('iInput');
+    let clicks=0, clkTimer=null, editorOn=false, imgTarget=null;
 
     /* toggle editor */
-    const enableEditor=()=>{
-      editorOn=true;
+    const enableEditor = () => {
+      editorOn = true;
       document.body.classList.add('em');
       eBar.classList.add('on');
-      document.querySelectorAll('[contenteditable]').forEach(el=>el.setAttribute('contenteditable','true'));
+      document.querySelectorAll('[contenteditable]').forEach(el => el.setAttribute('contenteditable','true'));
     };
-    const disableEditor=()=>{
-      editorOn=false;
+    const disableEditor = () => {
+      editorOn = false;
       document.body.classList.remove('em');
       eBar.classList.remove('on');
-      document.querySelectorAll('[contenteditable]').forEach(el=>el.setAttribute('contenteditable','false'));
-      document.getElementById('iPopup').classList.remove('show');
+      document.querySelectorAll('[contenteditable]').forEach(el => el.setAttribute('contenteditable','false'));
+      iPop.classList.remove('show');
     };
 
     /* secret trigger */
@@ -1021,39 +1207,147 @@
     });
     document.getElementById('eExit').addEventListener('click',disableEditor);
 
-    /* image swap */
-    const iPop=document.getElementById('iPopup'),iInp=document.getElementById('iInput');
-    document.addEventListener('click',e=>{
-      if(!editorOn)return;
-      const wrap=e.target.closest('.eimg');if(!wrap)return;
-      const ov2=wrap.querySelector('.eov');if(!ov2)return;
-      if(!ov2.contains(e.target)&&e.target!==ov2)return;
-      imgTarget=wrap.querySelector('img');
-      iInp.value='';
-      const wr=wrap.getBoundingClientRect();
-      iPop.style.top=Math.min(e.clientY+12,window.innerHeight-150)+'px';
-      iPop.style.left=Math.min(e.clientX-160,window.innerWidth-360)+'px';
+    /* ══════════════════════════════════════════
+       IMAGE EDITING — simple .img-btn approach
+    ══════════════════════════════════════════ */
+    const openImgPopup = (btn, e) => {
+      const targetId = btn.dataset.target;
+      imgTarget = targetId
+        ? document.getElementById(targetId)
+        : btn.closest('.eimg').querySelector('img');
+      if(!imgTarget) return;
+      iInp.value = '';
+      const x = Math.min(e.clientX - 20, window.innerWidth - 390);
+      const y = Math.min(e.clientY + 14, window.innerHeight - 160);
+      iPop.style.left = Math.max(8, x) + 'px';
+      iPop.style.top  = Math.max(8, y) + 'px';
       iPop.classList.add('show');
-      setTimeout(()=>iInp.focus(),50);
+      setTimeout(() => iInp.focus(), 40);
+      e.stopPropagation();
+    };
+
+    /* delegate all .img-btn clicks */
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('.img-btn');
+      if(btn) { openImgPopup(btn, e); return; }
+      /* close popup if clicking outside */
+      if(!iPop.contains(e.target)) iPop.classList.remove('show');
     });
-    document.getElementById('iApply').addEventListener('click',()=>{
-      const u=iInp.value.trim();
-      if(u&&imgTarget){ imgTarget.src=u; saveAll(); }
-      iPop.classList.remove('show');imgTarget=null;
+
+    document.getElementById('iApply').addEventListener('click', () => {
+      const u = iInp.value.trim();
+      if(u && imgTarget){ imgTarget.src = u; dSave(); }
+      iPop.classList.remove('show'); imgTarget = null;
     });
-    iInp.addEventListener('keydown',e=>{if(e.key==='Enter')document.getElementById('iApply').click();if(e.key==='Escape')document.getElementById('iCancel').click()});
-    document.getElementById('iCancel').addEventListener('click',()=>{iPop.classList.remove('show');imgTarget=null});
+    iInp.addEventListener('keydown', e => {
+      if(e.key === 'Enter')  document.getElementById('iApply').click();
+      if(e.key === 'Escape') { iPop.classList.remove('show'); imgTarget = null; }
+    });
+    document.getElementById('iCancel').addEventListener('click', () => {
+      iPop.classList.remove('show'); imgTarget = null;
+    });
+
+    /* ══════════════════════════════════════════
+       PROJECT DETAIL MODAL
+    ══════════════════════════════════════════ */
+    const pm      = document.getElementById('projModal');
+    const pmClose = document.getElementById('pmClose');
+    const pmBack  = document.getElementById('pmBack');
+    const pmReq   = document.getElementById('pmRequest');
+
+    const openProjModal = (article) => {
+      const d = article.dataset;
+      const heroSrc = article.querySelector('.pm')?.src || '';
+      const gallery = (d.gallery || '').split(',').map(s=>s.trim()).filter(Boolean);
+
+      /* fill header */
+      document.getElementById('pmCat').textContent      = d.cat || '';
+      document.getElementById('pmBarTitle').textContent = d.title || '';
+
+      /* hero */
+      document.getElementById('pmHeroImg').src   = heroSrc;
+      document.getElementById('pmHeroTitle').innerHTML =
+        (d.title||'').replace(/(\s)(\S+)$/, '$1<em>$2</em>');
+
+      /* meta */
+      document.getElementById('pmMetaCat').textContent   = d.cat   || '—';
+      document.getElementById('pmMetaLoc').textContent   = d.loc   || '—';
+      document.getElementById('pmMetaYear').textContent  = d.year  || '—';
+
+      /* description & details */
+      document.getElementById('pmDesc').textContent      = d.desc      || '';
+      document.getElementById('pmMaterials').textContent = d.materials || '';
+      document.getElementById('pmApproach').textContent  = d.approach  || '';
+
+      /* gallery */
+      ['pmGImg0','pmGImg1','pmGImg2'].forEach((id,i) => {
+        const el = document.getElementById(id);
+        const src = gallery[i] || heroSrc;
+        el.src = src;
+        el.parentElement.style.display = src ? '' : 'none';
+      });
+
+      pm.classList.add('open');
+      pm.scrollTop = 0;
+      document.body.style.overflow = 'hidden';
+
+      /* in editor mode, enable contenteditable in modal */
+      if(editorOn){
+        pm.querySelectorAll('[contenteditable]').forEach(el=>el.setAttribute('contenteditable','true'));
+      }
+    };
+
+    const closeProjModal = () => {
+      pm.classList.remove('open');
+      document.body.style.overflow = '';
+    };
+
+    pmClose.addEventListener('click', closeProjModal);
+    pmBack.addEventListener('click', closeProjModal);
+    pmReq.addEventListener('click', () => { closeProjModal(); openModal(); });
+
+    /* "View project" buttons on project rows */
+    document.addEventListener('click', e => {
+      const btn = e.target.closest('.view-proj-btn');
+      if(!btn) return;
+      const article = btn.closest('.project-row');
+      if(article) openProjModal(article);
+    });
+
+    /* hlabel (the circle) also opens modal */
+    document.addEventListener('click', e => {
+      const lbl = e.target.closest('.hlabel');
+      if(!lbl) return;
+      const article = lbl.closest('.project-row');
+      if(article) openProjModal(article);
+    });
+
+    /* close on Escape */
+    document.addEventListener('keydown', e => {
+      if(e.key === 'Escape'){
+        if(pm.classList.contains('open')){ closeProjModal(); return; }
+        if(editorOn) disableEditor();
+      }
+    });
 
     /* add project */
-    const makeProject=n=>{
-      const art=document.createElement('article');
-      art.className='project-row ph';
-      const num2=String(n).padStart(2,'0');
-      art.innerHTML=`
-        <button class="del-btn"><svg viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke="currentColor"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
+    const makeProject = n => {
+      const num2 = String(n).padStart(2,'0');
+      const art  = document.createElement('article');
+      art.className = 'project-row ph';
+      art.dataset.title     = 'New Project Title';
+      art.dataset.cat       = 'Category';
+      art.dataset.loc       = 'Location';
+      art.dataset.year      = '2025';
+      art.dataset.desc      = 'Describe your project here — atmosphere, materials, and the story behind the space.';
+      art.dataset.materials = 'List your materials and palette here.';
+      art.dataset.approach  = 'Describe your design approach here.';
+      art.dataset.gallery   = 'https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1200&q=80,https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1200&q=80,https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80';
+      art.innerHTML = `
+        <button class="del-btn" title="Remove"><svg viewBox="0 0 24 24" stroke-width="1.5" fill="none" stroke="currentColor"><path d="M18 6 6 18M6 6l12 12"/></svg></button>
         <div class="piw eimg">
           <img class="pm" src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1800&q=80" alt="">
-          <div class="eov"><div class="eov-inner"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg><span>Change image</span></div></div>
+          <button class="img-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>Change image</button>
         </div>
         <div class="pc">
           <div class="pnum" contenteditable="true">${num2} — New project</div>
@@ -1061,22 +1355,32 @@
             <h2 class="pt" contenteditable="true">New Project Title</h2>
             <div class="pm2">
               <div class="sc li" contenteditable="true">Category · Location</div>
-              <p contenteditable="true">Describe your project — atmosphere, materials, and the story behind the space.</p>
-              <a class="al" href="#contact"><span class="aln"></span>View project</a>
+              <p contenteditable="true">Describe your project briefly here.</p>
+              <button class="al view-proj-btn" style="background:none;border:none;cursor:pointer;padding:0;font:inherit;color:var(--linen)"><span class="aln"></span>View project</button>
             </div>
           </div>
         </div>
         <div class="hlabel">View<br>Project</div>`;
-      art.querySelector('.del-btn').addEventListener('click',()=>{if(confirm('Remove this project?'))art.remove()});
+      art.querySelector('.del-btn').addEventListener('click', () => { if(confirm('Remove this project?')) art.remove(); });
       return art;
     };
 
-    document.getElementById('addProjBtn').addEventListener('click',()=>{
-      const list=document.getElementById('projList');
-      const n=list.querySelectorAll('.project-row').length+1;
-      const card=makeProject(n);
-      list.insertBefore(card,document.getElementById('addProjBtn'));
-      card.scrollIntoView({behavior:'smooth',block:'center'});
+    document.getElementById('addProjBtn').addEventListener('click', () => {
+      const list   = document.getElementById('projList');
+      const btn    = document.getElementById('addProjBtn');
+      const n      = list.querySelectorAll('.project-row').length + 1;
+      const card   = makeProject(n);
+      /* insert before the button, which lives inside projList */
+      list.insertBefore(card, btn);
+      /* small animation */
+      card.style.opacity = '0';
+      card.style.transform = 'translateY(30px)';
+      requestAnimationFrame(() => {
+        card.style.transition = 'opacity .6s ease, transform .6s ease';
+        card.style.opacity = '1';
+        card.style.transform = 'none';
+      });
+      setTimeout(() => card.scrollIntoView({ behavior:'smooth', block:'center' }), 50);
     });
 
     /* wire up existing delete buttons */
@@ -1107,7 +1411,6 @@
       }
     });
 
-    document.addEventListener('keydown',e=>{ if(e.key==='Escape'&&editorOn) disableEditor(); });
   })();
   </script>
 </body>
