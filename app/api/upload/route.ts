@@ -35,7 +35,10 @@ export async function POST(request: NextRequest) {
     const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
     // Upload to Vercel Blob with public access
-    const blob = await put(`uploads/${filename}`, file);
+    const blob = await put(`uploads/${filename}`, file, {
+      access: 'public',
+      addRandomSuffix: false,
+    });
 
     return NextResponse.json({
       url: blob.url,

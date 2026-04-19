@@ -2,6 +2,7 @@
 
 import { Project } from '@/lib/types';
 import FadeIn from './FadeIn';
+import Link from 'next/link';
 
 interface ProjectsSectionProps {
   projects: Project[];
@@ -27,48 +28,41 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
 
             return (
               <FadeIn key={project.slug} delay={80 * index} clip>
-                <article className="project-row project-h">
-                  <div className="project-row-img-wrap">
-                    <img
-                      src={img1}
-                      alt={project.title}
-                      className="img-1"
-                      data-lightbox={index}
-                      data-i={0}
-                      loading={index === 0 ? "eager" : "lazy"}
-                      fetchPriority={index === 0 ? "high" : "auto"}
-                    />
-                    {img2 && img2 !== img1 && (
+                <Link href={`/projects/${project.slug}`} className="project-row-link">
+                  <article className="project-row project-h">
+                    <div className="project-row-img-wrap">
                       <img
-                        src={img2}
+                        src={img1}
                         alt={project.title}
-                        className="img-2"
-                        data-lightbox={index}
-                        data-i={1}
-                        loading="lazy"
+                        className="img-1"
+                        loading={index === 0 ? "eager" : "lazy"}
+                        fetchPriority={index === 0 ? "high" : "auto"}
                       />
-                    )}
-                  </div>
-                  <div className="hover-label">View<br/>Project</div>
-                  <div className="project-content">
-                    <div className="project-num">{String(index + 1).padStart(2, '0')} — {project.subtitle || 'Project'}</div>
-                    <div className="project-bottom">
-                      <h2 className="project-title">{project.title}</h2>
-                      <div className="project-meta">
-                        <div className="smallcaps light">{project.location || 'Toronto'} · {project.year || '2025'}</div>
-                        <p>{project.description || ''}</p>
-                        <a
-                          className="arrow-link"
-                          href="#"
-                          data-lightbox={index}
-                          data-i={0}
-                        >
-                          <span className="al-line" />View project
-                        </a>
+                      {img2 && img2 !== img1 && (
+                        <img
+                          src={img2}
+                          alt={project.title}
+                          className="img-2"
+                          loading="lazy"
+                        />
+                      )}
+                    </div>
+                    <div className="hover-label">View<br/>Project</div>
+                    <div className="project-content">
+                      <div className="project-num">{String(index + 1).padStart(2, '0')} — {project.subtitle || 'Project'}</div>
+                      <div className="project-bottom">
+                        <h2 className="project-title">{project.title}</h2>
+                        <div className="project-meta">
+                          <div className="smallcaps light">{project.location || 'Toronto'} · {project.year || '2025'}</div>
+                          <p>{project.description || ''}</p>
+                          <span className="arrow-link">
+                            <span className="al-line" />View project
+                          </span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </article>
+                  </article>
+                </Link>
               </FadeIn>
             );
           })}

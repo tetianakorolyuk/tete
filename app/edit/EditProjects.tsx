@@ -24,19 +24,28 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
     setSaving(true);
     setMessage(null);
     try {
-      const result = await saveProjectsAction(projects);
-      if (result.success) {
-        setMessage({ type: 'success', text: 'Projects saved! Refreshing...' });
-        router.refresh(); // Refresh the page to show updated data
+      // Try the new GitHub save API first
+      const res = await fetch('/api/save', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ projects }),
+      });
+      const data = await res.json();
+
+      if (data.success || data.message) {
+        setMessage({ type: 'success', text: data.message || 'Saved!' });
+        // Wait a moment then refresh
+        await new Promise(r => setTimeout(r, 1000));
+        router.refresh();
       } else {
-        setMessage({ type: 'error', text: result.error || 'Failed to save' });
+        setMessage({ type: 'error', text: data.error || 'Failed to save' });
       }
     } catch (e) {
       console.error(e);
       setMessage({ type: 'error', text: 'Failed to save projects' });
     }
     setSaving(false);
-    setTimeout(() => setMessage(null), 3000);
+    setTimeout(() => setMessage(null), 5000);
   };
 
   const addProject = () => {
