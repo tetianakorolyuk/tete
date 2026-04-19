@@ -1,8 +1,9 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useCallback } from 'react';
 import { Project, Fact } from '@/lib/types';
 import { saveProjectsAction } from './actions';
+import { generateDescriptionAction, generateFactsAction } from './ai-actions';
 
 interface EditProjectsProps {
   initialProjects: Project[];
@@ -13,6 +14,9 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
   const [editingSlug, setEditingSlug] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [uploadingImage, setUploadingImage] = useState<number | null>(null);
+  const [generatingAI, setGeneratingAI] = useState<{ type: string; slug: string } | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleSave = async () => {
     setSaving(true);
@@ -55,6 +59,14 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
 
   const updateProject = (slug: string, updates: Partial<Project>) => {
     setProjects(projects.map((p) => (p.slug === slug ? { ...p, ...updates } : p)));
+  };
+
+  const moveProject = (index: number, direction: 'up' | 'down') => {
+    const newIndex = direction === 'up' ? index - 1 : index + 1;
+    if (newIndex < 0 || newIndex >= projects.length) return;
+    const newProjects = [...projects];
+    [newProjects[index], newProjects[newIndex]] = [newProjects[newIndex], newProjects[index]];
+    setProjects(newProjects);
   };
 
   const addFact = (slug: string) => {
@@ -112,6 +124,70 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
     );
   };
 
+  const handleImageUpload = useCallback(async (slug: string, imageIndex: number, file: File) => {
+    setUploadingImage(imageIndex);
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await res.json();
+      if (data.url) {
+        updateImage(slug, imageIndex, data.url);
+        setMessage({ type: 'success', text: 'Image uploaded!' });
+        setTimeout(() => setMessage(null), 2000);
+      } else {
+        setMessage({ type: 'error', text: data.error || 'Upload failed' });
+        setTimeout(() => setMessage(null), 3000);
+      }
+    } catch {
+      setMessage({ type: 'error', text: 'Upload failed' });
+      setTimeout(() => setMessage(null), 3000);
+    }
+    setUploadingImage(null);
+  }, []);
+
+  const handleAIGenerateDescription = useCallback(async (slug: string) => {
+    const project = projects.find((p) => p.slug === slug);
+    if (!project) return;
+
+    setGeneratingAI({ type: 'description', slug });
+    const result = await generateDescriptionAction(
+      project.title,
+      project.subtitle || '',
+      project.facts || []
+    );
+    if (result.success && result.description) {
+      updateProject(slug, { description: result.description });
+      setMessage({ type: 'success', text: 'Description generated!' });
+      setTimeout(() => setMessage(null), 2000);
+    } else {
+      setMessage({ type: 'error', text: result.error || 'Failed to generate' });
+      setTimeout(() => setMessage(null), 3000);
+    }
+    setGeneratingAI(null);
+  }, [projects]);
+
+  const handleAIGenerateFacts = useCallback(async (slug: string) => {
+    const project = projects.find((p) => p.slug === slug);
+    if (!project) return;
+
+    setGeneratingAI({ type: 'facts', slug });
+    const result = await generateFactsAction(project.title, project.description || '');
+    if (result.success && result.facts) {
+      updateProject(slug, { facts: result.facts });
+      setMessage({ type: 'success', text: 'Facts generated!' });
+      setTimeout(() => setMessage(null), 2000);
+    } else {
+      setMessage({ type: 'error', text: result.error || 'Failed to generate' });
+      setTimeout(() => setMessage(null), 3000);
+    }
+    setGeneratingAI(null);
+  }, [projects]);
+
   return (
     <div className="space-y-6">
       <div className="flex items-center justify-between">
@@ -139,10 +215,27 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
       </div>
 
       <div className="space-y-4">
-        {projects.map((project) => (
+        {projects.map((project, index) => (
           <div key={project.slug} className="border border-[var(--line2)] bg-white p-6">
             <div className="flex items-start justify-between mb-4">
               <div className="flex-1">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-xs text-[var(--muted)] uppercase tracking-wider">#{index + 1}</span>
+                  <button
+                    onClick={() => moveProject(index, 'up')}
+                    disabled={index === 0}
+                    className="px-2 py-1 text-xs border border-[var(--line)] disabled:opacity-30 hover:border-[var(--accent)]"
+                  >
+                    ↑
+                  </button>
+                  <button
+                    onClick={() => moveProject(index, 'down')}
+                    disabled={index === projects.length - 1}
+                    className="px-2 py-1 text-xs border border-[var(--line)] disabled:opacity-30 hover:border-[var(--accent)]"
+                  >
+                    ↓
+                  </button>
+                </div>
                 <input
                   type="text"
                   value={project.title}
@@ -213,11 +306,22 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
                   </div>
                 </div>
 
-                {/* Description */}
+                {/* Description with AI */}
                 <div>
-                  <label className="block text-xs uppercase tracking-wider text-[var(--muted)] mb-1">
-                    Description
-                  </label>
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="block text-xs uppercase tracking-wider text-[var(--muted)]">
+                      Description
+                    </label>
+                    <button
+                      onClick={() => handleAIGenerateDescription(project.slug)}
+                      disabled={generatingAI?.slug === project.slug}
+                      className="text-xs px-2 py-1 bg-[var(--accent)] text-white rounded disabled:opacity-50"
+                    >
+                      {generatingAI?.type === 'description' && generatingAI?.slug === project.slug
+                        ? 'Generating...'
+                        : '✨ AI Generate'}
+                    </button>
+                  </div>
                   <textarea
                     value={project.description || ''}
                     onChange={(e) => updateProject(project.slug, { description: e.target.value })}
@@ -226,14 +330,17 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
                   />
                 </div>
 
-                {/* Images */}
+                {/* Images with Upload */}
                 <div>
                   <label className="block text-xs uppercase tracking-wider text-[var(--muted)] mb-2">
-                    Images (URLs)
+                    Images
                   </label>
                   <div className="space-y-2">
                     {project.images?.map((img, i) => (
                       <div key={i} className="flex items-center gap-2">
+                        {img && (
+                          <img src={img} alt="" className="w-12 h-12 object-cover border" />
+                        )}
                         <input
                           type="text"
                           value={img}
@@ -241,6 +348,23 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
                           className="flex-1 px-3 py-2 border border-[var(--line)] text-sm focus:outline-none focus:border-[var(--accent)]"
                           placeholder={`Image ${i + 1} URL`}
                         />
+                        <input
+                          type="file"
+                          ref={fileInputRef}
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) handleImageUpload(project.slug, i, file);
+                          }}
+                          className="hidden"
+                          accept="image/*"
+                        />
+                        <button
+                          onClick={() => fileInputRef.current?.click()}
+                          disabled={uploadingImage === i}
+                          className="px-2 py-2 text-xs border border-[var(--line)] hover:border-[var(--accent)] disabled:opacity-50"
+                        >
+                          {uploadingImage === i ? '...' : 'Upload'}
+                        </button>
                         <button
                           onClick={() => deleteImage(project.slug, i)}
                           className="px-2 py-2 text-xs text-red-600 border border-transparent hover:border-red-600"
@@ -258,11 +382,22 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
                   </div>
                 </div>
 
-                {/* Facts */}
+                {/* Facts with AI */}
                 <div>
-                  <label className="block text-xs uppercase tracking-wider text-[var(--muted)] mb-2">
-                    Facts / Details
-                  </label>
+                  <div className="flex items-center justify-between mb-2">
+                    <label className="block text-xs uppercase tracking-wider text-[var(--muted)]">
+                      Facts / Details
+                    </label>
+                    <button
+                      onClick={() => handleAIGenerateFacts(project.slug)}
+                      disabled={generatingAI?.slug === project.slug}
+                      className="text-xs px-2 py-1 bg-[var(--accent)] text-white rounded disabled:opacity-50"
+                    >
+                      {generatingAI?.type === 'facts' && generatingAI?.slug === project.slug
+                        ? 'Generating...'
+                        : '✨ AI Generate'}
+                    </button>
+                  </div>
                   <div className="space-y-2">
                     {project.facts?.map((fact, i) => (
                       <div key={i} className="flex items-center gap-2">

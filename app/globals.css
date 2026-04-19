@@ -57,6 +57,83 @@ a:hover {
   background: rgba(255, 149, 0, 0.25);
 }
 
+/* Loading Screen */
+.loader-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.loader-logo {
+  font-family: 'Roboto Slab', serif;
+  font-size: 56px;
+  font-weight: 300;
+  letter-spacing: 0.2px;
+  color: var(--ink);
+  animation: logoFadeIn 0.8s ease-out;
+}
+
+.loader-line {
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  animation: lineExpand 0.6s ease-out 0.4s forwards;
+}
+
+@keyframes logoFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes lineExpand {
+  to {
+    width: 60px;
+  }
+}
+
+/* Fade In Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in-up {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0d0c0a;
+    --ink: #f5f3f0;
+    --muted: #8a8580;
+    --line: rgba(245, 243, 240, 0.14);
+    --line2: rgba(245, 243, 240, 0.08);
+    --accent: #ff9500;
+    --soft: #1a1815;
+  }
+}
+
 .wrap {
   max-width: 1120px;
   margin: 0 auto;
@@ -787,6 +864,26 @@ img {
 
 .lbCaption {
   opacity: 0.88;
+}
+
+/* Theme Toggle */
+.themeToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.42);
+  border-radius: 0;
+  cursor: pointer;
+  color: var(--ink);
+  transition: border-color 0.2s, background-color 0.2s;
+}
+
+.themeToggle:hover {
+  border-color: rgba(255, 149, 0, 0.55);
+  background: rgba(255, 255, 255, 0.6);
 }
 
 /* Responsive */

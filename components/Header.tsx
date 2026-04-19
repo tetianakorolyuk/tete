@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import ThemeToggle from './ThemeToggle';
 
 export default function Header() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -29,6 +30,15 @@ export default function Header() {
               Email
             </a>
 
+            <a href="/edit" className="themeToggle" title="Edit site" aria-label="Edit site">
+              <svg viewBox="0 0 24 24" fill="none" className="w-5 h-5">
+                <path d="M12 20h9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </a>
+
+            <ThemeToggle />
+
             <button
               className="hamburger"
               type="button"
@@ -52,6 +62,7 @@ export default function Header() {
               <a href="#journal" onClick={() => setMobileOpen(false)}>Journal</a>
               <a href="#contact" onClick={() => setMobileOpen(false)}>Contact</a>
               <a href="mailto:tetiana.korolyuk@gmail.com">Email</a>
+              <a href="/edit">Edit Site</a>
             </div>
           )}
         </nav>

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
+import { ThemeProvider } from "@/components/ThemeProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -15,6 +16,23 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "tete — interior design",
   description: "Minimal interior design portfolio. Selected works, journal, and contact.",
+  keywords: ["interior design", "Toronto", "minimal", "portfolio", "residential design"],
+  authors: [{ name: "Tetyana Korolyuk" }],
+  openGraph: {
+    title: "tete — interior design",
+    description: "Minimal interior design portfolio. Selected works, journal, and contact.",
+    type: "website",
+    locale: "en_US",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "tete — interior design",
+    description: "Minimal interior design portfolio. Selected works, journal, and contact.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
 };
 
 export default function RootLayout({
@@ -23,10 +41,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -35,8 +50,10 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="min-h-full flex flex-col">
-        {children}
+      <body className="min-h-full flex flex-col antialiased">
+        <ThemeProvider>
+          {children}
+        </ThemeProvider>
       </body>
     </html>
   );
