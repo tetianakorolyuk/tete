@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     description: "Interior design with a cinematic, architectural point of view.",
     type: "website",
     locale: "en_US",
-    url: "https://thetestestudio.com",
+    url: "https://thetetestudio.com",
     siteName: "TETÉ",
     images: [
       {
