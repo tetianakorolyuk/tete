@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { checkAuth } from '@/lib/auth';
-import { put, download } from '@vercel/blob';
+import { put } from '@vercel/blob';
 
 export async function POST(request: NextRequest) {
   try {
@@ -34,17 +34,11 @@ export async function POST(request: NextRequest) {
     const ext = file.name.split('.').pop() || 'jpg';
     const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
-    // Upload with private access, then get download URL
-    const blob = await put(`uploads/${filename}`, file, {
-      access: 'private',
-      addRandomSuffix: false,
-    });
-
-    // Get the download URL (works for private blobs)
-    const downloadUrl = await download(blob.pathname);
+    // Upload to Vercel Blob with public access
+    const blob = await put(`uploads/${filename}`, file);
 
     return NextResponse.json({
-      url: downloadUrl.toString(),
+      url: blob.url,
       filename: blob.pathname,
       size: file.size,
     });
