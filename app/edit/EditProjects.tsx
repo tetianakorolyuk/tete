@@ -139,17 +139,20 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
         body: formData,
       });
       const data = await res.json();
+      console.log('Upload response:', data);
       if (data.url) {
         updateImage(slug, imageIndex, data.url);
         setMessage({ type: 'success', text: 'Image uploaded!' });
         setTimeout(() => setMessage(null), 2000);
       } else {
+        console.error('Upload failed:', data.error);
         setMessage({ type: 'error', text: data.error || 'Upload failed' });
-        setTimeout(() => setMessage(null), 3000);
+        setTimeout(() => setMessage(null), 5000);
       }
-    } catch {
-      setMessage({ type: 'error', text: 'Upload failed' });
-      setTimeout(() => setMessage(null), 3000);
+    } catch (err) {
+      console.error('Upload error:', err);
+      setMessage({ type: 'error', text: 'Upload failed. Check console for details.' });
+      setTimeout(() => setMessage(null), 5000);
     }
     setUploadingImage(null);
   }, []);
