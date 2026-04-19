@@ -14,7 +14,7 @@ export default function Hero({ projects }: HeroProps) {
 
   const intervalMs = 4800;
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const progressRef = useRef<NodeJS.Timeout | null>(null);
+  const progressRef = useRef<number | null>(null);
 
   const slides = projects.flatMap((p) =>
     (p.images || []).map((src) => ({ src }))
