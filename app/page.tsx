@@ -10,6 +10,8 @@ import Cursor from '@/components/Cursor';
 import Preloader from '@/components/Preloader';
 import MarqueeStrip from '@/components/MarqueeStrip';
 import ScrollReveal from '@/components/ScrollReveal';
+import BackToTop from '@/components/BackToTop';
+import ScrollProgress from '@/components/ScrollProgress';
 
 export default async function Home() {
   const projects = await getProjects();
@@ -18,6 +20,7 @@ export default async function Home() {
     <>
       <Cursor />
       <Preloader />
+      <ScrollProgress />
       <ScrollReveal />
       <Header />
       <main id="content">
@@ -29,6 +32,7 @@ export default async function Home() {
       </main>
       <Footer />
       <Lightbox projects={projects} />
+      <BackToTop />
     </>
   );
 }
