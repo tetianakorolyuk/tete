@@ -7,14 +7,15 @@ const geistMono = undefined;
 export const metadata: Metadata = {
   title: "TETÉ — Interior Design | Toronto",
   description: "Interior design with a cinematic, architectural point of view. Toronto-based studio creating calm but dramatic spaces.",
-  keywords: ["interior design", "Toronto", "residential", "luxury", "minimal", "Tatiana Koroliuk"],
+  keywords: ["interior design", "Toronto", "residential", "luxury", "minimal", "Tatiana Koroliuk", "thetestestudio"],
   authors: [{ name: "Tatiana Koroliuk" }],
   openGraph: {
     title: "TETÉ — Interior Design",
     description: "Interior design with a cinematic, architectural point of view.",
     type: "website",
     locale: "en_US",
-    url: "https://tetiana-korolyuk.vercel.app",
+    url: "https://thetestestudio.com",
+    siteName: "TETÉ",
     images: [
       {
         url: "/og.jpg",
@@ -33,6 +34,10 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+  },
+  icons: {
+    icon: "/favicon.svg",
+    apple: "/favicon.svg",
   },
 };
 

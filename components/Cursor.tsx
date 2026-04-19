@@ -1,37 +1,39 @@
 'use client';
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 
 export default function Cursor() {
-  const [mounted, setMounted] = useState(false);
-  const [isHovering, setIsHovering] = useState(false);
-  const [clickRipple, setClickRipple] = useState<{ x: number; y: number; id: number }[]>([]);
-
   const dotRef = useRef<HTMLDivElement>(null);
   const ringRef = useRef<HTMLDivElement>(null);
   const mousePos = useRef({ x: -100, y: -100 });
   const ringPos = useRef({ x: -100, y: -100 });
   const frameRef = useRef<number>(0);
+  const isHovering = useRef(false);
 
   useEffect(() => {
-    setMounted(true);
-
     const handleMouseMove = (e: MouseEvent) => {
       mousePos.current = { x: e.clientX, y: e.clientY };
     };
 
     const handleClick = (e: MouseEvent) => {
-      const id = Date.now();
-      setClickRipple((prev) => [...prev, { x: e.clientX, y: e.clientY, id }]);
-      setTimeout(() => {
-        setClickRipple((prev) => prev.filter((r) => r.id !== id));
-      }, 600);
+      // Add click ripple
+      const ripple = document.createElement('div');
+      ripple.className = 'click-ripple';
+      ripple.style.left = e.clientX + 'px';
+      ripple.style.top = e.clientY + 'px';
+      document.body.appendChild(ripple);
+      setTimeout(() => ripple.remove(), 600);
     };
 
     const checkHover = () => {
       const el = document.elementFromPoint(mousePos.current.x, mousePos.current.y);
-      const isInteractive = el?.closest('a, button, [data-lightbox], input, textarea, [role="button"]');
-      setIsHovering(!!isInteractive);
+      const wasHovering = isHovering.current;
+      isHovering.current = !!el?.closest('a, button, [data-lightbox], input, textarea, [role="button"]');
+
+      if (wasHovering !== isHovering.current) {
+        dotRef.current?.classList.toggle('is-hovering', isHovering.current);
+        ringRef.current?.classList.toggle('is-hovering', isHovering.current);
+      }
     };
 
     const animate = () => {
@@ -66,42 +68,10 @@ export default function Cursor() {
     };
   }, []);
 
-  if (!mounted) return null;
-
   return (
     <>
-      <div
-        ref={dotRef}
-        className="cursor-dot"
-        id="cursorDot"
-        style={{
-          pointerEvents: 'none',
-          width: isHovering ? '16px' : '8px',
-          height: isHovering ? '16px' : '8px',
-          background: isHovering ? 'var(--brown)' : 'var(--apricot)',
-        }}
-      />
-      <div
-        ref={ringRef}
-        className="cursor-ring"
-        id="cursorRing"
-        style={{
-          pointerEvents: 'none',
-          width: isHovering ? '60px' : '40px',
-          height: isHovering ? '60px' : '40px',
-          borderColor: isHovering ? 'var(--brown)' : 'var(--apricot)',
-        }}
-      />
-      {clickRipple.map((ripple) => (
-        <div
-          key={ripple.id}
-          className="click-ripple"
-          style={{
-            left: ripple.x,
-            top: ripple.y,
-          }}
-        />
-      ))}
+      <div ref={dotRef} className="cursor-dot" />
+      <div ref={ringRef} className="cursor-ring" />
     </>
   );
 }

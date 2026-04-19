@@ -87,18 +87,24 @@ body::before {
 }
 
 /* Custom cursor - premium smooth tracking */
+.cursor-dot,
+.cursor-ring {
+  /* Positions set via JS for 60fps */
+  position: fixed;
+  pointer-events: none;
+  z-index: 99999;
+  will-change: transform;
+  mix-blend-mode: multiply;
+}
+
 .cursor-dot {
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: var(--apricot);
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 99999;
-  pointer-events: none;
-  will-change: transform;
-  mix-blend-mode: multiply;
+  transition: width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              height 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              background 0.3s ease;
 }
 
 .cursor-ring {
@@ -106,24 +112,26 @@ body::before {
   height: 40px;
   border-radius: 50%;
   border: 1px solid var(--apricot);
-  position: fixed;
-  top: 0;
-  left: 0;
   z-index: 99998;
-  pointer-events: none;
-  will-change: transform;
-  mix-blend-mode: multiply;
-  opacity: 0.8;
+  opacity: 0.6;
+  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              height 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+              border-color 0.3s ease,
+              opacity 0.3s ease;
 }
 
-.cursor-dot.hover,
-.cursor-ring.hover {
-  transform: translate(-50%, -50%) scale(1.5);
+/* Hover state applied via JS */
+.cursor-dot.is-hovering {
+  width: 16px;
+  height: 16px;
+  background: var(--brown);
 }
 
-.cursor-ring.hover {
+.cursor-ring.is-hovering {
+  width: 60px;
+  height: 60px;
   border-color: var(--brown);
-  opacity: 0.5;
+  opacity: 0.4;
 }
 
 @media (hover: none) {
