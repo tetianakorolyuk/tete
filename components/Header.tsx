@@ -3,13 +3,11 @@
 import { useState, useEffect } from 'react';
 
 export default function Header() {
-  const [mobileOpen, setMobileOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [mobileOpen, setMobileOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 60);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
@@ -17,39 +15,42 @@ export default function Header() {
   return (
     <>
       <header className={`header ${scrolled ? 'scrolled' : ''}`}>
-        <a href="/" className="brand">TETÉ.</a>
-        <nav className="nav">
+        <a href="/" className="header-brand">TETÉ.</a>
+        <nav className="header-nav">
           <a href="#projects">Projects</a>
+          <a href="#about">About</a>
           <a href="#journal">Journal</a>
           <a href="#contact">Contact</a>
         </nav>
-        <div className="navRight">
-          <a className="iconLink" href="mailto:tetiana.korolyuk@gmail.com" aria-label="Email">
-            <svg className="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" strokeWidth="1.5"/>
-              <polyline points="22,6 12,13 2,6" stroke="currentColor" strokeWidth="1.5"/>
-            </svg>
-            Contact
-          </a>
-          <button
-            className={`hamburger ${scrolled ? 'scrolled' : ''} ${mobileOpen ? 'active' : ''}`}
-            type="button"
-            onClick={() => setMobileOpen(!mobileOpen)}
-            aria-label="Toggle menu"
-          >
-            <span></span>
-            <span></span>
-            <span></span>
-          </button>
-        </div>
+        <a href="#contact" className="header-cta">Start a Project</a>
+        <button
+          className="mobile-toggle"
+          onClick={() => setMobileOpen(!mobileOpen)}
+          aria-label="Toggle menu"
+        >
+          <span />
+          <span />
+          <span />
+        </button>
       </header>
 
-      <div className={`mobilePanel ${mobileOpen ? 'open' : ''}`}>
-        <a href="#projects" onClick={() => setMobileOpen(false)}>Projects</a>
-        <a href="#journal" onClick={() => setMobileOpen(false)}>Journal</a>
-        <a href="#contact" onClick={() => setMobileOpen(false)}>Contact</a>
-        <a href="mailto:tetiana.korolyuk@gmail.com">Email</a>
-      </div>
+      {mobileOpen && (
+        <div style={{
+          position: 'fixed',
+          inset: 0,
+          background: 'var(--bg-dark)',
+          zIndex: 999,
+          padding: '100px 24px 24px',
+          display: 'flex',
+          flexDirection: 'column',
+          gap: '24px',
+        }}>
+          <a href="#projects" onClick={() => setMobileOpen(false)} style={{ fontSize: '24px', color: '#fff' }}>Projects</a>
+          <a href="#about" onClick={() => setMobileOpen(false)} style={{ fontSize: '24px', color: '#fff' }}>About</a>
+          <a href="#journal" onClick={() => setMobileOpen(false)} style={{ fontSize: '24px', color: '#fff' }}>Journal</a>
+          <a href="#contact" onClick={() => setMobileOpen(false)} style={{ fontSize: '24px', color: '#fff' }}>Contact</a>
+        </div>
+      )}
     </>
   );
 }

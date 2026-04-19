@@ -69,15 +69,15 @@ export default function ContactForm() {
 
   if (submitted) {
     return (
-      <div className="contact-form-success">
+      <div className="form-success">
         <div className="success-icon">
-          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M20 6L9 17l-5-5" />
           </svg>
         </div>
         <h3>Thank you!</h3>
         <p>Your request has been sent. We'll get back to you within 24 hours.</p>
-        <button onClick={() => setSubmitted(false)} className="new-request-btn">
+        <button onClick={() => setSubmitted(false)} className="submit-btn" style={{ maxWidth: 200, marginTop: 20 }}>
           Send another request
         </button>
       </div>
@@ -88,7 +88,7 @@ export default function ContactForm() {
     <form className="contact-form" onSubmit={handleSubmit}>
       <div className="form-grid">
         <div className="form-group">
-          <label htmlFor="name">Your Name *</label>
+          <label htmlFor="name">Name *</label>
           <input
             type="text"
             id="name"
@@ -186,7 +186,7 @@ export default function ContactForm() {
         />
       </div>
 
-      {error && <div className="form-error">{error}</div>}
+      {error && <div style={{ color: '#dc2626', fontSize: 13, marginTop: 12 }}>{error}</div>}
 
       <button type="submit" className="submit-btn" disabled={submitting}>
         {submitting ? 'Sending...' : 'Send Request'}
