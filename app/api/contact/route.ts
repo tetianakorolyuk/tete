@@ -3,12 +3,12 @@ import { NextRequest, NextResponse } from 'next/server';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, message } = body;
+    const { name, email, phone, city, propertyType, area, message } = body;
 
-    // Validate
-    if (!name || !email || !message) {
+    // Validate required fields
+    if (!name || !email || !propertyType || !message) {
       return NextResponse.json(
-        { error: 'Please fill in all fields' },
+        { error: 'Please fill in all required fields' },
         { status: 400 }
       );
     }
@@ -20,13 +20,24 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // In production, you would send this to your email service
-    // For now, we'll just log it (you can connect to Resend, SendGrid, etc.)
-    console.log('Contact form submission:', { name, email, message });
+    // Log the submission (in production, send to email service)
+    console.log('=== New Project Request ===');
+    console.log('Name:', name);
+    console.log('Email:', email);
+    console.log('Phone:', phone || 'N/A');
+    console.log('City:', city || 'N/A');
+    console.log('Property Type:', propertyType);
+    console.log('Area:', area || 'N/A');
+    console.log('Message:', message);
+    console.log('===========================');
+
+    // TODO: Integrate with email service (Resend, SendGrid, etc.)
+    // TODO: Save to database or CRM
+    // TODO: Send auto-reply to client
 
     return NextResponse.json({
       success: true,
-      message: 'Thank you! Your message has been sent.',
+      message: 'Thank you! We will contact you within 24 hours.',
     });
   } catch (error) {
     console.error('Contact form error:', error);
