@@ -1,29 +1,26 @@
 'use client';
 
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 export default function Cursor() {
   const [mounted, setMounted] = useState(false);
   const [isHovering, setIsHovering] = useState(false);
   const [clickRipple, setClickRipple] = useState<{ x: number; y: number; id: number }[]>([]);
 
+  const dotRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
+  const mousePos = useRef({ x: -100, y: -100 });
+  const ringPos = useRef({ x: -100, y: -100 });
+  const frameRef = useRef<number>(0);
+
   useEffect(() => {
     setMounted(true);
 
-    const dot = document.getElementById('cursorDot');
-    const ring = document.getElementById('cursorRing');
-    if (!dot || !ring) return;
-
-    let mx = 0, my = 0, rx = 0, ry = 0;
-    let frameId: number;
-
     const handleMouseMove = (e: MouseEvent) => {
-      mx = e.clientX;
-      my = e.clientY;
+      mousePos.current = { x: e.clientX, y: e.clientY };
     };
 
     const handleClick = (e: MouseEvent) => {
-      // Add ripple effect
       const id = Date.now();
       setClickRipple((prev) => [...prev, { x: e.clientX, y: e.clientY, id }]);
       setTimeout(() => {
@@ -32,29 +29,40 @@ export default function Cursor() {
     };
 
     const checkHover = () => {
-      const el = document.elementFromPoint(mx, my);
-      const isInteractive = el?.closest('a, button, [data-lightbox]');
+      const el = document.elementFromPoint(mousePos.current.x, mousePos.current.y);
+      const isInteractive = el?.closest('a, button, [data-lightbox], input, textarea, [role="button"]');
       setIsHovering(!!isInteractive);
     };
 
-    document.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('click', handleClick);
-
     const animate = () => {
       checkHover();
-      dot.style.transform = `translate(${mx}px, ${my}px) translate(-50%, -50%)`;
-      rx += (mx - rx) * 0.12;
-      ry += (my - ry) * 0.12;
-      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
-      frameId = requestAnimationFrame(animate);
+
+      // Update dot position (instant)
+      if (dotRef.current) {
+        dotRef.current.style.transform = `translate(${mousePos.current.x}px, ${mousePos.current.y}px) translate(-50%, -50%)`;
+      }
+
+      // Update ring position (smooth follow)
+      ringPos.current.x += (mousePos.current.x - ringPos.current.x) * 0.15;
+      ringPos.current.y += (mousePos.current.y - ringPos.current.y) * 0.15;
+
+      if (ringRef.current) {
+        ringRef.current.style.transform = `translate(${ringPos.current.x}px, ${ringPos.current.y}px) translate(-50%, -50%)`;
+      }
+
+      frameRef.current = requestAnimationFrame(animate);
     };
 
-    animate();
+    document.addEventListener('mousemove', handleMouseMove, { passive: true });
+    document.addEventListener('click', handleClick);
+
+    // Start animation
+    frameRef.current = requestAnimationFrame(animate);
 
     return () => {
       document.removeEventListener('mousemove', handleMouseMove);
       document.removeEventListener('click', handleClick);
-      cancelAnimationFrame(frameId);
+      cancelAnimationFrame(frameRef.current);
     };
   }, []);
 
@@ -63,6 +71,7 @@ export default function Cursor() {
   return (
     <>
       <div
+        ref={dotRef}
         className="cursor-dot"
         id="cursorDot"
         style={{
@@ -73,6 +82,7 @@ export default function Cursor() {
         }}
       />
       <div
+        ref={ringRef}
         className="cursor-ring"
         id="cursorRing"
         style={{

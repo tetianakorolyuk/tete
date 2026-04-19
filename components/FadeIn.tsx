@@ -39,7 +39,7 @@ export default function FadeIn({ children, delay = 0, className = '', clip = fal
   return (
     <div
       ref={ref}
-      className={`reveal ${className}`}
+      className={`reveal fade-up ${className}`}
       style={{ transitionDelay: `${delay}ms` }}
     >
       {children}
