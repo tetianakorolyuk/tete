@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>tete — editor</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@200;300;400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Main site styles + editor layout -->
+  <link rel="stylesheet" href="styles.css?v=33" />
+  <link rel="stylesheet" href="editor.css?v=3" />
+</head>
+<body>
+  <a class="skip" href="#content">Skip to content</a>
+
+  <header class="header">
+    <div class="wrap">
+      <nav class="nav" aria-label="Editor">
+        <a class="brand" href="./" aria-label="Back to website">
+          <span class="logo">tete</span>
+          <span class="tag">editor</span>
+        </a>
+
+        <div class="navRight">
+          <a class="iconLink" href="./" aria-label="View website">
+            View site
+          </a>
+
+          <span class="savePill" id="savePill" aria-live="polite">Draft not saved</span>
+
+          <button class="iconLink" id="btnHelp" type="button">
+            Help
+          </button>
+
+          <button class="iconLink isPrimary" id="btnDownload" type="button">
+            Download update zip
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main id="content" class="wrap edMain">
+    <div id="localWarning" class="localWarn" hidden>
+      You opened this as a local file. If the download doesn’t work, open the editor from the live website (GitHub Pages) instead.
+    </div>
+
+    <div id="publishInfo" class="infoBar">
+      Changes don’t go live automatically. After editing, click <b>Download update zip</b> and upload the files to GitHub.
+    </div>
+
+    <div class="edGrid">
+      <aside class="edCard">
+        <div class="sideHead">
+          <div class="sideTitle">Projects</div>
+          <button class="iconLink isPrimary" id="btnAdd" type="button">+ Add</button>
+        </div>
+
+        <div id="projectList" class="projectList" aria-label="Project list"></div>
+
+        <div class="sideFoot">
+          <button class="iconLink" id="btnDuplicate" type="button">Duplicate</button>
+          <button class="iconLink" id="btnMoveUp" type="button">Move up</button>
+          <button class="iconLink" id="btnMoveDown" type="button">Move down</button>
+          <button class="iconLink isDanger" id="btnDelete" type="button">Delete</button>
+        </div>
+      </aside>
+
+      <section class="edCard panel">
+        <div class="panelHead">
+          <h1 id="panelTitle">Edit project</h1>
+          <p class="muted tiny" id="panelHint">Tip: drag & drop images into the image box.</p>
+        </div>
+
+        <form id="form" class="form" autocomplete="off">
+          <div class="row two">
+            <label class="field">
+              <span>Title</span>
+              <input id="fTitle" type="text" placeholder="e.g. Downtown Condo" />
+            </label>
+
+            <label class="field">
+              <span>Subtitle</span>
+              <input id="fSubtitle" type="text" placeholder="e.g. Living / Kitchen" />
+            </label>
+          </div>
+
+          <div class="row three">
+            <label class="field">
+              <span>Year</span>
+              <input id="fYear" type="text" placeholder="2026" />
+            </label>
+
+            <label class="field">
+              <span>Location</span>
+              <input id="fLocation" type="text" placeholder="Toronto" />
+            </label>
+
+            <label class="field">
+              <span>Slug (auto)</span>
+              <input id="fSlug" type="text" disabled />
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Description</span>
+            <textarea id="fDescription" placeholder="Short project description…"></textarea>
+          </label>
+
+          <div class="dropZone" id="dropZone">
+            <div class="dropHead">
+              <div class="dropTitle">Images</div>
+              <div style="display:flex; gap:10px; align-items:center;">
+                <span class="helper">Drag images here</span>
+                <button class="iconLink" id="btnAddImages" type="button">Add images</button>
+              </div>
+            </div>
+
+            <input id="fileInput" type="file" accept="image/*" multiple hidden />
+
+            <div id="imageList" class="imageList"></div>
+          </div>
+
+          <div class="factsHead">
+            <div class="dropTitle">Facts (optional)</div>
+            <button class="iconLink" id="btnAddFact" type="button">+ Add fact</button>
+          </div>
+          <div id="factsList" class="factsList"></div>
+
+          <div class="noteBox">
+            <div class="dropTitle">What the zip contains</div>
+            <ul class="muted tiny" style="margin:10px 0 8px 18px;">
+              <li>Updated <code>projects.js</code></li>
+              <li>All images referenced by your projects (inside <code>/images</code>)</li>
+            </ul>
+            <div class="muted tiny">After download: unzip → upload/replace those files in GitHub.</div>
+          </div>
+        </form>
+      </section>
+    </div>
+  </main>
+
+  <div id="modal" class="modal" hidden>
+    <div class="modalCard">
+      <div class="modalHead">
+        <div class="modalTitle">How to use</div>
+        <button class="iconBtn" id="btnClose" type="button" aria-label="Close">✕</button>
+      </div>
+      <div class="modalBody">
+        <ol>
+          <li>Select a project on the left.</li>
+          <li>Edit text on the right.</li>
+          <li>Add photos by dragging them into the image box.</li>
+          <li>Click <strong>Download update zip</strong> and send it to Flavio.</li>
+        </ol>
+
+        <p class="muted tiny" style="margin-top:10px;">
+          This editor auto-saves your changes in this browser (draft). If you want to go back to what is currently on the website, click:
+          <button class="iconLink" id="btnResetDraft" type="button" style="margin-left:6px;">Reset draft</button>
+        </p>
+
+        <div class="hr"></div>
+
+        <p class="muted tiny">
+          If the download fails and you see <code>file://</code> in the address bar, open the editor from the live website (GitHub Pages).
+          If you need to run it locally, Flavio can start a simple server:
+        </p>
+        <pre><code>python3 -m http.server 8000</code></pre>
+        <p class="muted tiny">Then open: <code>http://localhost:8000/editor.html</code></p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="projects.js?v=33"></script>
+  <script src="editor.js?v=3"></script>
+</body>
+</html>

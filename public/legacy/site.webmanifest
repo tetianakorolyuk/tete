@@ -1,0 +1,15 @@
+{
+  "name": "tete — interior design",
+  "short_name": "tete",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#fbfaf7",
+  "theme_color": "#ff9500",
+  "icons": [
+    {
+      "src": "apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

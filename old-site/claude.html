@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TETÉ — Interior Design</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── tokens ─── */
+    :root{
+      --bg:#F0EAE2;
+      --linen:#F0EAE2;
+      --linen-2:#E9DFD3;
+      --apricot:#B7694A;
+      --apricot-d:#9a5139;
+      --sand:#DCC4A8;
+      --brown:#3D2315;
+      --brown-m:rgba(61,35,21,.78);
+      --brown-s:rgba(61,35,21,.52);
+      --brown-xs:rgba(61,35,21,.22);
+      --white-a:rgba(240,234,226,.96);
+      --white-m:rgba(240,234,226,.72);
+      --shadow:0 32px 80px rgba(61,35,21,.12);
+      --w:min(calc(100% - 48px),1760px);
+      --ease:cubic-bezier(.76,0,.24,1);
+      --ease-out:cubic-bezier(0,.55,.45,1);
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0}
+    html{scroll-behavior:smooth;font-size:16px}
+    body{
+      font-family:'DM Sans',sans-serif;
+      background:var(--linen);
+      color:var(--brown);
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
+      overflow-x:hidden;
+    }
+    a{color:inherit;text-decoration:none}
+    img{display:block;max-width:100%}
+    button{font:inherit;cursor:pointer}
+
+    /* ─── grain overlay ─── */
+    body::before{
+      content:"";
+      position:fixed;inset:0;z-index:9000;
+      pointer-events:none;
+      opacity:.032;
+      background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-repeat:repeat;
+      background-size:200px 200px;
+    }
+
+    /* ─── custom cursor ─── */
+    .cursor-dot{
+      width:8px;height:8px;border-radius:50%;
+      background:var(--apricot);
+      position:fixed;top:0;left:0;z-index:9999;
+      pointer-events:none;
+      transform:translate(-50%,-50%);
+      transition:transform .08s linear, width .3s var(--ease), height .3s var(--ease), background .3s ease;
+      mix-blend-mode:multiply;
+    }
+    .cursor-ring{
+      width:40px;height:40px;border-radius:50%;
+      border:1px solid var(--apricot);
+      position:fixed;top:0;left:0;z-index:9998;
+      pointer-events:none;
+      transform:translate(-50%,-50%);
+      transition:transform .18s var(--ease), width .4s var(--ease), height .4s var(--ease), border-color .3s ease, opacity .3s ease;
+      mix-blend-mode:multiply;
+    }
+    body:has(a:hover) .cursor-dot,
+    body:has(button:hover) .cursor-dot{
+      width:16px;height:16px;background:var(--brown);
+    }
+    body:has(a:hover) .cursor-ring,
+    body:has(button:hover) .cursor-ring{
+      width:60px;height:60px;border-color:var(--brown);
+    }
+    @media(hover:none){.cursor-dot,.cursor-ring{display:none}}
+
+    /* ─── preloader ─── */
+    #preloader{
+      position:fixed;inset:0;z-index:10000;
+      background:var(--brown);
+      display:flex;align-items:center;justify-content:center;
+      flex-direction:column;gap:24px;
+      transition:opacity .8s var(--ease), visibility .8s;
+    }
+    #preloader.done{opacity:0;visibility:hidden}
+    .pre-brand{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(52px,8vw,110px);
+      font-weight:300;
+      letter-spacing:-.04em;
+      color:var(--linen);
+      opacity:0;
+      transform:translateY(30px);
+      animation:preReveal .9s var(--ease) .3s forwards;
+    }
+    .pre-bar{
+      width:180px;height:1px;background:rgba(240,234,226,.18);
+      position:relative;overflow:hidden;
+    }
+    .pre-fill{
+      position:absolute;left:0;top:0;bottom:0;width:0;background:var(--apricot);
+      transition:width 2s var(--ease);
+    }
+    .pre-num{
+      font-family:'DM Mono',monospace;
+      font-size:12px;letter-spacing:.12em;
+      color:rgba(240,234,226,.44);
+    }
+    @keyframes preReveal{to{opacity:1;transform:none}}
+
+    /* ─── reveal animations ─── */
+    .reveal{
+      opacity:0;transform:translateY(40px);
+      transition:opacity .9s var(--ease), transform .9s var(--ease);
+    }
+    .reveal.in{opacity:1;transform:none}
+    .reveal-clip{
+      overflow:hidden;
+    }
+    .reveal-clip .rc-inner{
+      transform:translateY(100%);
+      transition:transform 1s var(--ease);
+      display:block;
+    }
+    .reveal-clip.in .rc-inner{transform:none}
+
+    .stagger .reveal:nth-child(1){transition-delay:.0s}
+    .stagger .reveal:nth-child(2){transition-delay:.08s}
+    .stagger .reveal:nth-child(3){transition-delay:.16s}
+    .stagger .reveal:nth-child(4){transition-delay:.24s}
+    .stagger .reveal:nth-child(5){transition-delay:.32s}
+
+    /* ─── helpers ─── */
+    .smallcaps{
+      font-family:'DM Mono',monospace;
+      font-size:10px;
+      letter-spacing:.22em;
+      text-transform:uppercase;
+      color:var(--brown-s);
+    }
+    .smallcaps.light{color:rgba(240,234,226,.56)}
+
+    .pill-btn{
+      display:inline-flex;align-items:center;gap:12px;
+      padding:13px 28px;
+      background:var(--apricot);
+      color:var(--linen);
+      font-size:11px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      border:none;
+      transition:background .3s ease, transform .3s var(--ease);
+      position:relative;
+      overflow:hidden;
+    }
+    .pill-btn::after{
+      content:"";position:absolute;inset:0;
+      background:rgba(255,255,255,.12);
+      transform:translateX(-105%);
+      transition:transform .4s var(--ease);
+    }
+    .pill-btn:hover::after{transform:translateX(0)}
+    .pill-btn:hover{background:var(--apricot-d)}
+
+    .ghost-btn{
+      display:inline-flex;align-items:center;gap:12px;
+      padding:13px 28px;
+      border:1px solid rgba(240,234,226,.34);
+      background:rgba(240,234,226,.08);
+      backdrop-filter:blur(8px);
+      color:var(--linen);
+      font-size:11px;
+      letter-spacing:.16em;
+      text-transform:uppercase;
+      transition:background .3s ease, border-color .3s ease;
+    }
+    .ghost-btn:hover{background:rgba(240,234,226,.16);border-color:rgba(240,234,226,.54)}
+
+    .arrow-link{
+      display:inline-flex;align-items:center;gap:10px;
+      font-family:'DM Mono',monospace;
+      font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+      transition:gap .3s var(--ease);
+    }
+    .arrow-link .al-line{
+      width:40px;height:1px;background:currentColor;
+      transition:width .3s var(--ease);
+    }
+    .arrow-link:hover{gap:16px}
+    .arrow-link:hover .al-line{width:58px}
+
+    /* ─── nav ─── */
+    #topbar{
+      position:fixed;top:0;left:0;right:0;z-index:500;
+      display:flex;align-items:center;justify-content:space-between;
+      padding:24px 42px;
+      transition:padding .4s var(--ease), background .4s ease, backdrop-filter .4s ease;
+    }
+    #topbar.scrolled{
+      padding:14px 42px;
+      background:rgba(240,234,226,.86);
+      backdrop-filter:blur(20px);
+      -webkit-backdrop-filter:blur(20px);
+      border-bottom:1px solid rgba(61,35,21,.08);
+    }
+    #topbar.scrolled .brand,
+    #topbar.scrolled .nav a,
+    #topbar.scrolled .lang{color:var(--brown)}
+    #topbar.scrolled .pill-btn{background:var(--apricot)}
+
+    .brand{
+      font-family:'Cormorant Garamond',serif;
+      font-weight:500;font-size:24px;letter-spacing:-.02em;
+      color:var(--linen);
+      transition:color .4s ease;
+      flex-shrink:0;
+    }
+    .nav{
+      display:flex;align-items:center;gap:36px;
+      margin-left:32px;
+    }
+    .nav a{
+      font-size:13px;color:var(--white-a);
+      letter-spacing:.02em;
+      position:relative;
+      transition:color .4s ease, opacity .3s ease;
+    }
+    .nav a::after{
+      content:"";position:absolute;left:0;bottom:-3px;
+      width:0;height:1px;background:currentColor;
+      transition:width .35s var(--ease);
+    }
+    .nav a:hover::after{width:100%}
+    .lang{color:var(--white-m);font-size:12px;transition:color .4s ease}
+    .top-right{display:flex;align-items:center;gap:18px}
+
+    /* hamburger */
+    .menu-btn{
+      width:42px;height:42px;
+      display:none;
+      border:1px solid rgba(240,234,226,.22);
+      background:rgba(255,255,255,.06);
+      backdrop-filter:blur(8px);
+      position:relative;
+    }
+    .menu-btn span{
+      position:absolute;left:10px;right:10px;height:1px;
+      background:var(--linen);
+      transition:.32s var(--ease);
+    }
+    .menu-btn.scrolled span{background:var(--brown)}
+    .menu-btn span:nth-child(1){top:14px}
+    .menu-btn span:nth-child(2){top:20px}
+    .menu-btn span:nth-child(3){top:26px}
+    .menu-btn.active span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+    .menu-btn.active span:nth-child(2){opacity:0;transform:scaleX(0)}
+    .menu-btn.active span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+
+    /* ─── menu overlay ─── */
+    .menu-overlay{
+      position:fixed;inset:0;z-index:800;
+      background:var(--brown);
+      clip-path:inset(0 0 100% 0);
+      transition:clip-path .7s var(--ease);
+    }
+    .menu-overlay.open{clip-path:inset(0 0 0% 0)}
+    .menu-inner{
+      display:grid;grid-template-columns:1.1fr .9fr;
+      height:100%;
+    }
+    .menu-left{
+      padding:34px 48px 38px;
+      display:flex;flex-direction:column;justify-content:space-between;
+      border-right:1px solid rgba(240,234,226,.08);
+    }
+    .menu-head{display:flex;align-items:center;justify-content:space-between}
+    .menu-brand{
+      font-family:'Cormorant Garamond',serif;
+      font-size:24px;font-weight:500;letter-spacing:-.02em;
+      color:var(--linen);
+    }
+    .menu-close{
+      width:42px;height:42px;border:1px solid rgba(240,234,226,.22);
+      background:transparent;display:flex;align-items:center;justify-content:center;
+    }
+    .menu-close svg{stroke:var(--linen);width:16px;height:16px}
+    .menu-links{
+      display:flex;flex-direction:column;gap:2px;
+      padding:40px 0;
+    }
+    .menu-links a{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(44px,6.5vw,88px);
+      line-height:.88;font-weight:300;letter-spacing:-.05em;
+      color:rgba(240,234,226,.82);
+      display:flex;align-items:center;gap:0;
+      transition:color .3s ease, gap .4s var(--ease), letter-spacing .4s var(--ease);
+      overflow:hidden;
+    }
+    .menu-links a .mlink-num{
+      font-family:'DM Mono',monospace;
+      font-size:10px;letter-spacing:.14em;
+      color:var(--apricot);
+      opacity:0;margin-right:0;
+      transition:opacity .3s ease, margin-right .4s var(--ease);
+    }
+    .menu-links a:hover{color:var(--linen);gap:14px;letter-spacing:-.03em}
+    .menu-links a:hover .mlink-num{opacity:1;margin-right:14px}
+    .menu-foot{
+      display:flex;flex-wrap:wrap;gap:20px;
+      font-family:'DM Mono',monospace;
+      font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+      color:rgba(240,234,226,.38);
+    }
+    .menu-foot a{transition:color .3s ease}
+    .menu-foot a:hover{color:rgba(240,234,226,.72)}
+    .menu-right{
+      position:relative;overflow:hidden;
+      background:#2a1810;
+    }
+    .menu-right img{
+      position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+      opacity:.38;
+      transform:scale(1.08);
+      transition:transform 8s ease;
+    }
+    .menu-overlay.open .menu-right img{transform:scale(1)}
+    .menu-right::after{content:"";position:absolute;inset:0;background:linear-gradient(to top, rgba(61,35,21,.62),rgba(61,35,21,.18))}
+    .menu-right-copy{
+      position:absolute;left:38px;right:38px;bottom:38px;z-index:2;
+      color:var(--linen);
+    }
+    .menu-right-copy small{
+      font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.2em;text-transform:uppercase;
+      color:var(--apricot);display:block;margin-bottom:12px;
+    }
+    .menu-right-copy h3{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(28px,3.5vw,52px);line-height:.92;letter-spacing:-.04em;font-weight:400;
+      margin-bottom:12px;
+    }
+    .menu-right-copy p{font-size:13px;color:rgba(240,234,226,.72);max-width:34ch;line-height:1.6}
+
+    /* ─── hero ─── */
+    .hero{
+      position:relative;min-height:100svh;overflow:hidden;background:var(--brown);
+    }
+    .slides{position:absolute;inset:0}
+    .slide{
+      position:absolute;inset:0;opacity:0;
+      transition:opacity 1.2s ease;
+    }
+    .slide-img{
+      position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+      transform:scale(1.06);
+      transition:transform 7s ease, opacity 1.2s ease;
+    }
+    .slide.active .slide-img{transform:scale(1)}
+    .slide.active{opacity:1}
+    .slide::after{
+      content:"";position:absolute;inset:0;
+      background:
+        linear-gradient(to bottom, rgba(40,22,12,.22) 0%, rgba(40,22,12,.08) 28%,rgba(40,22,12,.32) 62%, rgba(40,22,12,.64) 100%),
+        linear-gradient(to right, rgba(40,22,12,.38) 0%,rgba(40,22,12,.04) 46%,rgba(40,22,12,.18) 100%);
+    }
+
+    .hero-content{
+      position:absolute;inset:0;z-index:10;
+      display:flex;flex-direction:column;justify-content:flex-end;
+      padding:0 5% 6%;
+    }
+    .hero-top{position:absolute;top:0;left:0;right:0;z-index:20;padding:0 5%;display:flex;align-items:center;justify-content:space-between;padding-top:32px}
+
+    .hero-eyebrow{
+      font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+      color:var(--apricot);margin-bottom:18px;
+      opacity:0;transform:translateY(12px);
+      animation:fadeUp .7s var(--ease) 2.6s forwards;
+    }
+    .hero-title{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(64px,9.5vw,148px);
+      line-height:.88;font-weight:300;letter-spacing:-.05em;
+      color:var(--linen);
+      margin-bottom:28px;
+    }
+    .hero-title-line{
+      display:block;overflow:hidden;
+    }
+    .hero-title-inner{
+      display:block;
+      transform:translateY(110%);
+      animation:slideUp .9s var(--ease) forwards;
+    }
+    .hero-title-line:nth-child(1) .hero-title-inner{animation-delay:2.2s}
+    .hero-title-line:nth-child(2) .hero-title-inner{animation-delay:2.38s}
+
+    .hero-bottom{
+      display:grid;grid-template-columns:1fr auto 1fr;
+      align-items:end;gap:24px;
+      opacity:0;
+      animation:fadeUp .8s var(--ease) 2.8s forwards;
+    }
+    .hero-desc{
+      font-size:13px;color:var(--white-m);
+      max-width:34ch;line-height:1.65;
+    }
+    .hero-cta-group{display:flex;flex-direction:column;align-items:center;gap:18px}
+    .scroll-hint{
+      display:flex;flex-direction:column;align-items:center;gap:8px;
+      font-family:'DM Mono',monospace;
+      font-size:9px;letter-spacing:.22em;text-transform:uppercase;
+      color:rgba(240,234,226,.42);
+    }
+    .scroll-hint-line{
+      width:1px;height:52px;background:linear-gradient(to bottom, rgba(240,234,226,.42), rgba(240,234,226,.04));
+      animation:scrollPulse 2s ease infinite;
+    }
+    @keyframes scrollPulse{0%,100%{transform:scaleY(1)}50%{transform:scaleY(.7)}}
+
+    .hero-right{display:flex;flex-direction:column;align-items:flex-end;gap:14px}
+    .hero-socials{display:flex;gap:14px}
+    .hero-socials a{
+      font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+      color:rgba(240,234,226,.44);
+      transition:color .3s ease;
+    }
+    .hero-socials a:hover{color:var(--linen)}
+    .hero-contact-chip{
+      display:flex;align-items:center;gap:8px;
+      border:1px solid rgba(240,234,226,.16);
+      background:rgba(240,234,226,.06);
+      backdrop-filter:blur(8px);
+      padding:6px 14px;
+      font-size:11px;color:var(--white-m);
+    }
+    .hero-contact-chip .dot{width:6px;height:6px;border-radius:50%;background:var(--apricot);animation:blink 2s ease infinite}
+    @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+
+    /* slideshow counter */
+    .slide-counter{
+      position:absolute;right:4%;top:50%;transform:translateY(-50%);z-index:10;
+      display:flex;flex-direction:column;align-items:center;gap:12px;
+      opacity:0;animation:fadeUp .8s var(--ease) 3s forwards;
+    }
+    .slide-counter-track{
+      width:1px;height:100px;background:rgba(240,234,226,.16);position:relative;overflow:hidden;
+    }
+    .slide-counter-fill{
+      position:absolute;top:0;left:0;right:0;background:var(--apricot);
+      transition:height .6s var(--ease);
+    }
+    .slide-counter-num{
+      font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;
+      color:rgba(240,234,226,.42);writing-mode:vertical-rl;transform:rotate(180deg);
+    }
+
+    @keyframes fadeUp{to{opacity:1;transform:none}}
+    @keyframes slideUp{to{transform:none}}
+
+    /* ─── marquee strip ─── */
+    .marquee-strip{
+      background:var(--apricot);
+      overflow:hidden;
+      height:44px;display:flex;align-items:center;
+      border-top:1px solid rgba(61,35,21,.12);
+      border-bottom:1px solid rgba(61,35,21,.12);
+    }
+    .marquee-track{
+      display:flex;gap:0;
+      animation:marquee 22s linear infinite;
+      white-space:nowrap;
+      will-change:transform;
+    }
+    .marquee-item{
+      font-family:'DM Mono',monospace;
+      font-size:10px;letter-spacing:.22em;text-transform:uppercase;
+      color:var(--linen);
+      padding:0 38px;
+      display:flex;align-items:center;gap:38px;
+    }
+    .marquee-item::before{content:"·";font-size:16px;opacity:.6}
+    @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+    /* ─── intro ─── */
+    .intro{padding:110px 0 120px;background:var(--linen)}
+    .intro-inner{width:var(--w);margin:0 auto}
+    .intro-grid{display:grid;grid-template-columns:1.2fr .8fr;gap:60px;align-items:end}
+    .intro h2{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(48px,5.5vw,90px);
+      line-height:.9;font-weight:300;letter-spacing:-.05em;
+      color:var(--brown);
+      max-width:12ch;
+    }
+    .intro h2 em{font-style:italic;color:var(--apricot)}
+    .intro-right{display:flex;flex-direction:column;gap:28px;justify-content:flex-end}
+    .intro p{
+      font-size:15px;color:var(--brown-m);
+      max-width:44ch;line-height:1.72;
+    }
+    .intro-chips{display:flex;flex-wrap:wrap;gap:8px}
+    .chip{
+      border:1px solid var(--brown-xs);
+      padding:6px 14px;
+      font-family:'DM Mono',monospace;
+      font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+      color:var(--brown-s);
+      transition:background .3s ease, color .3s ease, border-color .3s ease;
+    }
+    .chip:hover{background:var(--apricot);color:var(--linen);border-color:var(--apricot)}
+
+    /* ─── projects ─── */
+    .projects{padding:0 0 100px;background:var(--linen)}
+    .projects-inner{width:var(--w);margin:0 auto}
+    .projects-header{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:0 0 22px;margin-bottom:24px;
+      border-bottom:1px solid var(--brown-xs);
+    }
+    .projects-header h3{
+      font-family:'Cormorant Garamond',serif;
+      font-size:13px;font-weight:400;
+      letter-spacing:.14em;color:var(--brown-s);text-transform:uppercase;
+    }
+    .projects-list{display:flex;flex-direction:column;gap:20px}
+
+    .project-row{
+      position:relative;overflow:hidden;
+      background:var(--linen-2);
+      cursor:none;
+    }
+    .project-row-img-wrap{
+      position:absolute;inset:0;overflow:hidden;
+    }
+    .project-row img{
+      position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+      transition:transform .9s var(--ease);
+      transform-origin:center center;
+    }
+    .project-row:hover img{transform:scale(1.045)}
+    .project-row::after{
+      content:"";position:absolute;inset:0;
+      background:
+        linear-gradient(to right, rgba(40,22,12,.72) 0%,rgba(40,22,12,.28) 36%, rgba(40,22,12,.04) 58%, rgba(40,22,12,.44) 100%),
+        linear-gradient(to top, rgba(40,22,12,.72) 0%, rgba(40,22,12,.04) 36%);
+    }
+    .project-h{min-height:88svh}
+
+    .project-content{
+      position:absolute;inset:0;z-index:2;
+      padding:5% 6%;
+      display:flex;flex-direction:column;justify-content:space-between;
+    }
+    .project-num{
+      font-family:'DM Mono',monospace;
+      font-size:10px;letter-spacing:.18em;color:var(--apricot);
+    }
+    .project-bottom{
+      display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:end;
+    }
+    .project-title{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(48px,6.5vw,100px);
+      line-height:.88;font-weight:300;letter-spacing:-.05em;
+      color:var(--linen);
+      max-width:10ch;
+    }
+    .project-meta{
+      justify-self:end;
+      max-width:38ch;
+      padding:22px 24px;
+      background:rgba(240,234,226,.07);
+      backdrop-filter:blur(12px) saturate(110%);
+      -webkit-backdrop-filter:blur(12px) saturate(110%);
+      border:1px solid rgba(240,234,226,.14);
+    }
+    .project-meta p{
+      margin:12px 0 20px;font-size:13px;line-height:1.62;
+      color:rgba(240,234,226,.88);
+    }
+    .project-meta .arrow-link{color:var(--linen)}
+
+    /* hover label */
+    .project-row .hover-label{
+      position:absolute;
+      right:5%;top:5%;z-index:3;
+      width:72px;height:72px;border-radius:50%;
+      background:var(--apricot);
+      display:flex;align-items:center;justify-content:center;
+      font-family:'DM Mono',monospace;font-size:8px;letter-spacing:.16em;text-transform:uppercase;
+      color:var(--linen);text-align:center;line-height:1.4;
+      transform:scale(0) rotate(-20deg);
+      transition:transform .4s var(--ease);
+    }
+    .project-row:hover .hover-label{transform:scale(1) rotate(0deg)}
+
+    /* ─── studio ─── */
+    .studio{padding:100px 0;background:var(--linen)}
+    .studio-inner{width:var(--w);margin:0 auto}
+    .studio-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:20px}
+    .studio-card{background:var(--linen-2);overflow:hidden}
+    .studio-copy{padding:48px;display:flex;flex-direction:column;justify-content:space-between;gap:40px;min-height:660px}
+    .studio-copy h2{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(38px,4.5vw,72px);
+      line-height:.9;font-weight:300;letter-spacing:-.05em;
+      color:var(--brown);max-width:10ch;
+    }
+    .studio-copy h2 em{font-style:italic;color:var(--apricot)}
+    .studio-copy p{font-size:15px;color:var(--brown-m);line-height:1.7;max-width:44ch}
+    .stat-grid{display:grid;grid-template-columns:1fr 1fr;gap:0}
+    .stat{
+      padding:22px 0;border-top:1px solid var(--brown-xs);
+      padding-right:16px;
+    }
+    .stat strong{
+      display:block;
+      font-family:'Cormorant Garamond',serif;
+      font-size:44px;line-height:1;letter-spacing:-.04em;font-weight:300;
+      color:var(--apricot);margin-bottom:8px;
+    }
+    .stat span{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--brown-s)}
+
+    .studio-image{position:relative;overflow:hidden;min-height:660px}
+    .studio-image img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
+    .studio-image:hover img{transform:scale(1.04)}
+    .studio-image::after{content:"";position:absolute;inset:0;background:linear-gradient(to top, rgba(40,22,12,.44),rgba(40,22,12,.04))}
+    .studio-image-label{
+      position:absolute;left:32px;bottom:32px;z-index:2;
+      font-family:'Cormorant Garamond',serif;
+      font-size:36px;font-weight:300;letter-spacing:-.04em;
+      color:var(--linen);line-height:1;
+    }
+    .studio-image-label small{
+      display:block;
+      font-family:'DM Mono',monospace;
+      font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+      color:var(--apricot);margin-bottom:8px;
+    }
+
+    /* ─── philosophy strip ─── */
+    .philosophy{padding:110px 0;background:var(--brown)}
+    .philosophy-inner{width:var(--w);margin:0 auto}
+    .philosophy-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(240,234,226,.08)}
+    .phil-card{
+      background:var(--brown);
+      padding:48px 40px;
+      transition:background .4s ease;
+    }
+    .phil-card:hover{background:#2a1810}
+    .phil-num{
+      font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.2em;text-transform:uppercase;
+      color:var(--apricot);margin-bottom:28px;display:block;
+    }
+    .phil-card h3{
+      font-family:'Cormorant Garamond',serif;
+      font-size:32px;font-weight:300;letter-spacing:-.04em;
+      color:var(--linen);line-height:.94;margin-bottom:18px;
+    }
+    .phil-card p{font-size:13px;color:rgba(240,234,226,.58);line-height:1.7;max-width:32ch}
+
+    /* ─── journal ─── */
+    .journal{padding:100px 0;background:var(--linen)}
+    .journal-inner{width:var(--w);margin:0 auto}
+    .journal-head{
+      display:grid;grid-template-columns:1.1fr .9fr;
+      gap:40px;align-items:end;margin-bottom:32px;
+    }
+    .journal-head h2{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(38px,4.5vw,74px);
+      line-height:.9;font-weight:300;letter-spacing:-.05em;
+      color:var(--brown);max-width:12ch;
+    }
+    .journal-head h2 em{font-style:italic;color:var(--apricot)}
+    .journal-head p{font-size:14px;color:var(--brown-m);max-width:42ch;line-height:1.7;align-self:end}
+    .journal-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .article{
+      background:var(--linen-2);
+      display:flex;flex-direction:column;overflow:hidden;
+      border:1px solid var(--brown-xs);
+      transition:border-color .3s ease;
+    }
+    .article:hover{border-color:rgba(61,35,21,.28)}
+    .article-media{
+      position:relative;overflow:hidden;
+      aspect-ratio:1.15/1;
+    }
+    .article-media img{
+      width:100%;height:100%;object-fit:cover;
+      transition:transform .9s var(--ease);
+    }
+    .article:hover .article-media img{transform:scale(1.05)}
+    .article-copy{
+      padding:24px;flex:1;display:flex;flex-direction:column;gap:12px;
+    }
+    .article-copy h3{
+      font-family:'Cormorant Garamond',serif;
+      font-size:28px;font-weight:400;letter-spacing:-.04em;
+      color:var(--brown);line-height:.96;max-width:14ch;
+    }
+    .article-copy p{font-size:13px;color:var(--brown-m);line-height:1.65;max-width:34ch}
+    .article-foot{
+      margin-top:auto;padding-top:14px;border-top:1px solid var(--brown-xs);
+      display:flex;justify-content:space-between;align-items:center;gap:10px;
+    }
+    .article-foot time{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--brown-s)}
+    .article-foot .arrow-link{font-size:9px;color:var(--brown)}
+
+    /* ─── contact ─── */
+    .contact{padding:100px 0 120px;background:var(--linen)}
+    .contact-inner{width:var(--w);margin:0 auto}
+    .contact-wrap{position:relative;min-height:78svh;overflow:hidden}
+    .contact-bg{position:absolute;inset:0;overflow:hidden}
+    .contact-bg img{width:100%;height:100%;object-fit:cover;transform:scale(1.04);transition:transform 1s var(--ease)}
+    .contact-wrap:hover .contact-bg img{transform:scale(1)}
+    .contact-bg::after{
+      content:"";position:absolute;inset:0;
+      background:
+        linear-gradient(to right, rgba(40,22,12,.78) 0%,rgba(40,22,12,.38) 44%, rgba(40,22,12,.28) 100%),
+        linear-gradient(to top, rgba(40,22,12,.58) 0%,rgba(40,22,12,.04) 44%);
+    }
+    .contact-body{
+      position:relative;z-index:2;
+      padding:7% 6%;min-height:78svh;
+      display:flex;flex-direction:column;justify-content:space-between;
+    }
+    .contact-body h2{
+      font-family:'Cormorant Garamond',serif;
+      font-size:clamp(52px,7vw,112px);
+      line-height:.88;font-weight:300;letter-spacing:-.06em;
+      color:var(--linen);max-width:9ch;
+    }
+    .contact-body h2 em{font-style:italic;color:var(--apricot)}
+    .contact-body p{
+      margin-top:20px;font-size:14px;color:rgba(240,234,226,.78);
+      max-width:38ch;line-height:1.7;
+    }
+    .contact-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+    .contact-bottom{
+      display:flex;flex-wrap:wrap;gap:28px;
+      font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+      color:rgba(240,234,226,.38);
+    }
+    .contact-bottom a{transition:color .3s ease}
+    .contact-bottom a:hover{color:rgba(240,234,226,.78)}
+
+    /* contact form panel */
+    .contact-form{
+      position:absolute;right:6%;top:50%;transform:translateY(-50%);z-index:3;
+      width:min(420px,42%);
+      background:rgba(240,234,226,.06);
+      backdrop-filter:blur(20px) saturate(120%);
+      -webkit-backdrop-filter:blur(20px) saturate(120%);
+      border:1px solid rgba(240,234,226,.14);
+      padding:36px;
+    }
+    .contact-form h4{
+      font-family:'Cormorant Garamond',serif;
+      font-size:26px;font-weight:400;letter-spacing:-.04em;
+      color:var(--linen);margin-bottom:24px;
+    }
+    .form-field{margin-bottom:16px}
+    .form-field label{
+      display:block;
+      font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.18em;text-transform:uppercase;
+      color:rgba(240,234,226,.44);margin-bottom:6px;
+    }
+    .form-field input,.form-field textarea{
+      width:100%;background:rgba(240,234,226,.07);
+      border:1px solid rgba(240,234,226,.14);
+      padding:10px 14px;font-size:13px;
+      color:var(--linen);
+      font-family:'DM Sans',sans-serif;
+      transition:border-color .3s ease, background .3s ease;
+      resize:none;
+    }
+    .form-field input::placeholder,.form-field textarea::placeholder{color:rgba(240,234,226,.28)}
+    .form-field input:focus,.form-field textarea:focus{
+      outline:none;
+      border-color:rgba(183,105,74,.6);
+      background:rgba(240,234,226,.10);
+    }
+    .form-field textarea{height:88px}
+
+    /* ─── footer ─── */
+    footer{
+      padding:22px 0 32px;
+      background:var(--linen-2);
+      border-top:1px solid var(--brown-xs);
+    }
+    .footer-inner{
+      width:var(--w);margin:0 auto;
+      display:flex;justify-content:space-between;align-items:center;
+      gap:16px;flex-wrap:wrap;
+    }
+    .footer-brand{
+      font-family:'Cormorant Garamond',serif;
+      font-size:18px;font-weight:400;letter-spacing:-.02em;color:var(--brown);
+    }
+    .footer-copy{font-family:'DM Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--brown-s)}
+
+    /* ─── cookie ─── */
+    #cookieBar{
+      position:fixed;left:24px;bottom:24px;z-index:8000;
+      max-width:380px;
+      background:var(--brown);
+      border:1px solid rgba(240,234,226,.12);
+      padding:22px 24px;
+      font-size:12px;color:rgba(240,234,226,.72);line-height:1.6;
+      transform:translateY(0);transition:transform .5s var(--ease), opacity .5s ease;
+    }
+    #cookieBar.hidden{transform:translateY(120%);opacity:0;pointer-events:none}
+    .cookie-btns{display:flex;gap:10px;margin-top:16px}
+    .cookie-btns button{
+      flex:1;padding:9px 16px;border:none;font-size:10px;letter-spacing:.14em;text-transform:uppercase;
+      font-family:'DM Mono',monospace;cursor:pointer;transition:.25s ease;
+    }
+    .cookie-btns .accept{background:var(--apricot);color:var(--linen)}
+    .cookie-btns .accept:hover{background:var(--apricot-d)}
+    .cookie-btns .deny{background:rgba(240,234,226,.08);color:rgba(240,234,226,.52);border:1px solid rgba(240,234,226,.14)}
+
+    /* ─── responsive ─── */
+    @media(max-width:1100px){
+      .intro-grid,.studio-grid,.journal-head{grid-template-columns:1fr}
+      .studio-image{min-height:480px}
+      .studio-copy{min-height:auto}
+      .philosophy-grid{grid-template-columns:1fr}
+      .contact-form{position:relative;right:auto;top:auto;transform:none;width:100%;max-width:480px;margin-top:40px}
+      .contact-body{min-height:auto;padding:6%}
+      .contact-wrap{min-height:auto}
+      .journal-grid{grid-template-columns:1fr 1fr}
+      .project-bottom{grid-template-columns:1fr}
+      .project-meta{justify-self:start;max-width:none}
+    }
+    @media(max-width:860px){
+      .nav,.top-right .lang,.top-right .pill-btn:not(.mobile-show){display:none}
+      .menu-btn{display:flex;align-items:center;justify-content:center}
+      #topbar{padding:16px 20px}
+      #topbar.scrolled{padding:12px 20px}
+      .hero-bottom{grid-template-columns:1fr}
+      .hero-right{display:none}
+      .slide-counter{display:none}
+      .journal-grid{grid-template-columns:1fr}
+      .menu-inner{grid-template-columns:1fr}
+      .menu-right{display:none}
+      .menu-left{padding:22px 24px 28px}
+      .contact-form{display:none}
+      #cookieBar{left:12px;right:12px;bottom:12px;max-width:none}
+      .project-h{min-height:72svh}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── cursor ─── -->
+  <div class="cursor-dot" id="cursorDot"></div>
+  <div class="cursor-ring" id="cursorRing"></div>
+
+  <!-- ─── preloader ─── -->
+  <div id="preloader">
+    <div class="pre-brand">TETÉ.</div>
+    <div class="pre-bar"><div class="pre-fill" id="preFill"></div></div>
+    <div class="pre-num" id="preNum">0%</div>
+  </div>
+
+  <!-- ─── nav ─── -->
+  <header id="topbar">
+    <a href="#top" class="brand">TETÉ.</a>
+    <nav class="nav">
+      <a href="#projects">Projects</a>
+      <a href="#studio">Studio</a>
+      <a href="#journal">Journal</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <div class="top-right">
+      <span class="lang">En</span>
+      <a class="pill-btn" href="#contact">Make request</a>
+      <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ─── menu overlay ─── -->
+  <div class="menu-overlay" id="menuOverlay">
+    <div class="menu-inner">
+      <div class="menu-left">
+        <div class="menu-head">
+          <span class="menu-brand">TETÉ.</span>
+          <button class="menu-close" id="closeMenu" aria-label="Close menu">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <nav class="menu-links">
+          <a href="#top"><span class="mlink-num">01</span>Home</a>
+          <a href="#projects"><span class="mlink-num">02</span>Projects</a>
+          <a href="#studio"><span class="mlink-num">03</span>Studio</a>
+          <a href="#journal"><span class="mlink-num">04</span>Journal</a>
+          <a href="#contact"><span class="mlink-num">05</span>Contact</a>
+        </nav>
+        <div class="menu-foot">
+          <a href="#">Instagram</a>
+          <a href="#">Substack</a>
+          <a href="#">Toronto</a>
+          <a href="mailto:hello@tete.design">hello@tete.design</a>
+        </div>
+      </div>
+      <div class="menu-right">
+        <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1400&q=80" alt="">
+        <div class="menu-right-copy">
+          <small>Featured Project</small>
+          <h3>Monolith<br>Penthouse</h3>
+          <p>Clean geometries and warm atmospheric light — architecture as emotion.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── hero ─── -->
+  <section class="hero" id="top">
+    <div class="slides">
+      <div class="slide active">
+        <img class="slide-img" src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1800&q=80" alt="The Teté Apartment">
+      </div>
+      <div class="slide">
+        <img class="slide-img" src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1800&q=80" alt="Monolith Penthouse">
+      </div>
+      <div class="slide">
+        <img class="slide-img" src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1800&q=80" alt="Quiet Form Residence">
+      </div>
+      <div class="slide">
+        <img class="slide-img" src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1800&q=80" alt="Charismatic Luxury Mansion">
+      </div>
+    </div>
+
+    <div class="slide-counter" id="slideCounter">
+      <div class="slide-counter-num" id="slideNumTop">01</div>
+      <div class="slide-counter-track">
+        <div class="slide-counter-fill" id="slideCounterFill" style="height:25%"></div>
+      </div>
+      <div class="slide-counter-num" id="slideNumBot">04</div>
+    </div>
+
+    <div class="hero-content">
+      <div>
+        <div class="hero-eyebrow">Interior Design · Toronto</div>
+        <h1 class="hero-title">
+          <span class="hero-title-line"><span class="hero-title-inner">The Teté</span></span>
+          <span class="hero-title-line"><span class="hero-title-inner" style="animation-delay:2.38s;font-style:italic;color:rgba(240,234,226,.72)">Apartment</span></span>
+        </h1>
+      </div>
+      <div class="hero-bottom">
+        <p class="hero-desc">A portfolio shaped around strong visual storytelling, minimal copy, and a cinematic presentation that puts the work first.</p>
+        <div class="hero-cta-group">
+          <div class="scroll-hint">
+            <div class="scroll-hint-line"></div>
+            Scroll
+          </div>
+        </div>
+        <div class="hero-right">
+          <div class="hero-contact-chip">
+            <div class="dot"></div>
+            Available for projects
+          </div>
+          <div class="hero-socials">
+            <a href="#">Ig</a>
+            <a href="#">Sb</a>
+            <a href="#">Be</a>
+            <a href="#">Pi</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── marquee ─── -->
+  <div class="marquee-strip" aria-hidden="true">
+    <div class="marquee-track">
+      <span class="marquee-item">Interior Design</span>
+      <span class="marquee-item">Toronto</span>
+      <span class="marquee-item">Residential Spaces</span>
+      <span class="marquee-item">Private Clients</span>
+      <span class="marquee-item">Cinematic Atmosphere</span>
+      <span class="marquee-item">Tatiana Koroliuk</span>
+      <span class="marquee-item">Interior Design</span>
+      <span class="marquee-item">Toronto</span>
+      <span class="marquee-item">Residential Spaces</span>
+      <span class="marquee-item">Private Clients</span>
+      <span class="marquee-item">Cinematic Atmosphere</span>
+      <span class="marquee-item">Tatiana Koroliuk</span>
+    </div>
+  </div>
+
+  <!-- ─── intro ─── -->
+  <section class="intro">
+    <div class="intro-inner">
+      <div class="intro-grid">
+        <div class="reveal-clip">
+          <h2 class="rc-inner">Interior design with a <em>cinematic,</em> architectural point of view.</h2>
+        </div>
+        <div class="intro-right reveal">
+          <p>Teté is a project-led studio concept for Tatiana Koroliuk — shaped around strong visual storytelling, minimal copy, and a dark luxury presentation that puts the work first.</p>
+          <div class="intro-chips">
+            <span class="chip">Residential</span>
+            <span class="chip">Commercial</span>
+            <span class="chip">Concept</span>
+            <span class="chip">Styling</span>
+            <span class="chip">Toronto</span>
+            <span class="chip">Since 2020</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── projects ─── -->
+  <section class="projects" id="projects">
+    <div class="projects-inner">
+      <div class="projects-header reveal">
+        <h3>Selected Projects</h3>
+        <div class="smallcaps">04 Works</div>
+      </div>
+      <div class="projects-list">
+
+        <article class="project-row project-h reveal">
+          <div class="project-row-img-wrap">
+            <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1800&q=80" alt="The Teté Apartment">
+          </div>
+          <div class="hover-label">View<br>Project</div>
+          <div class="project-content">
+            <div class="project-num">01 — Residential interior</div>
+            <div class="project-bottom">
+              <h2 class="project-title">The Teté Apartment</h2>
+              <div class="project-meta">
+                <div class="smallcaps light">Residential · Toronto</div>
+                <p>A calm but dramatic interior with layered texture, sculptural lighting, and a cinematic sense of atmosphere.</p>
+                <a class="arrow-link" href="#contact"><span class="al-line"></span>View project</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-row project-h reveal">
+          <div class="project-row-img-wrap">
+            <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=1800&q=80" alt="Monolith Penthouse">
+          </div>
+          <div class="hover-label">View<br>Project</div>
+          <div class="project-content">
+            <div class="project-num">02 — Private client</div>
+            <div class="project-bottom">
+              <h2 class="project-title">Monolith Penthouse</h2>
+              <div class="project-meta">
+                <div class="smallcaps light">Private client · Concept</div>
+                <p>Clean geometries, reflective materials, and warm low-contrast lighting create a strong architectural presence.</p>
+                <a class="arrow-link" href="#contact"><span class="al-line"></span>View project</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-row project-h reveal">
+          <div class="project-row-img-wrap">
+            <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=1800&q=80" alt="Quiet Form Residence">
+          </div>
+          <div class="hover-label">View<br>Project</div>
+          <div class="project-content">
+            <div class="project-num">03 — Interior styling</div>
+            <div class="project-bottom">
+              <h2 class="project-title">Quiet Form Residence</h2>
+              <div class="project-meta">
+                <div class="smallcaps light">Interior Styling</div>
+                <p>A study in warm minimalism, intimacy, and soft transitions between material, light, and proportion.</p>
+                <a class="arrow-link" href="#contact"><span class="al-line"></span>View project</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+        <article class="project-row project-h reveal">
+          <div class="project-row-img-wrap">
+            <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1800&q=80" alt="Charismatic Luxury Mansion">
+          </div>
+          <div class="hover-label">View<br>Project</div>
+          <div class="project-content">
+            <div class="project-num">04 — Large-scale residence</div>
+            <div class="project-bottom">
+              <h2 class="project-title">Charismatic Luxury Mansion</h2>
+              <div class="project-meta">
+                <div class="smallcaps light">Large-Scale Residence</div>
+                <p>Spatial drama, muted richness, and a gallery-like composition for a refined high-end living experience.</p>
+                <a class="arrow-link" href="#contact"><span class="al-line"></span>View project</a>
+              </div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── studio ─── -->
+  <section class="studio" id="studio">
+    <div class="studio-inner">
+      <div class="studio-grid">
+        <article class="studio-card reveal">
+          <div class="studio-copy">
+            <div>
+              <div class="smallcaps" style="margin-bottom:20px">About the Studio</div>
+              <h2>Spaces that feel <em>intimate,</em> editorial, precise.</h2>
+              <p style="margin-top:22px">This direction keeps the website highly visual and intentionally restrained. The goal is to let the work feel premium and immersive, while still giving clients an easy path to conversation.</p>
+            </div>
+            <div class="stat-grid">
+              <div class="stat">
+                <strong class="count-up" data-target="12">0</strong>
+                <span>Completed projects</span>
+              </div>
+              <div class="stat">
+                <strong class="count-up" data-target="4">0</strong>
+                <span>Featured works</span>
+              </div>
+              <div class="stat">
+                <strong>24/7</strong>
+                <span>Online presentation</span>
+              </div>
+              <div class="stat">
+                <strong style="font-size:24px">Tête-à-tête</strong>
+                <span>Studio philosophy</span>
+              </div>
+            </div>
+          </div>
+        </article>
+        <div class="studio-image reveal">
+          <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1400&q=80" alt="Studio">
+          <div class="studio-image-label">
+            <small>Est. 2020 · Toronto</small>
+            Tatiana<br>Koroliuk
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── philosophy ─── -->
+  <section class="philosophy">
+    <div class="philosophy-inner">
+      <div class="philosophy-grid stagger">
+        <div class="phil-card reveal">
+          <span class="phil-num">01</span>
+          <h3>Architecture as atmosphere</h3>
+          <p>Every space should feel like a considered emotional experience — not just a functional arrangement of walls and furniture.</p>
+        </div>
+        <div class="phil-card reveal">
+          <span class="phil-num">02</span>
+          <h3>Material tells the story</h3>
+          <p>Texture, weight, and warmth are the language of intimacy. The right material choice is felt before it is seen.</p>
+        </div>
+        <div class="phil-card reveal">
+          <span class="phil-num">03</span>
+          <h3>Restraint as a luxury</h3>
+          <p>True refinement is knowing what to leave out. Silence in a room — visual and physical — is always the rarest thing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── journal ─── -->
+  <section class="journal" id="journal">
+    <div class="journal-inner">
+      <div class="journal-head">
+        <div class="reveal-clip">
+          <h2 class="rc-inner">Journal, references &amp; <em>Substack</em> thoughts.</h2>
+        </div>
+        <p class="reveal">This section connects to Tatiana's Substack feed. Editorial writing on design, atmosphere, and the spaces that shape how we live.</p>
+      </div>
+      <div class="journal-grid stagger">
+        <article class="article reveal">
+          <div class="article-media">
+            <img src="https://images.unsplash.com/photo-1494526585095-c41746248156?auto=format&fit=crop&w=900&q=80" alt="">
+          </div>
+          <div class="article-copy">
+            <div class="smallcaps">Journal</div>
+            <h3>Designing calm spaces that still feel emotionally rich.</h3>
+            <p>A short reflection on warmth, restraint, and architectural intimacy in contemporary interiors.</p>
+            <div class="article-foot">
+              <time>March 2026</time>
+              <a class="arrow-link" href="#"><span class="al-line"></span>Read</a>
+            </div>
+          </div>
+        </article>
+        <article class="article reveal">
+          <div class="article-media">
+            <img src="https://images.unsplash.com/photo-1484154218962-a197022b5858?auto=format&fit=crop&w=900&q=80" alt="">
+          </div>
+          <div class="article-copy">
+            <div class="smallcaps">Substack</div>
+            <h3>Why low-contrast palettes can still feel dramatic.</h3>
+            <p>On dark luxury interiors, atmospheric lighting, and how material choices shape emotional depth.</p>
+            <div class="article-foot">
+              <time>February 2026</time>
+              <a class="arrow-link" href="#"><span class="al-line"></span>Read</a>
+            </div>
+          </div>
+        </article>
+        <article class="article reveal">
+          <div class="article-media">
+            <img src="https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=900&q=80" alt="">
+          </div>
+          <div class="article-copy">
+            <div class="smallcaps">Notes</div>
+            <h3>The intimacy of architecture seen through interiors.</h3>
+            <p>A project note about scale, silence, reflection, and the tension between softness and precision.</p>
+            <div class="article-foot">
+              <time>January 2026</time>
+              <a class="arrow-link" href="#"><span class="al-line"></span>Read</a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── contact ─── -->
+  <section class="contact" id="contact">
+    <div class="contact-inner">
+      <div class="contact-wrap reveal">
+        <div class="contact-bg">
+          <img src="https://images.unsplash.com/photo-1505693416388-ac5ce068fe85?auto=format&fit=crop&w=1800&q=80" alt="">
+        </div>
+        <div class="contact-body">
+          <div>
+            <div class="smallcaps light" style="margin-bottom:16px">Get in touch</div>
+            <h2>Let's discuss your future <em>space.</em></h2>
+            <p>For private residences, styling, freelance design support, or creative collaborations — get in touch and start a conversation with Teté.</p>
+            <div class="contact-actions">
+              <a class="pill-btn" href="mailto:hello@tete.design?subject=Interior%20Design%20Inquiry">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                Email Teté
+              </a>
+              <a class="ghost-btn" href="https://wa.me/15555555555?text=Hi%20Teté,%20I%20would%20love%20to%20talk%20about%20a%20project." target="_blank" rel="noopener">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+                WhatsApp
+              </a>
+            </div>
+          </div>
+          <div class="contact-bottom">
+            <span>Toronto, Canada</span>
+            <a href="mailto:hello@tete.design">hello@tete.design</a>
+            <a href="#">Instagram</a>
+            <a href="#">Substack</a>
+          </div>
+        </div>
+
+        <!-- form panel -->
+        <div class="contact-form">
+          <h4>Send a message</h4>
+          <div class="form-field">
+            <label>Your name</label>
+            <input type="text" placeholder="Tatiana">
+          </div>
+          <div class="form-field">
+            <label>Email address</label>
+            <input type="email" placeholder="hello@example.com">
+          </div>
+          <div class="form-field">
+            <label>Project type</label>
+            <input type="text" placeholder="Residential / Commercial / Other">
+          </div>
+          <div class="form-field">
+            <label>Message</label>
+            <textarea placeholder="Tell me about your space…"></textarea>
+          </div>
+          <button class="pill-btn" style="width:100%;justify-content:center;margin-top:4px">Send message</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── footer ─── -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-brand">TETÉ.</span>
+      <span class="footer-copy">© 2026 Tatiana Koroliuk · Interior Design · Toronto</span>
+    </div>
+  </footer>
+
+  <!-- ─── cookie ─── -->
+  <div id="cookieBar">
+    We use cookies to enhance your experience. Read our <a href="#" style="color:var(--apricot)">Privacy Policy</a> for details.
+    <div class="cookie-btns">
+      <button class="accept" id="acceptCookies">Accept all</button>
+      <button class="deny" id="denyCookies">Decline</button>
+    </div>
+  </div>
+
+  <script>
+  (() => {
+    /* ─ cursor ─ */
+    const dot = document.getElementById('cursorDot');
+    const ring = document.getElementById('cursorRing');
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; });
+    const animCursor = () => {
+      dot.style.transform = `translate(${mx}px,${my}px) translate(-50%,-50%)`;
+      rx += (mx - rx) * .12;
+      ry += (my - ry) * .12;
+      ring.style.transform = `translate(${rx}px,${ry}px) translate(-50%,-50%)`;
+      requestAnimationFrame(animCursor);
+    };
+    animCursor();
+
+    /* ─ preloader ─ */
+    const pre = document.getElementById('preloader');
+    const fill = document.getElementById('preFill');
+    const num = document.getElementById('preNum');
+    let pct = 0;
+    setTimeout(() => {
+      fill.style.width = '100%';
+    }, 400);
+    const tick = setInterval(() => {
+      pct = Math.min(pct + Math.random() * 6 + 2, 100);
+      num.textContent = Math.floor(pct) + '%';
+      if(pct >= 100){ clearInterval(tick); setTimeout(() => pre.classList.add('done'), 320); }
+    }, 60);
+
+    /* ─ topbar scroll ─ */
+    const topbar = document.getElementById('topbar');
+    const menuBtnEl = document.getElementById('menuBtn');
+    window.addEventListener('scroll', () => {
+      const s = window.scrollY > 60;
+      topbar.classList.toggle('scrolled', s);
+      menuBtnEl.classList.toggle('scrolled', s);
+    }, { passive: true });
+
+    /* ─ menu ─ */
+    const overlay = document.getElementById('menuOverlay');
+    const closeBtn = document.getElementById('closeMenu');
+    const open = () => { overlay.classList.add('open'); document.body.style.overflow='hidden'; menuBtnEl.classList.add('active'); };
+    const close = () => { overlay.classList.remove('open'); document.body.style.overflow=''; menuBtnEl.classList.remove('active'); };
+    menuBtnEl.addEventListener('click', () => overlay.classList.contains('open') ? close() : open());
+    closeBtn.addEventListener('click', close);
+    overlay.querySelectorAll('a').forEach(a => a.addEventListener('click', close));
+    document.addEventListener('keydown', e => e.key === 'Escape' && close());
+
+    /* ─ slideshow ─ */
+    const slides = document.querySelectorAll('.slide');
+    const counterFill = document.getElementById('slideCounterFill');
+    const counterTop = document.getElementById('slideNumTop');
+    const total = slides.length;
+    let cur = 0;
+    const goTo = (i) => {
+      slides[cur].classList.remove('active');
+      cur = i;
+      slides[cur].classList.add('active');
+      counterTop.textContent = String(cur + 1).padStart(2, '0');
+      counterFill.style.height = `${((cur + 1) / total) * 100}%`;
+    };
+    setInterval(() => goTo((cur + 1) % total), 4800);
+
+    /* ─ reveal on scroll ─ */
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if(e.isIntersecting) { e.target.classList.add('in'); observer.unobserve(e.target); } });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal, .reveal-clip').forEach(el => observer.observe(el));
+
+    /* ─ count-up ─ */
+    const countObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if(!e.isIntersecting) return;
+        const el = e.target;
+        const target = parseInt(el.dataset.target);
+        let n = 0;
+        const inc = target / 40;
+        const t = setInterval(() => {
+          n = Math.min(n + inc, target);
+          el.textContent = Math.floor(n);
+          if(n >= target){ el.textContent = target; clearInterval(t); }
+        }, 35);
+        countObs.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    document.querySelectorAll('.count-up').forEach(el => countObs.observe(el));
+
+    /* ─ cookie ─ */
+    const bar = document.getElementById('cookieBar');
+    const hide = () => bar.classList.add('hidden');
+    document.getElementById('acceptCookies').addEventListener('click', hide);
+    document.getElementById('denyCookies').addEventListener('click', hide);
+  })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,40 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "images/uploads"
+public_folder: "/images/uploads"
+
+publish_mode: editorial_workflow
+
+collections:
+  - name: "content"
+    label: "Content"
+    files:
+      - name: "projects"
+        label: "Projects"
+        file: "content/projects.json"
+        format: "json"
+        fields:
+          - name: "projects"
+            label: "Projects"
+            widget: "list"
+            summary: "{{fields.title}} — {{fields.location}}"
+            fields:
+              - { name: "slug", label: "Slug", widget: "string", hint: "Unique. Example: calm-loft" }
+              - { name: "title", label: "Title", widget: "string" }
+              - { name: "subtitle", label: "Subtitle", widget: "string", required: false }
+              - { name: "year", label: "Year", widget: "string", required: false }
+              - { name: "location", label: "Location", widget: "string", required: false }
+              - { name: "description", label: "Description", widget: "text", required: false }
+              - name: "images"
+                label: "Gallery images"
+                widget: "list"
+                field: { name: "src", label: "Image", widget: "image" }
+              - name: "facts"
+                label: "Facts (optional)"
+                widget: "list"
+                required: false
+                fields:
+                  - { name: "label", label: "Label", widget: "string" }
+                  - { name: "value", label: "Value", widget: "string" }
