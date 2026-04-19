@@ -2085,4 +2085,154 @@ img {
   .touch-form-wrapper {
     padding: 32px 20px;
   }
+
+  .touch-title {
+    font-size: 28px;
+  }
+
+  .touch-desc {
+    font-size: 14px;
+  }
+}
+
+/* Additional mobile improvements */
+@media (max-width: 480px) {
+  .hero-title {
+    font-size: 42px;
+  }
+
+  .hero-desc {
+    font-size: 14px;
+    padding: 0 16px;
+  }
+
+  .project-title {
+    font-size: 28px;
+  }
+
+  .section-title {
+    font-size: 36px;
+  }
+
+  .hamburger {
+    display: block;
+  }
+
+  .nav {
+    display: none;
+  }
+}
+
+/* Improve focus states for accessibility */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--apricot);
+  outline-offset: 4px;
+}
+
+/* Reduce motion for accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Journal Section Loading Skeleton */
+.postItemSkeleton {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--brown-xs);
+}
+
+.skeleton-line {
+  height: 12px;
+  background: linear-gradient(
+    90deg,
+    var(--linen-2) 0%,
+    var(--sand) 50%,
+    var(--linen-2) 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-loading 1.5s infinite;
+  border-radius: 2px;
+}
+
+.skeleton-line.short {
+  width: 40%;
+  margin-bottom: 12px;
+}
+
+.skeleton-line.long {
+  width: 85%;
+}
+
+@keyframes skeleton-loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+/* 404 Page */
+.not-found-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--linen);
+  padding: 24px;
+}
+
+.not-found-content {
+  text-align: center;
+  max-width: 480px;
+}
+
+.not-found-num {
+  font-size: 120px;
+  font-weight: 300;
+  color: var(--apricot);
+  line-height: 1;
+  margin-bottom: 24px;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.not-found-title {
+  font-size: 32px;
+  font-weight: 400;
+  color: var(--brown);
+  margin-bottom: 16px;
+  font-family: 'Cormorant Garamond', serif;
+}
+
+.not-found-desc {
+  color: var(--brown-m);
+  font-size: 16px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+}
+
+.not-found-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 14px 32px;
+  background: var(--apricot);
+  color: var(--linen);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 0;
+  transition: all 0.3s ease;
+}
+
+.not-found-link:hover {
+  background: var(--apricot-d);
+  transform: translateY(-2px);
 }

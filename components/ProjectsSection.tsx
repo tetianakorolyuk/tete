@@ -35,6 +35,8 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
                       className="img-1"
                       data-lightbox={index}
                       data-i={0}
+                      loading={index === 0 ? "eager" : "lazy"}
+                      fetchPriority={index === 0 ? "high" : "auto"}
                     />
                     {img2 && img2 !== img1 && (
                       <img
@@ -43,6 +45,7 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
                         className="img-2"
                         data-lightbox={index}
                         data-i={1}
+                        loading="lazy"
                       />
                     )}
                   </div>

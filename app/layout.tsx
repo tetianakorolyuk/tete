@@ -5,7 +5,7 @@ const geistSans = undefined;
 const geistMono = undefined;
 
 export const metadata: Metadata = {
-  title: "TETÉ — Interior Design",
+  title: "TETÉ — Interior Design | Toronto",
   description: "Interior design with a cinematic, architectural point of view. Toronto-based studio creating calm but dramatic spaces.",
   keywords: ["interior design", "Toronto", "residential", "luxury", "minimal", "Tatiana Koroliuk"],
   authors: [{ name: "Tatiana Koroliuk" }],
@@ -14,11 +14,21 @@ export const metadata: Metadata = {
     description: "Interior design with a cinematic, architectural point of view.",
     type: "website",
     locale: "en_US",
+    url: "https://tetiana-korolyuk.vercel.app",
+    images: [
+      {
+        url: "/og.jpg",
+        width: 1200,
+        height: 630,
+        alt: "TETÉ Interior Design Portfolio",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "TETÉ — Interior Design",
     description: "Interior design with a cinematic, architectural point of view.",
+    images: ["/og.jpg"],
   },
   robots: {
     index: true,

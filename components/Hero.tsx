@@ -43,7 +43,13 @@ export default function Hero({ projects }: HeroProps) {
       <div className="slides">
         {slides.map((slide, i) => (
           <div key={i} className={`slide ${i === currentIdx ? 'active' : ''}`}>
-            <img className="slide-img" src={slide.src} alt="" />
+            <img
+              className="slide-img"
+              src={slide.src}
+              alt=""
+              loading={i < 2 ? "eager" : "lazy"}
+              fetchPriority={i < 2 ? "high" : "auto"}
+            />
           </div>
         ))}
       </div>
