@@ -138,6 +138,34 @@ body:has(button:hover) .cursor-ring {
   }
 }
 
+/* Click ripple effect */
+.click-ripple {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--apricot);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 10001;
+  animation: rippleExpand 0.6s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+@keyframes rippleExpand {
+  0% {
+    width: 20px;
+    height: 20px;
+    opacity: 1;
+    border-width: 2px;
+  }
+  100% {
+    width: 80px;
+    height: 80px;
+    opacity: 0;
+    border-width: 0px;
+  }
+}
+
 /* Loading / Preloader */
 #preloader {
   position: fixed;
@@ -208,6 +236,25 @@ body:has(button:hover) .cursor-ring {
 }
 
 .reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Staggered reveal animation */
+.reveal-stagger > * {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.8s cubic-bezier(0.76, 0, 0.24, 1), transform 0.8s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.reveal-stagger > *:nth-child(1) { transition-delay: 0ms; }
+.reveal-stagger > *:nth-child(2) { transition-delay: 80ms; }
+.reveal-stagger > *:nth-child(3) { transition-delay: 160ms; }
+.reveal-stagger > *:nth-child(4) { transition-delay: 240ms; }
+.reveal-stagger > *:nth-child(5) { transition-delay: 320ms; }
+.reveal-stagger > *:nth-child(6) { transition-delay: 400ms; }
+
+.reveal-stagger.in > * {
   opacity: 1;
   transform: none;
 }
@@ -499,6 +546,16 @@ main {
   min-height: 100svh;
   overflow: hidden;
   background: var(--brown);
+}
+
+/* Parallax effect for hero slides */
+.hero.parallax-active .slide.active .slide-img {
+  transform: scale(1.08) translateY(-10px);
+  transition: transform 8s ease, opacity 1.2s ease;
+}
+
+.hero .slide .slide-img {
+  transition: transform 7s ease, opacity 1.2s ease;
 }
 
 .stage {
@@ -842,6 +899,24 @@ img {
   background: var(--linen-2);
   cursor: none;
   min-height: 88svh;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+/* Smooth scale effect on project hover */
+.project-row::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, var(--apricot), transparent, var(--apricot));
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.project-row:hover::before {
+  opacity: 0.15;
 }
 
 .project-row-img-wrap {
@@ -1195,10 +1270,22 @@ img {
   align-items: center;
   justify-content: center;
   padding: 18px;
+  opacity: 0;
+  transition: opacity 0.4s cubic-bezier(0.76, 0, 0.24, 1);
 }
 
 .lightbox.isOpen {
   display: flex;
+  opacity: 1;
+}
+
+.lightbox .lightboxInner {
+  transform: scale(0.98) translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.lightbox.isOpen .lightboxInner {
+  transform: scale(1) translateY(0);
 }
 
 .lightboxInner {
