@@ -29,7 +29,7 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
               />
               <div className="project-info">
                 <h3 className="project-title">{project.title}</h3>
-                <p className="project-category">{project.category || 'Residential'} · {project.year || '2025'}</p>
+                <p className="project-category">{project.location || 'Toronto'} · {project.year || '2025'}</p>
               </div>
             </article>
           </FadeIn>
