@@ -54,9 +54,8 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Upload to Vercel Blob
+    // Upload to Vercel Blob (without public access flag - use signed URLs or make blob public after)
     const blob = await put(`uploads/${filename}`, file, {
-      access: 'public',
       addRandomSuffix: false,
     });
 
