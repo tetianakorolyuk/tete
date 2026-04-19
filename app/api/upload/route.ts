@@ -1,6 +1,7 @@
-import { put } from '@vercel/blob';
 import { NextRequest, NextResponse } from 'next/server';
 import { checkAuth } from '@/lib/auth';
+import { writeFile, mkdir } from 'fs/promises';
+import { join } from 'path';
 
 export async function POST(request: NextRequest) {
   // Check authentication
@@ -36,17 +37,23 @@ export async function POST(request: NextRequest) {
 
     // Generate unique filename
     const ext = file.name.split('.').pop() || 'jpg';
-    const filename = `projects/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
-    // Upload to Vercel Blob
-    const blob = await put(filename, file, {
-      access: 'public',
-      addRandomSuffix: false,
-    });
+    // Save to public/images/uploads folder
+    const uploadDir = join(process.cwd(), 'public', 'images', 'uploads');
+    await mkdir(uploadDir, { recursive: true });
+
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
+    const path = join(uploadDir, filename);
+    await writeFile(path, buffer);
+
+    // Return public URL
+    const url = `/images/uploads/${filename}`;
 
     return NextResponse.json({
-      url: blob.url,
-      filename: blob.pathname,
+      url,
+      filename,
       size: file.size,
     });
   } catch (error) {

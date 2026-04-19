@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import { Project, Fact } from '@/lib/types';
 import { saveProjectsAction } from './actions';
 import { generateDescriptionAction, generateFactsAction } from './ai-actions';
@@ -10,6 +11,7 @@ interface EditProjectsProps {
 }
 
 export default function EditProjects({ initialProjects }: EditProjectsProps) {
+  const router = useRouter();
   const [projects, setProjects] = useState<Project[]>(initialProjects);
   const [editingSlug, setEditingSlug] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
@@ -24,11 +26,13 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
     try {
       const result = await saveProjectsAction(projects);
       if (result.success) {
-        setMessage({ type: 'success', text: 'Projects saved successfully!' });
+        setMessage({ type: 'success', text: 'Projects saved! Refreshing...' });
+        router.refresh(); // Refresh the page to show updated data
       } else {
         setMessage({ type: 'error', text: result.error || 'Failed to save' });
       }
-    } catch {
+    } catch (e) {
+      console.error(e);
       setMessage({ type: 'error', text: 'Failed to save projects' });
     }
     setSaving(false);
