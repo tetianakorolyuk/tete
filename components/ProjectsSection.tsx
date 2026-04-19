@@ -20,8 +20,10 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
 
         <div className="projects-list">
           {projects.map((project, index) => {
-            const img1 = project.images?.[0] || '';
+            const img1 = project.images?.[0];
             const img2 = project.images?.[1] || img1;
+
+            if (!img1) return null;
 
             return (
               <FadeIn key={project.slug} delay={80 * index} clip>
@@ -34,13 +36,15 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
                       data-lightbox={index}
                       data-i={0}
                     />
-                    <img
-                      src={img2}
-                      alt={project.title}
-                      className="img-2"
-                      data-lightbox={index}
-                      data-i={1}
-                    />
+                    {img2 && img2 !== img1 && (
+                      <img
+                        src={img2}
+                        alt={project.title}
+                        className="img-2"
+                        data-lightbox={index}
+                        data-i={1}
+                      />
+                    )}
                   </div>
                   <div className="hover-label">View<br/>Project</div>
                   <div className="project-content">
