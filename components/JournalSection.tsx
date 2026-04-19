@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 
 interface Post {
   title: string;
@@ -22,38 +22,50 @@ const formatDate = (pub: string) => {
   }
 };
 
+const CACHE_KEY = 'tete_substack_cache_v5';
+const CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutes cache
+
 export default function JournalSection() {
   const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(true);
-  const [note, setNote] = useState<string>('');
+  const [error, setError] = useState(false);
 
   const loadSubstack = useCallback(async (force = false) => {
     const FEED = 'https://tekofm.substack.com/feed';
     const RELAY = 'https://api.allorigins.win/raw?url=';
-    const CACHE_KEY = 'tete_substack_cache_v4';
-    const CACHE_TTL_MS = 10 * 60 * 1000;
 
     try {
-      // Try cache first
+      // Try cache first (unless forced refresh)
       if (!force) {
         try {
           const raw = localStorage.getItem(CACHE_KEY);
           if (raw) {
             const cached = JSON.parse(raw);
-            if (cached?.ts && Array.isArray(cached?.items) && Date.now() - cached.ts < CACHE_TTL_MS) {
+            if (cached?.ts && Array.isArray(cached?.items) && (Date.now() - cached.ts) < CACHE_TTL_MS) {
               setPosts(cached.items);
-              setNote('cached');
               setLoading(false);
+              setError(false);
+              return; // Use cached data
             }
           }
-        } catch {}
+        } catch (e) {
+          console.warn('Cache read failed:', e);
+        }
       }
 
-      setLoading(true);
+      // Fetch fresh data
       const bust = Date.now();
       const url = RELAY + encodeURIComponent(`${FEED}?_=${bust}`);
 
-      const res = await fetch(url, { cache: 'no-store' });
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 8000);
+
+      const res = await fetch(url, {
+        cache: 'no-store',
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
+
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       const xmlText = await res.text();
 
@@ -66,48 +78,36 @@ export default function JournalSection() {
 
       if (!items.length) throw new Error('No RSS items');
 
+      // Save to cache
       try {
         localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), items }));
-      } catch {}
+      } catch (e) {
+        console.warn('Cache write failed:', e);
+      }
 
       setPosts(items);
-      setNote('updated');
-      setLoading(false);
-    } catch {
+      setError(false);
+    } catch (err) {
+      console.error('Substack load failed:', err);
+      setError(true);
+      // Try to show cached data on error
+      try {
+        const raw = localStorage.getItem(CACHE_KEY);
+        if (raw) {
+          const cached = JSON.parse(raw);
+          if (cached?.items?.length) {
+            setPosts(cached.items);
+          }
+        }
+      } catch {}
+    } finally {
       setLoading(false);
     }
   }, []);
 
-  if (loading) {
-    return (
-      <section className="section" id="journal">
-        <div className="wrap">
-          <p className="subkicker">
-            <span className="rule"></span>Journal
-          </p>
-          <div className="sectionTitleLine">
-            <h2>Latest writing</h2>
-            <div className="meta metaRow">
-              <a href="https://tekofm.substack.com/" target="_blank" rel="noopener">
-                tekofm.substack.com
-              </a>
-              <button
-                className="postsRefresh"
-                onClick={() => loadSubstack(true)}
-                type="button"
-                aria-label="Refresh posts"
-              >
-                Refresh
-              </button>
-            </div>
-          </div>
-          <div style={{ marginTop: 18 }} className="posts">
-            <div className="postsEmpty">Loading posts…</div>
-          </div>
-        </div>
-      </section>
-    );
-  }
+  useEffect(() => {
+    loadSubstack();
+  }, [loadSubstack]);
 
   return (
     <section className="section" id="journal">
@@ -121,24 +121,35 @@ export default function JournalSection() {
             <a href="https://tekofm.substack.com/" target="_blank" rel="noopener">
               tekofm.substack.com
             </a>
-            <button
-              className="postsRefresh"
-              onClick={() => loadSubstack(true)}
-              type="button"
-              aria-label="Refresh posts"
-            >
-              Refresh
-            </button>
+            {!loading && (
+              <button
+                className="postsRefresh"
+                onClick={() => loadSubstack(true)}
+                type="button"
+                aria-label="Refresh posts"
+              >
+                Refresh
+              </button>
+            )}
           </div>
         </div>
 
         <div style={{ marginTop: 18 }} className="posts">
-          {posts.length > 0 ? (
+          {loading ? (
+            <div className="postsEmpty">Loading latest posts…</div>
+          ) : error && posts.length === 0 ? (
+            <div className="postsEmpty">
+              Couldn't load posts right now.{' '}
+              <a href="https://tekofm.substack.com/" target="_blank" rel="noopener">
+                Open Substack
+              </a>
+              .
+            </div>
+          ) : posts.length > 0 ? (
             posts.map((post, i) => (
               <article key={i} className="postItem">
                 <p className="postMeta">
                   {formatDate(post.pubDate)}
-                  {note ? ` · ${note}` : ''}
                 </p>
                 <h3 className="postTitle">
                   <a href={post.link} target="_blank" rel="noopener">

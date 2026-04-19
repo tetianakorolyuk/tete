@@ -31,9 +31,6 @@ export default function Header() {
             </svg>
             Contact
           </a>
-          <a href="/edit" className="smallcaps" style={{ color: scrolled ? 'var(--brown-s)' : 'var(--white-m)' }}>
-            Edit
-          </a>
           <button
             className={`hamburger ${scrolled ? 'scrolled' : ''} ${mobileOpen ? 'active' : ''}`}
             type="button"
@@ -52,7 +49,6 @@ export default function Header() {
         <a href="#journal" onClick={() => setMobileOpen(false)}>Journal</a>
         <a href="#contact" onClick={() => setMobileOpen(false)}>Contact</a>
         <a href="mailto:tetiana.korolyuk@gmail.com">Email</a>
-        <a href="/edit">Edit Site</a>
       </div>
     </>
   );
