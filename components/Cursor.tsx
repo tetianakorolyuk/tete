@@ -38,8 +38,8 @@ export default function Cursor() {
 
   return (
     <>
-      <div className="cursor-dot" id="cursorDot" />
-      <div className="cursor-ring" id="cursorRing" />
+      <div className="cursor-dot" id="cursorDot" style={{ pointerEvents: 'none' }} />
+      <div className="cursor-ring" id="cursorRing" style={{ pointerEvents: 'none' }} />
     </>
   );
 }

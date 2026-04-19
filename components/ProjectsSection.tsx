@@ -12,7 +12,18 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
   const [openSlug, setOpenSlug] = useState<string | null>(null);
 
   const toggleExpand = (slug: string) => {
-    setOpenSlug((prev) => (prev === slug ? null : slug));
+    setOpenSlug((prev) => {
+      const willOpen = prev !== slug;
+      setTimeout(() => {
+        if (willOpen) {
+          document.getElementById(`expand-${slug}`)?.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+          });
+        }
+      }, 100);
+      return prev === slug ? null : slug;
+    });
   };
 
   return (

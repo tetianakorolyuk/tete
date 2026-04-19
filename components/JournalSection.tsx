@@ -22,8 +22,8 @@ const formatDate = (pub: string) => {
   }
 };
 
-const CACHE_KEY = 'tete_substack_cache_v5';
-const CACHE_TTL_MS = 15 * 60 * 1000; // 15 minutes cache
+const CACHE_KEY = 'tete_substack_cache_v6';
+const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes cache
 
 export default function JournalSection() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -32,42 +32,55 @@ export default function JournalSection() {
 
   const loadSubstack = useCallback(async (force = false) => {
     const FEED = 'https://tekofm.substack.com/feed';
-    const RELAY = 'https://api.allorigins.win/raw?url=';
+    // Use multiple fallbacks for reliability
+    const PROXIES = [
+      `https://api.allorigins.win/raw?url=${encodeURIComponent(FEED)}`,
+      `https://corsproxy.io/?${encodeURIComponent(FEED)}`,
+      FEED, // Direct (may fail due to CORS but try last)
+    ];
 
     try {
-      // Try cache first (unless forced refresh)
+      // Check cache first
       if (!force) {
-        try {
-          const raw = localStorage.getItem(CACHE_KEY);
-          if (raw) {
-            const cached = JSON.parse(raw);
-            if (cached?.ts && Array.isArray(cached?.items) && (Date.now() - cached.ts) < CACHE_TTL_MS) {
-              setPosts(cached.items);
-              setLoading(false);
-              setError(false);
-              return; // Use cached data
-            }
+        const raw = localStorage.getItem(CACHE_KEY);
+        if (raw) {
+          const cached = JSON.parse(raw);
+          if (cached?.ts && Array.isArray(cached?.items) && (Date.now() - cached.ts) < CACHE_TTL_MS) {
+            setPosts(cached.items);
+            setLoading(false);
+            setError(false);
+            return;
           }
-        } catch (e) {
-          console.warn('Cache read failed:', e);
         }
       }
 
-      // Fetch fresh data
-      const bust = Date.now();
-      const url = RELAY + encodeURIComponent(`${FEED}?_=${bust}`);
+      setLoading(true);
+      setError(false);
 
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 8000);
+      // Try proxies in order
+      let xmlText = '';
+      for (const proxyUrl of PROXIES) {
+        try {
+          const controller = new AbortController();
+          const timeoutId = setTimeout(() => controller.abort(), 6000);
 
-      const res = await fetch(url, {
-        cache: 'no-store',
-        signal: controller.signal,
-      });
-      clearTimeout(timeoutId);
+          const res = await fetch(proxyUrl, {
+            cache: 'no-store',
+            signal: controller.signal,
+          });
+          clearTimeout(timeoutId);
 
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      const xmlText = await res.text();
+          if (res.ok) {
+            xmlText = await res.text();
+            break;
+          }
+        } catch (e) {
+          console.warn(`Proxy failed: ${proxyUrl}`);
+          continue;
+        }
+      }
+
+      if (!xmlText) throw new Error('All proxies failed');
 
       const doc = new DOMParser().parseFromString(xmlText, 'text/xml');
       const items: Post[] = [...doc.querySelectorAll('item')].map((item) => ({
@@ -78,28 +91,21 @@ export default function JournalSection() {
 
       if (!items.length) throw new Error('No RSS items');
 
-      // Save to cache
-      try {
-        localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), items }));
-      } catch (e) {
-        console.warn('Cache write failed:', e);
-      }
+      // Cache the results
+      localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), items }));
 
       setPosts(items);
-      setError(false);
     } catch (err) {
       console.error('Substack load failed:', err);
       setError(true);
-      // Try to show cached data on error
-      try {
-        const raw = localStorage.getItem(CACHE_KEY);
-        if (raw) {
-          const cached = JSON.parse(raw);
-          if (cached?.items?.length) {
-            setPosts(cached.items);
-          }
+      // Show cached data on error
+      const raw = localStorage.getItem(CACHE_KEY);
+      if (raw) {
+        const cached = JSON.parse(raw);
+        if (cached?.items?.length) {
+          setPosts(cached.items);
         }
-      } catch {}
+      }
     } finally {
       setLoading(false);
     }
@@ -110,29 +116,33 @@ export default function JournalSection() {
   }, [loadSubstack]);
 
   return (
-    <section className="section" id="journal">
+    <section className="section journal" id="journal">
       <div className="wrap">
-        <p className="subkicker">
-          <span className="rule"></span>Journal
-        </p>
-        <div className="sectionTitleLine">
-          <h2>Latest writing</h2>
-          <div className="meta metaRow">
-            <a href="https://tekofm.substack.com/" target="_blank" rel="noopener">
-              tekofm.substack.com
-            </a>
-            {!loading && (
-              <button
-                className="postsRefresh"
-                onClick={() => loadSubstack(true)}
-                type="button"
-                aria-label="Refresh posts"
-              >
-                Refresh
-              </button>
-            )}
+        <FadeIn>
+          <p className="subkicker">
+            <span className="rule"></span>Journal
+          </p>
+        </FadeIn>
+        <FadeIn delay={100}>
+          <div className="sectionTitleLine">
+            <h2>Latest writing</h2>
+            <div className="meta metaRow">
+              <a href="https://tekofm.substack.com/" target="_blank" rel="noopener">
+                tekofm.substack.com
+              </a>
+              {!loading && (
+                <button
+                  className="postsRefresh"
+                  onClick={() => loadSubstack(true)}
+                  type="button"
+                  aria-label="Refresh posts"
+                >
+                  Refresh
+                </button>
+              )}
+            </div>
           </div>
-        </div>
+        </FadeIn>
 
         <div style={{ marginTop: 18 }} className="posts">
           {loading ? (
@@ -170,5 +180,28 @@ export default function JournalSection() {
         </div>
       </div>
     </section>
+  );
+}
+
+// Simple FadeIn for this component
+function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
+  const [visible, setVisible] = useState(false);
+  const ref = useState<any>(null);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setVisible(true), delay);
+    return () => clearTimeout(timer);
+  }, [delay]);
+
+  return (
+    <div
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(20px)',
+        transition: 'opacity 0.6s ease, transform 0.6s ease',
+      }}
+    >
+      {children}
+    </div>
   );
 }
