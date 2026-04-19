@@ -9,129 +9,95 @@ interface HeroProps {
 
 export default function Hero({ projects }: HeroProps) {
   const [currentIdx, setCurrentIdx] = useState(0);
-  const [showingA, setShowingA] = useState(true);
-  const [progress, setProgress] = useState(0);
+  const [mounted, setMounted] = useState(false);
 
-  const intervalMs = 5200;
+  const intervalMs = 4800;
   const timerRef = useRef<NodeJS.Timeout | null>(null);
-  const startTimeRef = useRef<number>(Date.now());
-  const animationFrameRef = useRef<number | null>(null);
 
   const slides = projects.flatMap((p) =>
-    (p.images || []).map((src, i) => ({
-      src,
-      text: `${p.title} — ${p.subtitle || ''}`.replace(' — ', p.subtitle ? ' — ' : ''),
-      alt: `${p.title} photo ${i + 1}`,
-    }))
+    (p.images || []).map((src) => ({ src }))
   );
 
   const totalSlides = slides.length;
 
   useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
     if (totalSlides === 0) return;
 
-    const tick = () => {
-      const elapsed = Date.now() - startTimeRef.current;
-      const pct = Math.min(1, elapsed / intervalMs);
-      setProgress(pct * 100);
-
-      if (pct >= 1) {
-        setCurrentIdx((prev) => (prev + 1) % totalSlides);
-        setShowingA((prev) => !prev);
-        startTimeRef.current = Date.now();
-      }
-
-      animationFrameRef.current = requestAnimationFrame(tick);
-    };
-
-    animationFrameRef.current = requestAnimationFrame(tick);
+    timerRef.current = setInterval(() => {
+      setCurrentIdx((prev) => (prev + 1) % totalSlides);
+    }, intervalMs);
 
     return () => {
-      if (animationFrameRef.current !== null) {
-        cancelAnimationFrame(animationFrameRef.current);
-      }
-      if (timerRef.current) {
-        clearInterval(timerRef.current);
-      }
+      if (timerRef.current) clearInterval(timerRef.current);
     };
   }, [totalSlides]);
 
-  const goToSlide = (index: number) => {
-    setCurrentIdx(((index % totalSlides) + totalSlides) % totalSlides);
-    setShowingA((prev) => !prev);
-    startTimeRef.current = Date.now();
-  };
-
-  const prevSlide = () => {
-    goToSlide(currentIdx - 1);
-  };
-
-  const nextSlide = () => {
-    goToSlide(currentIdx + 1);
-  };
-
-  const currentSlide = slides[currentIdx];
-
-  if (!totalSlides) return null;
+  if (!mounted || !totalSlides) return null;
 
   return (
     <section className="hero" aria-label="Featured images">
-      <div className="stage" aria-hidden="true">
-        <img
-          id="imgA"
-          className={`layer ${showingA ? 'isActive' : ''}`}
-          src={slides[currentIdx]?.src || ''}
-          alt=""
-        />
-        <img
-          id="imgB"
-          className={`layer ${!showingA ? 'isActive' : ''}`}
-          src={slides[(currentIdx + 1) % totalSlides]?.src || ''}
-          alt=""
-        />
+      <div className="slides">
+        {slides.map((slide, i) => (
+          <div key={i} className={`slide ${i === currentIdx ? 'active' : ''}`}>
+            <img className="slide-img" src={slide.src} alt="" />
+          </div>
+        ))}
       </div>
 
-      <div className="heroInner">
-        <div className="wrap">
-          <p className="kicker">
-            <span className="rule"></span>Selected works
-          </p>
-          <h1>tete</h1>
-          <p className="lead">Minimal interior design. Projects below.</p>
+      <div className="slide-counter">
+        <div className="slide-counter-num">{String(currentIdx + 1).padStart(2, '0')}</div>
+        <div className="slide-counter-track">
+          <div
+            className="slide-counter-fill"
+            style={{ height: `${((currentIdx + 1) / totalSlides) * 100}%` }}
+          />
+        </div>
+        <div className="slide-counter-num">{String(totalSlides).padStart(2, '0')}</div>
+      </div>
 
-          <div className="heroBar">
-            <div className="hint">
-              <span className="dot" aria-hidden="true"></span>Scroll
+      <div className="hero-content">
+        <div className="hero-top">
+          <div className="hero-eyebrow">Interior Design · Toronto</div>
+        </div>
+        <div>
+          <h1 className="hero-title">
+            <span className="hero-title-line">
+              <span className="hero-title-inner">The Teté</span>
+            </span>
+            <span className="hero-title-line">
+              <span className="hero-title-inner" style={{ animationDelay: '0.18s', fontStyle: 'italic', color: 'rgba(240,234,226,.72)' }}>
+                Portfolio
+              </span>
+            </span>
+          </h1>
+        </div>
+        <div className="hero-bottom">
+          <p className="hero-desc">
+            A portfolio shaped around strong visual storytelling, minimal copy, and a cinematic presentation that puts the work first.
+          </p>
+          <div className="hero-cta-group">
+            <div className="scroll-hint">
+              <div className="scroll-hint-line" />
+              Scroll
             </div>
-            <p className="caption" id="heroCaption">
-              Image {currentIdx + 1} of {totalSlides}
-            </p>
+          </div>
+          <div className="hero-right">
+            <div className="hero-contact-chip">
+              <div className="dot" />
+              Available for projects
+            </div>
+            <div className="hero-socials">
+              <a href="#">Ig</a>
+              <a href="#">Sb</a>
+              <a href="#">Be</a>
+              <a href="#">Pi</a>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div className="heroUI">
-        <button className="navBtn" onClick={prevSlide} type="button">
-          Prev
-        </button>
-        <div className="dots" id="dots" aria-label="Carousel navigation">
-          {slides.map((_, i) => (
-            <button
-              key={i}
-              className={`dotBtn ${i === currentIdx ? 'isActive' : ''}`}
-              type="button"
-              onClick={() => goToSlide(i)}
-              aria-label={`Go to image ${i + 1}`}
-            />
-          ))}
-        </div>
-        <button className="navBtn" onClick={nextSlide} type="button">
-          Next
-        </button>
-      </div>
-
-      <div className="progress progressBottom" aria-hidden="true">
-        <div className="progressFill" style={{ width: `${progress}%` }} />
       </div>
     </section>
   );

@@ -6,13 +6,14 @@ import JournalSection from '@/components/JournalSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import Lightbox from '@/components/Lightbox';
-import PageWrapper from '@/components/PageWrapper';
+import Cursor from '@/components/Cursor';
 
 export default async function Home() {
   const projects = await getProjects();
 
   return (
-    <PageWrapper>
+    <>
+      <Cursor />
       <Header />
       <main id="content">
         <Hero projects={projects} />
@@ -22,6 +23,6 @@ export default async function Home() {
       </main>
       <Footer />
       <Lightbox projects={projects} />
-    </PageWrapper>
+    </>
   );
 }
