@@ -6,6 +6,8 @@ interface Post {
   title: string;
   link: string;
   pubDate: string;
+  description: string;
+  image?: string;
 }
 
 const formatDate = (pub: string) => {
@@ -83,11 +85,20 @@ export default function JournalSection() {
       if (!xmlText) throw new Error('All proxies failed');
 
       const doc = new DOMParser().parseFromString(xmlText, 'text/xml');
-      const items: Post[] = [...doc.querySelectorAll('item')].map((item) => ({
-        title: item.querySelector('title')?.textContent || '',
-        link: item.querySelector('link')?.textContent || '',
-        pubDate: item.querySelector('pubDate')?.textContent || '',
-      })).slice(0, 6);
+      const items: Post[] = [...doc.querySelectorAll('item')].map((item) => {
+        const content = item.querySelector('content\\:encoded')?.textContent || item.querySelector('description')?.textContent || '';
+        // Extract first image from content or description
+        const imgMatch = content.match(/<img[^>]+src="([^"]+)"/);
+        const imageUrl = imgMatch ? imgMatch[1] : undefined;
+
+        return {
+          title: item.querySelector('title')?.textContent || '',
+          link: item.querySelector('link')?.textContent || '',
+          pubDate: item.querySelector('pubDate')?.textContent || '',
+          description: content.replace(/<[^>]+>/g, '').slice(0, 180) + '...',
+          image: imageUrl,
+        };
+      }).slice(0, 6);
 
       if (!items.length) throw new Error('No RSS items');
 
@@ -158,14 +169,24 @@ export default function JournalSection() {
           ) : posts.length > 0 ? (
             posts.map((post, i) => (
               <article key={i} className="postItem">
-                <p className="postMeta">
-                  {formatDate(post.pubDate)}
-                </p>
-                <h3 className="postTitle">
-                  <a href={post.link} target="_blank" rel="noopener">
-                    {post.title}
-                  </a>
-                </h3>
+                {post.image && (
+                  <div className="postImage">
+                    <img src={post.image} alt="" loading="lazy" />
+                  </div>
+                )}
+                <div className="postContent">
+                  <p className="postMeta">
+                    {formatDate(post.pubDate)}
+                  </p>
+                  <h3 className="postTitle">
+                    <a href={post.link} target="_blank" rel="noopener">
+                      {post.title}
+                    </a>
+                  </h3>
+                  {post.description && (
+                    <p className="postExcerpt">{post.description}</p>
+                  )}
+                </div>
               </article>
             ))
           ) : (
@@ -186,7 +207,6 @@ export default function JournalSection() {
 // Simple FadeIn for this component
 function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: number }) {
   const [visible, setVisible] = useState(false);
-  const ref = useState<any>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), delay);
@@ -198,7 +218,7 @@ function FadeIn({ children, delay = 0 }: { children: React.ReactNode; delay?: nu
       style={{
         opacity: visible ? 1 : 0,
         transform: visible ? 'translateY(0)' : 'translateY(20px)',
-        transition: 'opacity 0.6s ease, transform 0.6s ease',
+        transition: 'opacity 0.7s cubic-bezier(0.76, 0, 0.24, 1), transform 0.7s cubic-bezier(0.76, 0, 0.24, 1)',
       }}
     >
       {children}

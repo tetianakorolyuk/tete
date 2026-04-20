@@ -24,6 +24,7 @@ export default function Header() {
           <a href="#contact">Contact</a>
         </nav>
         <div className="navRight">
+          <a href="#contact" className="nav-cta">Make a Request</a>
           <button
             className={`hamburger ${scrolled ? 'scrolled' : ''} ${mobileOpen ? 'active' : ''}`}
             type="button"

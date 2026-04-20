@@ -478,6 +478,37 @@ body::before {
   gap: 18px;
 }
 
+.nav-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-family: 'DM Mono', monospace;
+  color: var(--linen);
+  background: var(--apricot);
+  border: none;
+  transition: all 0.3s ease;
+  opacity: 0;
+  transform: translateX(10px);
+}
+
+.header:not(.scrolled) .nav-cta {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.header.scrolled .nav-cta {
+  opacity: 1;
+  transform: none;
+}
+
+.nav-cta:hover {
+  background: var(--apricot-d);
+}
+
 .iconLink {
   display: inline-flex;
   align-items: center;
@@ -1127,18 +1158,59 @@ img {
 .posts {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 24px;
 }
 
 .postItem {
   background: var(--linen-2);
   border: 1px solid var(--brown-xs);
-  padding: 24px;
-  transition: border-color 0.3s ease;
+  overflow: hidden;
+  transition: all 0.4s cubic-bezier(0.76, 0, 0.24, 1);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: postReveal 0.6s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+.postItem:nth-child(1) { animation-delay: 0ms; }
+.postItem:nth-child(2) { animation-delay: 80ms; }
+.postItem:nth-child(3) { animation-delay: 160ms; }
+.postItem:nth-child(4) { animation-delay: 240ms; }
+.postItem:nth-child(5) { animation-delay: 320ms; }
+.postItem:nth-child(6) { animation-delay: 400ms; }
+
+@keyframes postReveal {
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 .postItem:hover {
   border-color: rgba(61, 35, 21, 0.28);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px rgba(61, 35, 21, 0.08);
+}
+
+.postImage {
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  background: var(--brown-xs);
+}
+
+.postImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s cubic-bezier(0.76, 0, 0.24, 1);
+}
+
+.postItem:hover .postImage img {
+  transform: scale(1.06);
+}
+
+.postContent {
+  padding: 20px;
 }
 
 .postMeta {
@@ -1151,10 +1223,10 @@ img {
 }
 
 .postTitle {
-  margin: 12px 0 0;
+  margin: 12px 0;
   font-family: 'Cormorant Garamond', serif;
-  font-size: 28px;
-  line-height: 0.96;
+  font-size: 24px;
+  line-height: 1.1;
   font-weight: 400;
   letter-spacing: -0.04em;
   color: var(--brown);
@@ -1162,16 +1234,31 @@ img {
 
 .postTitle a {
   opacity: 1;
+  transition: color 0.3s ease;
 }
 
 .postTitle a:hover {
   color: var(--apricot);
 }
 
+.postExcerpt {
+  margin: 12px 0 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--brown-s);
+  font-weight: 300;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
 .postsEmpty {
   color: var(--brown-s);
   font-size: 14px;
   grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
 }
 
 /* Contact */
@@ -1726,6 +1813,10 @@ img {
     display: none;
   }
 
+  .nav-cta {
+    display: none;
+  }
+
   .hamburger {
     display: flex;
   }
@@ -1771,6 +1862,7 @@ img {
 
   .posts {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
 
   .grid2 {
@@ -1780,6 +1872,18 @@ img {
   .projectOverlayCard {
     align-self: center;
     max-width: none;
+  }
+
+  /* Disable custom cursor on touch devices */
+  .cursor-dot,
+  .cursor-ring {
+    display: none;
+  }
+
+  /* Better touch targets */
+  button, a {
+    min-height: 44px;
+    min-width: 44px;
   }
 }
 
@@ -1899,6 +2003,9 @@ img {
   text-transform: uppercase;
   color: var(--apricot);
   margin-bottom: 16px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.7s cubic-bezier(0.76, 0, 0.24, 1) 0.2s forwards;
 }
 
 .touch-title {
@@ -1909,6 +2016,9 @@ img {
   letter-spacing: -0.03em;
   color: var(--brown);
   margin: 0 0 24px;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.8s cubic-bezier(0.76, 0, 0.24, 1) 0.3s forwards;
 }
 
 .touch-title em {
@@ -1922,6 +2032,9 @@ img {
   color: var(--brown-m);
   max-width: 48ch;
   margin: 0 0 40px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeUp 0.8s cubic-bezier(0.76, 0, 0.24, 1) 0.4s forwards;
 }
 
 .touch-info {
@@ -1931,6 +2044,9 @@ img {
   padding: 32px;
   background: var(--linen-2);
   border: 1px solid var(--brown-xs);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeUp 0.8s cubic-bezier(0.76, 0, 0.24, 1) 0.5s forwards;
 }
 
 .info-item {
