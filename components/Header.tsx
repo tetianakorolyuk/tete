@@ -15,7 +15,7 @@ export default function Header() {
   }, []);
 
   const scrollToContact = () => {
-    const contactSection = document.querySelector('#contact');
+    const contactSection = document.querySelector('#get-in-touch');
     if (contactSection) {
       contactSection.scrollIntoView({ behavior: 'smooth' });
     }

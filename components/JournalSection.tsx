@@ -94,26 +94,15 @@ export default function JournalSection() {
         </FadeIn>
         <FadeIn delay={100}>
           <div className="sectionTitleLine">
-            <h2>Latest writing</h2>
-            <div className="meta metaRow">
-              <a href="https://tekofm.substack.com/" target="_blank" rel="noopener">
-                tekofm.substack.com
-              </a>
-              {!loading && (
-                <button
-                  className="postsRefresh"
-                  onClick={() => loadSubstack(true)}
-                  type="button"
-                  aria-label="Refresh posts"
-                >
-                  Refresh
-                </button>
-              )}
+            <h2>Journal, references &amp; <em>Substack</em> thoughts.</h2>
+            <div className="journal-note">
+              <div className="journal-note-circle"></div>
+              <p>This section connects to Tatiana's Substack feed. Editorial writing on design, atmosphere, and the spaces that shape how we live.</p>
             </div>
           </div>
         </FadeIn>
 
-        <div style={{ marginTop: 18 }} className="posts">
+        <div style={{ marginTop: 40 }} className="posts">
           {loading ? (
             <div className="postsEmpty">Loading latest posts…</div>
           ) : error && posts.length === 0 ? (
@@ -126,7 +115,7 @@ export default function JournalSection() {
             </div>
           ) : posts.length > 0 ? (
             posts.map((post, i) => (
-              <ImagePost key={i} post={post} formatDate={formatDate} />
+              <JournalCard key={i} post={post} formatDate={formatDate} />
             ))
           ) : (
             <div className="postsEmpty">
@@ -143,34 +132,40 @@ export default function JournalSection() {
   );
 }
 
-// Post card with image fallback handling
-function ImagePost({ post, formatDate }: { post: Post; formatDate: (pub: string) => string }) {
+// Journal Card with new design
+function JournalCard({ post, formatDate }: { post: Post; formatDate: (pub: string) => string }) {
   const [imgError, setImgError] = useState(false);
 
   return (
-    <article className="postItem">
-      {post.image && !imgError ? (
-        <div className="postImage">
+    <article className="journalCard">
+      <div className="journalCard-image">
+        {post.image && !imgError ? (
           <img
             src={post.image}
             alt=""
             loading="lazy"
             onError={() => setImgError(true)}
           />
-        </div>
-      ) : null}
-      <div className="postContent">
-        <p className="postMeta">
-          {formatDate(post.pubDate)}
-        </p>
-        <h3 className="postTitle">
+        ) : (
+          <div className="journalCard-image-placeholder"></div>
+        )}
+      </div>
+      <div className="journalCard-content">
+        <p className="journalCard-category">Journal</p>
+        <h3 className="journalCard-title">
           <a href={post.link} target="_blank" rel="noopener">
             {post.title}
           </a>
         </h3>
         {post.description && (
-          <p className="postExcerpt">{post.description}</p>
+          <p className="journalCard-excerpt">{post.description}</p>
         )}
+        <div className="journalCard-footer">
+          <span className="journalCard-date">{formatDate(post.pubDate)}</span>
+          <a href={post.link} target="_blank" rel="noopener" className="journalCard-read">
+            Read
+          </a>
+        </div>
       </div>
     </article>
   );
