@@ -24,7 +24,7 @@ const formatDate = (pub: string) => {
   }
 };
 
-const CACHE_KEY = 'tete_substack_cache_v6';
+const CACHE_KEY = 'tete_substack_cache_v7';
 const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes cache
 
 export default function JournalSection() {
@@ -33,13 +33,6 @@ export default function JournalSection() {
   const [error, setError] = useState(false);
 
   const loadSubstack = useCallback(async (force = false) => {
-    const FEED = 'https://tekofm.substack.com/feed';
-    const PROXIES = [
-      `https://api.allorigins.win/raw?url=${encodeURIComponent(FEED)}`,
-      `https://corsproxy.io/?${encodeURIComponent(FEED)}`,
-      FEED,
-    ];
-
     try {
       if (!force) {
         const raw = localStorage.getItem(CACHE_KEY);
@@ -57,55 +50,17 @@ export default function JournalSection() {
       setLoading(true);
       setError(false);
 
-      let xmlText = '';
-      for (const proxyUrl of PROXIES) {
-        try {
-          const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 8000);
+      // Use Next.js API route for reliable server-side fetching
+      const res = await fetch('/api/journal', {
+        cache: 'no-store',
+      });
 
-          const res = await fetch(proxyUrl, {
-            cache: 'no-store',
-            signal: controller.signal,
-          });
-          clearTimeout(timeoutId);
+      if (!res.ok) throw new Error('Failed to fetch journal');
 
-          if (res.ok) {
-            xmlText = await res.text();
-            break;
-          }
-        } catch (e) {
-          console.warn(`Proxy failed: ${proxyUrl}`);
-          continue;
-        }
-      }
+      const data = await res.json();
+      const items = data.posts || [];
 
-      if (!xmlText) throw new Error('All proxies failed');
-
-      const doc = new DOMParser().parseFromString(xmlText, 'text/xml');
-      const items: Post[] = [...doc.querySelectorAll('item')].map((item) => {
-        const description = item.querySelector('description')?.textContent || '';
-        const content = item.querySelector('content\\:encoded')?.textContent || description;
-
-        // Extract image from description (Substack puts featured image there)
-        const descImgMatch = description.match(/<img[^>]+src="([^"]+)"/);
-        // Extract image from content
-        const contentImgMatch = content.match(/<img[^>]+src="([^"]+)"/);
-        // Extract from enclosure
-        const enclosure = item.querySelector('enclosure');
-        const enclosureUrl = enclosure?.getAttribute('url');
-
-        const imageUrl = descImgMatch?.[1] || contentImgMatch?.[1] || enclosureUrl;
-
-        return {
-          title: item.querySelector('title')?.textContent || '',
-          link: item.querySelector('link')?.textContent || '',
-          pubDate: item.querySelector('pubDate')?.textContent || '',
-          description: content.replace(/<[^>]+>/g, '').slice(0, 200) + '...',
-          image: imageUrl || undefined,
-        };
-      }).slice(0, 6);
-
-      if (!items.length) throw new Error('No RSS items');
+      if (!items.length) throw new Error('No journal items');
 
       localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), items }));
 
@@ -171,26 +126,7 @@ export default function JournalSection() {
             </div>
           ) : posts.length > 0 ? (
             posts.map((post, i) => (
-              <article key={i} className="postItem">
-                {post.image && (
-                  <div className="postImage">
-                    <img src={post.image} alt="" loading="lazy" />
-                  </div>
-                )}
-                <div className="postContent">
-                  <p className="postMeta">
-                    {formatDate(post.pubDate)}
-                  </p>
-                  <h3 className="postTitle">
-                    <a href={post.link} target="_blank" rel="noopener">
-                      {post.title}
-                    </a>
-                  </h3>
-                  {post.description && (
-                    <p className="postExcerpt">{post.description}</p>
-                  )}
-                </div>
-              </article>
+              <ImagePost key={i} post={post} formatDate={formatDate} />
             ))
           ) : (
             <div className="postsEmpty">
@@ -204,6 +140,39 @@ export default function JournalSection() {
         </div>
       </div>
     </section>
+  );
+}
+
+// Post card with image fallback handling
+function ImagePost({ post, formatDate }: { post: Post; formatDate: (pub: string) => string }) {
+  const [imgError, setImgError] = useState(false);
+
+  return (
+    <article className="postItem">
+      {post.image && !imgError ? (
+        <div className="postImage">
+          <img
+            src={post.image}
+            alt=""
+            loading="lazy"
+            onError={() => setImgError(true)}
+          />
+        </div>
+      ) : null}
+      <div className="postContent">
+        <p className="postMeta">
+          {formatDate(post.pubDate)}
+        </p>
+        <h3 className="postTitle">
+          <a href={post.link} target="_blank" rel="noopener">
+            {post.title}
+          </a>
+        </h3>
+        {post.description && (
+          <p className="postExcerpt">{post.description}</p>
+        )}
+      </div>
+    </article>
   );
 }
 
