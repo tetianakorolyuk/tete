@@ -557,6 +557,18 @@ main {
   background: var(--brown);
 }
 
+.hero .slides {
+  z-index: 0;
+}
+
+.hero .slide {
+  z-index: 0;
+}
+
+.hero .slide-img {
+  z-index: 0;
+}
+
 /* Parallax effect for hero slides */
 .hero.parallax-active .slide.active .slide-img {
   transform: scale(1.08) translateY(-10px);
@@ -593,19 +605,25 @@ main {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(to bottom, rgba(40, 22, 12, 0.12) 0%, rgba(40, 22, 12, 0.04) 28%, rgba(40, 22, 12, 0.18) 62%, rgba(40, 22, 12, 0.32) 100%),
-    linear-gradient(to right, rgba(40, 22, 12, 0.18) 0%, rgba(40, 22, 12, 0.02) 46%, rgba(40, 22, 12, 0.08) 100%);
+    linear-gradient(to bottom, rgba(40, 22, 12, 0.08) 0%, rgba(40, 22, 12, 0.02) 35%, rgba(40, 22, 12, 0.12) 65%, rgba(40, 22, 12, 0.24) 100%),
+    linear-gradient(to right, rgba(40, 22, 12, 0.12) 0%, rgba(40, 22, 12, 0.02) 50%, rgba(40, 22, 12, 0.06) 100%);
   pointer-events: none;
+  z-index: 1;
 }
 
 .heroInner {
   position: relative;
-  z-index: 10;
+  z-index: 3;
   height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
   padding: 0 5% 6%;
+  pointer-events: none;
+}
+
+.heroInner * {
+  pointer-events: auto;
 }
 
 .heroInner .wrap {
