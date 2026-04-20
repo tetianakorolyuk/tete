@@ -34,15 +34,13 @@ export default function JournalSection() {
 
   const loadSubstack = useCallback(async (force = false) => {
     const FEED = 'https://tekofm.substack.com/feed';
-    // Use multiple fallbacks for reliability
     const PROXIES = [
       `https://api.allorigins.win/raw?url=${encodeURIComponent(FEED)}`,
       `https://corsproxy.io/?${encodeURIComponent(FEED)}`,
-      FEED, // Direct (may fail due to CORS but try last)
+      FEED,
     ];
 
     try {
-      // Check cache first
       if (!force) {
         const raw = localStorage.getItem(CACHE_KEY);
         if (raw) {
@@ -59,12 +57,11 @@ export default function JournalSection() {
       setLoading(true);
       setError(false);
 
-      // Try proxies in order
       let xmlText = '';
       for (const proxyUrl of PROXIES) {
         try {
           const controller = new AbortController();
-          const timeoutId = setTimeout(() => controller.abort(), 6000);
+          const timeoutId = setTimeout(() => controller.abort(), 8000);
 
           const res = await fetch(proxyUrl, {
             cache: 'no-store',
@@ -86,34 +83,36 @@ export default function JournalSection() {
 
       const doc = new DOMParser().parseFromString(xmlText, 'text/xml');
       const items: Post[] = [...doc.querySelectorAll('item')].map((item) => {
-        const content = item.querySelector('content\\:encoded')?.textContent || item.querySelector('description')?.textContent || '';
-        // Extract first image from content or description
-        const imgMatch = content.match(/<img[^>]+src="([^"]+)"/);
-        const imageUrl = imgMatch ? imgMatch[1] : undefined;
+        const description = item.querySelector('description')?.textContent || '';
+        const content = item.querySelector('content\\:encoded')?.textContent || description;
 
-        // Try to get image from media:content tag as fallback
-        const mediaContent = item.querySelector('media\\:content')?.getAttribute('url') || undefined;
-        const finalImage = imageUrl || mediaContent;
+        // Extract image from description (Substack puts featured image there)
+        const descImgMatch = description.match(/<img[^>]+src="([^"]+)"/);
+        // Extract image from content
+        const contentImgMatch = content.match(/<img[^>]+src="([^"]+)"/);
+        // Extract from enclosure
+        const enclosure = item.querySelector('enclosure');
+        const enclosureUrl = enclosure?.getAttribute('url');
+
+        const imageUrl = descImgMatch?.[1] || contentImgMatch?.[1] || enclosureUrl;
 
         return {
           title: item.querySelector('title')?.textContent || '',
           link: item.querySelector('link')?.textContent || '',
           pubDate: item.querySelector('pubDate')?.textContent || '',
           description: content.replace(/<[^>]+>/g, '').slice(0, 200) + '...',
-          image: finalImage || undefined,
+          image: imageUrl || undefined,
         };
       }).slice(0, 6);
 
       if (!items.length) throw new Error('No RSS items');
 
-      // Cache the results
       localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), items }));
 
       setPosts(items);
     } catch (err) {
       console.error('Substack load failed:', err);
       setError(true);
-      // Show cached data on error
       const raw = localStorage.getItem(CACHE_KEY);
       if (raw) {
         const cached = JSON.parse(raw);

@@ -641,192 +641,6 @@ main {
   transform: scale(1);
 }
 
-.hero::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background:
-    linear-gradient(to bottom, rgba(40, 22, 12, 0.08) 0%, rgba(40, 22, 12, 0.02) 35%, rgba(40, 22, 12, 0.12) 65%, rgba(40, 22, 12, 0.24) 100%),
-    linear-gradient(to right, rgba(40, 22, 12, 0.12) 0%, rgba(40, 22, 12, 0.02) 50%, rgba(40, 22, 12, 0.06) 100%);
-  pointer-events: none;
-  z-index: 1;
-}
-
-.heroInner {
-  position: relative;
-  z-index: 3;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-  padding: 0 5% 6%;
-  pointer-events: none;
-}
-
-.heroInner * {
-  pointer-events: auto;
-}
-
-.heroInner .wrap {
-  width: 100%;
-  position: relative;
-  z-index: 1;
-}
-
-.kicker {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--apricot);
-  margin-bottom: 18px;
-}
-
-.hero-eyebrow {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--apricot);
-  margin-bottom: 12px;
-}
-
-.hero-inner {
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 5% 6%;
-}
-
-.hero-title-wrap {
-  margin-bottom: 24px;
-}
-
-.hero-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(56px, 8vw, 120px);
-  line-height: 0.9;
-  font-weight: 300;
-  letter-spacing: -0.03em;
-  color: var(--linen);
-  margin: 0;
-  text-align: left;
-}
-
-.hero-title-line {
-  display: block;
-  overflow: hidden;
-}
-
-.hero-title-inner {
-  display: block;
-  opacity: 0;
-  transform: translateY(100%);
-  animation: textReveal 1.2s cubic-bezier(0.76, 0, 0.24, 1) forwards;
-}
-
-@keyframes textReveal {
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-
-.hero-desc {
-  margin: 0 0 24px 0;
-  font-size: 14px;
-  color: var(--white-m);
-  max-width: 42ch;
-  line-height: 1.7;
-  font-weight: 300;
-}
-
-.hint {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(240, 234, 226, 0.42);
-}
-
-.hint .dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--apricot);
-  animation: blink 2s ease infinite;
-}
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
-
-/* Marquee strip */
-.marquee-strip {
-  background: var(--apricot);
-  overflow: hidden;
-  height: 44px;
-  display: flex;
-  align-items: center;
-  border-top: 1px solid rgba(61, 35, 21, 0.12);
-  border-bottom: 1px solid rgba(61, 35, 21, 0.12);
-}
-
-.marquee-track {
-  display: flex;
-  gap: 0;
-  animation: marquee 22s linear infinite;
-  white-space: nowrap;
-  will-change: transform;
-}
-
-.marquee-item {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--linen);
-  padding: 0 38px;
-  display: flex;
-  align-items: center;
-  gap: 38px;
-}
-
-.marquee-item::before {
-  content: '·';
-  font-size: 16px;
-  opacity: 0.6;
-}
-
-@keyframes marquee {
-  from { transform: translateX(0); }
-  to { transform: translateX(-50%); }
-}
-
-.caption {
-  margin: 0;
-  opacity: 0.85;
-  font-family: 'DM Mono', monospace;
-  font-size: 9px;
-  letter-spacing: 0.14em;
-}
-
-.heroUI {
-  position: absolute;
-  right: 4%;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 10;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 12px;
-}
 
 .navBtn {
   border: 1px solid rgba(240, 234, 226, 0.28);
@@ -1551,7 +1365,8 @@ img {
   font-size: 10px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--apricot);
+  color: #fff;
+  opacity: 0.9;
 }
 
 .hero-title-wrap {
@@ -1564,9 +1379,9 @@ img {
   line-height: 0.9;
   font-weight: 300;
   letter-spacing: -0.03em;
-  color: var(--linen);
+  color: #fff;
   margin: 0;
-  text-shadow: 0 2px 40px rgba(0,0,0,0.3);
+  text-shadow: 0 4px 60px rgba(0,0,0,0.6);
 }
 
 .hero-title-line {
@@ -1598,11 +1413,12 @@ img {
 }
 
 .hero-desc {
-  font-size: 14px;
-  color: var(--white-m);
+  font-size: 15px;
+  color: #fff;
   max-width: 42ch;
   line-height: 1.7;
   font-weight: 300;
+  text-shadow: 0 2px 30px rgba(0,0,0,0.5);
 }
 
 .hero-cta-group {
