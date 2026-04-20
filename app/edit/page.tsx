@@ -13,21 +13,16 @@ export default async function EditPage() {
 
   return (
     <div className="min-h-screen bg-[var(--bg)]">
-      <header className="border-b border-[var(--line2)] px-6 py-4">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
+      <header className="edit-header">
+        <div className="edit-header-inner">
           <div>
-            <h1 className="text-2xl font-light font-[Roboto Slab]">Content Manager</h1>
-            <p className="text-sm text-[var(--muted)]">Manage your portfolio projects</p>
+            <h1>Content Manager</h1>
+            <p>Manage your portfolio projects</p>
           </div>
-          <div className="flex items-center gap-4">
-            <a href="/" className="text-sm uppercase tracking-wider underline">
-              View Site
-            </a>
-            <form action={logout}>
-              <button
-                type="submit"
-                className="px-4 py-2 border border-[var(--line)] bg-white text-sm uppercase tracking-wider hover:border-[var(--accent)]"
-              >
+          <div className="edit-header-actions">
+            <a href="/">View Site</a>
+            <form action={logout} style={{ display: 'inline' }}>
+              <button type="submit" className="edit-logout-btn">
                 Logout
               </button>
             </form>
@@ -35,7 +30,7 @@ export default async function EditPage() {
         </div>
       </header>
 
-      <main className="max-w-6xl mx-auto px-6 py-8">
+      <main className="edit-main">
         <EditProjects initialProjects={projects} />
       </main>
     </div>

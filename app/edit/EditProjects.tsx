@@ -221,133 +221,132 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
   const getFileInputId = (slug: string, index: number) => `file-${slug}-${index}`;
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-light">Projects ({projects.length})</h2>
-        <div className="flex items-center gap-3">
+    <div>
+      {/* Action Bar */}
+      <div className="admin-action-bar">
+        <h2>Projects ({projects.length})</h2>
+        <div className="admin-actions">
           {message && (
-            <span className={`text-sm ${message.type === 'success' ? 'text-green-600' : 'text-red-600'}`}>
+            <span className={`admin-message ${message.type === 'success' ? 'success' : 'error'}`}>
               {message.text}
             </span>
           )}
           <button
             onClick={addProject}
-            className="px-4 py-2 border border-[var(--line)] bg-white text-sm uppercase tracking-wider hover:border-[var(--accent)]"
+            className="admin-btn"
           >
             + Add Project
           </button>
           <button
             onClick={handleSave}
             disabled={saving}
-            className="px-4 py-2 bg-[var(--accent)] text-white text-sm uppercase tracking-wider disabled:opacity-50"
+            className="admin-btn admin-btn-primary"
           >
             {saving ? 'Saving...' : 'Save All'}
           </button>
         </div>
       </div>
 
+      {/* Project Cards */}
       <div className="space-y-4">
         {projects.map((project, index) => (
-          <div key={project.slug} className="border border-[var(--line2)] bg-white p-6">
-            <div className="flex items-start justify-between mb-4">
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <span className="text-xs text-[var(--muted)] uppercase tracking-wider">#{index + 1}</span>
-                  <button
-                    onClick={() => moveProject(index, 'up')}
-                    disabled={index === 0}
-                    className="px-2 py-1 text-xs border border-[var(--line)] disabled:opacity-30 hover:border-[var(--accent)]"
-                  >
-                    ↑
-                  </button>
-                  <button
-                    onClick={() => moveProject(index, 'down')}
-                    disabled={index === projects.length - 1}
-                    className="px-2 py-1 text-xs border border-[var(--line)] disabled:opacity-30 hover:border-[var(--accent)]"
-                  >
-                    ↓
-                  </button>
-                </div>
-                <input
-                  type="text"
-                  value={project.title}
-                  onChange={(e) => updateProject(project.slug, { title: e.target.value })}
-                  className="text-lg font-light border-b border-transparent hover:border-[var(--line)] focus:border-[var(--accent)] focus:outline-none bg-transparent"
-                  placeholder="Project Title"
-                />
-                <input
-                  type="text"
-                  value={project.subtitle || ''}
-                  onChange={(e) => updateProject(project.slug, { subtitle: e.target.value })}
-                  className="text-sm text-[var(--muted)] border-b border-transparent hover:border-[var(--line)] focus:border-[var(--accent)] focus:outline-none bg-transparent mt-1"
-                  placeholder="Subtitle (e.g., Living / Kitchen)"
-                />
+          <div key={project.slug} className="project-card">
+            {/* Card Header */}
+            <div className="project-card-header">
+              <div className="project-card-meta">
+                <span className="project-index">#{index + 1}</span>
+                <button
+                  onClick={() => moveProject(index, 'up')}
+                  disabled={index === 0}
+                  className="project-move-btn"
+                >
+                  ↑
+                </button>
+                <button
+                  onClick={() => moveProject(index, 'down')}
+                  disabled={index === projects.length - 1}
+                  className="project-move-btn"
+                >
+                  ↓
+                </button>
               </div>
-              <div className="flex items-center gap-2">
+              <input
+                type="text"
+                value={project.title}
+                onChange={(e) => updateProject(project.slug, { title: e.target.value })}
+                className="project-card-title"
+                placeholder="Project Title"
+              />
+              <input
+                type="text"
+                value={project.subtitle || ''}
+                onChange={(e) => updateProject(project.slug, { subtitle: e.target.value })}
+                className="project-card-subtitle"
+                placeholder="Subtitle (e.g., Living / Kitchen)"
+              />
+            </div>
+
+            {/* Card Actions */}
+            <div className="project-card-actions">
+              <div></div>
+              <div className="project-card-buttons">
                 <button
                   onClick={() => setEditingSlug(editingSlug === project.slug ? null : project.slug)}
-                  className="px-3 py-1 text-xs uppercase tracking-wider border border-[var(--line)] hover:border-[var(--accent)]"
+                  className="project-toggle-btn"
                 >
                   {editingSlug === project.slug ? 'Collapse' : 'Expand'}
                 </button>
                 <button
                   onClick={() => deleteProject(project.slug)}
-                  className="px-3 py-1 text-xs uppercase tracking-wider text-red-600 border border-transparent hover:border-red-600"
+                  className="project-delete-btn"
                 >
                   Delete
                 </button>
               </div>
             </div>
 
+            {/* Expanded Section */}
             {editingSlug === project.slug && (
-              <div className="space-y-6 pt-4 border-t border-[var(--line2)]">
+              <div className="project-expanded">
                 {/* Basic Info */}
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs uppercase tracking-wider text-[var(--muted)] mb-1">
-                      Slug
-                    </label>
+                <div className="form-grid">
+                  <div className="form-group">
+                    <label className="form-label">Slug</label>
                     <input
                       type="text"
                       value={project.slug}
                       onChange={(e) => updateProject(project.slug, { slug: e.target.value })}
-                      className="w-full px-3 py-2 border border-[var(--line)] text-sm focus:outline-none focus:border-[var(--accent)]"
+                      className="form-input"
                     />
                   </div>
-                  <div>
-                    <label className="block text-xs uppercase tracking-wider text-[var(--muted)] mb-1">
-                      Year
-                    </label>
+                  <div className="form-group">
+                    <label className="form-label">Year</label>
                     <input
                       type="text"
                       value={project.year || ''}
                       onChange={(e) => updateProject(project.slug, { year: e.target.value })}
-                      className="w-full px-3 py-2 border border-[var(--line)] text-sm focus:outline-none focus:border-[var(--accent)]"
+                      className="form-input"
                     />
                   </div>
-                  <div>
-                    <label className="block text-xs uppercase tracking-wider text-[var(--muted)] mb-1">
-                      Location
-                    </label>
+                  <div className="form-group">
+                    <label className="form-label">Location</label>
                     <input
                       type="text"
                       value={project.location || ''}
                       onChange={(e) => updateProject(project.slug, { location: e.target.value })}
-                      className="w-full px-3 py-2 border border-[var(--line)] text-sm focus:outline-none focus:border-[var(--accent)]"
+                      className="form-input"
                     />
                   </div>
                 </div>
 
                 {/* Description with AI */}
-                <div>
+                <div className="form-group">
                   <div className="flex items-center justify-between mb-1">
-                    <label className="block text-xs uppercase tracking-wider text-[var(--muted)]">
-                      Description
-                    </label>
+                    <label className="form-label">Description</label>
                     <button
                       onClick={() => handleAIGenerateDescription(project.slug)}
                       disabled={generatingAI?.slug === project.slug}
-                      className="text-xs px-2 py-1 bg-[var(--accent)] text-white rounded disabled:opacity-50"
+                      className="ai-btn"
                     >
                       {generatingAI?.type === 'description' && generatingAI?.slug === project.slug
                         ? 'Generating...'
@@ -357,27 +356,25 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
                   <textarea
                     value={project.description || ''}
                     onChange={(e) => updateProject(project.slug, { description: e.target.value })}
-                    className="w-full px-3 py-2 border border-[var(--line)] text-sm focus:outline-none focus:border-[var(--accent)] min-h-[100px]"
+                    className="form-input form-textarea"
                     placeholder="Project description..."
                   />
                 </div>
 
                 {/* Images with Upload */}
-                <div>
-                  <label className="block text-xs uppercase tracking-wider text-[var(--muted)] mb-2">
-                    Images
-                  </label>
-                  <div className="space-y-2">
+                <div className="form-group">
+                  <label className="form-label">Images</label>
+                  <div>
                     {project.images?.map((img, i) => (
-                      <div key={i} className="flex items-center gap-2">
+                      <div key={i} className="image-row">
                         {img && img !== '' && (
-                          <img src={img} alt="" className="w-12 h-12 object-cover border" />
+                          <img src={img} alt="" className="image-preview" />
                         )}
                         <input
                           type="text"
                           value={img}
                           onChange={(e) => updateImage(project.slug, i, e.target.value)}
-                          className="flex-1 px-3 py-2 border border-[var(--line)] text-sm focus:outline-none focus:border-[var(--accent)]"
+                          className="image-input"
                           placeholder={`Image ${i + 1} URL`}
                         />
                         <input
@@ -388,7 +385,7 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
                             if (file) {
                               handleImageUpload(project.slug, i, file);
                             }
-                            e.target.value = ''; // Reset input so same file can be selected again
+                            e.target.value = '';
                           }}
                           className="hidden"
                           accept="image/*"
@@ -396,13 +393,13 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
                         <button
                           onClick={() => document.getElementById(getFileInputId(project.slug, i))?.click()}
                           disabled={uploadingImage?.slug === project.slug && uploadingImage?.index === i}
-                          className="px-2 py-2 text-xs border border-[var(--line)] hover:border-[var(--accent)] disabled:opacity-50"
+                          className="image-upload-btn"
                         >
                           {uploadingImage?.slug === project.slug && uploadingImage?.index === i ? '...' : 'Upload'}
                         </button>
                         <button
                           onClick={() => deleteImage(project.slug, i)}
-                          className="px-2 py-2 text-xs text-red-600 border border-transparent hover:border-red-600"
+                          className="image-delete-btn"
                         >
                           ×
                         </button>
@@ -410,7 +407,7 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
                     ))}
                     <button
                       onClick={() => addImage(project.slug)}
-                      className="text-xs uppercase tracking-wider text-[var(--accent)] hover:underline"
+                      className="add-btn"
                     >
                       + Add Image
                     </button>
@@ -418,41 +415,39 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
                 </div>
 
                 {/* Facts with AI */}
-                <div>
+                <div className="form-group">
                   <div className="flex items-center justify-between mb-2">
-                    <label className="block text-xs uppercase tracking-wider text-[var(--muted)]">
-                      Facts / Details
-                    </label>
+                    <label className="form-label">Facts / Details</label>
                     <button
                       onClick={() => handleAIGenerateFacts(project.slug)}
                       disabled={generatingAI?.slug === project.slug}
-                      className="text-xs px-2 py-1 bg-[var(--accent)] text-white rounded disabled:opacity-50"
+                      className="ai-btn"
                     >
                       {generatingAI?.type === 'facts' && generatingAI?.slug === project.slug
                         ? 'Generating...'
                         : '✨ AI Generate'}
                     </button>
                   </div>
-                  <div className="space-y-2">
+                  <div>
                     {project.facts?.map((fact, i) => (
-                      <div key={i} className="flex items-center gap-2">
+                      <div key={i} className="fact-row">
                         <input
                           type="text"
                           value={fact.label}
                           onChange={(e) => updateFact(project.slug, i, 'label', e.target.value)}
-                          className="w-32 px-3 py-2 border border-[var(--line)] text-sm focus:outline-none focus:border-[var(--accent)]"
+                          className="fact-label-input"
                           placeholder="Label"
                         />
                         <input
                           type="text"
                           value={fact.value}
                           onChange={(e) => updateFact(project.slug, i, 'value', e.target.value)}
-                          className="flex-1 px-3 py-2 border border-[var(--line)] text-sm focus:outline-none focus:border-[var(--accent)]"
+                          className="fact-value-input"
                           placeholder="Value"
                         />
                         <button
                           onClick={() => deleteFact(project.slug, i)}
-                          className="px-2 py-2 text-xs text-red-600 border border-transparent hover:border-red-600"
+                          className="fact-delete-btn"
                         >
                           ×
                         </button>
@@ -460,7 +455,7 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
                     ))}
                     <button
                       onClick={() => addFact(project.slug)}
-                      className="text-xs uppercase tracking-wider text-[var(--accent)] hover:underline"
+                      className="add-btn"
                     >
                       + Add Fact
                     </button>

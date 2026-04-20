@@ -2297,6 +2297,558 @@ button:focus-visible {
   border-radius: 2px;
 }
 
+/* =========================================
+   Edit Admin Page Styles
+   ========================================= */
+
+/* Admin page header */
+.edit-header {
+  border-bottom: 1px solid var(--brown-xs);
+  padding: 16px 24px;
+}
+
+.edit-header-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.edit-header h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--brown);
+  margin: 0;
+}
+
+.edit-header p {
+  font-size: 12px;
+  color: var(--brown-s);
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  margin: 4px 0 0;
+}
+
+.edit-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.edit-header-actions a {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--brown);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.edit-logout-btn {
+  padding: 10px 20px;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  background: transparent;
+  border: 1px solid var(--brown-xs);
+  color: var(--brown);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.edit-logout-btn:hover {
+  border-color: var(--apricot);
+}
+
+/* Admin main content */
+.edit-main {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 24px;
+}
+
+/* Project card */
+.project-card {
+  border: 1px solid var(--brown-xs);
+  background: #fff;
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+.project-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.project-card-title {
+  font-size: 18px;
+  font-weight: 300;
+  color: var(--brown);
+  border: none;
+  background: transparent;
+  padding: 8px 0;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease;
+  width: 100%;
+  min-width: 0;
+}
+
+.project-card-title:hover {
+  border-bottom-color: var(--brown-xs);
+}
+
+.project-card-title:focus {
+  outline: none;
+  border-bottom-color: var(--apricot);
+}
+
+.project-card-subtitle {
+  font-size: 13px;
+  color: var(--brown-s);
+  border: none;
+  background: transparent;
+  padding: 4px 0;
+  border-bottom: 1px solid transparent;
+  transition: border-color 0.3s ease;
+  width: 100%;
+  min-width: 0;
+}
+
+.project-card-subtitle:hover {
+  border-bottom-color: var(--brown-xs);
+}
+
+.project-card-subtitle:focus {
+  outline: none;
+  border-bottom-color: var(--apricot);
+}
+
+/* Project card actions */
+.project-card-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.project-card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.project-index {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--brown-s);
+}
+
+.project-move-btn {
+  padding: 6px 10px;
+  font-size: 12px;
+  border: 1px solid var(--brown-xs);
+  background: transparent;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+  color: var(--brown);
+}
+
+.project-move-btn:hover:not(:disabled) {
+  border-color: var(--apricot);
+}
+
+.project-move-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.project-card-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.project-toggle-btn,
+.project-delete-btn {
+  padding: 8px 16px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  border: 1px solid var(--brown-xs);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.project-toggle-btn:hover {
+  border-color: var(--apricot);
+}
+
+.project-delete-btn {
+  color: #b91c1c;
+  border-color: transparent;
+}
+
+.project-delete-btn:hover {
+  border-color: #b91c1c;
+}
+
+/* Expanded project section */
+.project-expanded {
+  border-top: 1px solid var(--brown-xs);
+  margin-top: 20px;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Form grid */
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.form-label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--brown-s);
+}
+
+.form-input {
+  padding: 10px 12px;
+  font-size: 13px;
+  border: 1px solid var(--brown-xs);
+  background: #fff;
+  transition: border-color 0.3s ease;
+  min-width: 0;
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--apricot);
+}
+
+.form-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* AI button */
+.ai-btn {
+  padding: 6px 12px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  background: var(--apricot);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  white-space: nowrap;
+}
+
+.ai-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Image row */
+.image-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 8px 0;
+}
+
+.image-preview {
+  width: 48px;
+  height: 48px;
+  object-fit: cover;
+  border: 1px solid var(--brown-xs);
+  flex-shrink: 0;
+}
+
+.image-input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 10px;
+  font-size: 12px;
+  border: 1px solid var(--brown-xs);
+  word-break: break-word;
+}
+
+.image-upload-btn,
+.image-delete-btn {
+  padding: 8px 12px;
+  font-size: 11px;
+  border: 1px solid var(--brown-xs);
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.image-upload-btn:hover {
+  border-color: var(--apricot);
+}
+
+.image-delete-btn {
+  color: #b91c1c;
+  border-color: transparent;
+  font-size: 16px;
+  line-height: 1;
+}
+
+.image-delete-btn:hover {
+  border-color: #b91c1c;
+}
+
+/* Facts row */
+.fact-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  padding: 8px 0;
+}
+
+.fact-label-input {
+  width: 120px;
+  min-width: 0;
+  padding: 8px 10px;
+  font-size: 12px;
+  border: 1px solid var(--brown-xs);
+}
+
+.fact-value-input {
+  flex: 1;
+  min-width: 0;
+  padding: 8px 10px;
+  font-size: 12px;
+  border: 1px solid var(--brown-xs);
+}
+
+.fact-delete-btn {
+  padding: 8px 12px;
+  font-size: 16px;
+  line-height: 1;
+  color: #b91c1c;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+}
+
+.fact-delete-btn:hover {
+  border-color: #b91c1c;
+}
+
+/* Add buttons */
+.add-btn {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--apricot);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  padding: 8px 0;
+}
+
+.add-btn:hover {
+  opacity: 0.7;
+}
+
+/* Admin action bar */
+.admin-action-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--brown-xs);
+  margin-bottom: 24px;
+}
+
+.admin-action-bar h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 20px;
+  font-weight: 300;
+  color: var(--brown);
+  margin: 0;
+}
+
+.admin-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.admin-message {
+  font-size: 12px;
+}
+
+.admin-message.success {
+  color: #16a34a;
+}
+
+.admin-message.error {
+  color: #dc2626;
+}
+
+.admin-btn {
+  padding: 10px 20px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  border: 1px solid var(--brown-xs);
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.admin-btn:hover {
+  border-color: var(--apricot);
+}
+
+.admin-btn-primary {
+  background: var(--apricot);
+  color: #fff;
+  border-color: var(--apricot);
+}
+
+.admin-btn-primary:hover {
+  background: var(--apricot-d);
+  border-color: var(--apricot-d);
+}
+
+.admin-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .edit-header {
+    padding: 16px 16px;
+  }
+
+  .edit-header-inner {
+    gap: 12px;
+  }
+
+  .edit-header h1 {
+    font-size: 22px;
+  }
+
+  .edit-main {
+    padding: 20px 16px;
+  }
+
+  .project-card {
+    padding: 16px;
+  }
+
+  .project-card-header {
+    gap: 10px;
+  }
+
+  .project-card-title {
+    font-size: 16px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .image-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .image-preview {
+    width: 100%;
+    height: 120px;
+  }
+
+  .image-input,
+  .image-upload-btn {
+    width: 100%;
+  }
+
+  .fact-row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .fact-label-input,
+  .fact-value-input {
+    width: 100%;
+  }
+
+  .admin-action-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .admin-actions {
+    justify-content: stretch;
+  }
+
+  .admin-actions button {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .edit-header h1 {
+    font-size: 20px;
+  }
+
+  .project-card {
+    padding: 14px;
+  }
+
+  .project-card-buttons {
+    width: 100%;
+  }
+
+  .project-toggle-btn,
+  .project-delete-btn {
+    flex: 1;
+    text-align: center;
+  }
+
+  .project-move-btn {
+    padding: 8px 12px;
+  }
+}
+
 .skeleton-line.short {
   width: 40%;
   margin-bottom: 12px;
