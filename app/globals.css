@@ -1399,6 +1399,48 @@ img {
   animation-delay: 2.2s;
 }
 
+/* Marquee strip */
+.marquee-strip {
+  background: var(--apricot);
+  overflow: hidden;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid rgba(61, 35, 21, 0.12);
+  border-bottom: 1px solid rgba(61, 35, 21, 0.12);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 0;
+  animation: marquee 22s linear infinite;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+.marquee-item {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--linen);
+  padding: 0 38px;
+  display: flex;
+  align-items: center;
+  gap: 38px;
+}
+
+.marquee-item::before {
+  content: '·';
+  font-size: 16px;
+  opacity: 0.6;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
 .hero-title-line:nth-child(2) .hero-title-inner {
   animation-delay: 2.38s;
 }
