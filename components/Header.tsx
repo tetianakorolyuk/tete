@@ -14,6 +14,13 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const scrollToContact = () => {
+    const contactSection = document.querySelector('#contact');
+    if (contactSection) {
+      contactSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <>
       <header className={`header ${scrolled ? 'scrolled' : ''}`}>
@@ -24,7 +31,7 @@ export default function Header() {
           <a href="#contact">Contact</a>
         </nav>
         <div className="navRight">
-          <a href="#contact" className="nav-cta">Make a Request</a>
+          <button className="nav-cta" onClick={scrollToContact}>Make a Request</button>
           <button
             className={`hamburger ${scrolled ? 'scrolled' : ''} ${mobileOpen ? 'active' : ''}`}
             type="button"
