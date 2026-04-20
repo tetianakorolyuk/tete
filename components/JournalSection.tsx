@@ -91,12 +91,16 @@ export default function JournalSection() {
         const imgMatch = content.match(/<img[^>]+src="([^"]+)"/);
         const imageUrl = imgMatch ? imgMatch[1] : undefined;
 
+        // Try to get image from media:content tag as fallback
+        const mediaContent = item.querySelector('media\\:content')?.getAttribute('url') || undefined;
+        const finalImage = imageUrl || mediaContent;
+
         return {
           title: item.querySelector('title')?.textContent || '',
           link: item.querySelector('link')?.textContent || '',
           pubDate: item.querySelector('pubDate')?.textContent || '',
-          description: content.replace(/<[^>]+>/g, '').slice(0, 180) + '...',
-          image: imageUrl,
+          description: content.replace(/<[^>]+>/g, '').slice(0, 200) + '...',
+          image: finalImage || undefined,
         };
       }).slice(0, 6);
 
