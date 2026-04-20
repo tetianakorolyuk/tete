@@ -407,7 +407,13 @@ body::before {
   align-items: center;
   justify-content: space-between;
   padding: 24px 42px;
-  transition: padding 0.4s cubic-bezier(0.76, 0, 0.24, 1), background 0.4s ease, backdrop-filter 0.4s ease;
+  transition: padding 0.4s cubic-bezier(0.76, 0, 0.24, 1), background 0.4s ease, backdrop-filter 0.4s ease, opacity 0.4s ease;
+}
+
+/* Hide header brand on hero section to avoid overlap */
+.header:not(.scrolled) .brand {
+  opacity: 0;
+  pointer-events: none;
 }
 
 .header.scrolled {
@@ -416,6 +422,10 @@ body::before {
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border-bottom: 1px solid rgba(61, 35, 21, 0.08);
+}
+
+.header.scrolled .brand {
+  opacity: 1;
 }
 
 .header.scrolled .brand,
