@@ -16,25 +16,26 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
   const [editingSlug, setEditingSlug] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
-  const [uploadingImage, setUploadingImage] = useState<number | null>(null);
+  const [uploadingImage, setUploadingImage] = useState<{ slug: string; index: number } | null>(null);
   const [generatingAI, setGeneratingAI] = useState<{ type: string; slug: string } | null>(null);
-  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // Store a ref to the latest projects for use in callbacks
+  const projectsRef = useRef<Project[]>(initialProjects);
+  projectsRef.current = projects;
 
   const handleSave = async () => {
     setSaving(true);
     setMessage(null);
     try {
-      // Try the new GitHub save API first
       const res = await fetch('/api/save', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ projects }),
+        body: JSON.stringify({ projects: projectsRef.current }),
       });
       const data = await res.json();
 
       if (data.success || data.message) {
         setMessage({ type: 'success', text: data.message || 'Saved!' });
-        // Wait a moment then refresh
         await new Promise(r => setTimeout(r, 1000));
         router.refresh();
       } else {
@@ -59,86 +60,80 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
       images: ['', ''],
       facts: [],
     };
-    setProjects([...projects, newProject]);
+    setProjects(prev => [...prev, newProject]);
     setEditingSlug(newProject.slug);
   };
 
   const deleteProject = (slug: string) => {
     if (confirm('Are you sure you want to delete this project?')) {
-      setProjects(projects.filter((p) => p.slug !== slug));
+      setProjects(prev => prev.filter((p) => p.slug !== slug));
       if (editingSlug === slug) setEditingSlug(null);
     }
   };
 
   const updateProject = (slug: string, updates: Partial<Project>) => {
-    setProjects(projects.map((p) => (p.slug === slug ? { ...p, ...updates } : p)));
+    setProjects(prev => prev.map((p) => (p.slug === slug ? { ...p, ...updates } : p)));
   };
 
   const moveProject = (index: number, direction: 'up' | 'down') => {
     const newIndex = direction === 'up' ? index - 1 : index + 1;
-    if (newIndex < 0 || newIndex >= projects.length) return;
-    const newProjects = [...projects];
+    if (newIndex < 0 || newIndex >= projectsRef.current.length) return;
+    const newProjects = [...projectsRef.current];
     [newProjects[index], newProjects[newIndex]] = [newProjects[newIndex], newProjects[index]];
     setProjects(newProjects);
   };
 
   const addFact = (slug: string) => {
-    setProjects(
-      projects.map((p) =>
-        p.slug === slug ? { ...p, facts: [...(p.facts || []), { label: '', value: '' }] } : p
-      )
-    );
+    setProjects(prev => prev.map((p) =>
+      p.slug === slug ? { ...p, facts: [...(p.facts || []), { label: '', value: '' }] } : p
+    ));
   };
 
   const updateFact = (slug: string, index: number, field: 'label' | 'value', value: string) => {
-    setProjects(
-      projects.map((p) =>
-        p.slug === slug
-          ? {
-              ...p,
-              facts: p.facts?.map((f, i) => (i === index ? { ...f, [field]: value } : f)),
-            }
-          : p
-      )
-    );
+    setProjects(prev => prev.map((p) =>
+      p.slug === slug
+        ? {
+            ...p,
+            facts: p.facts?.map((f, i) => (i === index ? { ...f, [field]: value } : f)),
+          }
+        : p
+    ));
   };
 
   const deleteFact = (slug: string, index: number) => {
-    setProjects(
-      projects.map((p) =>
-        p.slug === slug ? { ...p, facts: p.facts?.filter((_, i) => i !== index) } : p
-      )
-    );
+    setProjects(prev => prev.map((p) =>
+      p.slug === slug ? { ...p, facts: p.facts?.filter((_, i) => i !== index) } : p
+    ));
   };
 
   const addImage = (slug: string) => {
-    setProjects(
-      projects.map((p) =>
-        p.slug === slug ? { ...p, images: [...(p.images || []), ''] } : p
-      )
-    );
+    setProjects(prev => prev.map((p) =>
+      p.slug === slug ? { ...p, images: [...(p.images || []), ''] } : p
+    ));
   };
 
   const updateImage = (slug: string, index: number, value: string) => {
-    setProjects(
-      projects.map((p) =>
+    console.log(`[updateImage] Setting project ${slug} image ${index} to:`, value);
+    setProjects(prev => {
+      const newProjects = prev.map((p) =>
         p.slug === slug
           ? { ...p, images: p.images?.map((img, i) => (i === index ? value : img)) }
           : p
-      )
-    );
+      );
+      console.log('[updateImage] New projects state:', newProjects.find(p => p.slug === slug)?.images);
+      return newProjects;
+    });
   };
 
   const deleteImage = (slug: string, index: number) => {
-    setProjects(
-      projects.map((p) =>
-        p.slug === slug ? { ...p, images: p.images?.filter((_, i) => i !== index) } : p
-      )
-    );
+    setProjects(prev => prev.map((p) =>
+      p.slug === slug ? { ...p, images: p.images?.filter((_, i) => i !== index) } : p
+    ));
   };
 
   const handleImageUpload = useCallback(async (slug: string, imageIndex: number, file: File) => {
-    setUploadingImage(imageIndex);
+    console.log(`[handleImageUpload] Starting upload for ${slug} index ${imageIndex}`, file.name);
+    setUploadingImage({ slug, index: imageIndex });
     const formData = new FormData();
     formData.append('file', file);
 
@@ -147,27 +142,45 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
         method: 'POST',
         body: formData,
       });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || 'Upload failed');
+      }
+
       const data = await res.json();
-      console.log('Upload response:', data);
+      console.log('[handleImageUpload] Upload response:', data);
+
       if (data.url) {
-        updateImage(slug, imageIndex, data.url);
-        setMessage({ type: 'success', text: 'Image uploaded!' });
-        setTimeout(() => setMessage(null), 2000);
+        console.log('[handleImageUpload] Setting image URL:', data.url);
+        // Use setProjects directly to avoid stale closure
+        setProjects(prev => {
+          const newProjects = prev.map((p) =>
+            p.slug === slug
+              ? { ...p, images: p.images?.map((img, i) => (i === imageIndex ? data.url : img)) }
+              : p
+          );
+          console.log('[handleImageUpload] Updated project images:', newProjects.find(p => p.slug === slug)?.images);
+          return newProjects;
+        });
+        setMessage({ type: 'success', text: 'Image uploaded! Click "Save All" to persist.' });
+        setTimeout(() => setMessage(null), 3000);
       } else {
-        console.error('Upload failed:', data.error);
-        setMessage({ type: 'error', text: data.error || 'Upload failed' });
-        setTimeout(() => setMessage(null), 5000);
+        throw new Error(data.error || 'No URL in response');
       }
     } catch (err) {
-      console.error('Upload error:', err);
-      setMessage({ type: 'error', text: 'Upload failed. Check console for details.' });
+      console.error('[handleImageUpload] Error:', err);
+      setMessage({
+        type: 'error',
+        text: err instanceof Error ? err.message : 'Upload failed'
+      });
       setTimeout(() => setMessage(null), 5000);
     }
     setUploadingImage(null);
   }, []);
 
   const handleAIGenerateDescription = useCallback(async (slug: string) => {
-    const project = projects.find((p) => p.slug === slug);
+    const project = projectsRef.current.find((p) => p.slug === slug);
     if (!project) return;
 
     setGeneratingAI({ type: 'description', slug });
@@ -185,10 +198,10 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
       setTimeout(() => setMessage(null), 3000);
     }
     setGeneratingAI(null);
-  }, [projects]);
+  }, []);
 
   const handleAIGenerateFacts = useCallback(async (slug: string) => {
-    const project = projects.find((p) => p.slug === slug);
+    const project = projectsRef.current.find((p) => p.slug === slug);
     if (!project) return;
 
     setGeneratingAI({ type: 'facts', slug });
@@ -202,7 +215,10 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
       setTimeout(() => setMessage(null), 3000);
     }
     setGeneratingAI(null);
-  }, [projects]);
+  }, []);
+
+  // Separate file input ref for each image slot
+  const getFileInputId = (slug: string, index: number) => `file-${slug}-${index}`;
 
   return (
     <div className="space-y-6">
@@ -354,7 +370,7 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
                   <div className="space-y-2">
                     {project.images?.map((img, i) => (
                       <div key={i} className="flex items-center gap-2">
-                        {img && (
+                        {img && img !== '' && (
                           <img src={img} alt="" className="w-12 h-12 object-cover border" />
                         )}
                         <input
@@ -366,20 +382,23 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
                         />
                         <input
                           type="file"
-                          ref={fileInputRef}
+                          id={getFileInputId(project.slug, i)}
                           onChange={(e) => {
                             const file = e.target.files?.[0];
-                            if (file) handleImageUpload(project.slug, i, file);
+                            if (file) {
+                              handleImageUpload(project.slug, i, file);
+                            }
+                            e.target.value = ''; // Reset input so same file can be selected again
                           }}
                           className="hidden"
                           accept="image/*"
                         />
                         <button
-                          onClick={() => fileInputRef.current?.click()}
-                          disabled={uploadingImage === i}
+                          onClick={() => document.getElementById(getFileInputId(project.slug, i))?.click()}
+                          disabled={uploadingImage?.slug === project.slug && uploadingImage?.index === i}
                           className="px-2 py-2 text-xs border border-[var(--line)] hover:border-[var(--accent)] disabled:opacity-50"
                         >
-                          {uploadingImage === i ? '...' : 'Upload'}
+                          {uploadingImage?.slug === project.slug && uploadingImage?.index === i ? '...' : 'Upload'}
                         </button>
                         <button
                           onClick={() => deleteImage(project.slug, i)}

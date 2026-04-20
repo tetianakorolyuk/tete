@@ -40,6 +40,11 @@ export async function POST(request: NextRequest) {
       addRandomSuffix: false,
     });
 
+    console.log('Upload successful:', {
+      url: blob.url,
+      pathname: blob.pathname,
+    });
+
     return NextResponse.json({
       url: blob.url,
       filename: blob.pathname,
