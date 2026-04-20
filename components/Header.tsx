@@ -24,13 +24,6 @@ export default function Header() {
           <a href="#contact">Contact</a>
         </nav>
         <div className="navRight">
-          <a className="iconLink" href="mailto:tetiana.korolyuk@gmail.com" aria-label="Email">
-            <svg className="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
-              <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" stroke="currentColor" strokeWidth="1.5"/>
-              <polyline points="22,6 12,13 2,6" stroke="currentColor" strokeWidth="1.5"/>
-            </svg>
-            Contact
-          </a>
           <button
             className={`hamburger ${scrolled ? 'scrolled' : ''} ${mobileOpen ? 'active' : ''}`}
             type="button"
@@ -48,7 +41,6 @@ export default function Header() {
         <a href="#projects" onClick={() => setMobileOpen(false)}>Projects</a>
         <a href="#journal" onClick={() => setMobileOpen(false)}>Journal</a>
         <a href="#contact" onClick={() => setMobileOpen(false)}>Contact</a>
-        <a href="mailto:tetiana.korolyuk@gmail.com">Email</a>
       </div>
     </>
   );

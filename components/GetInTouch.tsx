@@ -25,10 +25,6 @@ export default function GetInTouch() {
               <a href="mailto:tetiana.korolyuk@gmail.com">tetiana.korolyuk@gmail.com</a>
             </div>
             <div className="info-item">
-              <span className="info-label">Phone</span>
-              <a href="tel:+15555555555">+1 (555) 555-5555</a>
-            </div>
-            <div className="info-item">
               <span className="info-label">Location</span>
               <span>Toronto, Ontario</span>
             </div>
