@@ -89,44 +89,46 @@ export default function Hero({ projects }: HeroProps) {
       </div>
 
       <div className="hero-content">
-        <div className="hero-top fade-up">
-          <div className="hero-eyebrow">Interior Design · Toronto</div>
-        </div>
-        <div>
-          <h1 className="hero-title">
-            <span className="hero-title-line">
-              <span className="hero-title-inner text-reveal-inner">The Teté</span>
-            </span>
-            <span className="hero-title-line">
-              <span
-                className="hero-title-inner text-reveal-inner"
-                style={{ animationDelay: '0.18s', fontStyle: 'italic', color: 'rgba(240,234,226,.72)' }}
-              >
-                Portfolio
-              </span>
-            </span>
-          </h1>
-        </div>
-        <div className="hero-bottom">
-          <p className="hero-desc fade-up" style={{ transitionDelay: '0.3s' }}>
-            A portfolio shaped around strong visual storytelling, minimal copy, and a cinematic presentation that puts the work first.
-          </p>
-          <div className="hero-cta-group fade-up" style={{ transitionDelay: '0.4s' }}>
-            <div className="scroll-hint">
-              <div className="scroll-hint-line" />
-              Scroll
-            </div>
+        <div className="hero-inner">
+          <div className="hero-top fade-up">
+            <div className="hero-eyebrow">Interior Design · Toronto</div>
           </div>
-          <div className="hero-right fade-up" style={{ transitionDelay: '0.5s' }}>
-            <div className="hero-contact-chip">
-              <div className="dot" />
-              Available for projects
+          <div className="hero-title-wrap">
+            <h1 className="hero-title">
+              <span className="hero-title-line">
+                <span className="hero-title-inner text-reveal-inner">The Teté</span>
+              </span>
+              <span className="hero-title-line">
+                <span
+                  className="hero-title-inner text-reveal-inner"
+                  style={{ animationDelay: '0.18s', fontStyle: 'italic', color: 'rgba(240,234,226,.72)' }}
+                >
+                  Portfolio
+                </span>
+              </span>
+            </h1>
+          </div>
+          <div className="hero-bottom">
+            <p className="hero-desc fade-up" style={{ transitionDelay: '0.3s' }}>
+              A portfolio shaped around strong visual storytelling, minimal copy, and a cinematic presentation that puts the work first.
+            </p>
+            <div className="hero-cta-group fade-up" style={{ transitionDelay: '0.4s' }}>
+              <div className="scroll-hint">
+                <div className="scroll-hint-line" />
+                Scroll
+              </div>
             </div>
-            <div className="hero-socials">
-              <a href="#" className="animated-underline">Ig</a>
-              <a href="#" className="animated-underline">Sb</a>
-              <a href="#" className="animated-underline">Be</a>
-              <a href="#" className="animated-underline">Pi</a>
+            <div className="hero-right fade-up" style={{ transitionDelay: '0.5s' }}>
+              <div className="hero-contact-chip">
+                <div className="dot" />
+                Available for projects
+              </div>
+              <div className="hero-socials">
+                <a href="#" className="animated-underline">Ig</a>
+                <a href="#" className="animated-underline">Sb</a>
+                <a href="#" className="animated-underline">Be</a>
+                <a href="#" className="animated-underline">Pi</a>
+              </div>
             </div>
           </div>
         </div>
