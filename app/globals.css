@@ -1337,22 +1337,6 @@ img {
 }
 
 /* Hero content */
-.hero-content {
-  position: absolute;
-  inset: 0;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-
-.hero-inner {
-  width: 100%;
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 0 5%;
-}
-
 .hero-top {
   opacity: 0;
   transform: translateY(12px);
