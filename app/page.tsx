@@ -1,6 +1,7 @@
 import { getProjects } from '@/lib/content';
 import Header from '@/components/Header';
 import Hero from '@/components/Hero';
+import StudioSection from '@/components/StudioSection';
 import ProjectsSection from '@/components/ProjectsSection';
 import JournalSection from '@/components/JournalSection';
 import ContactSection from '@/components/ContactSection';
@@ -26,6 +27,7 @@ export default async function Home() {
       <main id="content">
         <Hero projects={projects} />
         <MarqueeStrip />
+        <StudioSection />
         <ProjectsSection projects={projects} />
         <JournalSection />
         <ContactSection />

@@ -27,6 +27,7 @@ export default function Header() {
         <a href="/" className="brand">TETÉ.</a>
         <nav className="nav">
           <a href="#projects">Projects</a>
+          <a href="#studio">Studio</a>
           <a href="#journal">Journal</a>
           <a href="#contact">Contact</a>
         </nav>
@@ -47,6 +48,7 @@ export default function Header() {
 
       <div className={`mobilePanel ${mobileOpen ? 'open' : ''}`}>
         <a href="#projects" onClick={() => setMobileOpen(false)}>Projects</a>
+        <a href="#studio" onClick={() => setMobileOpen(false)}>Studio</a>
         <a href="#journal" onClick={() => setMobileOpen(false)}>Journal</a>
         <a href="#contact" onClick={() => setMobileOpen(false)}>Contact</a>
       </div>
