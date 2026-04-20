@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { checkAuth } from '@/lib/auth';
 import { Octokit } from '@octokit/rest';
+import { revalidatePath } from 'next/cache';
 
 export async function POST(request: NextRequest) {
   try {
@@ -64,6 +65,10 @@ export async function POST(request: NextRequest) {
         error: 'No storage configured. Add GITHUB_TOKEN or KV_URL to environment variables.'
       }, { status: 500 });
     }
+
+    // Revalidate the homepage and project pages to show updated content
+    revalidatePath('/');
+    revalidatePath('/projects/[slug]', 'page');
 
     return NextResponse.json({
       success: true,
