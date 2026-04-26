@@ -19,21 +19,21 @@ const FALLBACK_POSTS: Post[] = [
     link: 'https://thetete.substack.com/',
     pubDate: new Date().toUTCString(),
     description: 'Exploring how minimalism and warmth coexist in modern interior design. A journey through texture, light, and the spaces that shape our daily rituals.',
-    image: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&q=80'
+    image: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=1200&q=80'
   },
   {
     title: 'Material Stories: Natural Textures',
     link: 'https://thetete.substack.com/',
     pubDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toUTCString(),
     description: 'How natural materials tell a story through their imperfections. Linen, wood, and stone as the foundation of intimate spaces.',
-    image: 'https://images.unsplash.com/photo-1615529182904-14819c35db37?w=800&q=80'
+    image: 'https://images.unsplash.com/photo-1615529182904-14819c35db37?w=1200&q=80'
   },
   {
     title: 'Light as Architecture',
     link: 'https://thetete.substack.com/',
     pubDate: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toUTCString(),
     description: 'Understanding how natural light shapes our experience of space. The interplay of shadow and illumination in residential design.',
-    image: 'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=800&q=80'
+    image: 'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=1200&q=80'
   },
 ];
 
