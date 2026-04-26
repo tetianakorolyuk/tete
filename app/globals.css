@@ -2220,7 +2220,7 @@ img {
   transform: scale(1.02);
 }
 
-/* Get in Touch Section */
+/* ─── Get in Touch Section ─── */
 .get-in-touch {
   padding: 120px 0;
   background: var(--linen);
@@ -2234,9 +2234,19 @@ img {
 
 .touch-content {
   display: grid;
-  grid-template-columns: 1.2fr 0.8fr;
+  grid-template-columns: 1fr auto;
   gap: 80px;
-  align-items: start;
+  align-items: center;
+}
+
+.touch-left {
+  max-width: 640px;
+}
+
+.touch-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 .touch-label {
@@ -2246,9 +2256,6 @@ img {
   text-transform: uppercase;
   color: var(--apricot);
   margin-bottom: 16px;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUp 0.7s cubic-bezier(0.76, 0, 0.24, 1) 0.2s forwards;
 }
 
 .touch-title {
@@ -2259,9 +2266,6 @@ img {
   letter-spacing: -0.03em;
   color: var(--brown);
   margin: 0 0 24px;
-  opacity: 0;
-  transform: translateY(30px);
-  animation: fadeUp 0.8s cubic-bezier(0.76, 0, 0.24, 1) 0.3s forwards;
 }
 
 .touch-title em {
@@ -2275,9 +2279,6 @@ img {
   color: var(--brown-m);
   max-width: 48ch;
   margin: 0 0 40px;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: fadeUp 0.8s cubic-bezier(0.76, 0, 0.24, 1) 0.4s forwards;
 }
 
 .touch-info {
@@ -2287,9 +2288,6 @@ img {
   padding: 32px;
   background: var(--linen-2);
   border: 1px solid var(--brown-xs);
-  opacity: 0;
-  transform: translateY(30px);
-  animation: fadeUp 0.8s cubic-bezier(0.76, 0, 0.24, 1) 0.5s forwards;
 }
 
 .info-item {
@@ -2321,7 +2319,7 @@ img {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  padding: 18px 42px;
+  padding: 20px 48px;
   background: var(--apricot);
   color: var(--linen);
   font-family: 'DM Mono', monospace;
@@ -2331,45 +2329,111 @@ img {
   border: none;
   cursor: pointer;
   transition: all 0.4s cubic-bezier(0.76, 0, 0.24, 1);
-  margin-top: 32px;
+  white-space: nowrap;
 }
 
 .touch-cta:hover {
   background: var(--apricot-d);
   transform: translateY(-2px);
+  box-shadow: 0 12px 32px rgba(183, 105, 74, 0.25);
 }
 
-/* Form Wrapper */
-.touch-form-wrapper {
+/* ─── Contact Modal ─── */
+.contact-modal-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(40, 22, 12, 0.65);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: modalFadeIn 0.35s ease forwards;
+}
+
+@keyframes modalFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.contact-modal {
   position: relative;
   background: var(--linen);
+  width: 100%;
+  max-width: 720px;
+  max-height: 90vh;
+  overflow-y: auto;
   padding: 48px;
   border: 1px solid var(--brown-xs);
-  box-shadow: 0 24px 80px rgba(61, 35, 21, 0.08);
+  box-shadow: 0 32px 100px rgba(61, 35, 21, 0.18);
+  animation: modalSlideIn 0.45s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
 }
 
-.close-form {
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.contact-modal-close {
   position: absolute;
-  top: 16px;
-  right: 16px;
+  top: 20px;
+  right: 20px;
   width: 40px;
   height: 40px;
   border: 1px solid var(--brown-xs);
   background: transparent;
+  color: var(--brown);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  border-radius: 50%;
 }
 
-.close-form:hover {
+.contact-modal-close:hover {
   background: var(--linen-2);
   border-color: var(--apricot);
+  color: var(--apricot);
+  transform: rotate(90deg);
 }
 
-.close-form svg {
-  stroke: var(--brown);
+.contact-modal-header {
+  margin-bottom: 36px;
+  padding-right: 40px;
+}
+
+.contact-modal-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--apricot);
+  margin-bottom: 12px;
+}
+
+.contact-modal-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(28px, 4vw, 40px);
+  font-weight: 300;
+  line-height: 1.15;
+  color: var(--brown);
+  margin: 0 0 10px;
+}
+
+.contact-modal-subtitle {
+  font-size: 15px;
+  line-height: 1.6;
+  color: var(--brown-m);
+  margin: 0;
 }
 
 /* Contact Form */
@@ -2551,8 +2615,21 @@ img {
     padding: 0 20px;
   }
 
-  .touch-form-wrapper {
+  .contact-modal-overlay {
+    padding: 16px;
+  }
+
+  .contact-modal {
     padding: 32px 20px;
+    max-height: 92vh;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-modal-header {
+    margin-bottom: 24px;
   }
 
   .touch-title {
