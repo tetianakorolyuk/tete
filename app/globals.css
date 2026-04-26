@@ -2156,11 +2156,11 @@ img {
   transform: translateY(0);
 }
 
-.page-transition.is-animating .page-transition-top {
+.page-transition.is-exiting .page-transition-top {
   transform: translateY(-100%);
 }
 
-.page-transition.is-animating .page-transition-bottom {
+.page-transition.is-exiting .page-transition-bottom {
   transform: translateY(100%);
 }
 
