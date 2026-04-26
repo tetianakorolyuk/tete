@@ -794,7 +794,7 @@ main {
 }
 
 h2 {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: clamp(38px, 4.5vw, 74px);
   line-height: 1.0;
   font-weight: 300;
@@ -879,7 +879,7 @@ img {
 }
 
 .projects-header-num {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: clamp(48px, 5vw, 72px);
   font-weight: 300;
   line-height: 0.85;
@@ -903,7 +903,7 @@ img {
 }
 
 .projects-header h3 {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: clamp(22px, 2.5vw, 32px);
   font-weight: 400;
   letter-spacing: 0;
@@ -921,7 +921,7 @@ img {
 }
 
 .projects-header-count {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: clamp(32px, 3vw, 48px);
   font-weight: 300;
   line-height: 0.9;
@@ -1038,7 +1038,7 @@ img {
 }
 
 .project-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: clamp(52px, 7vw, 120px);
   line-height: 0.88;
   font-weight: 300;
@@ -1234,7 +1234,7 @@ img {
 }
 
 .journalCard-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: 22px;
   line-height: 1.2;
   font-weight: 400;
@@ -1327,7 +1327,7 @@ img {
 
 .postTitle {
   margin: 16px 0 10px;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: 24px;
   line-height: 1.15;
   font-weight: 400;
@@ -1429,7 +1429,7 @@ img {
 }
 
 .footer-brand {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: 18px;
   font-weight: 400;
   letter-spacing: -0.02em;
@@ -1500,7 +1500,7 @@ img {
 }
 
 .contact-body h2 {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: clamp(52px, 7vw, 112px);
   line-height: 0.88;
   font-weight: 300;
@@ -1666,7 +1666,7 @@ img {
 }
 
 .lbCaption-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: 18px;
   font-weight: 400;
   color: rgba(240, 234, 226, 0.88);
@@ -2033,7 +2033,7 @@ img {
   }
 
   .mobilePanel a {
-    font-family: 'Cormorant Garamond', serif;
+    font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
     font-size: clamp(44px, 6.5vw, 88px);
     line-height: 0.88;
     color: rgba(240, 234, 226, 0.82);
@@ -2239,7 +2239,7 @@ img {
 }
 
 .touch-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: clamp(42px, 5vw, 64px);
   line-height: 1.15;
   font-weight: 300;
@@ -2404,7 +2404,7 @@ img {
 }
 
 .contact-modal-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: clamp(28px, 4vw, 40px);
   font-weight: 300;
   line-height: 1.15;
@@ -2526,7 +2526,7 @@ img {
 }
 
 .contact-form-success h3 {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: 32px;
   font-weight: 400;
   color: var(--brown);
@@ -2831,7 +2831,7 @@ button:focus-visible {
 }
 
 .admin-topbar h1 {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: 28px;
   font-weight: 300;
   color: var(--brown);
@@ -2892,7 +2892,7 @@ button:focus-visible {
 }
 
 .admin-section-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: 18px;
   font-weight: 400;
   color: var(--brown);
@@ -2943,7 +2943,7 @@ button:focus-visible {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: 20px;
   font-weight: 300;
   color: var(--brown);
@@ -3190,7 +3190,7 @@ button:focus-visible {
 }
 
 .project-card-name {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: 18px;
   font-weight: 400;
   color: var(--brown);
@@ -3881,7 +3881,7 @@ button:focus-visible {
 }
 
 .confirm-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: 22px;
   font-weight: 400;
   color: var(--brown);
@@ -4160,7 +4160,7 @@ button:focus-visible {
 }
 
 .confirm-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: 22px;
   font-weight: 400;
   color: var(--brown);
@@ -4362,7 +4362,7 @@ button:focus-visible {
 }
 
 .studio-settings-toggle h3 {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: 18px;
   font-weight: 400;
   color: var(--brown);
@@ -4677,7 +4677,7 @@ button:focus-visible {
   color: var(--apricot);
   line-height: 1;
   margin-bottom: 24px;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
 }
 
 .not-found-title {
@@ -4685,7 +4685,7 @@ button:focus-visible {
   font-weight: 400;
   color: var(--brown);
   margin-bottom: 16px;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
 }
 
 .not-found-desc {
@@ -4789,7 +4789,7 @@ button:focus-visible {
 }
 
 .studio-header-num {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: clamp(48px, 5vw, 72px);
   font-weight: 300;
   line-height: 0.85;
@@ -4813,7 +4813,7 @@ button:focus-visible {
 }
 
 .studio-header-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: clamp(22px, 2.5vw, 32px);
   font-weight: 400;
   color: var(--brown);
@@ -4859,7 +4859,7 @@ button:focus-visible {
 }
 
 .studio-headline {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: clamp(32px, 4vw, 48px);
   line-height: 1.1;
   font-weight: 400;
@@ -4899,7 +4899,7 @@ button:focus-visible {
 }
 
 .studio-stat-num {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: 26px;
   font-weight: 300;
   color: var(--apricot);
@@ -4949,7 +4949,7 @@ button:focus-visible {
 }
 
 .studio-hero-name {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: 28px;
   font-weight: 300;
   color: #fff;
@@ -4983,7 +4983,7 @@ button:focus-visible {
 }
 
 .principle-num {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: clamp(48px, 5vw, 72px);
   font-weight: 300;
   line-height: 1;
@@ -4992,12 +4992,18 @@ button:focus-visible {
   min-width: 80px;
 }
 
+.principle-content {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
 .principle-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: clamp(24px, 2.8vw, 32px);
   font-weight: 400;
   color: #fff;
-  margin: 0 0 14px;
+  margin: 0;
   line-height: 1.2;
 }
 
@@ -5717,7 +5723,7 @@ button:focus-visible {
 }
 
 .project-hero-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: clamp(48px, 7vw, 110px);
   font-weight: 300;
   line-height: 0.92;
@@ -5867,7 +5873,7 @@ button:focus-visible {
 }
 
 .footer-nav-item .nav-title {
-  font-family: 'Cormorant Garamond', serif;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: 22px;
   font-weight: 400;
   color: var(--brown);

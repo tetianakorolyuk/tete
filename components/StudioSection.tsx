@@ -233,8 +233,10 @@ export default function StudioSection() {
           <FadeUpOnScroll key={i} delay={i * 120}>
             <div className="studio-principle">
               <span className="principle-num">{principle.num}</span>
-              <h3 className="principle-title">{principle.title}</h3>
-              <p className="principle-description">{principle.description}</p>
+              <div className="principle-content">
+                <h3 className="principle-title">{principle.title}</h3>
+                <p className="principle-description">{principle.description}</p>
+              </div>
             </div>
           </FadeUpOnScroll>
         ))}
