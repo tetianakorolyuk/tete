@@ -1,5 +1,13 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Snell Roundhand';
+  src: url('/fonts/Snell Roundhand Regular.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 :root {
   /* Core colors from claude.html */
   --bg: #F0EAE2;
@@ -434,10 +442,10 @@ body::before {
 }
 
 .brand {
-  font-family: 'Cormorant Garamond', serif;
-  font-weight: 500;
-  font-size: 24px;
-  letter-spacing: -0.02em;
+  font-family: 'Snell Roundhand', 'Cormorant Garamond', serif;
+  font-weight: 400;
+  font-size: 28px;
+  letter-spacing: 0.02em;
   color: var(--linen);
   transition: color 0.4s ease;
   flex-shrink: 0;
