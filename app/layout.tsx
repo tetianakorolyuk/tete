@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import PageTransition from "@/components/PageTransition";
+import ScrollToTop from "@/components/ScrollToTop";
 
 export const metadata: Metadata = {
   title: "TETÉ — Interior Design | Toronto",
@@ -55,6 +56,7 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <ScrollToTop />
         <PageTransition />
         {children}
       </body>

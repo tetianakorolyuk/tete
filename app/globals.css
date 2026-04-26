@@ -4920,6 +4920,42 @@ button:focus-visible {
   line-height: 1.1;
 }
 
+/* Studio Scroll Hint */
+.studio-scroll-hint {
+  position: absolute;
+  bottom: 28px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  color: rgba(240, 234, 226, 0.55);
+  animation: studioHintFadeIn 1s ease 0.8s both;
+}
+
+@keyframes studioHintFadeIn {
+  from { opacity: 0; transform: translateX(-50%) translateY(-10px); }
+  to { opacity: 1; transform: translateX(-50%) translateY(0); }
+}
+
+.studio-scroll-hint-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.studio-scroll-hint-arrow {
+  animation: studioHintBounce 2s ease infinite;
+}
+
+@keyframes studioHintBounce {
+  0%, 100% { transform: translateY(0); opacity: 0.7; }
+  50% { transform: translateY(6px); opacity: 1; }
+}
+
 /* Studio Divider */
 .studio-divider {
   display: flex;

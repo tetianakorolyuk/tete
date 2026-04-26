@@ -212,6 +212,12 @@ export default function StudioSection() {
               <h3 className="studio-hero-name">Tatiana Koroliuk</h3>
             </div>
           </div>
+          <div className="studio-scroll-hint">
+            <span className="studio-scroll-hint-text">Scroll to explore</span>
+            <svg className="studio-scroll-hint-arrow" width="16" height="28" viewBox="0 0 16 28" fill="none">
+              <path d="M8 0v26m0 0l6.5-6.5M8 26L1.5 19.5" stroke="currentColor" strokeWidth="1.2" />
+            </svg>
+          </div>
         </div>
       </div>
 
