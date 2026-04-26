@@ -96,7 +96,10 @@ export default function Hero({ projects }: HeroProps) {
           <div className="hero-title-wrap">
             <h1 className="hero-title">
               <span className="hero-title-line">
-                <span className="hero-title-inner text-reveal-inner">the TETE</span>
+                <span className="hero-title-inner text-reveal-inner">the</span>
+              </span>
+              <span className="hero-title-line">
+                <span className="hero-title-inner text-reveal-inner" style={{ animationDelay: '0.18s' }}>TETE</span>
               </span>
             </h1>
           </div>

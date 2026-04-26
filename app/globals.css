@@ -1568,9 +1568,11 @@ img {
 }
 
 .hero-title {
+  display: flex;
+  flex-direction: column;
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(64px, 10vw, 140px);
-  line-height: 0.9;
+  line-height: 0.85;
   font-weight: 300;
   letter-spacing: -0.03em;
   color: #fff;
@@ -1578,13 +1580,29 @@ img {
   text-shadow: 0 4px 60px rgba(0,0,0,0.6);
 }
 
-.hero-eyebrow {
-  font-family: 'DM Mono', monospace;
-  font-size: 10px;
+.hero-title-line {
+  display: block;
+  overflow: hidden;
+}
+
+.hero-title-inner {
+  display: block;
+  transform: translateY(110%);
+  animation: slideUp 0.9s cubic-bezier(0.76, 0, 0.24, 1) forwards;
+}
+
+.hero-title-line:nth-child(1) .hero-title-inner {
+  animation-delay: 2.0s;
+  font-size: 0.35em;
   letter-spacing: 0.25em;
   text-transform: uppercase;
   color: rgba(240, 234, 226, 0.72);
-  margin-bottom: 8px;
+}
+
+.hero-title-line:nth-child(2) .hero-title-inner {
+  animation-delay: 2.2s;
+  font-size: 1em;
+  letter-spacing: -0.03em;
 }
 
 .hero-title-line {
