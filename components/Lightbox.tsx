@@ -72,24 +72,49 @@ export default function Lightbox({ projects }: LightboxProps) {
       role="dialog"
       aria-label="Image viewer"
     >
+      {/* Close button — top right */}
+      <button className="lb-close" onClick={closeLightbox} type="button" aria-label="Close">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <path d="M18 6L6 18M6 6l12 12" />
+        </svg>
+      </button>
+
+      {/* Prev arrow — left */}
+      {currentImages.length > 1 && (
+        <button className="lb-arrow lb-arrow-prev" onClick={() => step(-1)} type="button" aria-label="Previous image">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+            <path d="M15 18l-6-6 6-6" />
+          </svg>
+        </button>
+      )}
+
+      {/* Next arrow — right */}
+      {currentImages.length > 1 && (
+        <button className="lb-arrow lb-arrow-next" onClick={() => step(1)} type="button" aria-label="Next image">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1">
+            <path d="M9 18l6-6-6-6" />
+          </svg>
+        </button>
+      )}
+
+      {/* Main content */}
       <div className="lightboxInner">
-        <div className="lbTop">
-          <div className="lbCaption" id="lbCaption">
-            {currentProject?.title} — {activeImageIndex + 1} / {currentImages.length}
-          </div>
-          <div className="lbBtns">
-            <button className="lbBtn" onClick={() => step(-1)} type="button">
-              Prev
-            </button>
-            <button className="lbBtn" onClick={() => step(1)} type="button">
-              Next
-            </button>
-            <button className="lbBtn" onClick={closeLightbox} type="button">
-              Close
-            </button>
-          </div>
+        {currentImage && (
+          <img
+            className="lbImg"
+            src={currentImage}
+            alt={`${currentProject?.title || ''} — ${activeImageIndex + 1}`}
+            key={`${activeProjectIndex}-${activeImageIndex}`}
+          />
+        )}
+
+        {/* Caption below image */}
+        <div className="lbCaption">
+          <span className="lbCaption-title">{currentProject?.title}</span>
+          <span className="lbCaption-counter">
+            {String(activeImageIndex + 1).padStart(2, '0')} / {String(currentImages.length).padStart(2, '0')}
+          </span>
         </div>
-        {currentImage && <img className="lbImg" src={currentImage} alt="" />}
       </div>
     </div>
   );

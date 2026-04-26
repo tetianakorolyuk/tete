@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
-
-const geistSans = undefined;
-const geistMono = undefined;
+import PageTransition from "@/components/PageTransition";
+import SmoothScroll from "@/components/SmoothScroll";
 
 export const metadata: Metadata = {
   title: "TETÉ — Interior Design | Toronto",
@@ -57,6 +56,8 @@ export default function RootLayout({
         />
       </head>
       <body>
+        <PageTransition />
+        <SmoothScroll />
         {children}
       </body>
     </html>

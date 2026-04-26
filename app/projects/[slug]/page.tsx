@@ -1,6 +1,7 @@
 import { getProjects } from '@/lib/content';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import ProjectDetailNav from '@/components/ProjectDetailNav';
 
 interface Props {
   params: Promise<{ slug: string }>;
@@ -26,20 +27,8 @@ export default async function ProjectPage({ params }: Props) {
 
   return (
     <main className="project-detail">
-      {/* Fixed minimal nav */}
-      <nav className="project-detail-nav">
-        <div className="project-detail-nav-inner">
-          <Link href="/" className="nav-back">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-              <path d="M19 12H5M12 19l-7-7 7-7" />
-            </svg>
-            <span>Index</span>
-          </Link>
-          <span className="nav-project-num">
-            {String(currentIndex + 1).padStart(2, '0')} / {String(projects.length).padStart(2, '0')}
-          </span>
-        </div>
-      </nav>
+      {/* Fixed minimal nav with scroll fade */}
+      <ProjectDetailNav currentIndex={currentIndex} totalProjects={projects.length} />
 
       {/* Cinematic full-bleed hero */}
       <div className="project-hero-full">

@@ -3,43 +3,41 @@
 import { useEffect, useState } from 'react';
 
 export default function Preloader() {
-  const [visible, setVisible] = useState(true);
-  const [progress, setProgress] = useState(0);
-  const [done, setDone] = useState(false);
+  const [phase, setPhase] = useState<'enter' | 'hold' | 'exit' | 'done'>('enter');
 
   useEffect(() => {
-    // Animate progress
-    const interval = setInterval(() => {
-      setProgress((prev) => {
-        const next = prev + Math.random() * 6 + 2;
-        if (next >= 100) {
-          clearInterval(interval);
-          setTimeout(() => {
-            setDone(true);
-            setTimeout(() => setVisible(false), 320);
-          }, 320);
-          return 100;
-        }
-        return next;
-      });
-    }, 60);
+    // Phase 1: brand enters (0-1200ms)
+    const t1 = setTimeout(() => setPhase('hold'), 1200);
+    // Phase 2: hold briefly then exit (1200-1800ms)
+    const t2 = setTimeout(() => setPhase('exit'), 1800);
+    // Phase 3: remove from DOM
+    const t3 = setTimeout(() => setPhase('done'), 2600);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+    };
   }, []);
 
-  if (!visible) return null;
+  if (phase === 'done') return null;
 
   return (
-    <div id="preloader" className={done ? 'done' : ''}>
-      <div className="pre-brand">
-        <span className="pre-brand-small">the</span>
-        <br />
-        <span className="pre-brand-large">TETE</span>
+    <div className={`preloader ${phase}`} aria-hidden="true">
+      {/* Split panels */}
+      <div className="preloader-panel preloader-panel-left" />
+      <div className="preloader-panel preloader-panel-right" />
+
+      {/* Centered brand */}
+      <div className="preloader-brand">
+        <span className="preloader-brand-small">the</span>
+        <span className="preloader-brand-large">TETE</span>
       </div>
-      <div className="pre-bar">
-        <div className="pre-fill" style={{ width: `${progress}%` }} />
+
+      {/* Subtle line */}
+      <div className="preloader-line">
+        <div className="preloader-line-inner" />
       </div>
-      <div className="pre-num">{Math.floor(progress)}%</div>
     </div>
   );
 }
