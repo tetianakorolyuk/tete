@@ -236,7 +236,6 @@ export default function StudioSection() {
               <span className="principle-num">{principle.num}</span>
               <h3 className="principle-title">{principle.title}</h3>
               <p className="principle-description">{principle.description}</p>
-              <span className="principle-line" />
             </div>
           </FadeUpOnScroll>
         ))}
