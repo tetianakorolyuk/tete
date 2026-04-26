@@ -43,7 +43,6 @@ function useCountUp(target: string, duration = 1200) {
     if (hasAnimated.current) return;
     hasAnimated.current = true;
 
-    // Handle non-numeric values (e.g. "Tête-à-tête", "24/7")
     const numericMatch = target.match(/^(\d+)/);
     if (!numericMatch) {
       setDisplay(target);
@@ -55,7 +54,7 @@ function useCountUp(target: string, duration = 1200) {
 
     const step = (now: number) => {
       const progress = Math.min((now - startTime) / duration, 1);
-      const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+      const eased = 1 - Math.pow(1 - progress, 3);
       const current = Math.floor(eased * end);
       setDisplay(String(current));
       if (progress < 1) requestAnimationFrame(step);
@@ -153,7 +152,6 @@ export default function StudioSection() {
       .catch((err) => console.warn('Failed to load studio settings:', err));
   }, []);
 
-  // Parallax effect on image
   useEffect(() => {
     const handleScroll = () => {
       if (!imageRef.current) return;
@@ -161,8 +159,8 @@ export default function StudioSection() {
       const windowHeight = window.innerHeight;
       if (rect.top < windowHeight && rect.bottom > 0) {
         const progress = (windowHeight - rect.top) / (windowHeight + rect.height);
-        const translateY = progress * 30 - 15; // -15px to +15px
-        const scale = 1 + progress * 0.06; // 1.0 to 1.06
+        const translateY = progress * 20 - 10;
+        const scale = 1 + progress * 0.04;
         const img = imageRef.current.querySelector('img');
         if (img) {
           img.style.transform = `translateY(${translateY}px) scale(${scale})`;
@@ -175,23 +173,38 @@ export default function StudioSection() {
 
   return (
     <section className="studio" id="studio">
-      {/* Hero Split Section */}
+      {/* Editorial Header */}
+      <div className="studio-inner">
+        <FadeUpOnScroll>
+          <div className="studio-header">
+            <div className="studio-header-left">
+              <span className="studio-header-num">01</span>
+              <div className="studio-header-title-group">
+                <span className="studio-header-eyebrow">Studio</span>
+                <h2 className="studio-header-title">About the Studio</h2>
+              </div>
+            </div>
+            <div className="studio-header-right">
+              <span className="studio-header-meta">Est. 2020 · Toronto</span>
+            </div>
+          </div>
+        </FadeUpOnScroll>
+      </div>
+
+      {/* Compact Split */}
       <div className="studio-hero">
         <div className="studio-hero-content">
           <FadeUpOnScroll>
-            <p className="studio-eyebrow">About the Studio</p>
-          </FadeUpOnScroll>
-          <FadeUpOnScroll delay={100}>
             <h2
               className="studio-headline"
               dangerouslySetInnerHTML={{ __html: content.headline }}
             />
           </FadeUpOnScroll>
-          <FadeUpOnScroll delay={180}>
+          <FadeUpOnScroll delay={100}>
             <p className="studio-description">{content.description}</p>
           </FadeUpOnScroll>
 
-          <FadeUpOnScroll delay={260}>
+          <FadeUpOnScroll delay={180}>
             <div className="studio-stats">
               {content.stats.map((stat, i) => (
                 <StatCounter key={i} stat={stat} />
@@ -208,27 +221,13 @@ export default function StudioSection() {
           />
           <div className="studio-hero-overlay">
             <div className="studio-hero-overlay-inner">
-              <p className="studio-hero-meta">Est. 2020 · Toronto</p>
               <h3 className="studio-hero-name">Tatiana Koroliuk</h3>
             </div>
-          </div>
-          <div className="studio-scroll-hint">
-            <span className="studio-scroll-hint-text">Scroll to explore</span>
-            <svg className="studio-scroll-hint-arrow" width="16" height="28" viewBox="0 0 16 28" fill="none">
-              <path d="M8 0v26m0 0l6.5-6.5M8 26L1.5 19.5" stroke="currentColor" strokeWidth="1.2" />
-            </svg>
           </div>
         </div>
       </div>
 
-      {/* Decorative divider */}
-      <div className="studio-divider">
-        <span className="studio-divider-line" />
-        <span className="studio-divider-text">Studio Principles</span>
-        <span className="studio-divider-line" />
-      </div>
-
-      {/* Principles Grid */}
+      {/* Principles */}
       <div className="studio-principles">
         {content.principles.map((principle, i) => (
           <FadeUpOnScroll key={i} delay={i * 120}>
