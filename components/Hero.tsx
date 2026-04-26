@@ -96,15 +96,7 @@ export default function Hero({ projects }: HeroProps) {
           <div className="hero-title-wrap">
             <h1 className="hero-title">
               <span className="hero-title-line">
-                <span className="hero-title-inner text-reveal-inner">The TETÉ</span>
-              </span>
-              <span className="hero-title-line">
-                <span
-                  className="hero-title-inner text-reveal-inner"
-                  style={{ animationDelay: '0.18s', fontStyle: 'italic', color: 'rgba(240,234,226,.72)' }}
-                >
-                  STUDIO
-                </span>
+                <span className="hero-title-inner text-reveal-inner">tété</span>
               </span>
             </h1>
           </div>
@@ -125,7 +117,7 @@ export default function Hero({ projects }: HeroProps) {
               </div>
               <div className="hero-socials">
                 <a href="https://instagram.com" target="_blank" rel="noopener" className="animated-underline">Ig</a>
-                <a href="https://substack.com" target="_blank" rel="noopener" className="animated-underline">Sb</a>
+                <a href="https://thetete.substack.com" target="_blank" rel="noopener" className="animated-underline">Sb</a>
                 <a href="https://behance.net" target="_blank" rel="noopener" className="animated-underline">Be</a>
                 <a href="https://pinterest.com" target="_blank" rel="noopener" className="animated-underline">Pi</a>
               </div>

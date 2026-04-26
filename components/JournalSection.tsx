@@ -98,7 +98,7 @@ export default function JournalSection() {
           ) : error && posts.length === 0 ? (
             <div className="postsEmpty">
               Couldn't load posts right now.{' '}
-              <a href="https://tekofm.substack.com/" target="_blank" rel="noopener">
+              <a href="https://thetete.substack.com/" target="_blank" rel="noopener">
                 Open Substack
               </a>
               .
@@ -110,7 +110,7 @@ export default function JournalSection() {
           ) : (
             <div className="postsEmpty">
               No posts found.{' '}
-              <a href="https://tekofm.substack.com/" target="_blank" rel="noopener">
+              <a href="https://thetete.substack.com/" target="_blank" rel="noopener">
                 Open Substack
               </a>
               .
