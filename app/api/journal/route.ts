@@ -89,6 +89,7 @@ export async function GET() {
     return NextResponse.json({ posts: FALLBACK_POSTS });
   }
 
+  try {
     const doc = new DOMParser().parseFromString(xmlText, 'text/xml');
     const items: Post[] = [...doc.querySelectorAll('item')].map((item) => {
       const description = item.querySelector('description')?.textContent || '';
