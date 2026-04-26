@@ -92,7 +92,7 @@ export default function JournalSection() {
           </div>
         </FadeIn>
 
-        <div style={{ marginTop: 40 }} className="posts">
+        <div className="posts">
           {loading ? (
             <div className="postsEmpty">Loading latest posts…</div>
           ) : error && posts.length === 0 ? (

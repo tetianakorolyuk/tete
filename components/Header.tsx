@@ -32,7 +32,7 @@ export default function Header() {
           <a href="#projects">Projects</a>
           <a href="#studio">Studio</a>
           <a href="#journal">Journal</a>
-          <a href="#contact">Contact</a>
+          <a href="#get-in-touch">Contact</a>
         </nav>
         <div className="navRight">
           <button className="nav-cta" onClick={scrollToContact}>Make a Request</button>
@@ -53,7 +53,7 @@ export default function Header() {
         <a href="#projects" onClick={() => setMobileOpen(false)}>Projects</a>
         <a href="#studio" onClick={() => setMobileOpen(false)}>Studio</a>
         <a href="#journal" onClick={() => setMobileOpen(false)}>Journal</a>
-        <a href="#contact" onClick={() => setMobileOpen(false)}>Contact</a>
+        <a href="#get-in-touch" onClick={() => setMobileOpen(false)}>Contact</a>
       </div>
     </>
   );

@@ -415,7 +415,10 @@ body::before {
 }
 
 @media (max-width: 860px) {
-  .wrap {
+  .wrap,
+  .projects-inner,
+  .get-in-touch-inner,
+  .footer-inner {
     padding: 0 20px;
   }
 }
@@ -818,7 +821,7 @@ img {
 
 /* Projects section */
 .projects {
-  padding: 0 0 100px;
+  padding: 100px 0;
   background: var(--linen);
 }
 
@@ -1075,6 +1078,7 @@ img {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 32px;
+  margin-top: 40px;
 }
 
 .journalCard {
@@ -1904,6 +1908,10 @@ img {
   pointer-events: auto;
 }
 
+.hero-inner {
+  max-width: 920px;
+}
+
 /* Responsive */
 @media (max-width: 1100px) {
   .hero-bottom {
@@ -2110,7 +2118,7 @@ img {
 }
 
 .get-in-touch-inner {
-  max-width: 1400px;
+  max-width: 1760px;
   margin: 0 auto;
   padding: 0 48px;
 }
@@ -2394,7 +2402,7 @@ img {
   color: var(--linen);
 }
 
-/* Mobile */
+/* Tablet */
 @media (max-width: 1024px) {
   .touch-content {
     grid-template-columns: 1fr;
@@ -2404,6 +2412,25 @@ img {
   .form-grid {
     grid-template-columns: 1fr;
   }
+
+  /* Studio hero stacks on tablet */
+  .studio-hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+
+  .studio-hero-image {
+    min-height: 360px;
+    order: -1;
+  }
+
+  .studio-principles {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .studio-principle {
+    padding: 48px 36px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -2412,7 +2439,7 @@ img {
   }
 
   .get-in-touch-inner {
-    padding: 0 24px;
+    padding: 0 20px;
   }
 
   .touch-form-wrapper {
@@ -2453,6 +2480,14 @@ img {
 
   .nav {
     display: none;
+  }
+
+  .studio-principles {
+    grid-template-columns: 1fr;
+  }
+
+  .studio-principle {
+    padding: 40px 24px;
   }
 }
 
@@ -5721,6 +5756,10 @@ textarea:focus {
 /* Mobile landscape and portrait */
 @media (max-width: 768px) {
   .wrap {
+    padding: 0 20px;
+  }
+
+  .footer-inner {
     padding: 0 20px;
   }
 
