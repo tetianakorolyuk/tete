@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { StudioContent } from '@/lib/types';
 
 const defaultContent: StudioContent = {
@@ -35,15 +35,109 @@ const defaultContent: StudioContent = {
   ],
 };
 
-export default function StudioSection() {
-  const [visible, setVisible] = useState(false);
-  const [studioImage, setStudioImage] = useState('/images/studio-hero.jpg');
-  const [content, setContent] = useState<StudioContent>(defaultContent);
+function useCountUp(target: string, duration = 1200) {
+  const [display, setDisplay] = useState('0');
+  const hasAnimated = useRef(false);
+
+  const animate = useCallback(() => {
+    if (hasAnimated.current) return;
+    hasAnimated.current = true;
+
+    // Handle non-numeric values (e.g. "Tête-à-tête", "24/7")
+    const numericMatch = target.match(/^(\d+)/);
+    if (!numericMatch) {
+      setDisplay(target);
+      return;
+    }
+
+    const end = parseInt(numericMatch[1], 10);
+    const startTime = performance.now();
+
+    const step = (now: number) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3); // easeOutCubic
+      const current = Math.floor(eased * end);
+      setDisplay(String(current));
+      if (progress < 1) requestAnimationFrame(step);
+    };
+
+    requestAnimationFrame(step);
+  }, [target, duration]);
+
+  return { display, animate };
+}
+
+function StatCounter({ stat }: { stat: { number: string; label: string } }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { display, animate } = useCountUp(stat.number);
 
   useEffect(() => {
-    const timer = setTimeout(() => setVisible(true), 200);
-    return () => clearTimeout(timer);
-  }, []);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          animate();
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.5 }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [animate]);
+
+  return (
+    <div ref={ref} className="studio-stat">
+      <div className="studio-stat-num">{display}</div>
+      <div className="studio-stat-label">{stat.label}</div>
+    </div>
+  );
+}
+
+function FadeUpOnScroll({
+  children,
+  delay = 0,
+  className = '',
+}: {
+  children: React.ReactNode;
+  delay?: number;
+  className?: string;
+}) {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setTimeout(() => setVisible(true), delay);
+          observer.unobserve(entry.target);
+        }
+      },
+      { threshold: 0.1, rootMargin: '0px 0px -60px 0px' }
+    );
+    if (ref.current) observer.observe(ref.current);
+    return () => observer.disconnect();
+  }, [delay]);
+
+  return (
+    <div
+      ref={ref}
+      className={className}
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible ? 'translateY(0)' : 'translateY(28px)',
+        transition: `opacity 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${delay}ms, transform 0.9s cubic-bezier(0.25, 0.46, 0.45, 0.94) ${delay}ms`,
+      }}
+    >
+      {children}
+    </div>
+  );
+}
+
+export default function StudioSection() {
+  const [studioImage, setStudioImage] = useState('/images/studio-hero.jpg');
+  const [content, setContent] = useState<StudioContent>(defaultContent);
+  const imageRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetch('/api/settings')
@@ -59,57 +153,86 @@ export default function StudioSection() {
       .catch((err) => console.warn('Failed to load studio settings:', err));
   }, []);
 
+  // Parallax effect on image
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!imageRef.current) return;
+      const rect = imageRef.current.getBoundingClientRect();
+      const windowHeight = window.innerHeight;
+      if (rect.top < windowHeight && rect.bottom > 0) {
+        const progress = (windowHeight - rect.top) / (windowHeight + rect.height);
+        const translateY = progress * 30 - 15; // -15px to +15px
+        const scale = 1 + progress * 0.06; // 1.0 to 1.06
+        const img = imageRef.current.querySelector('img');
+        if (img) {
+          img.style.transform = `translateY(${translateY}px) scale(${scale})`;
+        }
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <section className="studio" id="studio">
       {/* Hero Split Section */}
       <div className="studio-hero">
         <div className="studio-hero-content">
-          <p className="studio-eyebrow">About the Studio</p>
-          <h2
-            className="studio-headline"
-            dangerouslySetInnerHTML={{ __html: content.headline }}
-          />
-          <p className="studio-description">{content.description}</p>
+          <FadeUpOnScroll>
+            <p className="studio-eyebrow">About the Studio</p>
+          </FadeUpOnScroll>
+          <FadeUpOnScroll delay={100}>
+            <h2
+              className="studio-headline"
+              dangerouslySetInnerHTML={{ __html: content.headline }}
+            />
+          </FadeUpOnScroll>
+          <FadeUpOnScroll delay={180}>
+            <p className="studio-description">{content.description}</p>
+          </FadeUpOnScroll>
 
-          <div className="studio-stats">
-            {content.stats.map((stat, i) => (
-              <div key={i} className="studio-stat">
-                <div className="studio-stat-num">{stat.number}</div>
-                <div className="studio-stat-label">{stat.label}</div>
-              </div>
-            ))}
-          </div>
+          <FadeUpOnScroll delay={260}>
+            <div className="studio-stats">
+              {content.stats.map((stat, i) => (
+                <StatCounter key={i} stat={stat} />
+              ))}
+            </div>
+          </FadeUpOnScroll>
         </div>
 
-        <div className="studio-hero-image">
+        <div className="studio-hero-image" ref={imageRef}>
           <img
             src={studioImage}
             alt="Tatiana Koroliuk - Interior Design Toronto"
             loading="eager"
           />
           <div className="studio-hero-overlay">
-            <p className="studio-hero-meta">Est. 2020 · Toronto</p>
-            <h3 className="studio-hero-name">Tatiana Koroliuk</h3>
+            <div className="studio-hero-overlay-inner">
+              <p className="studio-hero-meta">Est. 2020 · Toronto</p>
+              <h3 className="studio-hero-name">Tatiana Koroliuk</h3>
+            </div>
           </div>
         </div>
+      </div>
+
+      {/* Decorative divider */}
+      <div className="studio-divider">
+        <span className="studio-divider-line" />
+        <span className="studio-divider-text">Studio Principles</span>
+        <span className="studio-divider-line" />
       </div>
 
       {/* Principles Grid */}
       <div className="studio-principles">
         {content.principles.map((principle, i) => (
-          <div
-            key={i}
-            className="studio-principle"
-            style={{
-              opacity: visible ? 1 : 0,
-              transform: visible ? 'none' : 'translateY(24px)',
-              transition: `opacity 0.8s ease ${0.3 + i * 0.15}s, transform 0.8s ease ${0.3 + i * 0.15}s`,
-            }}
-          >
-            <span className="principle-num">{principle.num}</span>
-            <h3 className="principle-title">{principle.title}</h3>
-            <p className="principle-description">{principle.description}</p>
-          </div>
+          <FadeUpOnScroll key={i} delay={i * 120}>
+            <div className="studio-principle">
+              <span className="principle-num">{principle.num}</span>
+              <h3 className="principle-title">{principle.title}</h3>
+              <p className="principle-description">{principle.description}</p>
+              <span className="principle-line" />
+            </div>
+          </FadeUpOnScroll>
         ))}
       </div>
     </section>

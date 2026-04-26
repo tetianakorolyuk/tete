@@ -4879,13 +4879,27 @@ button:focus-visible {
   height: 100%;
   object-fit: cover;
   display: block;
+  will-change: transform;
 }
 
 .studio-hero-overlay {
   position: absolute;
-  bottom: 40px;
-  left: 40px;
+  inset: 0;
   z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+.studio-hero-overlay-inner {
+  padding: 80px 40px 40px;
+  width: 100%;
+  background: linear-gradient(
+    to top,
+    rgba(61, 35, 21, 0.55) 0%,
+    rgba(61, 35, 21, 0.18) 50%,
+    transparent 100%
+  );
 }
 
 .studio-hero-meta {
@@ -4893,17 +4907,49 @@ button:focus-visible {
   font-size: 9px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(240, 234, 226, 0.7);
+  color: rgba(240, 234, 226, 0.65);
   margin: 0 0 8px;
 }
 
 .studio-hero-name {
   font-family: 'Cormorant Garamond', serif;
-  font-size: 32px;
+  font-size: 36px;
   font-weight: 300;
   color: #fff;
   margin: 0;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.4);
+  line-height: 1.1;
+}
+
+/* Studio Divider */
+.studio-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding: 60px 24px;
+  background: var(--linen);
+}
+
+.studio-divider-line {
+  flex: 1;
+  max-width: 120px;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--brown-xs) 30%,
+    var(--brown-xs) 70%,
+    transparent
+  );
+}
+
+.studio-divider-text {
+  font-family: 'DM Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--brown-s);
+  white-space: nowrap;
 }
 
 /* Studio Principles */
@@ -4919,7 +4965,9 @@ button:focus-visible {
   background: var(--brown);
   padding: 60px 48px;
   color: rgba(240, 234, 226, 0.85);
-  transition: all 0.4s ease;
+  transition: all 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  position: relative;
+  overflow: hidden;
 }
 
 .studio-principle:hover {
@@ -4953,6 +5001,20 @@ button:focus-visible {
   font-weight: 300;
 }
 
+.principle-line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--apricot);
+  transition: width 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.studio-principle:hover .principle-line {
+  width: 100%;
+}
+
 /* Mobile responsive */
 /* Studio responsive - moved to dedicated section above */
 
@@ -4976,6 +5038,23 @@ button:focus-visible {
 
   .studio-stat-label {
     font-size: 8px;
+  }
+
+  .studio-hero-overlay-inner {
+    padding: 60px 20px 24px;
+  }
+
+  .studio-hero-name {
+    font-size: 28px;
+  }
+
+  .studio-divider {
+    padding: 40px 20px;
+    gap: 16px;
+  }
+
+  .studio-divider-line {
+    max-width: 60px;
   }
 }
 
