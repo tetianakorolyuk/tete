@@ -9,6 +9,12 @@ interface ProjectsSectionProps {
 }
 
 export default function ProjectsSection({ projects }: ProjectsSectionProps) {
+  const getSize = (index: number) => {
+    // Pattern: full, half, half, full, half, half...
+    if (index % 3 === 0) return 'full';
+    return 'half';
+  };
+
   return (
     <section className="projects" id="projects">
       <div className="projects-inner">
@@ -29,46 +35,36 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
         </FadeIn>
       </div>
 
-      <div className="projects-list-full">
+      <div className="projects-grid">
         {projects.map((project, index) => {
-          const img1 = project.images?.[0];
-          const img2 = project.images?.[1] || img1;
+          const img = project.images?.[0];
+          if (!img) return null;
 
-          if (!img1) return null;
+          const size = getSize(index);
 
           return (
-            <FadeIn key={project.slug} delay={40 * index}>
-              <Link href={`/projects/${project.slug}`} className="project-row-link">
-                <article className="project-row project-h">
-                  <div className="project-row-img-wrap">
+            <FadeIn key={project.slug} delay={60 * (index % 3)}>
+              <Link
+                href={`/projects/${project.slug}`}
+                className={`project-card-link ${size}`}
+              >
+                <article className={`project-card ${size}`}>
+                  <div className="project-card-img-wrap">
                     <img
-                      src={img1}
+                      src={img}
                       alt={project.title}
-                      className="img-1"
-                      loading={index === 0 ? "eager" : "lazy"}
-                      fetchPriority={index === 0 ? "high" : "auto"}
+                      loading={index === 0 ? 'eager' : 'lazy'}
+                      fetchPriority={index === 0 ? 'high' : 'auto'}
                     />
-                    {img2 && img2 !== img1 && (
-                      <img
-                        src={img2}
-                        alt={project.title}
-                        className="img-2"
-                        loading="lazy"
-                      />
-                    )}
                   </div>
-                  <div className="hover-label">View<br/>Project</div>
-                  <div className="project-content">
-                    <div className="project-num">{String(index + 1).padStart(2, '0')} — {project.subtitle || 'Project'}</div>
-                    <div className="project-bottom">
-                      <h2 className="project-title">{project.title}</h2>
-                      <div className="project-meta">
-                        <div className="smallcaps light">{project.location || ''} {project.location && project.year ? '·' : ''} {project.year || '2025'}</div>
-                        <p>{project.description || ''}</p>
-                        <span className="arrow-link">
-                          <span className="al-line" />View project
-                        </span>
-                      </div>
+                  <div className="project-card-overlay">
+                    <div className="project-card-info">
+                      <span className="project-card-name">{project.title}</span>
+                      <span className="project-card-meta">
+                        {project.location || ''}
+                        {project.location && project.year ? ' — ' : ''}
+                        {project.year || ''}
+                      </span>
                     </div>
                   </div>
                 </article>
