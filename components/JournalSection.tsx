@@ -24,7 +24,7 @@ const formatDate = (pub: string) => {
   }
 };
 
-const CACHE_KEY = 'tete_substack_cache_v8';
+const CACHE_KEY = 'tete_substack_cache_v9';
 const CACHE_TTL_MS = 30 * 60 * 1000; // 30 minutes cache
 
 export default function JournalSection() {

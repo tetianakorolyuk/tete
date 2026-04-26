@@ -28,7 +28,7 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
           if (!img1) return null;
 
           return (
-            <FadeIn key={project.slug} delay={80 * index} clip>
+            <FadeIn key={project.slug} delay={40 * index}>
               <Link href={`/projects/${project.slug}`} className="project-row-link">
                 <article className="project-row project-h">
                   <div className="project-row-img-wrap">

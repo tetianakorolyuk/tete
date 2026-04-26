@@ -21,7 +21,7 @@ export default function FadeIn({ children, delay = 0, className = '', clip = fal
           observer.unobserve(entry.target);
         }
       },
-      { threshold: 0.12, rootMargin: '50px' }
+      { threshold: 0.05, rootMargin: '80px' }
     );
 
     if (ref.current) observer.observe(ref.current);

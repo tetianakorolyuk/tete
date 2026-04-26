@@ -3,41 +3,43 @@
 import { useEffect, useState } from 'react';
 
 export default function Preloader() {
-  const [phase, setPhase] = useState<'enter' | 'hold' | 'exit' | 'done'>('enter');
+  const [visible, setVisible] = useState(true);
+  const [progress, setProgress] = useState(0);
+  const [done, setDone] = useState(false);
 
   useEffect(() => {
-    // Phase 1: brand enters (0-1200ms)
-    const t1 = setTimeout(() => setPhase('hold'), 1200);
-    // Phase 2: hold briefly then exit (1200-1800ms)
-    const t2 = setTimeout(() => setPhase('exit'), 1800);
-    // Phase 3: remove from DOM
-    const t3 = setTimeout(() => setPhase('done'), 2600);
+    // Smoother progress animation
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        const increment = Math.random() * 5 + 1.5;
+        const next = prev + increment;
+        if (next >= 100) {
+          clearInterval(interval);
+          setTimeout(() => {
+            setDone(true);
+            setTimeout(() => setVisible(false), 500);
+          }, 400);
+          return 100;
+        }
+        return next;
+      });
+    }, 45);
 
-    return () => {
-      clearTimeout(t1);
-      clearTimeout(t2);
-      clearTimeout(t3);
-    };
+    return () => clearInterval(interval);
   }, []);
 
-  if (phase === 'done') return null;
+  if (!visible) return null;
 
   return (
-    <div className={`preloader ${phase}`} aria-hidden="true">
-      {/* Split panels */}
-      <div className="preloader-panel preloader-panel-left" />
-      <div className="preloader-panel preloader-panel-right" />
-
-      {/* Centered brand */}
-      <div className="preloader-brand">
-        <span className="preloader-brand-small">the</span>
-        <span className="preloader-brand-large">TETE</span>
+    <div id="preloader" className={done ? 'done' : ''}>
+      <div className="pre-brand">
+        <span className="pre-brand-small">the</span>
+        <span className="pre-brand-large">TETE</span>
       </div>
-
-      {/* Subtle line */}
-      <div className="preloader-line">
-        <div className="preloader-line-inner" />
+      <div className="pre-bar">
+        <div className="pre-fill" style={{ width: `${progress}%` }} />
       </div>
+      <div className="pre-num">{Math.floor(progress)}%</div>
     </div>
   );
 }

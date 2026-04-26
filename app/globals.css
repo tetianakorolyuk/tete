@@ -177,121 +177,87 @@ body::before {
   }
 }
 
-/* ─── Preloader: Split-Screen Curtain Reveal ─── */
-.preloader {
+/* ─── Preloader ─── */
+#preloader {
   position: fixed;
   inset: 0;
   z-index: 10000;
+  background: var(--brown);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 28px;
+  transition: opacity 0.7s cubic-bezier(0.76, 0, 0.24, 1), visibility 0.7s;
   pointer-events: none;
 }
 
-.preloader-panel {
-  position: absolute;
-  inset: 0;
-  background: var(--brown);
-  transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1);
+#preloader.done {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
 }
 
-.preloader-panel-left {
-  clip-path: inset(0 50% 0 0);
+#preloader:not(.done) {
+  pointer-events: auto;
 }
 
-.preloader-panel-right {
-  clip-path: inset(0 0 0 50%);
-}
-
-/* Enter phase — panels cover screen */
-.preloader.enter .preloader-panel-left,
-.preloader.enter .preloader-panel-right {
-  transform: translateY(0);
-}
-
-/* Exit phase — panels slide away */
-.preloader.exit .preloader-panel-left {
-  transform: translateY(-100%);
-}
-
-.preloader.exit .preloader-panel-right {
-  transform: translateY(100%);
-}
-
-/* Brand center */
-.preloader-brand {
-  position: absolute;
-  inset: 0;
+.pre-brand {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  gap: 8px;
-  z-index: 2;
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.8s cubic-bezier(0.76, 0, 0.24, 1) 0.2s,
-              transform 0.8s cubic-bezier(0.76, 0, 0.24, 1) 0.2s;
-}
-
-.preloader.enter .preloader-brand,
-.preloader.hold .preloader-brand {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.preloader.exit .preloader-brand {
-  opacity: 0;
-  transform: translateY(-10px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
-}
-
-.preloader-brand-small {
+  gap: 6px;
   font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(12px, 2.5vw, 18px);
+  color: var(--linen);
+  opacity: 0;
+  transform: translateY(30px);
+  animation: preReveal 0.9s cubic-bezier(0.76, 0, 0.24, 1) 0.3s forwards;
+}
+
+.pre-brand-small {
+  font-size: clamp(14px, 3vw, 22px);
   font-weight: 300;
-  letter-spacing: 0.3em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
-  color: rgba(240, 234, 226, 0.6);
+  color: rgba(240, 234, 226, 0.7);
 }
 
-.preloader-brand-large {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(48px, 7vw, 100px);
+.pre-brand-large {
+  font-size: clamp(52px, 8vw, 110px);
   font-weight: 400;
   letter-spacing: -0.02em;
-  line-height: 0.9;
-  color: var(--linen);
+  line-height: 1;
 }
 
-/* Subtle horizontal line */
-.preloader-line {
-  position: absolute;
-  left: 50%;
-  bottom: 15%;
-  transform: translateX(-50%);
-  width: 60px;
+.pre-bar {
+  width: 180px;
   height: 1px;
-  background: rgba(240, 234, 226, 0.15);
+  background: rgba(240, 234, 226, 0.18);
+  position: relative;
   overflow: hidden;
-  z-index: 2;
-  opacity: 0;
-  transition: opacity 0.6s ease 0.6s;
 }
 
-.preloader.enter .preloader-line,
-.preloader.hold .preloader-line {
-  opacity: 1;
-}
-
-.preloader-line-inner {
-  width: 100%;
-  height: 100%;
+.pre-fill {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 0;
   background: var(--apricot);
-  transform: translateX(-100%);
-  animation: preloaderLineSlide 1.2s cubic-bezier(0.76, 0, 0.24, 1) 0.4s forwards;
+  transition: width 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
-@keyframes preloaderLineSlide {
+.pre-num {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: rgba(240, 234, 226, 0.5);
+}
+
+@keyframes preReveal {
   to {
-    transform: translateX(0);
+    opacity: 1;
+    transform: none;
   }
 }
 
@@ -912,7 +878,7 @@ img {
   overflow: hidden;
   background: var(--linen-2);
   cursor: none;
-  min-height: 100svh;
+  min-height: 78svh;
   transform: translateZ(0);
   backface-visibility: hidden;
 }
@@ -6009,7 +5975,7 @@ button:focus-visible {
 
   /* Projects - fix for mobile */
   .project-row {
-    min-height: 85svh !important;
+    min-height: 70svh !important;
   }
 
   .project-content {
@@ -6269,7 +6235,7 @@ button:focus-visible {
 
   /* Projects small mobile */
   .project-row {
-    min-height: 75svh !important;
+    min-height: 60svh !important;
   }
 
   .project-content {
