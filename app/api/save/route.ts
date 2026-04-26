@@ -18,7 +18,21 @@ export async function POST(request: NextRequest) {
 
     let savedTo = [];
 
-    // Always save to Vercel KV first (instant updates in production)
+    // Save to local file first (so local dev works immediately)
+    try {
+      const fs = await import('fs/promises');
+      const CONTENT_PATH = process.cwd() + '/public/content';
+      await fs.writeFile(
+        CONTENT_PATH + '/projects.json',
+        JSON.stringify({ projects }, null, 2),
+        'utf-8'
+      );
+      savedTo.push('local file');
+    } catch (fileError) {
+      console.log('Local file save skipped:', fileError);
+    }
+
+    // Also save to Vercel KV for production
     try {
       const { kv } = await import('@vercel/kv');
       await kv.set('tete_projects', projects);

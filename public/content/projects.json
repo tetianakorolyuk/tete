@@ -7,6 +7,7 @@
       "year": "2025",
       "location": "Toronto",
       "description": "A calm, light-filled living space with warm wood and tactile neutrals. The layout stays open for flow, with clean lines and soft volumes.",
+      "layout": "single",
       "images": [
         "images/project-01-a.jpg",
         "images/project-01-b.jpg"
@@ -37,6 +38,7 @@
       "year": "2025",
       "location": "Toronto",
       "description": "A residential concept built around simplicity and proportion. Materials stay honest and restrained, letting texture do the work.",
+      "layout": "dual",
       "images": [
         "images/project-02-a.jpg",
         "images/project-02-b.jpg"
@@ -67,6 +69,7 @@
       "year": "2025",
       "location": "Toronto",
       "description": "A kitchen and bar environment with a stronger, evening tone. Dark surfaces, warm highlights, and a confident material contrast.",
+      "layout": "dual",
       "images": [
         "images/project-03-a.jpg",
         "images/project-03-b.jpg"
