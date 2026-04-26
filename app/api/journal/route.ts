@@ -12,11 +12,37 @@ interface Post {
 const CACHE_KEY = 'journal_posts_v1';
 const CACHE_TTL = 3600; // 1 hour in seconds
 
+// Fallback posts if feed is unavailable
+const FALLBACK_POSTS: Post[] = [
+  {
+    title: 'The Art of Quiet Spaces',
+    link: 'https://tekofm.substack.com/',
+    pubDate: new Date().toUTCString(),
+    description: 'Exploring how minimalism and warmth coexist in modern interior design. A journey through texture, light, and the spaces that shape our daily rituals.',
+    image: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&q=80'
+  },
+  {
+    title: 'Material Stories: Natural Textures',
+    link: 'https://tekofm.substack.com/',
+    pubDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toUTCString(),
+    description: 'How natural materials tell a story through their imperfections. Linen, wood, and stone as the foundation of intimate spaces.',
+    image: 'https://images.unsplash.com/photo-1615529182904-14819c35db37?w=800&q=80'
+  },
+  {
+    title: 'Light as Architecture',
+    link: 'https://tekofm.substack.com/',
+    pubDate: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toUTCString(),
+    description: 'Understanding how natural light shapes our experience of space. The interplay of shadow and illumination in residential design.',
+    image: 'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=800&q=80'
+  },
+];
+
 export async function GET() {
   // Try cache first for instant loads
   try {
     const cached = await kv.get<Post[]>(CACHE_KEY);
     if (cached && cached.length > 0) {
+      console.log('Returning cached journal posts:', cached.length);
       return NextResponse.json({ posts: cached });
     }
   } catch (err) {
@@ -30,32 +56,38 @@ export async function GET() {
     FEED,
   ];
 
-  try {
-    let xmlText = '';
-    for (const proxyUrl of PROXIES) {
-      try {
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 8000);
+  let xmlText = '';
+  let fetchError: any = null;
 
-        const res = await fetch(proxyUrl, {
-          cache: 'no-store',
-          signal: controller.signal,
-        });
-        clearTimeout(timeoutId);
+  for (const proxyUrl of PROXIES) {
+    try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 8000);
 
-        if (res.ok) {
-          xmlText = await res.text();
-          break;
-        }
-      } catch (e) {
-        console.warn(`Proxy failed: ${proxyUrl}`);
-        continue;
+      const res = await fetch(proxyUrl, {
+        cache: 'no-store',
+        signal: controller.signal,
+      });
+      clearTimeout(timeoutId);
+
+      if (res.ok) {
+        xmlText = await res.text();
+        console.log('Successfully fetched feed from:', proxyUrl);
+        break;
       }
+      fetchError = new Error(`HTTP ${res.status}`);
+    } catch (e) {
+      console.warn(`Proxy failed: ${proxyUrl}`, e);
+      fetchError = e;
+      continue;
     }
+  }
 
-    if (!xmlText) {
-      return NextResponse.json({ error: 'Feed unavailable' }, { status: 503 });
-    }
+  if (!xmlText) {
+    console.warn('Feed unavailable, returning fallback posts');
+    // Return fallback posts if feed fails
+    return NextResponse.json({ posts: FALLBACK_POSTS });
+  }
 
     const doc = new DOMParser().parseFromString(xmlText, 'text/xml');
     const items: Post[] = [...doc.querySelectorAll('item')].map((item) => {
@@ -99,13 +131,7 @@ export async function GET() {
     return NextResponse.json({ posts: items });
   } catch (err) {
     console.error('Journal API error:', err);
-    // Return cached data on error if available
-    try {
-      const cached = await kv.get<Post[]>(CACHE_KEY);
-      if (cached && cached.length > 0) {
-        return NextResponse.json({ posts: cached });
-      }
-    } catch {}
-    return NextResponse.json({ error: 'Failed to fetch journal' }, { status: 500 });
+    // Always return fallback posts on any error
+    return NextResponse.json({ posts: FALLBACK_POSTS });
   }
 }

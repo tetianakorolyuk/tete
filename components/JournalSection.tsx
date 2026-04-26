@@ -34,11 +34,12 @@ export default function JournalSection() {
 
   const loadSubstack = useCallback(async (force = false) => {
     try {
+      // Check localStorage cache first
       if (!force) {
         const raw = localStorage.getItem(CACHE_KEY);
         if (raw) {
           const cached = JSON.parse(raw);
-          if (cached?.ts && Array.isArray(cached?.items) && (Date.now() - cached.ts) < CACHE_TTL_MS) {
+          if (cached?.items?.length) {
             setPosts(cached.items);
             setLoading(false);
             setError(false);
@@ -51,30 +52,19 @@ export default function JournalSection() {
       setError(false);
 
       // Use Next.js API route for reliable server-side fetching
-      const res = await fetch('/api/journal', {
-        cache: 'no-store',
-      });
-
-      if (!res.ok) throw new Error('Failed to fetch journal');
-
+      const res = await fetch('/api/journal');
       const data = await res.json();
       const items = data.posts || [];
 
-      if (!items.length) throw new Error('No journal items');
-
-      localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), items }));
-
-      setPosts(items);
+      if (items.length > 0) {
+        setPosts(items);
+        localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), items }));
+      } else {
+        setError(true);
+      }
     } catch (err) {
       console.error('Substack load failed:', err);
       setError(true);
-      const raw = localStorage.getItem(CACHE_KEY);
-      if (raw) {
-        const cached = JSON.parse(raw);
-        if (cached?.items?.length) {
-          setPosts(cached.items);
-        }
-      }
     } finally {
       setLoading(false);
     }
