@@ -96,7 +96,7 @@ export default function Hero({ projects }: HeroProps) {
           <div className="hero-title-wrap">
             <h1 className="hero-title">
               <span className="hero-title-line">
-                <span className="hero-title-inner text-reveal-inner">tété</span>
+                <span className="hero-title-inner text-reveal-inner">tete</span>
               </span>
             </h1>
           </div>

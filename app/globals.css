@@ -1536,14 +1536,14 @@ img {
 }
 
 .hero-title {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: clamp(64px, 10vw, 140px);
-  line-height: 0.9;
-  font-weight: 300;
-  letter-spacing: -0.03em;
-  color: #fff;
+  font-family: 'Snell Roundhand', 'Cormorant Garamond', serif;
+  font-size: clamp(80px, 12vw, 160px);
+  line-height: 1;
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--apricot);
   margin: 0;
-  text-shadow: 0 4px 60px rgba(0,0,0,0.6);
+  text-shadow: 0 2px 40px rgba(0,0,0,0.5);
 }
 
 .hero-title-line {
