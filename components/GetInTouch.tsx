@@ -48,7 +48,7 @@ export default function GetInTouch() {
               <div className="touch-info">
                 <div className="info-item">
                   <span className="info-label">Email</span>
-                  <a href="mailto:tetiana.korolyuk@gmail.com">tetiana.korolyuk@gmail.com</a>
+                  <a href="mailto:project@thetetestudio.com">project@thetetestudio.com</a>
                 </div>
                 <div className="info-item">
                   <span className="info-label">Location</span>

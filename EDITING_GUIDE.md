@@ -44,7 +44,7 @@
 
 ## Contact Form
 
-Form submissions are sent to: `tetiana.korolyuk@gmail.com`
+Form submissions are sent to: `project@thetetestudio.com`
 
 To change the recipient email:
 1. Update `CONTACT_EMAIL` in `.env.local` (local) or Vercel Environment Variables (production)

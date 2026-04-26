@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
 
         await resend.emails.send({
           from: 'TETÉ Portfolio <onboarding@resend.dev>',
-          to: [process.env.CONTACT_EMAIL || 'tetiana.korolyuk@gmail.com'],
+          to: [process.env.CONTACT_EMAIL || 'project@thetetestudio.com'],
           subject: `New Project Request from ${name}`,
           html: `
             <h2>New Project Inquiry</h2>
