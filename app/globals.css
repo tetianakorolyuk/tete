@@ -798,11 +798,13 @@ main {
 h2 {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(38px, 4.5vw, 74px);
-  line-height: 0.9;
+  line-height: 1.0;
   font-weight: 300;
   letter-spacing: -0.05em;
   color: var(--brown);
-  max-width: 12ch;
+  word-break: keep-all;
+  hyphens: none;
+  overflow-wrap: normal;
 }
 
 .meta {
@@ -2337,11 +2339,14 @@ img {
 .touch-title {
   font-family: 'Cormorant Garamond', serif;
   font-size: clamp(42px, 5vw, 64px);
-  line-height: 1.1;
+  line-height: 1.15;
   font-weight: 300;
   letter-spacing: -0.03em;
   color: var(--brown);
   margin: 0 0 24px;
+  word-break: keep-all;
+  hyphens: none;
+  overflow-wrap: normal;
 }
 
 .touch-title em {
@@ -4916,7 +4921,10 @@ button:focus-visible {
   font-weight: 400;
   color: var(--brown);
   margin: 0;
-  line-height: 1.1;
+  line-height: 1.15;
+  word-break: keep-all;
+  hyphens: none;
+  overflow-wrap: normal;
 }
 
 .studio-header-right {
@@ -4940,10 +4948,12 @@ button:focus-visible {
   grid-template-columns: 1fr 1fr;
   min-height: 520px;
   position: relative;
+  max-width: 1760px;
+  margin: 0 auto;
 }
 
 .studio-hero-content {
-  padding: 48px 6%;
+  padding: 48px 48px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -5053,7 +5063,7 @@ button:focus-visible {
 /* Studio Principles — Editorial Manifesto */
 .studio-principles {
   background: var(--brown);
-  padding: 0 6%;
+  padding: 0 48px;
 }
 
 .studio-principle {
@@ -6564,13 +6574,6 @@ div, section, article, main, header, footer {
 /* Fix flex item overflow */
 [class*="flex"] {
   min-width: 0;
-}
-
-/* Ensure text wraps properly */
-h1, h2, h3, h4, h5, h6, p, span, a, li {
-  word-wrap: break-word;
-  overflow-wrap: break-word;
-  hyphens: auto;
 }
 
 /* Fix long URLs and strings */
