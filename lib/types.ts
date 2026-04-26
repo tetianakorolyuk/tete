@@ -14,6 +14,24 @@ export interface Project {
   facts?: Fact[];
 }
 
+export interface StudioStat {
+  number: string;
+  label: string;
+}
+
+export interface StudioPrinciple {
+  num: string;
+  title: string;
+  description: string;
+}
+
+export interface StudioContent {
+  headline: string;
+  description: string;
+  stats: StudioStat[];
+  principles: StudioPrinciple[];
+}
+
 export interface SiteContent {
   projects: Project[];
 }

@@ -1,11 +1,17 @@
 import { login, checkAuth } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 
-export default async function LoginPage({ searchParams }: { searchParams: { error?: string } }) {
+export default async function LoginPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ error?: string }>;
+}) {
   const isAuthenticated = await checkAuth();
   if (isAuthenticated) {
     redirect('/edit');
   }
+
+  const params = await searchParams;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-[var(--bg)]">
@@ -15,7 +21,7 @@ export default async function LoginPage({ searchParams }: { searchParams: { erro
           <p className="text-[var(--muted)] text-sm uppercase tracking-wider">Admin Login</p>
         </div>
 
-        {searchParams.error && (
+        {params.error && (
           <div className="mb-4 p-3 border border-red-300 bg-red-50 text-red-700 text-sm">
             Invalid password. Please try again.
           </div>
