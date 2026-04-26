@@ -55,7 +55,7 @@ export async function POST(request: NextRequest) {
             <p>Thank you for your interest in our interior design services. We have received your project inquiry and will review it carefully.</p>
             <p>We will get back to you within 24 hours to discuss your project in more detail.</p>
             <p>Best regards,<br/>TETÉ Portfolio</p>
-            <p><em>Toronto, Ontario</em></p>
+            <p><em>TETÉ Portfolio</em></p>
           `,
         });
       } catch (emailError) {

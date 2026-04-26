@@ -4,10 +4,10 @@ import PageTransition from "@/components/PageTransition";
 import ScrollToTop from "@/components/ScrollToTop";
 
 export const metadata: Metadata = {
-  title: "TETÉ — Interior Design | Toronto",
-  description: "Interior design with a cinematic, architectural point of view. Toronto-based studio creating calm but dramatic spaces.",
-  keywords: ["interior design", "Toronto", "residential", "luxury", "minimal", "Tatiana Koroliuk", "thetestestudio"],
-  authors: [{ name: "Tatiana Koroliuk" }],
+  title: "TETÉ — Interior Design",
+  description: "Interior design with a cinematic, architectural point of view. Creating calm but dramatic spaces.",
+  keywords: ["interior design", "residential", "luxury", "minimal", "Tetyana Koroliuk", "thetestestudio"],
+  authors: [{ name: "Tetyana Koroliuk" }],
   openGraph: {
     title: "TETÉ — Interior Design",
     description: "Interior design with a cinematic, architectural point of view.",

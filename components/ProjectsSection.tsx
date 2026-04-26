@@ -63,7 +63,7 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
                     <div className="project-bottom">
                       <h2 className="project-title">{project.title}</h2>
                       <div className="project-meta">
-                        <div className="smallcaps light">{project.location || 'Toronto'} · {project.year || '2025'}</div>
+                        <div className="smallcaps light">{project.location || ''} {project.location && project.year ? '·' : ''} {project.year || '2025'}</div>
                         <p>{project.description || ''}</p>
                         <span className="arrow-link">
                           <span className="al-line" />View project

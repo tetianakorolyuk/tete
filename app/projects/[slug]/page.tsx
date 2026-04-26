@@ -42,13 +42,13 @@ export default async function ProjectPage({ params }: Props) {
         <div className="project-hero-overlay" />
         <div className="project-hero-content">
           <div className="project-hero-eyebrow">
-            {project.subtitle || 'Project'} — {project.location || 'Toronto'}
+            {project.subtitle || 'Project'} {project.location ? `— ${project.location}` : ''}
           </div>
           <h1 className="project-hero-title">{project.title}</h1>
           <div className="project-hero-meta">
             <span>{project.year || '2025'}</span>
             <span className="meta-dot" />
-            <span>{project.location || 'Toronto'}</span>
+            {project.location && <span>{project.location}</span>}
           </div>
         </div>
       </div>

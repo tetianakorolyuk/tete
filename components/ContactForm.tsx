@@ -133,7 +133,7 @@ export default function ContactForm() {
             name="city"
             value={formData.city}
             onChange={handleChange}
-            placeholder="Toronto"
+            placeholder="Your city"
           />
         </div>
 

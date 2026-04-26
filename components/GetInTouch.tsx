@@ -51,8 +51,8 @@ export default function GetInTouch() {
                   <a href="mailto:project@thetetestudio.com">project@thetetestudio.com</a>
                 </div>
                 <div className="info-item">
-                  <span className="info-label">Location</span>
-                  <span>Toronto, Ontario</span>
+                  <span className="info-label">WhatsApp / Phone</span>
+                  <a href="https://wa.me/16476854262" target="_blank" rel="noopener">+1 (647) 685-4262</a>
                 </div>
               </div>
             </div>

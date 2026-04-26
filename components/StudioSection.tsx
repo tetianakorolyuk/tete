@@ -185,7 +185,7 @@ export default function StudioSection() {
               </div>
             </div>
             <div className="studio-header-right">
-              <span className="studio-header-meta">Est. 2020 · Toronto</span>
+              <span className="studio-header-meta">Est. 2020</span>
             </div>
           </div>
         </FadeUpOnScroll>
@@ -216,12 +216,12 @@ export default function StudioSection() {
         <div className="studio-hero-image" ref={imageRef}>
           <img
             src={studioImage}
-            alt="Tatiana Koroliuk - Interior Design Toronto"
+            alt="Tetyana Koroliuk - Interior Design"
             loading="eager"
           />
           <div className="studio-hero-overlay">
             <div className="studio-hero-overlay-inner">
-              <h3 className="studio-hero-name">Tatiana Koroliuk</h3>
+              <h3 className="studio-hero-name">Tetyana Koroliuk</h3>
             </div>
           </div>
         </div>

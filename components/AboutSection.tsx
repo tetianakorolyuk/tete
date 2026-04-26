@@ -13,7 +13,7 @@ export default function AboutSection() {
               Design that transforms spaces and inspires living
             </h2>
             <p className="about-text">
-              TETÉ is a Toronto-based interior design studio specializing in creating
+              TETÉ is an interior design studio specializing in creating
               exceptional residential and commercial spaces. With over 15 years of experience,
               we bring a refined aesthetic and meticulous attention to detail to every project.
             </p>

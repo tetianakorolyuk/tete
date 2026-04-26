@@ -3,11 +3,10 @@
 export default function MarqueeStrip() {
   const items = [
     'Interior Design',
-    'Toronto',
     'Residential Spaces',
     'Private Clients',
     'Cinematic Atmosphere',
-    'Tatiana Koroliuk',
+    'Tetyana Koroliuk',
   ];
 
   return (

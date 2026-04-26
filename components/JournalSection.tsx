@@ -87,7 +87,7 @@ export default function JournalSection() {
             <h2>Journal, references &amp; <em>Substack</em> thoughts.</h2>
             <div className="journal-note">
               <div className="journal-note-circle"></div>
-              <p>This section connects to Tatiana's Substack feed. Editorial writing on design, atmosphere, and the spaces that shape how we live.</p>
+              <p>This section connects to Tetyana's Substack feed. Editorial writing on design, atmosphere, and the spaces that shape how we live.</p>
             </div>
           </div>
         </FadeIn>
