@@ -72,12 +72,13 @@ export async function GET() {
 
       if (res.ok) {
         xmlText = await res.text();
-        console.log('Successfully fetched feed from:', proxyUrl);
+        console.log('✓ Successfully fetched feed from:', proxyUrl);
+        console.log('Feed content length:', xmlText.length);
         break;
       }
       fetchError = new Error(`HTTP ${res.status}`);
     } catch (e) {
-      console.warn(`Proxy failed: ${proxyUrl}`, e);
+      console.warn(`✗ Proxy failed: ${proxyUrl}`, e);
       fetchError = e;
       continue;
     }
@@ -118,8 +119,11 @@ export async function GET() {
     }).slice(0, 6);
 
     if (!items.length) {
-      return NextResponse.json({ error: 'No items found' }, { status: 404 });
+      console.warn('No items found in feed, returning fallback');
+      return NextResponse.json({ posts: FALLBACK_POSTS });
     }
+
+    console.log(`✓ Extracted ${items.length} posts from feed`);
 
     // Cache the posts for 1 hour
     try {
