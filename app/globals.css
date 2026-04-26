@@ -54,7 +54,7 @@ html.no-scroll body {
 
 body {
   margin: 0;
-  font-family: 'DM Sans', Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: 'Lato', Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   background: var(--linen);
   color: var(--brown);
   line-height: 1.45;

@@ -74,19 +74,6 @@ export default function Hero({ projects }: HeroProps) {
         ))}
       </div>
 
-      <div className="hero-content">
-        <div className="hero-inner">
-          <h1 className="hero-title">
-            <span className="hero-title-line">
-              <span className="hero-title-inner text-reveal-inner">the</span>
-            </span>
-            <span className="hero-title-line">
-              <span className="hero-title-inner text-reveal-inner" style={{ animationDelay: '0.18s' }}>TETE</span>
-            </span>
-          </h1>
-        </div>
-      </div>
-
       <div className="hero-scroll">
         <span className="hero-scroll-text">Scroll</span>
         <span className="hero-scroll-line" />
