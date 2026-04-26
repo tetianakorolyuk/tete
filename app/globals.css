@@ -206,8 +206,8 @@ body::before {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 6px;
-  font-family: 'Cormorant Garamond', serif;
+  gap: 4px;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   color: var(--linen);
   opacity: 0;
   transform: translateY(30px);
@@ -215,18 +215,21 @@ body::before {
 }
 
 .pre-brand-small {
-  font-size: clamp(14px, 3vw, 22px);
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
+  font-size: clamp(14px, 3vw, 20px);
   font-weight: 300;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
-  color: rgba(240, 234, 226, 0.7);
+  letter-spacing: 0.22em;
+  text-transform: lowercase;
+  color: rgba(240, 234, 226, 0.65);
 }
 
 .pre-brand-large {
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   font-size: clamp(52px, 8vw, 110px);
   font-weight: 400;
-  letter-spacing: -0.02em;
+  letter-spacing: 0.1em;
   line-height: 1;
+  text-transform: uppercase;
 }
 
 .pre-bar {
@@ -496,8 +499,8 @@ body::before {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 2px;
-  font-family: 'Cormorant Garamond', serif;
+  gap: 1px;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   color: var(--linen);
   transition: color 0.4s ease;
   flex-shrink: 0;
@@ -505,18 +508,21 @@ body::before {
 }
 
 .brand-small {
-  font-family: 'DM Sans', Inter, system-ui, -apple-system, sans-serif;
-  font-size: 9px;
-  font-weight: 400;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: rgba(240, 234, 226, 0.72);
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
+  color: rgba(240, 234, 226, 0.65);
+  margin-bottom: 1px;
 }
 
 .brand-large {
-  font-size: 24px;
-  font-weight: 500;
-  letter-spacing: -0.02em;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
+  font-size: 22px;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .nav {
@@ -2828,8 +2834,8 @@ button:focus-visible {
 .admin-sidebar-brand .brand {
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  font-family: 'Cormorant Garamond', serif;
+  gap: 1px;
+  font-family: 'Lato', 'DM Sans', Inter, system-ui, sans-serif;
   color: var(--linen);
   line-height: 1;
 }
@@ -2837,8 +2843,8 @@ button:focus-visible {
 .admin-sidebar-brand .brand-small {
   font-size: 9px;
   font-weight: 300;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  text-transform: lowercase;
   color: rgba(240, 234, 226, 0.6);
 }
 

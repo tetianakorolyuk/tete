@@ -90,9 +90,7 @@ export default function Hero({ projects }: HeroProps) {
 
       <div className="hero-content">
         <div className="hero-inner">
-          <div className="hero-top fade-up">
-            <div className="hero-eyebrow">Interior Design</div>
-          </div>
+          <div className="hero-top fade-up"></div>
           <div className="hero-title-wrap">
             <h1 className="hero-title">
               <span className="hero-title-line">
