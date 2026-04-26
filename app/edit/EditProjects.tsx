@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { Project, StudioContent } from '@/lib/types';
 import { saveStudioAction } from './actions';
 import { generateDescriptionAction, generateFactsAction } from './ai-actions';
+import GridBuilder from './GridBuilder';
 
 interface EditProjectsProps {
   initialProjects: Project[];
@@ -122,6 +123,7 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
   });
   const [dragOverSlug, setDragOverSlug] = useState<string | null>(null);
   const [gridLayout, setGridLayout] = useState('two-col');
+  const [showGridBuilder, setShowGridBuilder] = useState(false);
 
   const projectsRef = useRef<Project[]>(initialProjects);
   projectsRef.current = projects;
@@ -498,6 +500,18 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
       <ToastContainer toasts={toasts} onDismiss={dismissToast} />
       <ConfirmModal state={confirmState} onClose={() => setConfirmState((s) => ({ ...s, open: false }))} />
 
+      {/* Grid Builder Modal */}
+      {showGridBuilder && (
+        <GridBuilder
+          projects={projects}
+          onUpdate={(next) => {
+            setProjects(next);
+            addToast('success', 'Grid updated! Click Save All to persist.');
+          }}
+          onClose={() => setShowGridBuilder(false)}
+        />
+      )}
+
       {/* Studio Settings */}
       <div className="admin-section">
         <button
@@ -681,6 +695,15 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
           </div>
         </div>
         <div className="admin-toolbar-actions">
+          <button onClick={() => setShowGridBuilder(true)} className="admin-btn text">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <rect x="3" y="3" width="7" height="7" />
+              <rect x="14" y="3" width="7" height="7" />
+              <rect x="3" y="14" width="7" height="7" />
+              <rect x="14" y="14" width="7" height="7" />
+            </svg>
+            Grid Builder
+          </button>
           <button onClick={expandAll} className="admin-btn text">
             Expand All
           </button>
