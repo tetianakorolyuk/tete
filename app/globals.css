@@ -3261,61 +3261,7 @@ button:focus-visible {
 }
 
 /* Mobile responsive */
-@media (max-width: 1024px) {
-  .studio-principles {
-    grid-template-columns: 1fr;
-  }
-
-  .studio-principle {
-    border-bottom: 1px solid var(--brown-xs);
-  }
-}
-
-@media (max-width: 768px) {
-  .studio-hero {
-    grid-template-columns: 1fr;
-    min-height: auto;
-  }
-
-  .studio-hero-content {
-    padding: 60px 24px;
-    border-right: none;
-    border-bottom: 1px solid var(--brown-xs);
-  }
-
-  .studio-headline {
-    font-size: 36px;
-  }
-
-  .studio-description {
-    font-size: 14px;
-  }
-
-  .studio-stats {
-    gap: 24px;
-  }
-
-  .studio-stat-num {
-    font-size: 28px;
-  }
-
-  .studio-hero-image {
-    min-height: 320px;
-  }
-
-  .studio-hero-overlay {
-    bottom: 24px;
-    left: 24px;
-  }
-
-  .studio-hero-name {
-    font-size: 24px;
-  }
-
-  .studio-principle {
-    padding: 40px 24px;
-  }
-}
+/* Studio responsive - moved to dedicated section above */
 
 @media (max-width: 480px) {
   .studio-hero-content {
@@ -4228,6 +4174,24 @@ textarea:focus {
 }
 
 /* Tablets */
+@media (max-width: 1024px) {
+  .wrap {
+    padding: 0 32px;
+  }
+
+  .studio-hero-content {
+    padding: 60px 4%;
+  }
+
+  .studio-headline {
+    font-size: clamp(38px, 4vw, 52px);
+  }
+
+  .studio-principle {
+    padding: 48px 32px;
+  }
+}
+
 @media (max-width: 900px) {
   .wrap {
     padding: 0 24px;
@@ -4250,21 +4214,21 @@ textarea:focus {
     font-size: clamp(48px, 8vw, 100px);
   }
 
-  /* Studio section */
-  .studio-hero {
-    min-height: auto;
-  }
-
+  /* Studio section - keep grid on tablets */
   .studio-hero-content {
-    padding: 48px 24px;
+    padding: 50px 3%;
   }
 
   .studio-headline {
-    font-size: clamp(36px, 5vw, 52px);
+    font-size: 42px;
   }
 
   .studio-stats {
     gap: 24px;
+  }
+
+  .studio-stat-num {
+    font-size: 28px;
   }
 
   /* Journal section */
