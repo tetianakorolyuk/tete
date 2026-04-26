@@ -29,10 +29,8 @@ export default function Hero({ projects }: HeroProps) {
   useEffect(() => {
     if (!mounted || totalSlides === 0) return;
 
-    // Reset progress
     setProgress(0);
 
-    // Progress bar animation
     const startTime = Date.now();
     const animateProgress = () => {
       const elapsed = Date.now() - startTime;
@@ -45,7 +43,6 @@ export default function Hero({ projects }: HeroProps) {
     };
     progressRef.current = requestAnimationFrame(animateProgress);
 
-    // Slide timer
     timerRef.current = setInterval(() => {
       setCurrentIdx((prev) => (prev + 1) % totalSlides);
     }, intervalMs);
@@ -77,6 +74,24 @@ export default function Hero({ projects }: HeroProps) {
         ))}
       </div>
 
+      <div className="hero-content">
+        <div className="hero-inner">
+          <h1 className="hero-title">
+            <span className="hero-title-line">
+              <span className="hero-title-inner text-reveal-inner">the</span>
+            </span>
+            <span className="hero-title-line">
+              <span className="hero-title-inner text-reveal-inner" style={{ animationDelay: '0.18s' }}>TETE</span>
+            </span>
+          </h1>
+        </div>
+      </div>
+
+      <div className="hero-scroll">
+        <span className="hero-scroll-text">Scroll</span>
+        <span className="hero-scroll-line" />
+      </div>
+
       <div className="slide-counter">
         <div className="slide-counter-num">{String(currentIdx + 1).padStart(2, '0')}</div>
         <div className="slide-counter-track">
@@ -86,45 +101,6 @@ export default function Hero({ projects }: HeroProps) {
           />
         </div>
         <div className="slide-counter-num">{String(totalSlides).padStart(2, '0')}</div>
-      </div>
-
-      <div className="hero-content">
-        <div className="hero-inner">
-          <div className="hero-top fade-up"></div>
-          <div className="hero-title-wrap">
-            <h1 className="hero-title">
-              <span className="hero-title-line">
-                <span className="hero-title-inner text-reveal-inner">the</span>
-              </span>
-              <span className="hero-title-line">
-                <span className="hero-title-inner text-reveal-inner" style={{ animationDelay: '0.18s' }}>TETE</span>
-              </span>
-            </h1>
-          </div>
-          <div className="hero-bottom">
-            <p className="hero-desc fade-up" style={{ transitionDelay: '0.3s' }}>
-              A portfolio shaped around strong visual storytelling, minimal copy, and a cinematic presentation that puts the work first.
-            </p>
-            <div className="hero-cta-group fade-up" style={{ transitionDelay: '0.4s' }}>
-              <div className="scroll-hint">
-                <div className="scroll-hint-line" />
-                Scroll
-              </div>
-            </div>
-            <div className="hero-right fade-up" style={{ transitionDelay: '0.5s' }}>
-              <div className="hero-contact-chip">
-                <div className="dot" />
-                Available for projects
-              </div>
-              <div className="hero-socials">
-                <a href="https://instagram.com" target="_blank" rel="noopener" className="animated-underline">Ig</a>
-                <a href="https://thetete.substack.com" target="_blank" rel="noopener" className="animated-underline">Sb</a>
-                <a href="https://behance.net" target="_blank" rel="noopener" className="animated-underline">Be</a>
-                <a href="https://pinterest.com" target="_blank" rel="noopener" className="animated-underline">Pi</a>
-              </div>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
   );
