@@ -31,7 +31,11 @@ export default function Preloader() {
 
   return (
     <div id="preloader" className={done ? 'done' : ''}>
-      <div className="pre-brand">TETÉ.</div>
+      <div className="pre-brand">
+        <span className="pre-brand-small">the</span>
+        <br />
+        <span className="pre-brand-large">TETE</span>
+      </div>
       <div className="pre-bar">
         <div className="pre-fill" style={{ width: `${progress}%` }} />
       </div>
