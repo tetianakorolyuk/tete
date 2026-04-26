@@ -1810,6 +1810,16 @@ img {
   opacity: 1;
 }
 
+/* Hero image overlay for better text contrast */
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to right, rgba(61, 35, 21, 0.7) 0%, rgba(61, 35, 21, 0.5) 40%, rgba(61, 35, 21, 0.3) 70%, rgba(61, 35, 21, 0.4) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
 /* Ensure hero content is above slides */
 .hero-content {
   position: relative;
@@ -1820,6 +1830,7 @@ img {
   justify-content: center;
   min-height: 100%;
   padding-top: 8%;
+  padding-left: 5%;
 }
 
 .hero-content > * {
