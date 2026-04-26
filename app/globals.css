@@ -444,8 +444,8 @@ body::before {
 .brand {
   font-family: 'Snell Roundhand', 'Cormorant Garamond', serif;
   font-weight: 400;
-  font-size: 32px;
-  letter-spacing: 0.05em;
+  font-size: 28px;
+  letter-spacing: -0.01em;
   color: var(--linen);
   transition: color 0.4s ease;
   flex-shrink: 0;
@@ -1297,10 +1297,10 @@ img {
 }
 
 .footer-brand {
-  font-family: 'Cormorant Garamond', serif;
-  font-size: 18px;
+  font-family: 'Snell Roundhand', 'Cormorant Garamond', serif;
+  font-size: 24px;
   font-weight: 400;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   color: var(--brown);
 }
 
@@ -1537,13 +1537,22 @@ img {
 
 .hero-title {
   font-family: 'Snell Roundhand', 'Cormorant Garamond', serif;
-  font-size: clamp(80px, 12vw, 160px);
-  line-height: 1;
+  font-size: clamp(100px, 14vw, 200px);
+  line-height: 0.85;
   font-weight: 400;
-  letter-spacing: 0.02em;
+  letter-spacing: -0.02em;
   color: var(--apricot);
   margin: 0;
   text-shadow: 0 2px 40px rgba(0,0,0,0.5);
+}
+
+.hero-eyebrow {
+  font-family: 'DM Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba(240, 234, 226, 0.72);
+  margin-bottom: 8px;
 }
 
 .hero-title-line {
