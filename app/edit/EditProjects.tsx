@@ -684,7 +684,7 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
           return (
             <div
               key={project.slug}
-              className={`project-card ${isExpanded ? 'expanded' : ''} ${isDragOver ? 'drag-over' : ''}`}
+              className={`admin-project-card ${isExpanded ? 'expanded' : ''} ${isDragOver ? 'drag-over' : ''}`}
               onDragOver={(e) => handleDragOver(e, project.slug)}
               onDragLeave={handleDragLeave}
               onDrop={(e) => {
@@ -837,6 +837,70 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
                         <option value="square">Square (1 col, 1:1)</option>
                         <option value="tall">Tall (1 col, 3:4)</option>
                       </select>
+                    </div>
+                  </div>
+
+                  {/* Toggles */}
+                  <div className="form-grid">
+                    <div className="form-group">
+                      <label className="form-label">Visibility</label>
+                      <div className="toggle-row">
+                        <button
+                          type="button"
+                          className={`toggle-btn ${project.published !== false ? 'active' : ''}`}
+                          onClick={() => updateProject(project.slug, { published: true })}
+                        >
+                          <span className="toggle-dot" />
+                          Published
+                        </button>
+                        <button
+                          type="button"
+                          className={`toggle-btn ${project.published === false ? 'active' : ''}`}
+                          onClick={() => updateProject(project.slug, { published: false })}
+                        >
+                          <span className="toggle-dot" />
+                          Draft
+                        </button>
+                      </div>
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Featured</label>
+                      <div className="toggle-row">
+                        <button
+                          type="button"
+                          className={`toggle-btn ${project.featured ? 'active' : ''}`}
+                          onClick={() => updateProject(project.slug, { featured: !project.featured })}
+                        >
+                          <span className="toggle-dot" />
+                          {project.featured ? 'Featured' : 'Not featured'}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Live Preview */}
+                  <div className="form-group">
+                    <label className="form-label">Preview</label>
+                    <div className="preview-wrap">
+                      <div className={`project-card ${project.layout === 'square' ? 'square' : project.layout === 'tall' ? 'tall' : project.layout === 'wide' ? 'wide' : 'full'}`}>
+                        <div className="project-card-img-wrap">
+                          {project.images?.[0] ? (
+                            <img src={project.images[0]} alt={project.title} />
+                          ) : (
+                            <div className="preview-no-image">No cover image</div>
+                          )}
+                        </div>
+                        <div className="project-card-overlay">
+                          <div className="project-card-info">
+                            <span className="project-card-name">{project.title || 'Project Name'}</span>
+                            <span className="project-card-meta">
+                              {project.location || ''}
+                              {project.location && project.year ? ' — ' : ''}
+                              {project.year || ''}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
 

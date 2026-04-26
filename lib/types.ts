@@ -13,6 +13,8 @@ export interface Project {
   images: string[];
   facts?: Fact[];
   layout?: 'full' | 'wide' | 'square' | 'tall';
+  featured?: boolean;
+  published?: boolean;
 }
 
 export interface StudioStat {
