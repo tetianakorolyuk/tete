@@ -12,7 +12,7 @@ export interface Project {
   description?: string;
   images: string[];
   facts?: Fact[];
-  layout?: 'full' | 'wide' | 'square' | 'tall';
+  layout?: 'single' | 'dual' | 'full' | 'wide' | 'square' | 'tall';
   featured?: boolean;
   published?: boolean;
 }

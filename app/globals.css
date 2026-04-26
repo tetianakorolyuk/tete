@@ -1035,8 +1035,14 @@ img {
   backface-visibility: hidden;
 }
 
-.project-card.half {
+.project-card.half,
+.project-card.dual {
   aspect-ratio: 4 / 3;
+}
+
+.project-card.single,
+.project-card.full {
+  aspect-ratio: 16 / 10;
 }
 
 .project-card.square {
@@ -5124,8 +5130,6 @@ button:focus-visible {
 .studio-principles {
   background: var(--brown);
   padding: 0 48px;
-  max-width: 1760px;
-  margin: 0 auto;
 }
 
 .studio-principle {
@@ -6330,6 +6334,8 @@ button:focus-visible {
   }
 
   .project-card,
+  .project-card.single,
+  .project-card.dual,
   .project-card.half,
   .project-card.square,
   .project-card.tall,
@@ -6521,6 +6527,8 @@ button:focus-visible {
 
   /* Projects small mobile */
   .project-card,
+  .project-card.single,
+  .project-card.dual,
   .project-card.half,
   .project-card.square,
   .project-card.tall,

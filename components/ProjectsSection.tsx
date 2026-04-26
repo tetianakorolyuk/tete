@@ -10,32 +10,41 @@ interface ProjectsSectionProps {
 }
 
 export default function ProjectsSection({ projects }: ProjectsSectionProps) {
-  const [gridLayout, setGridLayout] = useState<string>('two-col');
+  const [gridMode, setGridMode] = useState<string>('two-col');
 
   useEffect(() => {
     fetch('/api/settings')
       .then((res) => res.json())
       .then(({ settings }) => {
         if (settings?.projectsGridLayout) {
-          setGridLayout(settings.projectsGridLayout);
+          setGridMode(settings.projectsGridLayout);
         }
       })
       .catch((err) => console.warn('Failed to load grid settings:', err));
   }, []);
 
-  const getSize = (index: number, layout?: string) => {
-    if (gridLayout === 'single') return 'full';
-    if (layout === 'full' || layout === 'wide') return 'full';
-    if (layout === 'square' || layout === 'tall') return 'half';
-    // Default pattern: full, half, half...
-    if (index % 3 === 0) return 'full';
-    return 'half';
+  const getSize = (layout?: string) => {
+    // Per-project explicit layout
+    if (layout === 'single' || layout === 'full' || layout === 'wide') return 'full';
+    if (layout === 'dual' || layout === 'square' || layout === 'tall') return 'half';
+    // Default: auto pattern
+    return 'auto';
+  };
+
+  const getLayoutClass = (layout?: string) => {
+    if (layout === 'single') return 'single';
+    if (layout === 'dual') return 'dual';
+    if (layout === 'full') return 'full';
+    if (layout === 'wide') return 'wide';
+    if (layout === 'square') return 'square';
+    if (layout === 'tall') return 'tall';
+    return 'default';
   };
 
   const gridClass =
-    gridLayout === 'single'
+    gridMode === 'single'
       ? 'projects-grid single'
-      : gridLayout === 'auto-fit'
+      : gridMode === 'auto-fit'
       ? 'projects-grid auto-fit'
       : 'projects-grid';
 
@@ -64,16 +73,20 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
           const img = project.images?.[0];
           if (!img) return null;
 
-          const size = getSize(index, project.layout);
-          const layoutClass = project.layout || 'default';
+          const size = getSize(project.layout);
+          const layoutClass = getLayoutClass(project.layout);
+          // When layout is not set, use auto pattern
+          const finalSize = size === 'auto'
+            ? (index % 3 === 0 ? 'full' : 'half')
+            : size;
 
           return (
             <FadeIn key={project.slug} delay={60 * (index % 3)}>
               <Link
                 href={`/projects/${project.slug}`}
-                className={`project-card-link ${size}`}
+                className={`project-card-link ${finalSize}`}
               >
-                <article className={`project-card ${size} ${layoutClass}`}>
+                <article className={`project-card ${finalSize} ${layoutClass}`}>
                   <div className="project-card-img-wrap">
                     <img
                       src={img}

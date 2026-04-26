@@ -660,7 +660,7 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
             )}
           </div>
           <div className="grid-layout-select">
-            <label htmlFor="grid-layout">Grid Layout</label>
+            <label htmlFor="grid-layout">Default Grid</label>
             <select
               id="grid-layout"
               value={gridLayout}
@@ -674,9 +674,9 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
                 });
               }}
             >
-              <option value="single">Single Column</option>
-              <option value="two-col">Two Columns</option>
-              <option value="auto-fit">Auto Fit (Suggested)</option>
+              <option value="two-col">Two Columns (pattern)</option>
+              <option value="single">Single Column (all full)</option>
+              <option value="auto-fit">Auto Fit (masonry)</option>
             </select>
           </div>
         </div>
@@ -856,6 +856,8 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
                         className="form-input"
                       >
                         <option value="">Auto (pattern)</option>
+                        <option value="single">Single — 1 per row (16:10)</option>
+                        <option value="dual">Dual — 2 per row (4:3)</option>
                         <option value="full">Full (2 cols, 16:10)</option>
                         <option value="wide">Wide (2 cols, 21:9)</option>
                         <option value="square">Square (1 col, 1:1)</option>
