@@ -12,6 +12,7 @@ export interface Project {
   description?: string;
   images: string[];
   facts?: Fact[];
+  layout?: 'full' | 'wide' | 'square' | 'tall';
 }
 
 export interface StudioStat {

@@ -701,12 +701,12 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
               }}
             >
               {/* Collapsed Header */}
-              <div className="project-card-summary" onClick={() => toggleExpand(project.slug)}>
-                <div className="project-card-thumb">
+              <div className="admin-project-card-summary" onClick={() => toggleExpand(project.slug)}>
+                <div className="admin-project-card-thumb">
                   {thumb ? (
                     <img src={thumb} alt="" />
                   ) : (
-                    <div className="project-card-thumb-empty">
+                    <div className="admin-project-card-thumb-empty">
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                         <rect x="3" y="3" width="18" height="18" rx="2" />
                         <circle cx="8.5" cy="8.5" r="1.5" />
@@ -715,13 +715,13 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
                     </div>
                   )}
                 </div>
-                <div className="project-card-info">
-                  <div className="project-card-info-main">
-                    <span className="project-card-num">{String(index + 1).padStart(2, '0')}</span>
-                    <h4 className="project-card-name">{project.title}</h4>
-                    {project.subtitle && <span className="project-card-sub">{project.subtitle}</span>}
+                <div className="admin-project-card-info">
+                  <div className="admin-project-card-info-main">
+                    <span className="admin-project-card-num">{String(index + 1).padStart(2, '0')}</span>
+                    <h4 className="admin-project-card-name">{project.title}</h4>
+                    {project.subtitle && <span className="admin-project-card-sub">{project.subtitle}</span>}
                   </div>
-                  <div className="project-card-meta-row">
+                  <div className="admin-project-card-meta-row">
                     {project.year && <span className="project-meta-tag">{project.year}</span>}
                     {project.location && <span className="project-meta-tag">{project.location}</span>}
                     <span className="project-meta-tag faint">
@@ -732,7 +732,7 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
                     </span>
                   </div>
                 </div>
-                <div className="project-card-controls">
+                <div className="admin-project-card-controls">
                   <button
                     className="project-move-btn"
                     onClick={(e) => {
@@ -823,6 +823,20 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
                         onChange={(e) => updateProject(project.slug, { location: e.target.value })}
                         className="form-input"
                       />
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Layout</label>
+                      <select
+                        value={project.layout || ''}
+                        onChange={(e) => updateProject(project.slug, { layout: e.target.value as Project['layout'] })}
+                        className="form-input"
+                      >
+                        <option value="">Auto (pattern)</option>
+                        <option value="full">Full (2 cols, 16:10)</option>
+                        <option value="wide">Wide (2 cols, 21:9)</option>
+                        <option value="square">Square (1 col, 1:1)</option>
+                        <option value="tall">Tall (1 col, 3:4)</option>
+                      </select>
                     </div>
                   </div>
 

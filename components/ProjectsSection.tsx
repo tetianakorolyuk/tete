@@ -9,8 +9,10 @@ interface ProjectsSectionProps {
 }
 
 export default function ProjectsSection({ projects }: ProjectsSectionProps) {
-  const getSize = (index: number) => {
-    // Pattern: full, half, half, full, half, half...
+  const getSize = (index: number, layout?: string) => {
+    if (layout === 'full' || layout === 'wide') return 'full';
+    if (layout === 'square' || layout === 'tall') return 'half';
+    // Default pattern: full, half, half...
     if (index % 3 === 0) return 'full';
     return 'half';
   };
@@ -40,7 +42,8 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
           const img = project.images?.[0];
           if (!img) return null;
 
-          const size = getSize(index);
+          const size = getSize(index, project.layout);
+          const layoutClass = project.layout || 'default';
 
           return (
             <FadeIn key={project.slug} delay={60 * (index % 3)}>
@@ -48,7 +51,7 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
                 href={`/projects/${project.slug}`}
                 className={`project-card-link ${size}`}
               >
-                <article className={`project-card ${size}`}>
+                <article className={`project-card ${size} ${layoutClass}`}>
                   <div className="project-card-img-wrap">
                     <img
                       src={img}
