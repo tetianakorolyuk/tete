@@ -975,6 +975,40 @@ img {
   background: var(--linen-2);
 }
 
+.projects-grid.single {
+  grid-template-columns: 1fr;
+}
+
+.projects-grid.single .project-card-link.full,
+.projects-grid.single .project-card-link.half {
+  grid-column: span 1;
+}
+
+.projects-grid.single .project-card,
+.projects-grid.single .project-card.half,
+.projects-grid.single .project-card.square,
+.projects-grid.single .project-card.tall,
+.projects-grid.single .project-card.wide {
+  aspect-ratio: 16 / 9;
+}
+
+.projects-grid.auto-fit {
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+}
+
+.projects-grid.auto-fit .project-card-link.full,
+.projects-grid.auto-fit .project-card-link.half {
+  grid-column: span 1;
+}
+
+.projects-grid.auto-fit .project-card,
+.projects-grid.auto-fit .project-card.half,
+.projects-grid.auto-fit .project-card.square,
+.projects-grid.auto-fit .project-card.tall,
+.projects-grid.auto-fit .project-card.wide {
+  aspect-ratio: 1 / 1;
+}
+
 /* Project card link wrapper */
 .project-card-link {
   display: block;
@@ -2988,6 +3022,32 @@ button:focus-visible {
   align-items: center;
   gap: 8px;
   flex-wrap: wrap;
+}
+
+.grid-layout-select {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.grid-layout-select label {
+  font-family: 'Nexa', sans-serif;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--brown-s);
+  font-weight: 300;
+}
+
+.grid-layout-select select {
+  padding: 6px 10px;
+  border: 1px solid var(--brown-xs);
+  border-radius: 4px;
+  background: #fff;
+  font-family: 'Nexa', sans-serif;
+  font-size: 12px;
+  color: var(--brown);
+  cursor: pointer;
 }
 
 /* Buttons */
@@ -6259,7 +6319,8 @@ button:focus-visible {
   }
 
   /* Projects - fix for mobile */
-  .projects-grid {
+  .projects-grid,
+  .projects-grid.auto-fit {
     grid-template-columns: 1fr;
   }
 
@@ -6273,6 +6334,14 @@ button:focus-visible {
   .project-card.square,
   .project-card.tall,
   .project-card.wide {
+    aspect-ratio: 4 / 3;
+  }
+
+  .projects-grid.single .project-card,
+  .projects-grid.single .project-card.half,
+  .projects-grid.single .project-card.square,
+  .projects-grid.single .project-card.tall,
+  .projects-grid.single .project-card.wide {
     aspect-ratio: 4 / 3;
   }
 

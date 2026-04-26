@@ -3,19 +3,41 @@
 import { Project } from '@/lib/types';
 import FadeIn from './FadeIn';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
 
 interface ProjectsSectionProps {
   projects: Project[];
 }
 
 export default function ProjectsSection({ projects }: ProjectsSectionProps) {
+  const [gridLayout, setGridLayout] = useState<string>('two-col');
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then((res) => res.json())
+      .then(({ settings }) => {
+        if (settings?.projectsGridLayout) {
+          setGridLayout(settings.projectsGridLayout);
+        }
+      })
+      .catch((err) => console.warn('Failed to load grid settings:', err));
+  }, []);
+
   const getSize = (index: number, layout?: string) => {
+    if (gridLayout === 'single') return 'full';
     if (layout === 'full' || layout === 'wide') return 'full';
     if (layout === 'square' || layout === 'tall') return 'half';
     // Default pattern: full, half, half...
     if (index % 3 === 0) return 'full';
     return 'half';
   };
+
+  const gridClass =
+    gridLayout === 'single'
+      ? 'projects-grid single'
+      : gridLayout === 'auto-fit'
+      ? 'projects-grid auto-fit'
+      : 'projects-grid';
 
   return (
     <section className="projects" id="projects">
@@ -37,7 +59,7 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
         </FadeIn>
       </div>
 
-      <div className="projects-grid">
+      <div className={gridClass}>
         {projects.map((project, index) => {
           const img = project.images?.[0];
           if (!img) return null;

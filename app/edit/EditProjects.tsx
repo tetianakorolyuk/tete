@@ -121,6 +121,7 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
     onConfirm: () => {},
   });
   const [dragOverSlug, setDragOverSlug] = useState<string | null>(null);
+  const [gridLayout, setGridLayout] = useState('two-col');
 
   const projectsRef = useRef<Project[]>(initialProjects);
   projectsRef.current = projects;
@@ -134,6 +135,9 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
       .then(({ settings, studioContent: sc }) => {
         if (settings?.studioImage) {
           setStudioImage(settings.studioImage);
+        }
+        if (settings?.projectsGridLayout) {
+          setGridLayout(settings.projectsGridLayout);
         }
         if (sc) {
           setStudioContent(sc);
@@ -654,6 +658,26 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
                 ×
               </button>
             )}
+          </div>
+          <div className="grid-layout-select">
+            <label htmlFor="grid-layout">Grid Layout</label>
+            <select
+              id="grid-layout"
+              value={gridLayout}
+              onChange={async (e) => {
+                const value = e.target.value;
+                setGridLayout(value);
+                await fetch('/api/settings', {
+                  method: 'POST',
+                  headers: { 'Content-Type': 'application/json' },
+                  body: JSON.stringify({ settings: { projectsGridLayout: value } }),
+                });
+              }}
+            >
+              <option value="single">Single Column</option>
+              <option value="two-col">Two Columns</option>
+              <option value="auto-fit">Auto Fit (Suggested)</option>
+            </select>
           </div>
         </div>
         <div className="admin-toolbar-actions">
