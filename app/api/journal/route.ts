@@ -16,21 +16,21 @@ const CACHE_TTL = 3600; // 1 hour in seconds
 const FALLBACK_POSTS: Post[] = [
   {
     title: 'The Art of Quiet Spaces',
-    link: 'https://tekofm.substack.com/',
+    link: 'https://thetete.substack.com/',
     pubDate: new Date().toUTCString(),
     description: 'Exploring how minimalism and warmth coexist in modern interior design. A journey through texture, light, and the spaces that shape our daily rituals.',
     image: 'https://images.unsplash.com/photo-1616486338812-3dadae4b4ace?w=800&q=80'
   },
   {
     title: 'Material Stories: Natural Textures',
-    link: 'https://tekofm.substack.com/',
+    link: 'https://thetete.substack.com/',
     pubDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toUTCString(),
     description: 'How natural materials tell a story through their imperfections. Linen, wood, and stone as the foundation of intimate spaces.',
     image: 'https://images.unsplash.com/photo-1615529182904-14819c35db37?w=800&q=80'
   },
   {
     title: 'Light as Architecture',
-    link: 'https://tekofm.substack.com/',
+    link: 'https://thetete.substack.com/',
     pubDate: new Date(Date.now() - 14 * 24 * 60 * 60 * 1000).toUTCString(),
     description: 'Understanding how natural light shapes our experience of space. The interplay of shadow and illumination in residential design.',
     image: 'https://images.unsplash.com/photo-1507089947368-19c1da9775ae?w=800&q=80'
@@ -49,7 +49,7 @@ export async function GET() {
     console.warn('KV cache read failed, fetching fresh:', err);
   }
 
-  const FEED = 'https://tekofm.substack.com/feed';
+  const FEED = 'https://thetete.substack.com/feed';
   const PROXIES = [
     `https://api.allorigins.win/raw?url=${encodeURIComponent(FEED)}`,
     `https://corsproxy.io/?${encodeURIComponent(FEED)}`,
