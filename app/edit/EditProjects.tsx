@@ -122,7 +122,6 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
     onConfirm: () => {},
   });
   const [dragOverSlug, setDragOverSlug] = useState<string | null>(null);
-  const [gridLayout, setGridLayout] = useState('two-col');
   const [showGridBuilder, setShowGridBuilder] = useState(false);
 
   const projectsRef = useRef<Project[]>(initialProjects);
@@ -137,9 +136,6 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
       .then(({ settings, studioContent: sc }) => {
         if (settings?.studioImage) {
           setStudioImage(settings.studioImage);
-        }
-        if (settings?.projectsGridLayout) {
-          setGridLayout(settings.projectsGridLayout);
         }
         if (sc) {
           setStudioContent(sc);
@@ -500,6 +496,7 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
       <ToastContainer toasts={toasts} onDismiss={dismissToast} />
       <ConfirmModal state={confirmState} onClose={() => setConfirmState((s) => ({ ...s, open: false }))} />
 
+
       {/* Grid Builder Modal */}
       {showGridBuilder && (
         <GridBuilder
@@ -672,29 +669,6 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
                 ×
               </button>
             )}
-          </div>
-          <div className="grid-layout-select">
-            <label htmlFor="grid-layout">Bulk Layout</label>
-            <select
-              id="grid-layout"
-              value={gridLayout}
-              onChange={(e) => {
-                const value = e.target.value;
-                setGridLayout(value);
-                // Bulk set all projects
-                let newLayout: Project['layout'] = undefined;
-                if (value === 'single') newLayout = 'single';
-                if (value === 'auto-fit') newLayout = 'square';
-                setProjects((prev) =>
-                  prev.map((p) => ({ ...p, layout: newLayout }))
-                );
-                addToast('success', `All projects set to ${value === 'two-col' ? 'auto' : value}. Click Save All.`);
-              }}
-            >
-              <option value="two-col">Auto (pattern)</option>
-              <option value="single">All Full Width</option>
-              <option value="auto-fit">All Square</option>
-            </select>
           </div>
         </div>
         <div className="admin-toolbar-actions">
@@ -873,22 +847,6 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
                         onChange={(e) => updateProject(project.slug, { location: e.target.value })}
                         className="form-input"
                       />
-                    </div>
-                    <div className="form-group">
-                      <label className="form-label">Layout</label>
-                      <select
-                        value={project.layout || ''}
-                        onChange={(e) => updateProject(project.slug, { layout: e.target.value as Project['layout'] })}
-                        className="form-input"
-                      >
-                        <option value="">Auto (pattern)</option>
-                        <option value="single">Single — 1 per row (16:10)</option>
-                        <option value="dual">Dual — 2 per row (4:3)</option>
-                        <option value="full">Full (2 cols, 16:10)</option>
-                        <option value="wide">Wide (2 cols, 21:9)</option>
-                        <option value="square">Square (1 col, 1:1)</option>
-                        <option value="tall">Tall (1 col, 3:4)</option>
-                      </select>
                     </div>
                   </div>
 
