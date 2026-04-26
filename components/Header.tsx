@@ -14,11 +14,8 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const scrollToContact = () => {
-    const contactSection = document.querySelector('#get-in-touch');
-    if (contactSection) {
-      contactSection.scrollIntoView({ behavior: 'smooth' });
-    }
+  const openContactModal = () => {
+    window.dispatchEvent(new CustomEvent('open-contact-modal'));
   };
 
   return (
@@ -35,7 +32,7 @@ export default function Header() {
           <a href="#get-in-touch">Contact</a>
         </nav>
         <div className="navRight">
-          <button className="nav-cta" onClick={scrollToContact}>Make a Request</button>
+          <button className="nav-cta" onClick={openContactModal}>Make a Request</button>
           <button
             className={`hamburger ${scrolled ? 'scrolled' : ''} ${mobileOpen ? 'active' : ''}`}
             type="button"

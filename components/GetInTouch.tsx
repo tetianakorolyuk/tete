@@ -6,10 +6,10 @@ import ContactForm from './ContactForm';
 export default function GetInTouch() {
   const [showForm, setShowForm] = useState(false);
 
-  const openForm = () => {
+  const openForm = useCallback(() => {
     setShowForm(true);
     document.documentElement.classList.add('no-scroll');
-  };
+  }, []);
 
   const closeForm = useCallback(() => {
     setShowForm(false);
@@ -23,6 +23,12 @@ export default function GetInTouch() {
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
   }, [showForm, closeForm]);
+
+  useEffect(() => {
+    const handleOpen = () => openForm();
+    window.addEventListener('open-contact-modal', handleOpen);
+    return () => window.removeEventListener('open-contact-modal', handleOpen);
+  }, [openForm]);
 
   return (
     <>
