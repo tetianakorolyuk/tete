@@ -2,12 +2,28 @@
 
 import { useState, useEffect } from 'react';
 
+interface Settings {
+  studioImage?: string;
+}
+
 export default function StudioSection() {
   const [visible, setVisible] = useState(false);
+  const [studioImage, setStudioImage] = useState('/images/studio-hero.jpg');
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 200);
     return () => clearTimeout(timer);
+  }, []);
+
+  useEffect(() => {
+    fetch('/api/settings')
+      .then((res) => res.json())
+      .then(({ settings }) => {
+        if (settings?.studioImage) {
+          setStudioImage(settings.studioImage);
+        }
+      })
+      .catch((err) => console.warn('Failed to load studio image:', err));
   }, []);
 
   const stats = [
@@ -60,7 +76,7 @@ export default function StudioSection() {
 
         <div className="studio-hero-image">
           <img
-            src="/images/studio-hero.jpg"
+            src={studioImage}
             alt="Tatiana Koroliuk - Interior Design Toronto"
             loading="eager"
           />

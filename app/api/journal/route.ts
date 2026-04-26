@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { kv } from '@vercel/kv';
 
 interface Post {
   title: string;
@@ -8,7 +9,20 @@ interface Post {
   image?: string;
 }
 
+const CACHE_KEY = 'journal_posts_v1';
+const CACHE_TTL = 3600; // 1 hour in seconds
+
 export async function GET() {
+  // Try cache first for instant loads
+  try {
+    const cached = await kv.get<Post[]>(CACHE_KEY);
+    if (cached && cached.length > 0) {
+      return NextResponse.json({ posts: cached });
+    }
+  } catch (err) {
+    console.warn('KV cache read failed, fetching fresh:', err);
+  }
+
   const FEED = 'https://tekofm.substack.com/feed';
   const PROXIES = [
     `https://api.allorigins.win/raw?url=${encodeURIComponent(FEED)}`,
@@ -74,9 +88,24 @@ export async function GET() {
       return NextResponse.json({ error: 'No items found' }, { status: 404 });
     }
 
+    // Cache the posts for 1 hour
+    try {
+      await kv.set(CACHE_KEY, items, { ex: CACHE_TTL });
+      console.log(`Journal posts cached: ${items.length} posts`);
+    } catch (err) {
+      console.warn('KV cache write failed:', err);
+    }
+
     return NextResponse.json({ posts: items });
   } catch (err) {
     console.error('Journal API error:', err);
+    // Return cached data on error if available
+    try {
+      const cached = await kv.get<Post[]>(CACHE_KEY);
+      if (cached && cached.length > 0) {
+        return NextResponse.json({ posts: cached });
+      }
+    } catch {}
     return NextResponse.json({ error: 'Failed to fetch journal' }, { status: 500 });
   }
 }

@@ -18,6 +18,8 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
   const [uploadingImage, setUploadingImage] = useState<{ slug: string; index: number } | null>(null);
   const [generatingAI, setGeneratingAI] = useState<{ type: string; slug: string } | null>(null);
+  const [studioImage, setStudioImage] = useState<string>('/images/studio-hero.jpg');
+  const [uploadingStudioImage, setUploadingStudioImage] = useState(false);
 
   // Store a ref to the latest projects for use in callbacks
   const projectsRef = useRef<Project[]>(initialProjects);
@@ -220,8 +222,87 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
   // Separate file input ref for each image slot
   const getFileInputId = (slug: string, index: number) => `file-${slug}-${index}`;
 
+  const handleStudioImageUpload = useCallback(async (file: File) => {
+    setUploadingStudioImage(true);
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        throw new Error(errorData.error || 'Upload failed');
+      }
+
+      const data = await res.json();
+      if (data.url) {
+        setStudioImage(data.url);
+        // Save to settings
+        await fetch('/api/settings', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ settings: { studioImage: data.url } }),
+        });
+        setMessage({ type: 'success', text: 'Studio image updated!' });
+        setTimeout(() => setMessage(null), 3000);
+      } else {
+        throw new Error(data.error || 'No URL in response');
+      }
+    } catch (err) {
+      console.error('[handleStudioImageUpload] Error:', err);
+      setMessage({
+        type: 'error',
+        text: err instanceof Error ? err.message : 'Upload failed'
+      });
+      setTimeout(() => setMessage(null), 5000);
+    }
+    setUploadingStudioImage(false);
+  }, []);
+
+  // Load studio image on mount
+  useEffect(() => {
+    fetch('/api/settings')
+      .then((res) => res.json())
+      .then(({ settings }) => {
+        if (settings?.studioImage) {
+          setStudioImage(settings.studioImage);
+        }
+      })
+      .catch((err) => console.warn('Failed to load studio image:', err));
+  }, []);
+
   return (
     <div>
+      {/* Studio Settings */}
+      <div className="studio-settings-card">
+        <h3>Studio Section Image</h3>
+        <div className="studio-image-editor">
+          <div className="studio-image-preview">
+            <img src={studioImage} alt="Studio preview" />
+          </div>
+          <div className="studio-image-actions">
+            <label className="admin-btn admin-btn-secondary">
+              {uploadingStudioImage ? 'Uploading...' : 'Upload New Image'}
+              <input
+                type="file"
+                accept="image/*"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) handleStudioImageUpload(file);
+                }}
+                disabled={uploadingStudioImage}
+                style={{ display: 'none' }}
+              />
+            </label>
+            <p className="studio-image-note">This image appears in the About/Studio section</p>
+          </div>
+        </div>
+      </div>
+
       {/* Action Bar */}
       <div className="admin-action-bar">
         <h2>Projects ({projects.length})</h2>
