@@ -18,55 +18,55 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
             <div className="smallcaps">{String(projects.length).padStart(2, '0')} Works</div>
           </div>
         </FadeIn>
+      </div>
 
-        <div className="projects-list">
-          {projects.map((project, index) => {
-            const img1 = project.images?.[0];
-            const img2 = project.images?.[1] || img1;
+      <div className="projects-list-full">
+        {projects.map((project, index) => {
+          const img1 = project.images?.[0];
+          const img2 = project.images?.[1] || img1;
 
-            if (!img1) return null;
+          if (!img1) return null;
 
-            return (
-              <FadeIn key={project.slug} delay={80 * index} clip>
-                <Link href={`/projects/${project.slug}`} className="project-row-link">
-                  <article className="project-row project-h">
-                    <div className="project-row-img-wrap">
+          return (
+            <FadeIn key={project.slug} delay={80 * index} clip>
+              <Link href={`/projects/${project.slug}`} className="project-row-link">
+                <article className="project-row project-h">
+                  <div className="project-row-img-wrap">
+                    <img
+                      src={img1}
+                      alt={project.title}
+                      className="img-1"
+                      loading={index === 0 ? "eager" : "lazy"}
+                      fetchPriority={index === 0 ? "high" : "auto"}
+                    />
+                    {img2 && img2 !== img1 && (
                       <img
-                        src={img1}
+                        src={img2}
                         alt={project.title}
-                        className="img-1"
-                        loading={index === 0 ? "eager" : "lazy"}
-                        fetchPriority={index === 0 ? "high" : "auto"}
+                        className="img-2"
+                        loading="lazy"
                       />
-                      {img2 && img2 !== img1 && (
-                        <img
-                          src={img2}
-                          alt={project.title}
-                          className="img-2"
-                          loading="lazy"
-                        />
-                      )}
-                    </div>
-                    <div className="hover-label">View<br/>Project</div>
-                    <div className="project-content">
-                      <div className="project-num">{String(index + 1).padStart(2, '0')} — {project.subtitle || 'Project'}</div>
-                      <div className="project-bottom">
-                        <h2 className="project-title">{project.title}</h2>
-                        <div className="project-meta">
-                          <div className="smallcaps light">{project.location || 'Toronto'} · {project.year || '2025'}</div>
-                          <p>{project.description || ''}</p>
-                          <span className="arrow-link">
-                            <span className="al-line" />View project
-                          </span>
-                        </div>
+                    )}
+                  </div>
+                  <div className="hover-label">View<br/>Project</div>
+                  <div className="project-content">
+                    <div className="project-num">{String(index + 1).padStart(2, '0')} — {project.subtitle || 'Project'}</div>
+                    <div className="project-bottom">
+                      <h2 className="project-title">{project.title}</h2>
+                      <div className="project-meta">
+                        <div className="smallcaps light">{project.location || 'Toronto'} · {project.year || '2025'}</div>
+                        <p>{project.description || ''}</p>
+                        <span className="arrow-link">
+                          <span className="al-line" />View project
+                        </span>
                       </div>
                     </div>
-                  </article>
-                </Link>
-              </FadeIn>
-            );
-          })}
-        </div>
+                  </div>
+                </article>
+              </Link>
+            </FadeIn>
+          );
+        })}
       </div>
     </section>
   );
