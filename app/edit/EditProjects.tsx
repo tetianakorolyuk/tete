@@ -674,23 +674,26 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
             )}
           </div>
           <div className="grid-layout-select">
-            <label htmlFor="grid-layout">Default Grid</label>
+            <label htmlFor="grid-layout">Bulk Layout</label>
             <select
               id="grid-layout"
               value={gridLayout}
-              onChange={async (e) => {
+              onChange={(e) => {
                 const value = e.target.value;
                 setGridLayout(value);
-                await fetch('/api/settings', {
-                  method: 'POST',
-                  headers: { 'Content-Type': 'application/json' },
-                  body: JSON.stringify({ settings: { projectsGridLayout: value } }),
-                });
+                // Bulk set all projects
+                let newLayout: Project['layout'] = undefined;
+                if (value === 'single') newLayout = 'single';
+                if (value === 'auto-fit') newLayout = 'square';
+                setProjects((prev) =>
+                  prev.map((p) => ({ ...p, layout: newLayout }))
+                );
+                addToast('success', `All projects set to ${value === 'two-col' ? 'auto' : value}. Click Save All.`);
               }}
             >
-              <option value="two-col">Two Columns (pattern)</option>
-              <option value="single">Single Column (all full)</option>
-              <option value="auto-fit">Auto Fit (masonry)</option>
+              <option value="two-col">Auto (pattern)</option>
+              <option value="single">All Full Width</option>
+              <option value="auto-fit">All Square</option>
             </select>
           </div>
         </div>
