@@ -9,7 +9,7 @@ interface Post {
   image?: string;
 }
 
-const CACHE_KEY = 'journal_posts_v1';
+const CACHE_KEY = 'journal_posts_v2';
 const CACHE_TTL = 3600; // 1 hour in seconds
 
 // Fallback posts if feed is unavailable
