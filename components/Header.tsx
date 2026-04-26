@@ -24,7 +24,10 @@ export default function Header() {
   return (
     <>
       <header className={`header ${scrolled ? 'scrolled' : ''}`}>
-        <a href="/" className="brand">TÉTÉ</a>
+        <a href="/" className="brand">
+          <span className="brand-small">the</span>
+          <span className="brand-large">TETE</span>
+        </a>
         <nav className="nav">
           <a href="#projects">Projects</a>
           <a href="#studio">Studio</a>

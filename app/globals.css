@@ -458,13 +458,29 @@ body::before {
 }
 
 .brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
   font-family: 'Cormorant Garamond', serif;
-  font-weight: 500;
-  font-size: 24px;
-  letter-spacing: -0.02em;
   color: var(--linen);
   transition: color 0.4s ease;
   flex-shrink: 0;
+  line-height: 1;
+}
+
+.brand-small {
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(240, 234, 226, 0.72);
+}
+
+.brand-large {
+  font-size: 24px;
+  font-weight: 500;
+  letter-spacing: -0.02em;
 }
 
 .nav {
@@ -4404,6 +4420,19 @@ textarea:focus {
     font-size: 22px;
   }
 
+  /* Brand - mobile */
+  .brand {
+    gap: 1px;
+  }
+
+  .brand-small {
+    font-size: 7px;
+  }
+
+  .brand-large {
+    font-size: 18px;
+  }
+
   /* Studio settings - mobile */
   .studio-image-editor {
     flex-direction: column;
@@ -4498,6 +4527,16 @@ textarea:focus {
 @media (max-width: 480px) {
   .wrap {
     padding: 0 16px;
+  }
+
+  /* Brand - small mobile */
+  .brand-small {
+    font-size: 6px;
+  }
+
+  .brand-large {
+    font-size: 16px;
+  }
   }
 
   .section {
