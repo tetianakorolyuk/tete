@@ -3,7 +3,7 @@ export default function Footer() {
     <footer>
       <div className="footer-inner">
         <span className="footer-brand">TÉTÉ</span>
-        <span className="footer-copy">© 2026 Tetyana Koroliuk — Interior Design</span>
+        <span className="footer-copy">© 2026 Interior Design</span>
       </div>
     </footer>
   );

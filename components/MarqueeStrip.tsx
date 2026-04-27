@@ -6,7 +6,7 @@ export default function MarqueeStrip() {
     'Residential Spaces',
     'Private Clients',
     'Cinematic Atmosphere',
-    'Tetyana Koroliuk',
+    'Editorial Precision',
   ];
 
   return (

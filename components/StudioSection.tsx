@@ -212,7 +212,7 @@ export default function StudioSection() {
           />
           <div className="studio-hero-overlay">
             <div className="studio-hero-overlay-inner">
-              <h3 className="studio-hero-name">Tetyana Koroliuk</h3>
+              <h3 className="studio-hero-name">The Studio</h3>
             </div>
           </div>
         </div>
