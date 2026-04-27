@@ -92,6 +92,126 @@
           "value": "Bold, refined, night-ready"
         }
       ]
+    },
+    {
+      "slug": "project-04",
+      "title": "Project 04",
+      "subtitle": "Dining / Entertaining",
+      "year": "2025",
+      "location": "Los Angeles",
+      "description": "A refined dining space with layered textures and warm neutral tones. The atmosphere is intimate yet elevated.",
+      "layout": "single",
+      "images": [
+        "images/project-04-a.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Entertaining + atmosphere"
+        },
+        {
+          "label": "Palette",
+          "value": "Warm neutrals, soft wood, linen"
+        },
+        {
+          "label": "Details",
+          "value": "Statement lighting, open flow"
+        },
+        {
+          "label": "Mood",
+          "value": "Welcoming, refined, calm"
+        }
+      ]
+    },
+    {
+      "slug": "project-05",
+      "title": "Project 05",
+      "subtitle": "Bar / Lounge",
+      "year": "2025",
+      "location": "Los Angeles",
+      "description": "A moody bar environment with dark stone and warm bronze accents. Linear lighting creates depth and drama.",
+      "layout": "dual",
+      "images": [
+        "images/project-05-a.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Evening atmosphere"
+        },
+        {
+          "label": "Palette",
+          "value": "Dark stone, bronze, soft light"
+        },
+        {
+          "label": "Details",
+          "value": "Backlit shelving, stone island"
+        },
+        {
+          "label": "Mood",
+          "value": "Dramatic, intimate, confident"
+        }
+      ]
+    },
+    {
+      "slug": "project-06",
+      "title": "Project 06",
+      "subtitle": "Living / Retreat",
+      "year": "2025",
+      "location": "Los Angeles",
+      "description": "A serene living retreat with natural materials and soft daylight. The space feels like a private escape.",
+      "layout": "dual",
+      "images": [
+        "images/project-06-a.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Comfort + escape"
+        },
+        {
+          "label": "Palette",
+          "value": "Soft white, natural wood, stone"
+        },
+        {
+          "label": "Details",
+          "value": "Arched doorways, built-in seating"
+        },
+        {
+          "label": "Mood",
+          "value": "Serene, light, restorative"
+        }
+      ]
+    },
+    {
+      "slug": "project-07",
+      "title": "Project 07",
+      "subtitle": "Residential",
+      "year": "2025",
+      "location": "Los Angeles",
+      "description": "A modern residential space with clean lines and warm materials. The design balances minimalism with lived-in comfort.",
+      "layout": "single",
+      "images": [
+        "images/project-07-a.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Modern living"
+        },
+        {
+          "label": "Palette",
+          "value": "Warm timber, soft grey, linen"
+        },
+        {
+          "label": "Details",
+          "value": "Floor-to-ceiling windows, custom millwork"
+        },
+        {
+          "label": "Mood",
+          "value": "Calm, modern, intentional"
+        }
+      ]
     }
   ]
 }
