@@ -50,10 +50,10 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
             : size;
 
           return (
-            <FadeIn key={project.slug} delay={60 * (index % 3)}>
+            <FadeIn key={project.slug} delay={60 * (index % 3)} className={`project-card-link ${finalSize}`}>
               <Link
                 href={`/projects/${project.slug}`}
-                className={`project-card-link ${finalSize}`}
+                className="project-card-link"
               >
                 <article className={`project-card ${finalSize} ${layoutClass}`}>
                   <div className="project-card-img-wrap">
