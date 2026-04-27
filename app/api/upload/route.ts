@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { checkAuth } from '@/lib/auth';
-import { put } from '@vercel/blob';
 
 export async function POST(request: NextRequest) {
   try {
@@ -34,20 +33,38 @@ export async function POST(request: NextRequest) {
     const ext = file.name.split('.').pop() || 'jpg';
     const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
 
-    // Upload to Vercel Blob with public access
-    const blob = await put(`uploads/${filename}`, file, {
-      access: 'public',
-      addRandomSuffix: false,
-    });
+    // Try Vercel Blob first (production)
+    try {
+      const { put } = await import('@vercel/blob');
+      const blob = await put(`uploads/${filename}`, file, {
+        access: 'public',
+        addRandomSuffix: false,
+      });
+      return NextResponse.json({
+        url: blob.url,
+        filename: blob.pathname,
+        size: file.size,
+      });
+    } catch (blobError) {
+      console.log('Blob upload skipped, falling back to local file:', blobError);
+    }
 
-    console.log('Upload successful:', {
-      url: blob.url,
-      pathname: blob.pathname,
-    });
+    // Fallback: save to local filesystem (local dev)
+    const fs = await import('fs/promises');
+    const path = await import('path');
+    const uploadDir = path.join(process.cwd(), 'public', 'images', 'uploads');
+    await fs.mkdir(uploadDir, { recursive: true });
+
+    const buffer = Buffer.from(await file.arrayBuffer());
+    const filepath = path.join(uploadDir, filename);
+    await fs.writeFile(filepath, buffer);
+
+    const url = `/images/uploads/${filename}`;
+    console.log('Local upload successful:', url);
 
     return NextResponse.json({
-      url: blob.url,
-      filename: blob.pathname,
+      url,
+      filename,
       size: file.size,
     });
   } catch (error) {
