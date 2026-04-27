@@ -822,6 +822,24 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
                   {/* Basic Info */}
                   <div className="form-grid">
                     <div className="form-group">
+                      <label className="form-label">Title</label>
+                      <input
+                        type="text"
+                        value={project.title}
+                        onChange={(e) => updateProject(project.slug, { title: e.target.value })}
+                        className="form-input"
+                      />
+                    </div>
+                    <div className="form-group">
+                      <label className="form-label">Subtitle</label>
+                      <input
+                        type="text"
+                        value={project.subtitle || ''}
+                        onChange={(e) => updateProject(project.slug, { subtitle: e.target.value })}
+                        className="form-input"
+                      />
+                    </div>
+                    <div className="form-group">
                       <label className="form-label">Slug</label>
                       <input
                         type="text"

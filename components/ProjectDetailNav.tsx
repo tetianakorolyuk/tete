@@ -29,7 +29,7 @@ export default function ProjectDetailNav({ currentIndex, totalProjects }: Projec
           <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
-          <span>Index</span>
+          <span>Home</span>
         </Link>
         <span className="nav-project-num">
           {String(currentIndex + 1).padStart(2, '0')} / {String(totalProjects).padStart(2, '0')}

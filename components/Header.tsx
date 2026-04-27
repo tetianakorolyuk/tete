@@ -47,6 +47,7 @@ export default function Header() {
       </header>
 
       <div className={`mobilePanel ${mobileOpen ? 'open' : ''}`}>
+        <a href="/" onClick={() => setMobileOpen(false)}>Home</a>
         <a href="#projects" onClick={() => setMobileOpen(false)}>Projects</a>
         <a href="#studio" onClick={() => setMobileOpen(false)}>Studio</a>
         <a href="#journal" onClick={() => setMobileOpen(false)}>Journal</a>
