@@ -1,108 +1,15 @@
 {
   "projects": [
     {
-      "slug": "project-01",
-      "title": "Project 01",
-      "subtitle": "Living / Kitchen",
-      "year": "2025",
-      "location": "Toronto",
-      "description": "A calm, light-filled living space with warm wood and tactile neutrals. The layout stays open for flow, with clean lines and soft volumes.",
-      "layout": "single",
-      "images": [
-        "images/project-01-a.jpg",
-        "images/project-01-b.jpg"
-      ],
-      "facts": [
-        {
-          "label": "Focus",
-          "value": "Layout + light"
-        },
-        {
-          "label": "Palette",
-          "value": "Natural oak, stone, soft linen"
-        },
-        {
-          "label": "Details",
-          "value": "Integrated storage, minimal hardware"
-        },
-        {
-          "label": "Mood",
-          "value": "Quiet, modern, warm"
-        }
-      ]
-    },
-    {
-      "slug": "project-02",
-      "title": "Project 02",
-      "subtitle": "Residential",
-      "year": "2025",
-      "location": "Toronto",
-      "description": "A residential concept built around simplicity and proportion. Materials stay honest and restrained, letting texture do the work.",
-      "layout": "dual",
-      "images": [
-        "images/project-02-a.jpg",
-        "images/project-02-b.jpg"
-      ],
-      "facts": [
-        {
-          "label": "Focus",
-          "value": "Comfort + proportion"
-        },
-        {
-          "label": "Palette",
-          "value": "Soft whites, warm timber, matte finishes"
-        },
-        {
-          "label": "Details",
-          "value": "Custom millwork, seamless transitions"
-        },
-        {
-          "label": "Mood",
-          "value": "Minimal, elevated, serene"
-        }
-      ]
-    },
-    {
-      "slug": "project-03",
-      "title": "Project 03",
-      "subtitle": "Kitchen / Bar",
-      "year": "2025",
-      "location": "Toronto",
-      "description": "A kitchen and bar environment with a stronger, evening tone. Dark surfaces, warm highlights, and a confident material contrast.",
-      "layout": "dual",
-      "images": [
-        "images/project-03-a.jpg",
-        "images/project-03-b.jpg"
-      ],
-      "facts": [
-        {
-          "label": "Focus",
-          "value": "Material contrast"
-        },
-        {
-          "label": "Palette",
-          "value": "Deep stone, warm bronze, soft light"
-        },
-        {
-          "label": "Details",
-          "value": "Linear lighting, hidden storage"
-        },
-        {
-          "label": "Mood",
-          "value": "Bold, refined, night-ready"
-        }
-      ]
-    },
-    {
-      "slug": "project-04",
-      "title": "Project 04",
-      "subtitle": "Dining / Entertaining",
-      "year": "2025",
+      "slug": "fernando",
+      "title": "Fernando",
+      "subtitle": "Dining / Kitchen",
+      "year": "2026",
       "location": "Los Angeles",
       "description": "A refined dining space with layered textures and warm neutral tones. The atmosphere is intimate yet elevated.",
       "layout": "single",
       "images": [
-        "images/project-04-a.png"
+        "images/3cgpq4wp6_sd.png"
       ],
       "facts": [
         {
@@ -114,25 +21,21 @@
           "value": "Warm neutrals, soft wood, linen"
         },
         {
-          "label": "Details",
-          "value": "Statement lighting, open flow"
-        },
-        {
           "label": "Mood",
           "value": "Welcoming, refined, calm"
         }
       ]
     },
     {
-      "slug": "project-05",
-      "title": "Project 05",
+      "slug": "project-02",
+      "title": "Project 02",
       "subtitle": "Bar / Lounge",
-      "year": "2025",
+      "year": "2026",
       "location": "Los Angeles",
       "description": "A moody bar environment with dark stone and warm bronze accents. Linear lighting creates depth and drama.",
       "layout": "dual",
       "images": [
-        "images/project-05-a.png"
+        "images/4tr4xqh26_sd.png"
       ],
       "facts": [
         {
@@ -144,25 +47,21 @@
           "value": "Dark stone, bronze, soft light"
         },
         {
-          "label": "Details",
-          "value": "Backlit shelving, stone island"
-        },
-        {
           "label": "Mood",
           "value": "Dramatic, intimate, confident"
         }
       ]
     },
     {
-      "slug": "project-06",
-      "title": "Project 06",
-      "subtitle": "Living / Retreat",
-      "year": "2025",
-      "location": "Los Angeles",
+      "slug": "taniuska",
+      "title": "Taniuska",
+      "subtitle": "Residential",
+      "year": "2026",
+      "location": "Toronto",
       "description": "A serene living retreat with natural materials and soft daylight. The space feels like a private escape.",
       "layout": "dual",
       "images": [
-        "images/project-06-a.png"
+        "images/4wu4akjcb_sd.png"
       ],
       "facts": [
         {
@@ -174,12 +73,86 @@
           "value": "Soft white, natural wood, stone"
         },
         {
-          "label": "Details",
-          "value": "Arched doorways, built-in seating"
+          "label": "Mood",
+          "value": "Serene, light, restorative"
+        }
+      ]
+    },
+    {
+      "slug": "project-04",
+      "title": "Project 04",
+      "subtitle": "Living / Kitchen",
+      "year": "2026",
+      "location": "Los Angeles",
+      "description": "A calm, light-filled living space with warm wood and tactile neutrals. The layout stays open for flow, with clean lines and soft volumes.",
+      "layout": "single",
+      "images": [
+        "images/5xt4kp2xv_sd.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Layout + light"
+        },
+        {
+          "label": "Palette",
+          "value": "Natural oak, stone, soft linen"
         },
         {
           "label": "Mood",
-          "value": "Serene, light, restorative"
+          "value": "Quiet, modern, warm"
+        }
+      ]
+    },
+    {
+      "slug": "project-05",
+      "title": "Project 05",
+      "subtitle": "Residential",
+      "year": "2026",
+      "location": "Los Angeles",
+      "description": "A residential concept built around simplicity and proportion. Materials stay honest and restrained, letting texture do the work.",
+      "layout": "dual",
+      "images": [
+        "images/69kz6c8fvj_sd.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Comfort + proportion"
+        },
+        {
+          "label": "Palette",
+          "value": "Soft whites, warm timber, matte finishes"
+        },
+        {
+          "label": "Mood",
+          "value": "Minimal, elevated, serene"
+        }
+      ]
+    },
+    {
+      "slug": "project-06",
+      "title": "Project 06",
+      "subtitle": "Kitchen / Bar",
+      "year": "2026",
+      "location": "Los Angeles",
+      "description": "A kitchen and bar environment with a stronger, evening tone. Dark surfaces, warm highlights, and a confident material contrast.",
+      "layout": "dual",
+      "images": [
+        "images/965uanilk_sd.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Material contrast"
+        },
+        {
+          "label": "Palette",
+          "value": "Deep stone, warm bronze, soft light"
+        },
+        {
+          "label": "Mood",
+          "value": "Bold, refined, night-ready"
         }
       ]
     },
@@ -187,12 +160,12 @@
       "slug": "project-07",
       "title": "Project 07",
       "subtitle": "Residential",
-      "year": "2025",
+      "year": "2026",
       "location": "Los Angeles",
       "description": "A modern residential space with clean lines and warm materials. The design balances minimalism with lived-in comfort.",
       "layout": "single",
       "images": [
-        "images/project-07-a.png"
+        "images/9trgj3i3_sd.png"
       ],
       "facts": [
         {
@@ -204,12 +177,502 @@
           "value": "Warm timber, soft grey, linen"
         },
         {
-          "label": "Details",
-          "value": "Floor-to-ceiling windows, custom millwork"
+          "label": "Mood",
+          "value": "Calm, modern, intentional"
+        }
+      ]
+    },
+    {
+      "slug": "project-08",
+      "title": "Project 08",
+      "subtitle": "Living / Kitchen",
+      "year": "2026",
+      "location": "Los Angeles",
+      "description": "A refined dining space with layered textures and warm neutral tones.",
+      "layout": "dual",
+      "images": [
+        "images/b0unnl91_sd.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Entertaining"
+        },
+        {
+          "label": "Palette",
+          "value": "Warm neutrals, wood"
+        },
+        {
+          "label": "Mood",
+          "value": "Welcoming, refined"
+        }
+      ]
+    },
+    {
+      "slug": "project-09",
+      "title": "Project 09",
+      "subtitle": "Bar / Lounge",
+      "year": "2026",
+      "location": "Los Angeles",
+      "description": "A moody bar environment with dark stone and warm bronze accents.",
+      "layout": "single",
+      "images": [
+        "images/c6q05qbgy_sd.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Evening atmosphere"
+        },
+        {
+          "label": "Palette",
+          "value": "Dark stone, bronze"
+        },
+        {
+          "label": "Mood",
+          "value": "Dramatic, intimate"
+        }
+      ]
+    },
+    {
+      "slug": "project-10",
+      "title": "Project 10",
+      "subtitle": "Residential",
+      "year": "2026",
+      "location": "Los Angeles",
+      "description": "A serene living retreat with natural materials and soft daylight.",
+      "layout": "dual",
+      "images": [
+        "images/dxxsj1l8_sd.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Comfort"
+        },
+        {
+          "label": "Palette",
+          "value": "Soft white, natural wood"
+        },
+        {
+          "label": "Mood",
+          "value": "Serene, light"
+        }
+      ]
+    },
+    {
+      "slug": "project-11",
+      "title": "Project 11",
+      "subtitle": "Living / Kitchen",
+      "year": "2026",
+      "location": "Los Angeles",
+      "description": "A calm, light-filled living space with warm wood and tactile neutrals.",
+      "layout": "dual",
+      "images": [
+        "images/e9ewiame3l_sd.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Layout + light"
+        },
+        {
+          "label": "Palette",
+          "value": "Natural oak, stone"
+        },
+        {
+          "label": "Mood",
+          "value": "Quiet, modern, warm"
+        }
+      ]
+    },
+    {
+      "slug": "project-12",
+      "title": "Project 12",
+      "subtitle": "Residential",
+      "year": "2026",
+      "location": "Los Angeles",
+      "description": "A residential concept built around simplicity and proportion.",
+      "layout": "single",
+      "images": [
+        "images/ghzresqguh_sd.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Comfort + proportion"
+        },
+        {
+          "label": "Palette",
+          "value": "Soft whites, warm timber"
+        },
+        {
+          "label": "Mood",
+          "value": "Minimal, elevated, serene"
+        }
+      ]
+    },
+    {
+      "slug": "project-13",
+      "title": "Project 13",
+      "subtitle": "Kitchen / Bar",
+      "year": "2026",
+      "location": "Los Angeles",
+      "description": "A kitchen and bar environment with a stronger, evening tone.",
+      "layout": "dual",
+      "images": [
+        "images/hzcox97vx_sd.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Material contrast"
+        },
+        {
+          "label": "Palette",
+          "value": "Deep stone, warm bronze"
+        },
+        {
+          "label": "Mood",
+          "value": "Bold, refined, night-ready"
+        }
+      ]
+    },
+    {
+      "slug": "project-14",
+      "title": "Project 14",
+      "subtitle": "Residential",
+      "year": "2026",
+      "location": "Los Angeles",
+      "description": "A modern residential space with clean lines and warm materials.",
+      "layout": "dual",
+      "images": [
+        "images/jh7wd8ov4_sd.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Modern living"
+        },
+        {
+          "label": "Palette",
+          "value": "Warm timber, soft grey"
         },
         {
           "label": "Mood",
           "value": "Calm, modern, intentional"
+        }
+      ]
+    },
+    {
+      "slug": "project-15",
+      "title": "Project 15",
+      "subtitle": "Living / Kitchen",
+      "year": "2026",
+      "location": "Los Angeles",
+      "description": "A refined dining space with layered textures and warm neutral tones.",
+      "layout": "single",
+      "images": [
+        "images/kb6tis38w_sd.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Entertaining"
+        },
+        {
+          "label": "Palette",
+          "value": "Warm neutrals, wood"
+        },
+        {
+          "label": "Mood",
+          "value": "Welcoming, refined"
+        }
+      ]
+    },
+    {
+      "slug": "project-16",
+      "title": "Project 16",
+      "subtitle": "Bar / Lounge",
+      "year": "2026",
+      "location": "Los Angeles",
+      "description": "A moody bar environment with dark stone and warm bronze accents.",
+      "layout": "dual",
+      "images": [
+        "images/klbjnhdr2_sd.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Evening atmosphere"
+        },
+        {
+          "label": "Palette",
+          "value": "Dark stone, bronze"
+        },
+        {
+          "label": "Mood",
+          "value": "Dramatic, intimate"
+        }
+      ]
+    },
+    {
+      "slug": "project-17",
+      "title": "Project 17",
+      "subtitle": "Residential",
+      "year": "2026",
+      "location": "Los Angeles",
+      "description": "A serene living retreat with natural materials and soft daylight.",
+      "layout": "single",
+      "images": [
+        "images/n0hokags1_sd.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Comfort"
+        },
+        {
+          "label": "Palette",
+          "value": "Soft white, natural wood"
+        },
+        {
+          "label": "Mood",
+          "value": "Serene, light"
+        }
+      ]
+    },
+    {
+      "slug": "project-18",
+      "title": "Project 18",
+      "subtitle": "Living / Kitchen",
+      "year": "2026",
+      "location": "Los Angeles",
+      "description": "A calm, light-filled living space with warm wood and tactile neutrals.",
+      "layout": "dual",
+      "images": [
+        "images/naxwz8udnj_sd.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Layout + light"
+        },
+        {
+          "label": "Palette",
+          "value": "Natural oak, stone"
+        },
+        {
+          "label": "Mood",
+          "value": "Quiet, modern, warm"
+        }
+      ]
+    },
+    {
+      "slug": "project-19",
+      "title": "Project 19",
+      "subtitle": "Residential",
+      "year": "2026",
+      "location": "Los Angeles",
+      "description": "A residential concept built around simplicity and proportion.",
+      "layout": "dual",
+      "images": [
+        "images/nhuq2y4gb_sd.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Comfort + proportion"
+        },
+        {
+          "label": "Palette",
+          "value": "Soft whites, warm timber"
+        },
+        {
+          "label": "Mood",
+          "value": "Minimal, elevated, serene"
+        }
+      ]
+    },
+    {
+      "slug": "project-20",
+      "title": "Project 20",
+      "subtitle": "Kitchen / Bar",
+      "year": "2026",
+      "location": "Los Angeles",
+      "description": "A kitchen and bar environment with a stronger, evening tone.",
+      "layout": "single",
+      "images": [
+        "images/pw9sjd4rs_sd.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Material contrast"
+        },
+        {
+          "label": "Palette",
+          "value": "Deep stone, warm bronze"
+        },
+        {
+          "label": "Mood",
+          "value": "Bold, refined, night-ready"
+        }
+      ]
+    },
+    {
+      "slug": "project-21",
+      "title": "Project 21",
+      "subtitle": "Residential",
+      "year": "2026",
+      "location": "Los Angeles",
+      "description": "A modern residential space with clean lines and warm materials.",
+      "layout": "dual",
+      "images": [
+        "images/rc4105v1qh_sd.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Modern living"
+        },
+        {
+          "label": "Palette",
+          "value": "Warm timber, soft grey"
+        },
+        {
+          "label": "Mood",
+          "value": "Calm, modern, intentional"
+        }
+      ]
+    },
+    {
+      "slug": "project-22",
+      "title": "Project 22",
+      "subtitle": "Living / Kitchen",
+      "year": "2026",
+      "location": "Los Angeles",
+      "description": "A refined dining space with layered textures and warm neutral tones.",
+      "layout": "dual",
+      "images": [
+        "images/s0sv0oyea_sd.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Entertaining"
+        },
+        {
+          "label": "Palette",
+          "value": "Warm neutrals, wood"
+        },
+        {
+          "label": "Mood",
+          "value": "Welcoming, refined"
+        }
+      ]
+    },
+    {
+      "slug": "project-23",
+      "title": "Project 23",
+      "subtitle": "Bar / Lounge",
+      "year": "2026",
+      "location": "Los Angeles",
+      "description": "A moody bar environment with dark stone and warm bronze accents.",
+      "layout": "single",
+      "images": [
+        "images/vkg9e7dio_sd.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Evening atmosphere"
+        },
+        {
+          "label": "Palette",
+          "value": "Dark stone, bronze"
+        },
+        {
+          "label": "Mood",
+          "value": "Dramatic, intimate"
+        }
+      ]
+    },
+    {
+      "slug": "project-24",
+      "title": "Project 24",
+      "subtitle": "Residential",
+      "year": "2026",
+      "location": "Los Angeles",
+      "description": "A serene living retreat with natural materials and soft daylight.",
+      "layout": "dual",
+      "images": [
+        "images/wr24bwfspi_sd.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Comfort"
+        },
+        {
+          "label": "Palette",
+          "value": "Soft white, natural wood"
+        },
+        {
+          "label": "Mood",
+          "value": "Serene, light"
+        }
+      ]
+    },
+    {
+      "slug": "project-25",
+      "title": "Project 25",
+      "subtitle": "Living / Kitchen",
+      "year": "2026",
+      "location": "Los Angeles",
+      "description": "A calm, light-filled living space with warm wood and tactile neutrals.",
+      "layout": "dual",
+      "images": [
+        "images/x5hjh983s_sd.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Layout + light"
+        },
+        {
+          "label": "Palette",
+          "value": "Natural oak, stone"
+        },
+        {
+          "label": "Mood",
+          "value": "Quiet, modern, warm"
+        }
+      ]
+    },
+    {
+      "slug": "project-26",
+      "title": "Project 26",
+      "subtitle": "Residential",
+      "year": "2026",
+      "location": "Los Angeles",
+      "description": "A residential concept built around simplicity and proportion.",
+      "layout": "single",
+      "images": [
+        "images/x6n7lmve6_sd.png"
+      ],
+      "facts": [
+        {
+          "label": "Focus",
+          "value": "Comfort + proportion"
+        },
+        {
+          "label": "Palette",
+          "value": "Soft whites, warm timber"
+        },
+        {
+          "label": "Mood",
+          "value": "Minimal, elevated, serene"
         }
       ]
     }
