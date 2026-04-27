@@ -18,7 +18,7 @@ export async function POST(request: NextRequest) {
     const validTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
     if (!validTypes.includes(file.type)) {
       return NextResponse.json(
-        { error: 'Invalid file type' },
+        { error: `Invalid file type: ${file.type}` },
         { status: 400 }
       );
     }
@@ -40,13 +40,14 @@ export async function POST(request: NextRequest) {
         access: 'public',
         addRandomSuffix: false,
       });
+      console.log('Blob upload:', blob.url);
       return NextResponse.json({
         url: blob.url,
         filename: blob.pathname,
         size: file.size,
       });
     } catch (blobError) {
-      console.log('Blob upload skipped, falling back to local file:', blobError);
+      console.log('Blob unavailable, using local:', blobError);
     }
 
     // Fallback: save to local filesystem (local dev)
@@ -55,12 +56,13 @@ export async function POST(request: NextRequest) {
     const uploadDir = path.join(process.cwd(), 'public', 'images', 'uploads');
     await fs.mkdir(uploadDir, { recursive: true });
 
-    const buffer = Buffer.from(await file.arrayBuffer());
+    const bytes = await file.arrayBuffer();
+    const buffer = Buffer.from(bytes);
     const filepath = path.join(uploadDir, filename);
     await fs.writeFile(filepath, buffer);
 
     const url = `/images/uploads/${filename}`;
-    console.log('Local upload successful:', url);
+    console.log('Local upload:', url);
 
     return NextResponse.json({
       url,
