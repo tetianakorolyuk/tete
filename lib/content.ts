@@ -3,29 +3,31 @@ import { Project } from './types';
 const PROJECTS_KEY = 'tete_projects';
 
 export async function getProjects(): Promise<Project[]> {
-  // Try Vercel KV first
-  try {
-    const { kv } = await import('@vercel/kv');
-    const projects = await kv.get<Project[]>(PROJECTS_KEY);
-    if (projects && projects.length > 0) {
-      console.log('Loaded projects from KV:', projects.length);
-      return projects;
-    }
-  } catch (error) {
-    console.log('KV not available, using file fallback');
-  }
-
-  // Fallback: read from file (works locally and as initial load)
+  // Always read from file locally (fresh data, no caching issues)
   try {
     const fs = await import('fs/promises');
     const CONTENT_PATH = process.cwd() + '/public/content';
     const content = await fs.readFile(CONTENT_PATH + '/projects.json', 'utf-8');
     const data = JSON.parse(content);
-    return data.projects || [];
+    if (data.projects && data.projects.length > 0) {
+      return data.projects;
+    }
   } catch (fileError) {
     console.error('Failed to read projects.json:', fileError);
-    return [];
   }
+
+  // Fallback: try KV in production
+  try {
+    const { kv } = await import('@vercel/kv');
+    const projects = await kv.get<Project[]>(PROJECTS_KEY);
+    if (projects && projects.length > 0) {
+      return projects;
+    }
+  } catch (error) {
+    console.log('KV not available');
+  }
+
+  return [];
 }
 
 export async function saveProjects(projects: Project[]): Promise<void> {
