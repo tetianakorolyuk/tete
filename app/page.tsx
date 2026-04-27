@@ -14,6 +14,8 @@ import ScrollReveal from '@/components/ScrollReveal';
 import BackToTop from '@/components/BackToTop';
 import ScrollProgress from '@/components/ScrollProgress';
 
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
   const projects = await getProjects();
 

@@ -32,17 +32,7 @@ export default function ProjectsSection({ projects }: ProjectsSectionProps) {
       <div className="projects-inner">
         <FadeIn>
           <div className="projects-header">
-            <div className="projects-header-left">
-              <span className="projects-header-num">02</span>
-              <div className="projects-header-title-group">
-                <span className="projects-header-eyebrow">Portfolio</span>
-                <h3>Selected Projects</h3>
-              </div>
-            </div>
-            <div className="projects-header-right">
-              <span className="projects-header-count">{String(projects.length).padStart(2, '0')}</span>
-              <span className="projects-header-count-label">Works</span>
-            </div>
+            <h3>Selected Projects</h3>
           </div>
         </FadeIn>
       </div>

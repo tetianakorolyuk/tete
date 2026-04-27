@@ -177,16 +177,7 @@ export default function StudioSection() {
       <div className="studio-inner">
         <FadeUpOnScroll>
           <div className="studio-header">
-            <div className="studio-header-left">
-              <span className="studio-header-num">01</span>
-              <div className="studio-header-title-group">
-                <span className="studio-header-eyebrow">Studio</span>
-                <h2 className="studio-header-title">About the Studio</h2>
-              </div>
-            </div>
-            <div className="studio-header-right">
-              <span className="studio-header-meta">Est. 2020</span>
-            </div>
+            <h2 className="studio-header-title">About the Studio</h2>
           </div>
         </FadeUpOnScroll>
       </div>
