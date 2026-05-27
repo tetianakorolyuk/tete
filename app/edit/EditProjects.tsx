@@ -24,6 +24,65 @@ interface ConfirmState {
   onConfirm: () => void;
 }
 
+
+
+const MAX_UPLOAD_SIZE = 5 * 1024 * 1024;
+const ACCEPTED_UPLOAD_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif']);
+
+async function fileToDataUrl(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(String(reader.result));
+    reader.onerror = () => reject(new Error('Failed to read image file'));
+    reader.readAsDataURL(file);
+  });
+}
+
+async function dataUrlToJpegFile(dataUrl: string, originalName: string, quality: number): Promise<File> {
+  const image = new Image();
+  image.src = dataUrl;
+  await new Promise((resolve, reject) => {
+    image.onload = resolve;
+    image.onerror = () => reject(new Error('Failed to decode image'));
+  });
+
+  const canvas = document.createElement('canvas');
+  canvas.width = image.naturalWidth;
+  canvas.height = image.naturalHeight;
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('Canvas unavailable for compression');
+  ctx.drawImage(image, 0, 0);
+
+  const blob = await new Promise<Blob | null>((resolve) => canvas.toBlob(resolve, 'image/jpeg', quality));
+  if (!blob) throw new Error('Failed to encode image');
+
+  const safeBase = originalName.replace(/\.[^.]+$/, '') || 'upload';
+  return new File([blob], `${safeBase}.jpg`, { type: 'image/jpeg' });
+}
+
+async function prepareUploadFile(file: File): Promise<File> {
+  if (ACCEPTED_UPLOAD_TYPES.has(file.type) && file.size <= MAX_UPLOAD_SIZE) {
+    return file;
+  }
+
+  if (!file.type.startsWith('image/')) {
+    throw new Error(`Unsupported file type: ${file.type || 'unknown'}`);
+  }
+
+  if (file.type === 'image/gif' && file.size > MAX_UPLOAD_SIZE) {
+    throw new Error('GIF file is too large (max 5MB). Please optimize it before uploading.');
+  }
+
+  const sourceDataUrl = await fileToDataUrl(file);
+
+  for (const quality of [0.9, 0.8, 0.7, 0.6, 0.5, 0.4]) {
+    const compressed = await dataUrlToJpegFile(sourceDataUrl, file.name, quality);
+    if (compressed.size <= MAX_UPLOAD_SIZE) return compressed;
+  }
+
+  throw new Error('Image is still too large after compression. Please resize it and try again.');
+}
+
 const defaultStudioContent: StudioContent = {
   headline: 'Spaces that feel <em>intimate</em>, editorial, precise.',
   description:
@@ -325,10 +384,10 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
   const handleImageUpload = useCallback(
     async (slug: string, imageIndex: number, file: File) => {
       setUploadingImage({ slug, index: imageIndex });
-      const formData = new FormData();
-      formData.append('file', file);
-
       try {
+        const formData = new FormData();
+        const preparedFile = await prepareUploadFile(file);
+        formData.append('file', preparedFile);
         const res = await fetch('/api/upload', { method: 'POST', body: formData });
         if (!res.ok) {
           const errorData = await res.json();
@@ -418,9 +477,10 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
   const handleStudioImageUpload = useCallback(
     async (file: File) => {
       setUploadingStudioImage(true);
-      const formData = new FormData();
-      formData.append('file', file);
       try {
+        const formData = new FormData();
+        const preparedFile = await prepareUploadFile(file);
+        formData.append('file', preparedFile);
         const res = await fetch('/api/upload', { method: 'POST', body: formData });
         if (!res.ok) {
           const errorData = await res.json();
