@@ -26,7 +26,7 @@ interface ConfirmState {
 
 
 
-const MAX_UPLOAD_SIZE = 5 * 1024 * 1024;
+const MAX_UPLOAD_SIZE = 4 * 1024 * 1024;
 const ACCEPTED_UPLOAD_TYPES = new Set(['image/jpeg', 'image/png', 'image/webp', 'image/gif']);
 
 async function fileToDataUrl(file: File): Promise<string> {
@@ -60,6 +60,28 @@ async function dataUrlToJpegFile(dataUrl: string, originalName: string, quality:
   return new File([blob], `${safeBase}.jpg`, { type: 'image/jpeg' });
 }
 
+
+
+async function getErrorMessageFromResponse(res: Response, fallback: string): Promise<string> {
+  const contentType = res.headers.get('content-type') || '';
+  try {
+    if (contentType.includes('application/json')) {
+      const data = await res.json();
+      if (data?.error && typeof data.error === 'string') return data.error;
+      if (data?.message && typeof data.message === 'string') return data.message;
+    } else {
+      const text = await res.text();
+      if (text.includes('Request Entity Too Large')) {
+        return 'Image is still too large for upload. Please use a smaller image.';
+      }
+      if (text.trim()) return text.slice(0, 180);
+    }
+  } catch {
+    // ignore parse errors
+  }
+  return fallback;
+}
+
 async function prepareUploadFile(file: File): Promise<File> {
   if (ACCEPTED_UPLOAD_TYPES.has(file.type) && file.size <= MAX_UPLOAD_SIZE) {
     return file;
@@ -70,7 +92,7 @@ async function prepareUploadFile(file: File): Promise<File> {
   }
 
   if (file.type === 'image/gif' && file.size > MAX_UPLOAD_SIZE) {
-    throw new Error('GIF file is too large (max 5MB). Please optimize it before uploading.');
+    throw new Error('GIF file is too large (max 4MB). Please optimize it before uploading.');
   }
 
   const sourceDataUrl = await fileToDataUrl(file);
@@ -80,7 +102,7 @@ async function prepareUploadFile(file: File): Promise<File> {
     if (compressed.size <= MAX_UPLOAD_SIZE) return compressed;
   }
 
-  throw new Error('Image is still too large after compression. Please resize it and try again.');
+  throw new Error('Image is still too large after compression (max 4MB). Please resize it and try again.');
 }
 
 const defaultStudioContent: StudioContent = {
@@ -390,8 +412,8 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
         formData.append('file', preparedFile);
         const res = await fetch('/api/upload', { method: 'POST', body: formData });
         if (!res.ok) {
-          const errorData = await res.json();
-          throw new Error(errorData.error || 'Upload failed');
+          const errorMsg = await getErrorMessageFromResponse(res, 'Upload failed');
+          throw new Error(errorMsg);
         }
         const data = await res.json();
         if (data.url) {
@@ -483,8 +505,8 @@ export default function EditProjects({ initialProjects }: EditProjectsProps) {
         formData.append('file', preparedFile);
         const res = await fetch('/api/upload', { method: 'POST', body: formData });
         if (!res.ok) {
-          const errorData = await res.json();
-          throw new Error(errorData.error || 'Upload failed');
+          const errorMsg = await getErrorMessageFromResponse(res, 'Upload failed');
+          throw new Error(errorMsg);
         }
         const data = await res.json();
         if (data.url) {
