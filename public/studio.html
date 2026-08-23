@@ -1017,6 +1017,12 @@
       </div>
 
       <div class="header-actions">
+        <!-- How to Use & Guide Button -->
+        <button class="btn btn-outline btn-sm" id="btn-header-guide" onclick="openGuideModal()" style="font-weight: 800; border-color: var(--brand-terracotta); color: var(--brand-terracotta);">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+          <span>Guide</span>
+        </button>
+
         <!-- Text Size Scaler -->
         <div class="font-size-picker" title="Adjust text size">
           <button class="font-size-btn active" data-size="normal">A</button>
@@ -1079,8 +1085,16 @@
             <span>6. Substack Archive</span>
           </button>
         </nav>
+
+        <div style="margin-top: 14px; padding-top: 14px; border-top: 2px solid var(--border-subtle);">
+          <button class="btn btn-outline btn-sm" onclick="openGuideModal()" style="width: 100%; color: var(--brand-terracotta); border-color: var(--brand-terracotta);">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+            <span>How to Use & Guide</span>
+          </button>
+        </div>
       </div>
     </aside>
+
 
     <!-- ── Main Views ── -->
     <main class="main-content">
@@ -1371,6 +1385,52 @@
     </div>
   </div>
 
+  <!-- ── 📖 Complete How to Use & Publishing Guide Modal ── -->
+  <div class="modal-backdrop" id="guide-modal">
+    <div class="success-modal-card" style="max-width: 680px; text-align: left; max-height: 85vh; overflow-y: auto;">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--border-subtle); padding-bottom: 14px;">
+        <div>
+          <span style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--brand-terracotta); letter-spacing: 0.08em;">Studio Master Playbook</span>
+          <h2 style="font-family: var(--font-display); font-size: 24px; color: var(--text-main); margin-top: 2px;">How to Use Your Studio & Publishing Guide</h2>
+        </div>
+        <button onclick="closeGuideModal()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-muted); font-weight: 700; line-height: 1;">&times;</button>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 8px;">
+        <!-- Step 1 -->
+        <div style="background: var(--bg-subtle); padding: 14px 16px; border-radius: var(--radius-sm); border-left: 4px solid var(--brand-terracotta);">
+          <strong style="display: block; font-size: 15px; color: var(--text-main); margin-bottom: 4px;">1️⃣ Tuesday 9:00 AM — The Discovery Note (2 Minutes)</strong>
+          <p style="font-size: 13px; color: var(--text-body); line-height: 1.55;">
+            Go to <strong>Ideas</strong> or <strong>Notes</strong> → Type your raw thought or tap an angle → Tap <strong>1. Copy & Open Substack Notes</strong> → Paste (<kbd>Cmd+V</kbd>) and hit post. Notes under 100 words with a question bring new subscribers to your profile every week.
+          </p>
+        </div>
+
+        <!-- Step 2 -->
+        <div style="background: var(--bg-subtle); padding: 14px 16px; border-radius: var(--radius-sm); border-left: 4px solid var(--accent-green);">
+          <strong style="display: block; font-size: 15px; color: var(--text-main); margin-bottom: 4px;">2️⃣ Thursday 10:00 AM — The Flagship Newsletter (5 Minutes)</strong>
+          <p style="font-size: 13px; color: var(--text-body); line-height: 1.55;">
+            Go to <strong>Issue</strong> → Your 4-part newsletter (Essay, Material Pick, Field Reality, Poll) is structured for you → Generate a free photo in <strong>Photos</strong> if needed → Click <strong>1. Copy & Open Substack Post</strong> → Paste and publish to inboxes!
+          </p>
+        </div>
+
+        <!-- Step 3 -->
+        <div style="background: var(--bg-subtle); padding: 14px 16px; border-radius: var(--radius-sm); border-left: 4px solid var(--accent-purple);">
+          <strong style="display: block; font-size: 15px; color: var(--text-main); margin-bottom: 4px;">3️⃣ Superpower Remix & Instagram Exporter (1 Minute)</strong>
+          <p style="font-size: 13px; color: var(--text-body); line-height: 1.55;">
+            In <strong>Creators</strong>, tap <em>"✨ Remix Draft in Kelly/Amanda's Voice"</em> to sharpen your writing with viral hooks. In <strong>Issue</strong>, tap <em>"Instagram Pack"</em> to get 5 formatted slides for social media.
+          </p>
+        </div>
+      </div>
+
+      <div style="margin-top: 10px; display: flex; gap: 10px;">
+        <button class="btn btn-primary" onclick="closeGuideModal()" style="width: 100%; font-size: 15px;">
+          Got It, Let's Create!
+        </button>
+      </div>
+    </div>
+  </div>
+
+
   <!-- ── Toast ── -->
   <div id="toast-notification">
     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
@@ -1526,12 +1586,22 @@
       setTimeout(() => toast.classList.remove('visible'), 3000);
     }
 
+    const guideModal = document.getElementById('guide-modal');
+
     function openSuccessModal() {
       successModal.classList.add('active');
     }
     function closeSuccessModal() {
       successModal.classList.remove('active');
     }
+
+    window.openGuideModal = function() {
+      guideModal.classList.add('active');
+    };
+    window.closeGuideModal = function() {
+      guideModal.classList.remove('active');
+    };
+
 
     async function copyText(text, successMsg = 'Copied to clipboard!') {
       try {
