@@ -1229,7 +1229,16 @@
 
         <div class="notes-editor-layout">
           <div class="notes-composer-card">
-            <label style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: var(--brand-terracotta);">Your Note Draft</label>
+            <!-- Archetype Selector -->
+            <label style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: var(--brand-terracotta);">Note Archetype</label>
+            <div style="display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch;">
+              <button class="keyword-chip" onclick="loadArchetype('story')">Micro-Story (3x Reach)</button>
+              <button class="keyword-chip" onclick="loadArchetype('contrarian')">Contrarian Reality</button>
+              <button class="keyword-chip" onclick="loadArchetype('sourcing')">Sourcing Secret</button>
+              <button class="keyword-chip" onclick="loadArchetype('question')">Discussion Starter</button>
+            </div>
+
+            <label style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: var(--brand-terracotta); margin-top: 6px;">Your Note Draft</label>
             <textarea id="notes-text-editor" class="notes-textarea" style="height: 180px;" spellcheck="false"></textarea>
             
             <div style="background: var(--bg-subtle); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 700;">
@@ -1257,14 +1266,30 @@
       <!-- ── 5. FREE AI PHOTO STUDIO ── -->
       <section class="view-panel" id="panel-ai-photo">
         <div class="bento-hero-card">
-          <div class="bento-badge">Free AI Generator</div>
+          <div class="bento-badge">Free AI Generator (Flux Realism)</div>
           <h1>AI Interior Photography Studio</h1>
           <p>Generate high-res photography without subscriptions or API keys.</p>
         </div>
 
         <div class="newsletter-builder-layout">
           <div class="ai-controls-card">
-            <label style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: var(--brand-terracotta);">Photo Description</label>
+            <label style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: var(--brand-terracotta);">Quick Style Presets</label>
+            <div style="display: flex; gap: 6px; overflow-x: auto; padding-bottom: 4px; -webkit-overflow-scrolling: touch;">
+              <button class="keyword-chip" style="font-size: 12px;" onclick="loadAiPreset('Washed oatmeal Belgian linen sofa in warm morning sunlight, natural oak table, ceramic vase, calm quiet luxury')">Belgian Linen</button>
+              <button class="keyword-chip" style="font-size: 12px;" onclick="loadAiPreset('Raw travertine plinth with unpolished textured lime wash wall, soft raking afternoon light, Japandi minimalist')">Travertine & Lime</button>
+              <button class="keyword-chip" style="font-size: 12px;" onclick="loadAiPreset('Sculptural Danish table lamp casting warm 2700K amber glow on aged oak desk at dusk, cozy moody')">Danish 2700K Glow</button>
+              <button class="keyword-chip" style="font-size: 12px;" onclick="loadAiPreset('Interior design flatlay, architectural floor plan sketches, raw travertine, linen swatches, brass scale ruler')">Moodboard Flatlay</button>
+            </div>
+
+            <!-- Aspect Ratio -->
+            <label style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: var(--brand-terracotta); margin-top: 8px;">Aspect Ratio</label>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-outline btn-sm ratio-btn active" data-w="1280" data-h="720" style="flex: 1;">16:9 Banner</button>
+              <button class="btn btn-outline btn-sm ratio-btn" data-w="800" data-h="1000" style="flex: 1;">4:5 Post</button>
+              <button class="btn btn-outline btn-sm ratio-btn" data-w="1024" data-h="1024" style="flex: 1;">1:1 Square</button>
+            </div>
+
+            <label style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: var(--brand-terracotta); margin-top: 8px;">Photo Description</label>
             <textarea id="ai-prompt-input" class="notes-textarea" style="height: 100px;" placeholder="Describe what you want to see..."></textarea>
             
             <button class="btn btn-purple" id="btn-generate-ai-image">
@@ -1295,6 +1320,7 @@
           <!-- Populated by JS -->
         </div>
       </section>
+
 
     </main>
   </div>
@@ -1810,12 +1836,70 @@
       });
     }
 
+    // ── Archetype Selector for Notes ──
+    window.loadArchetype = function(type) {
+      if (type === 'story') {
+        notesEditor.value = `The biggest mistake I see with living rooms is designing for who you wish you were on Saturday night instead of who you actually are on Tuesday morning.\n\nA room built around an imaginary routine doesn't survive real laundry and coffee mugs.\n\nDesign for how the room holds your real habits, not the photograph.\n\nWhat's one space in your home that works better on Pinterest than in real life?`;
+      } else if (type === 'contrarian') {
+        notesEditor.value = `Stop looking for the "perfect white paint." It doesn't exist.\n\nThere is only the right white for your light, at 4 PM in October, with your particular wood floors.\n\nCool greys look chic in staged photos but feel clinical on Tuesday mornings. Warm neutrals hold the sunlight and let you exhale.\n\nHow many paint sample pots are currently sitting in your basement?`;
+      } else if (type === 'sourcing') {
+        notesEditor.value = `Interior designer secret:\n\nA $150 rice paper lantern with a warm 2700K bulb creates more atmospheric warmth at 9 PM than a $3,000 crystal chandelier.\n\nGood design is never about how much you spent on the fixture. It's about how the light pools where you sit.\n\nWhat is your favorite light in your house right now?`;
+      } else if (type === 'question') {
+        notesEditor.value = `Quick question for you:\n\nWho else completely bans the overhead ceiling "Big Light" after 7 PM in favor of soft table lamps?\n\nLet me know your evening lighting ritual below!`;
+      }
+      updateNoteStats();
+      showToast('Loaded Note Archetype!');
+    };
+
+    // ── AI Photo Studio Helpers ──
+    let selectedImageWidth = 1280;
+    let selectedImageHeight = 720;
+    let currentGeneratedImageUrl = "https://image.pollinations.ai/prompt/warm%20minimalist%20living%20room%20belgian%20linen%20sofa%20aged%20oak%20coffee%20table%20natural%20morning%20sunlight%20quiet%20luxury%20architectural%20digest?width=1280&height=720&nologo=true&seed=42";
+
+    window.loadAiPreset = function(promptText) {
+      document.getElementById('ai-prompt-input').value = promptText;
+      showToast('Loaded Photo Style Preset!');
+    };
+
+    document.querySelectorAll('.ratio-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.ratio-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedImageWidth = parseInt(btn.getAttribute('data-w'));
+        selectedImageHeight = parseInt(btn.getAttribute('data-h'));
+        showToast('Selected aspect ratio');
+      });
+    });
+
+    document.getElementById('btn-generate-ai-image').addEventListener('click', () => {
+      const prompt = document.getElementById('ai-prompt-input').value.trim() || 'Washed oatmeal Belgian linen sofa in warm morning sunlight, natural oak table, ceramic vase, calm quiet luxury';
+      const cleanPrompt = encodeURIComponent(prompt + ", quiet luxury interior design, architectural digest magazine aesthetic, warm diffused natural light, 8k, photorealistic");
+      const seed = Math.floor(Math.random() * 100000);
+      const url = `https://image.pollinations.ai/prompt/${cleanPrompt}?width=${selectedImageWidth}&height=${selectedImageHeight}&model=flux-realism&nologo=true&seed=${seed}`;
+
+      const imgElem = document.getElementById('ai-result-image');
+      imgElem.src = url;
+      currentGeneratedImageUrl = url;
+      showToast('✨ Generated High-Res Photo!');
+    });
+
+    document.getElementById('btn-download-ai-image').addEventListener('click', () => {
+      window.open(currentGeneratedImageUrl, '_blank');
+      showToast('Opening high-res image for download!');
+    });
+
+    document.getElementById('btn-use-as-article-banner').addEventListener('click', () => {
+      switchView('newsletter-auto');
+      showToast('Set as Newsletter Header Banner!');
+    });
+
     document.getElementById('btn-generate-from-mind').addEventListener('click', generateFromCustomMind);
     document.getElementById('custom-mind-input').addEventListener('keydown', (e) => {
       if (e.key === 'Enter') generateFromCustomMind();
     });
 
     renderSuggestions(EDITORIAL_DATA);
+
 
     renderSuperCreators();
     renderArchiveFeed();
