@@ -1087,25 +1087,31 @@
       
       <!-- ── 1. EDITORIAL INTELLIGENCE VIEW ── -->
       <section class="view-panel active" id="panel-reach">
-        <div class="bento-hero-card">
-          <div class="bento-badge">Step 1: Choose an Angle</div>
-          <h1>Editorial Topics & Trend Scanner</h1>
-          <p>Click any card below to turn it into a full ready-to-post newsletter or Substack note.</p>
-        </div>
-
-        <!-- Superpower Keyword Shelf -->
-        <div class="superpower-box">
-          <div class="superpower-title">
-            <h3>⚡ Viral Phrase & Keyword Bank (Tap to Insert)</h3>
+        <!-- 💭 Mind-to-Creation Generator Bar (Type What's on Your Mind) -->
+        <div style="background: var(--bg-surface); border: 2.5px solid var(--brand-terracotta); border-radius: var(--radius-md); padding: 22px; margin-bottom: 20px; box-shadow: var(--shadow-sm);">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px;">
+            <label style="font-size: 15px; font-weight: 800; color: var(--brand-terracotta); text-transform: uppercase; letter-spacing: 0.05em; display: flex; align-items: center; gap: 6px;">
+              <span>💭 What is on your mind right now?</span>
+            </label>
+            <span style="font-size: 12px; color: var(--text-muted); font-weight: 700;">Custom Idea Engine</span>
           </div>
-          <div class="keyword-bank" id="global-keyword-bank">
-            <button class="keyword-chip" onclick="insertKeyword('Showroom myth vs Tuesday reality')">Showroom myth vs Tuesday reality</button>
-            <button class="keyword-chip" onclick="insertKeyword('Design for the exhale, not the photo')">Design for the exhale, not the photo</button>
-            <button class="keyword-chip" onclick="insertKeyword('The 2700K warm lighting therapy')">The 2700K warm lighting therapy</button>
-            <button class="keyword-chip" onclick="insertKeyword('Anti-greige & tactile limestone warmth')">Anti-greige & tactile limestone warmth</button>
-            <button class="keyword-chip" onclick="insertKeyword('Organic patina over showroom perfection')">Organic patina over showroom perfection</button>
-            <button class="keyword-chip" onclick="insertKeyword('Ban the overhead Big Light after 7 PM')">Ban the overhead Big Light after 7 PM</button>
-            <button class="keyword-chip" onclick="insertKeyword('Quiet European luxury')">Quiet European luxury</button>
+          <p style="font-size: 14px; color: var(--text-body); margin-bottom: 12px; line-height: 1.5;">Type any raw thought, material, room dilemma, or trend to generate bespoke angles:</p>
+          
+          <div style="display: flex; gap: 10px; flex-direction: column;">
+            <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+              <input type="text" id="custom-mind-input" class="search-input" placeholder="e.g. Limewash paint in small bathroom, Roman travertine, Danish 2700K lighting..." style="flex: 1; min-width: 240px; font-size: 16px;">
+              <button class="btn btn-accent" id="btn-generate-from-mind" style="padding: 12px 24px; white-space: nowrap;">
+                <span>✨ Generate Custom Ideas</span>
+              </button>
+            </div>
+            
+            <!-- Quick Example Chips -->
+            <div style="display: flex; gap: 6px; overflow-x: auto; padding-top: 4px; -webkit-overflow-scrolling: touch;">
+              <button class="keyword-chip" style="font-size: 12px;" onclick="fillMindInput('Limewash paint in small bathrooms')">Limewash in Bathrooms</button>
+              <button class="keyword-chip" style="font-size: 12px;" onclick="fillMindInput('Narrow hallway and entryway storage')">Narrow Entryways</button>
+              <button class="keyword-chip" style="font-size: 12px;" onclick="fillMindInput('Mixing vintage wood with modern minimalism')">Mixing Vintage & Modern</button>
+              <button class="keyword-chip" style="font-size: 12px;" onclick="fillMindInput('Danish lighting 2700K vs bright ceiling spots')">Lighting Secrets</button>
+            </div>
           </div>
         </div>
 
@@ -1113,6 +1119,7 @@
         <div class="suggestions-grid" id="reach-suggestions-container">
           <!-- Populated by JS -->
         </div>
+
       </section>
 
       <!-- ── 2. TOP CREATORS & REMIX ENGINE ── -->
@@ -1590,8 +1597,69 @@
       showToast(`✨ Remixed Note draft with ${creator.name}'s voice!`);
     };
 
+    // ── Mind-to-Creation Dynamic Idea Generator Engine ──
+    window.fillMindInput = function(val) {
+      document.getElementById('custom-mind-input').value = val;
+      generateFromCustomMind();
+    };
+
+    function generateFromCustomMind() {
+      const input = document.getElementById('custom-mind-input').value.trim();
+      if (!input) {
+        showToast('Please type a thought or keyword first!');
+        return;
+      }
+      
+      showToast(`Generating bespoke angles for: "${input}"...`);
+
+      const generatedAngles = [
+        {
+          id: "gen-" + Date.now() + "-1",
+          pillarLabel: "Contrarian Reality",
+          title: `The Truth About ${input}: Why Showroom Photos Lie`,
+          rationale: `Deconstructs common showroom misconceptions about ${input} and explains how to make it work in real life.`,
+          snippet: `“Everyone loves the staged Pinterest photo of ${input}. But on Tuesday morning, here is the unvarnished reality.”`,
+          noteText: `The biggest mistake people make with ${input} is treating it like a museum piece.\n\nIf you can't live with real coffee mugs, kids, and daily mess around ${input}, the design has failed.\n\nDesign for the exhale, not the photograph.\n\nWhat is your biggest frustration with ${input}?`,
+          essay: `We need to talk about ${input}. For the last three years, design feeds have been flooded with pristine, filtered images of ${input} looking like an untouchable sculpture.\n\nHere is what nobody tells you about living with it every single day: unless you understand the texture and lighting requirements, it will feel cold by October.\n\nHere are 3 rules I give my private clients before they commit to ${input}.`,
+          material: `Sourcing Pick: Handcrafted textured ${input} paired with warm 2700K ambient lighting and Belgian linen textiles.`,
+          behind: `A client asked me yesterday if they should replace their existing setup with ${input}. My answer was simple: only if it serves your morning routine.`,
+          poll: `Question for you: Have you ever tried ${input} in your home? What worked and what failed? Reply below!`
+        },
+        {
+          id: "gen-" + Date.now() + "-2",
+          pillarLabel: "Designer Sourcing Secret",
+          title: `The $150 Secret for ${input} That Beats Luxury Showrooms`,
+          rationale: `Provides high-value tactical sourcing advice and budget trade-offs for ${input}.`,
+          snippet: `“You don't need a $4,000 budget to achieve tactile luxury with ${input}. Here is the exact material formula.”`,
+          noteText: `Designer confession about ${input}:\n\nA $150 vintage or handcrafted piece with natural patina creates 10x more soul than a $3,000 brand-new reproduction.\n\nGood design is about restraint and layering, not spending.\n\nWhere do you usually source pieces for ${input}?`,
+          essay: `There is an unwritten rule in luxury residential design: the most memorable element in the room is almost never the most expensive item.\n\nWhen sourcing for ${input}, look for aged grain, natural limestone undertones, or tactile hand-woven textures that soften hard edges.`,
+          material: `Material Spec: Textured matte finish with natural organic imperfections. Avoid high-gloss lacquers on ${input}.`,
+          behind: `Testing 4 different finishes for ${input} in natural afternoon daylight. Matte natural oil always wins.`,
+          poll: `What is your absolute favorite place to hunt for home treasures? (Flea markets, vintage shops, or online?)`
+        },
+        {
+          id: "gen-" + Date.now() + "-3",
+          pillarLabel: "Tuesday Morning Audit",
+          title: `The 5-Minute Spatial Audit for ${input}`,
+          rationale: `Practical step-by-step diagnostic checklist readers can apply this weekend.`,
+          snippet: `“Before you spend a single dollar on ${input}, ask these three diagnostic questions.”`,
+          noteText: `Before you buy anything for ${input}, do this 5-minute test:\n\nSit in the room at 4 PM without turning on any lights. Notice where the natural light hits. That is where ${input} belongs.\n\nFollow the light, not the floor plan.\n\nWhat direction do the windows in your main room face?`,
+          essay: `Most people arrange ${input} based on where the TV or the wall happens to be. But the human nervous system relaxes when spatial flow and natural daylight align.\n\nHere is my 5-step spatial checklist for placing ${input} so the room feels twice as open and peaceful.`,
+          material: `Tactile Pairing: Solid aged oak and soft neutral lime wash background.`,
+          behind: `Rearranging a client's room around ${input} completely eliminated the cramped feeling without knocking down a single wall.`,
+          poll: `Which room in your house feels the most cramped right now? Let's troubleshoot it together!`
+        }
+      ];
+
+      // Insert at the top of suggestions and re-render
+      generatedAngles.forEach(a => EDITORIAL_DATA.unshift(a));
+      renderSuggestions(EDITORIAL_DATA);
+      showToast(`✨ Generated 3 custom angles for "${input}"!`);
+    }
+
     // ── Render Suggestions ──
     function renderSuggestions(items) {
+
       reachContainer.innerHTML = '';
       items.forEach((item) => {
         const card = document.createElement('div');
@@ -1742,7 +1810,13 @@
       });
     }
 
+    document.getElementById('btn-generate-from-mind').addEventListener('click', generateFromCustomMind);
+    document.getElementById('custom-mind-input').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') generateFromCustomMind();
+    });
+
     renderSuggestions(EDITORIAL_DATA);
+
     renderSuperCreators();
     renderArchiveFeed();
     const saved = localStorage.getItem('tete_saved_note_draft');
