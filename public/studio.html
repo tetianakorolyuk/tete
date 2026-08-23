@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The TETE — Editorial Studio & Substack Intelligence</title>
-  <meta name="description" content="Magazine-grade Editorial Content Studio, Newsletter Automation, Live Substack RSS Sync & AI Photo Studio for The TETE by Tetiana (TE | INTERIOR & DECOR)">
+  <title>The TETE — Editorial Studio, Top Creator Intelligence & Substack Suite</title>
+  <meta name="description" content="Magazine-grade Editorial Content Studio, Top Creator Benchmarks, Newsletter Automation, Live Substack RSS Sync & AI Photo Studio for The TETE by Tetiana (TE | INTERIOR & DECOR)">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -1110,6 +1110,66 @@
       display: flex;
     }
 
+    /* ── Creator Intelligence Cards ── */
+    .creator-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 16px;
+      transition: all 0.2s;
+    }
+    .creator-card:hover {
+      border-color: var(--brand-terracotta);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .creator-header-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .creator-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 15px;
+      color: var(--brand-terracotta);
+      flex-shrink: 0;
+    }
+    .creator-meta h3 {
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+    .creator-meta span {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    .playbook-badge {
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: var(--radius-full);
+      background: rgba(197, 106, 60, 0.12);
+      color: var(--brand-terracotta);
+    }
+
     /* ── Live Archive Grid ── */
     .archive-grid {
       display: grid;
@@ -1186,7 +1246,115 @@
     @keyframes spin {
       to { transform: rotate(360deg); }
     }
+
+    /* ── Mobile Responsive Overhaul (Fluid & Touch-Friendly) ── */
+    @media (max-width: 900px) {
+      .app-container {
+        grid-template-columns: 1fr;
+        padding: 16px;
+        gap: 16px;
+      }
+      header.app-header {
+        position: relative;
+      }
+      .header-inner {
+        padding: 12px 16px;
+        flex-direction: column;
+        align-items: stretch;
+        gap: 12px;
+      }
+      .brand-group {
+        justify-content: space-between;
+      }
+      .header-actions {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .style-picker {
+        grid-column: 1 / -1;
+        justify-content: space-around;
+      }
+      aside.sidebar {
+        position: sticky;
+        top: 0;
+        z-index: 90;
+      }
+      .sidebar-card {
+        padding: 12px;
+      }
+      .author-badge-card, .quick-links-group {
+        display: none;
+      }
+      .nav-menu {
+        flex-direction: row;
+        overflow-x: auto;
+        gap: 6px;
+        padding-bottom: 4px;
+        -webkit-overflow-scrolling: touch;
+      }
+      .nav-item {
+        padding: 8px 14px;
+        font-size: 12px;
+        white-space: nowrap;
+        width: auto;
+        border-radius: var(--radius-full);
+        background: var(--bg-subtle);
+        flex-shrink: 0;
+      }
+      .nav-tag {
+        display: none;
+      }
+      .bento-hero-card {
+        padding: 22px 18px;
+      }
+      .bento-hero-card h1, .bento-hero-card h2 {
+        font-size: 24px;
+      }
+      .notes-editor-layout,
+      .newsletter-builder-layout,
+      .ai-generator-layout {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+      .email-preview-container, .notes-composer-card, .note-preview-container, .ai-controls-card, .ai-preview-card {
+        padding: 18px 16px;
+      }
+      .sug-actions-row {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+      }
+      .sug-action-group {
+        flex-direction: column;
+        width: 100%;
+      }
+      .sug-action-group .btn, .sug-actions-row > .btn {
+        width: 100%;
+        text-align: center;
+      }
+      .search-input-group {
+        flex-direction: column;
+      }
+      .ratio-selector {
+        flex-direction: column;
+      }
+      .archive-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .brand-prefix { font-size: 14px; }
+      .brand-name { font-size: 18px; }
+      .badge-studio { display: none; }
+      .substack-status-pill { font-size: 11px; padding: 4px 8px; }
+      .bento-hero-card h1 { font-size: 20px; }
+      .bento-hero-card p { font-size: 13px; }
+      .archetype-selector { grid-template-columns: 1fr; }
+    }
   </style>
+
 </head>
 <body>
 
@@ -1255,6 +1423,12 @@
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
             <span>Editorial Intelligence</span>
             <span class="nav-tag live">Web Live</span>
+          </button>
+
+          <button class="nav-item" data-view="creators" id="nav-creators">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+            <span>Top Creators & Playbook</span>
+            <span class="nav-tag">Top 8</span>
           </button>
 
           <button class="nav-item" data-view="newsletter-auto" id="nav-newsletter-auto">
@@ -1344,7 +1518,46 @@
         </div>
       </section>
 
-      <!-- ── 2. MULTI-SECTION NEWSLETTER STUDIO ── -->
+      <!-- ── 2. TOP CREATORS & VIRAL PLAYBOOK ── -->
+      <section class="view-panel" id="panel-creators">
+        <div class="bento-hero-card">
+          <div class="bento-badge">
+            <span>Substack Design Benchmarks</span>
+          </div>
+          <h1>Top 8 Interior Design Substacks & Growth Playbook</h1>
+          <p>Reverse-engineered analysis of what top design creators are publishing to generate 100+ likes, comments, and restacks. Click any framework to load it into your Notes Studio.</p>
+        </div>
+
+        <!-- Viral Frameworks Bar -->
+        <div class="input-hero-card">
+          <span class="input-label">Viral Note Frameworks (Click to Load)</span>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 12px; margin-top: 10px;">
+            <button class="chip" style="text-align: left; padding: 12px 14px;" onclick="loadViralFramework('mistake')">
+              <strong style="display: block; font-size: 12px; color: var(--text-main); margin-bottom: 2px;">1. The Mistake Reframe</strong>
+              <span style="font-size: 11px; color: var(--text-muted);">Common showroom myth vs lived daily reality</span>
+            </button>
+            <button class="chip" style="text-align: left; padding: 12px 14px;" onclick="loadViralFramework('antitrend')">
+              <strong style="display: block; font-size: 12px; color: var(--text-main); margin-bottom: 2px;">2. The Anti-Trend Manifesto</strong>
+              <span style="font-size: 11px; color: var(--text-muted);">Calling out cold greige in favor of tactile depth</span>
+            </button>
+            <button class="chip" style="text-align: left; padding: 12px 14px;" onclick="loadViralFramework('sourcing')">
+              <strong style="display: block; font-size: 12px; color: var(--text-main); margin-bottom: 2px;">3. The Sourcing Secret</strong>
+              <span style="font-size: 11px; color: var(--text-muted);">Why one $150 fixture beats a $2,000 piece</span>
+            </button>
+            <button class="chip" style="text-align: left; padding: 12px 14px;" onclick="loadViralFramework('groupchat')">
+              <strong style="display: block; font-size: 12px; color: var(--text-main); margin-bottom: 2px;">4. The Designer Group Chat</strong>
+              <span style="font-size: 11px; color: var(--text-muted);">Unvarnished truth about client budget trade-offs</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Top Creators Grid -->
+        <div class="archive-grid" id="top-creators-grid">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- ── 3. MULTI-SECTION NEWSLETTER STUDIO ── -->
       <section class="view-panel" id="panel-newsletter-auto">
         <div class="bento-hero-card">
           <div class="bento-badge">
@@ -1361,9 +1574,9 @@
               <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
               <span>Draft in Substack Editor</span>
             </button>
-            <button class="btn btn-purple" id="btn-auto-compose-issue">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
-              <span>Auto-Generate Next Issue</span>
+            <button class="btn btn-purple" id="btn-export-instagram-pack">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+              <span>Export Instagram Carousel Pack</span>
             </button>
           </div>
         </div>
@@ -1468,7 +1681,7 @@
         </div>
       </section>
 
-      <!-- ── 3. SUBSTACK NOTES STUDIO VIEW ── -->
+      <!-- ── 4. SUBSTACK NOTES STUDIO VIEW ── -->
       <section class="view-panel" id="panel-notes">
         <div class="bento-hero-card">
           <div class="bento-badge">
@@ -1502,7 +1715,7 @@
             </div>
 
             <div>
-              <label class="input-label" for="notes-text-editor">Note Draft</label>
+              <label class="input-label" for="notes-text-editor">Note Draft (Auto-Saved)</label>
               <textarea id="notes-text-editor" class="notes-textarea" spellcheck="false"></textarea>
             </div>
 
@@ -1555,7 +1768,7 @@
         </div>
       </section>
 
-      <!-- ── 4. FREE AI PHOTO GENERATOR STUDIO ── -->
+      <!-- ── 5. FREE AI PHOTO GENERATOR STUDIO ── -->
       <section class="view-panel" id="panel-ai-photo">
         <div class="bento-hero-card">
           <div class="bento-badge" style="background: rgba(124,92,252,0.12); color: #7C5CFC; border-color: rgba(124,92,252,0.25);">
@@ -1628,7 +1841,7 @@
         </div>
       </section>
 
-      <!-- ── 5. PUBLISHING CADENCE & QUEUE ── -->
+      <!-- ── 6. PUBLISHING CADENCE & QUEUE ── -->
       <section class="view-panel" id="panel-calendar">
         <div class="bento-hero-card">
           <div class="bento-badge">
@@ -1668,7 +1881,7 @@
         </div>
       </section>
 
-      <!-- ── 6. SUBSTACK LIVE SYNC & ARCHIVE FEED ── -->
+      <!-- ── 7. SUBSTACK LIVE SYNC & ARCHIVE FEED ── -->
       <section class="view-panel" id="panel-feed">
         <div class="bento-hero-card">
           <div class="bento-badge">
@@ -1701,6 +1914,74 @@
 
   <!-- ── Application Logic ── -->
   <script>
+    // ── Top 8 Interior Design Substack Creators Intelligence ──
+    const TOP_CREATORS_DATA = [
+      {
+        name: "Kelly Wearstler",
+        pub: "WEARSTLERWORLD",
+        tagline: "Sculptural luxury, high-concept materiality, and architecture as fine art.",
+        cadence: "Weekly",
+        strategy: "Avant-Garde Materiality: High-contrast photos of custom stone and bronze with provocative 1-line design questions that drive 200+ comments.",
+        handle: "kellywearstler"
+      },
+      {
+        name: "Amanda Hesser",
+        pub: "Homeward",
+        tagline: "Ojai renovation journey, emotional architecture, and asking hard life questions through home design.",
+        cadence: "Bi-Weekly",
+        strategy: "Relatable Renovation Reality: Honest breakdowns of renovation setbacks, budgeting honesty, and lived human experiences.",
+        handle: "amandahesser"
+      },
+      {
+        name: "Eleanor Cording-Booth",
+        pub: "A Considered Space",
+        tagline: "Obsessively curated vintage, indie designer edits, anti-fast-furniture, and quiet European luxury.",
+        cadence: "Weekly",
+        strategy: "Quiet Curation & Anti-Trends: Deep dives into obscure craftspeople, antique hunting, and rejecting mass-produced trends.",
+        handle: "eleanorcordingbooth"
+      },
+      {
+        name: "Kate Watson-Smyth",
+        pub: "Mad About The House",
+        tagline: "Practical color theory, layout hacks, and demystifying interior designer rules.",
+        cadence: "Twice Weekly",
+        strategy: "The 'Do This, Not That' Formula: Highly practical paint and spatial rules that readers instantly screenshot and restack.",
+        handle: "katewatsonsmyth"
+      },
+      {
+        name: "Domino Magazine",
+        pub: "Home Front",
+        tagline: "Insider trend scouting, exclusive decor finds, and architectural house tours.",
+        cadence: "Twice Weekly",
+        strategy: "High-Open-Rate Subject Lines: Numbered roundups and 'The 1 item under $100 every designer buys' curiosity hooks.",
+        handle: "dominomag"
+      },
+      {
+        name: "Lily",
+        pub: "Designer's Digest",
+        tagline: "Group-chat honesty, realistic client budgets vs reality, and what nobody tells you about tile.",
+        cadence: "Weekly",
+        strategy: "Group Chat Intimacy: Writing in first-person lowercase conversational prose as if texting a close friend about a project.",
+        handle: "lily"
+      },
+      {
+        name: "Josh Young",
+        pub: "These Walls",
+        tagline: "High aesthetic curation, neoclassical meets modern minimalism, and atmospheric lighting.",
+        cadence: "Weekly",
+        strategy: "Atmospheric Visual Vignettes: Moody evening photography paired with 3-sentence poetic reflections on lighting.",
+        handle: "joshyoung"
+      },
+      {
+        name: "Carol Reed",
+        pub: "BECOMING HOME",
+        tagline: "30-year veteran design breakdowns, historic home restorations, and structural spatial logic.",
+        cadence: "Bi-Weekly",
+        strategy: "Load-Bearing Authority: Floor plan diagrams, construction details, and professional contractor collaboration tips.",
+        handle: "carolreed"
+      }
+    ];
+
     // ── Live Substack Published Archive Data (17 Issues synced via RSS) ──
     const LIVE_SUBSTACK_POSTS = [
       { title: "How I Actually Start a Project", date: "Aug 11, 2026", link: "https://thetete.substack.com/p/how-i-actually-start-a-project", desc: "Good design isn't about making someone's life fit the room. It's about making the room fit their life." },
@@ -1835,6 +2116,51 @@
       });
     });
 
+    // ── Render Top Creators ──
+    function renderTopCreators() {
+      const grid = document.getElementById('top-creators-grid');
+      grid.innerHTML = '';
+      TOP_CREATORS_DATA.forEach(c => {
+        const card = document.createElement('div');
+        card.className = 'creator-card';
+        card.innerHTML = `
+          <div>
+            <div class="creator-header-row">
+              <div class="creator-avatar">${c.name.split(' ').map(n=>n[0]).join('')}</div>
+              <div class="creator-meta">
+                <h3>${c.name}</h3>
+                <span>${c.pub} · ${c.cadence}</span>
+              </div>
+            </div>
+            <p style="font-size: 13px; color: var(--text-body); margin: 12px 0 8px; line-height: 1.5;">${c.tagline}</p>
+            <div style="background: var(--bg-subtle); padding: 10px 12px; border-radius: var(--radius-sm); font-size: 11px; line-height: 1.5; color: var(--text-muted);">
+              <strong style="color: var(--brand-terracotta);">Why they win:</strong> ${c.strategy}
+            </div>
+          </div>
+          <div style="display: flex; gap: 8px; padding-top: 12px; border-top: 1px solid var(--border-subtle);">
+            <a href="https://substack.com/@${c.handle}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm" style="flex: 1; text-align: center;">View on Substack ↗</a>
+          </div>
+        `;
+        grid.appendChild(card);
+      });
+    }
+
+    // ── Viral Framework Loaders ──
+    window.loadViralFramework = function(type) {
+      document.getElementById('nav-notes').click();
+      if (type === 'mistake') {
+        notesEditor.value = `The biggest mistake people make with lighting isn't buying the wrong lamp—it's turning on the overhead ceiling fixture after 7 PM.\n\nOverhead downlights blast light from above like an interrogation room.\n\nTwo warm 2700K table lamps in opposite corners pool light at eye level and make the room instantly feel 50% calmer.\n\nWho else refuses to turn on the "Big Light" at night?`;
+      } else if (type === 'antitrend') {
+        notesEditor.value = `Stop looking for the "perfect white paint." It doesn't exist.\n\nThere is only the right white for your light, at 4 PM in October, with your particular wood floors.\n\nCool greys look chic in staged photos but feel clinical on Tuesday mornings. Warm neutrals hold the sunlight and let you exhale.\n\nHow many paint sample pots are currently sitting in your basement?`;
+      } else if (type === 'sourcing') {
+        notesEditor.value = `Interior designer secret:\n\nA $150 rice paper lantern with a warm 2700K bulb creates more atmospheric warmth at 9 PM than a $3,000 crystal chandelier.\n\nGood design is never about how much you spent on the fixture. It's about how the light pools where you sit.\n\nWhat is your favorite light in your house right now?`;
+      } else if (type === 'groupchat') {
+        notesEditor.value = `Honest designer confession from yesterday's client meeting:\n\nWe spent 45 minutes debating between two sofas before I asked: "Where does the laundry actually land when you're tired on Tuesday?"\n\nDesigning for your real unvarnished routine always beats designing for an imaginary version of yourself.\n\nDesign for the exhale, not the photograph.`;
+      }
+      updateNoteStats();
+      showToast('Loaded viral framework into Notes Studio!');
+    };
+
     // ── Render Agent Reach Suggestions ──
     function renderSuggestions(items) {
       reachContainer.innerHTML = '';
@@ -1943,6 +2269,25 @@
       return `# ${subj}\n*${prev}*\n\n---\n\n## 1. The Design Essay\n\n${essay}\n\n---\n\n## 2. Material & Object of the Week\n\n${mat}\n\n---\n\n## 3. Tuesday Morning Reality\n\n${behind}\n\n---\n\n## 4. Community Discussion\n\n${poll}\n\n---\n\nStay cozy & curious,\n*xoxo,*\n*tete*`;
     }
 
+    // ── Export Instagram Carousel Pack ──
+    document.getElementById('btn-export-instagram-pack').addEventListener('click', () => {
+      const subj = document.getElementById('news-subject-input').value;
+      const essay = document.getElementById('sim-essay-body').textContent.trim();
+      const mat = document.getElementById('sim-material-body').textContent.trim();
+      const behind = document.getElementById('sim-behind-body').textContent.trim();
+      const poll = document.getElementById('sim-poll-body').textContent.trim();
+
+      const igPack = `📸 INSTAGRAM CAROUSEL PACK (5 SLIDES) for: "${subj}"\n\n` +
+        `SLIDE 1 (Cover Hook):\n${subj}\n\n` +
+        `SLIDE 2 (The Diagnostic):\n${essay.slice(0, 180)}...\n\n` +
+        `SLIDE 3 (The Sourcing Rule):\n${mat}\n\n` +
+        `SLIDE 4 (Behind The Scenes):\n${behind}\n\n` +
+        `SLIDE 5 (Call to Action):\nRead the full letter on Substack (link in bio).\n${poll}\n\n` +
+        `CAPTION & HASHTAGS:\n${subj}\n\nNew issue of The TETE is live on Substack. Link in bio to read the full breakdown.\n\n#InteriorDesign #TheTETE #TactileMinimalism #QuietLuxury #LightingDesign #SubstackWriters`;
+
+      copyText(igPack, 'Copied 5-Slide Instagram Carousel Pack!');
+    });
+
     // ── Section Tab Switching in Newsletter Editor ──
     document.querySelectorAll('.section-tab-btn').forEach(btn => {
       btn.addEventListener('click', () => {
@@ -2016,6 +2361,22 @@
       showToast('Set photo as Newsletter Header Banner!');
     });
 
+    // ── Update Notes Editor & Auto-Save ──
+    function updateNoteStats() {
+      const text = notesEditor.value.trim();
+      const words = text ? text.split(/\s+/).length : 0;
+      noteWordCount.textContent = `${words} words`;
+      if (words >= 50 && words <= 100) {
+        noteWordCount.className = 'word-counter-badge';
+      } else {
+        noteWordCount.className = 'word-counter-badge warning';
+      }
+      mockNotePreview.textContent = text || "Type your Substack Note draft...";
+      localStorage.setItem('tete_saved_note_draft', text);
+    }
+
+    notesEditor.addEventListener('input', updateNoteStats);
+
     // ── Populate Live Substack Archive (17 Issues) ──
     function renderArchiveFeed() {
       const container = document.getElementById('live-feed-grid');
@@ -2080,9 +2441,12 @@
       });
     });
 
-    // ── Initial Setup ──
+    // ── Initial Setup & Restore Auto-Saved Drafts ──
     renderSuggestions(EDITORIAL_DATA);
-    notesEditor.value = EDITORIAL_DATA[0].noteText;
+    renderTopCreators();
+    const savedDraft = localStorage.getItem('tete_saved_note_draft');
+    notesEditor.value = savedDraft || EDITORIAL_DATA[0].noteText;
+    updateNoteStats();
     document.getElementById('section-content-editor').value = EDITORIAL_DATA[0].essay;
     renderArchiveFeed();
   </script>
