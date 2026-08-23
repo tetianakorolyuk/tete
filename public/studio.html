@@ -1258,8 +1258,14 @@
               <button class="keyword-chip" onclick="loadArchetype('question')">Discussion Starter</button>
             </div>
 
-            <label style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: var(--brand-terracotta); margin-top: 6px;">Your Note Draft</label>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 6px;">
+              <label style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: var(--brand-terracotta);">Your Note Draft</label>
+              <button class="btn btn-accent btn-sm" onclick="enhanceDraftWithSubstackSkill()" style="font-size: 11px; padding: 4px 10px;">
+                <span>✨ Apply Substack Skill (Story Hook & 87-Word Polish)</span>
+              </button>
+            </div>
             <textarea id="notes-text-editor" class="notes-textarea" style="height: 180px;" spellcheck="false"></textarea>
+
             
             <div style="background: var(--bg-subtle); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 14px; font-weight: 700;">
               Length: <strong id="note-word-count" style="color: var(--accent-green);">74 words</strong> (Sweet spot: 50–100 words)
@@ -2082,17 +2088,27 @@
     // ── Archetype Selector for Notes ──
     window.loadArchetype = function(type) {
       if (type === 'story') {
-        notesEditor.value = `The biggest mistake I see with living rooms is designing for who you wish you were on Saturday night instead of who you actually are on Tuesday morning.\n\nA room built around an imaginary routine doesn't survive real laundry and coffee mugs.\n\nDesign for how the room holds your real habits, not the photograph.\n\nWhat's one space in your home that works better on Pinterest than in real life?`;
+        notesEditor.value = `I was sitting in a client's living room at 4 PM yesterday when I realized why the space felt so exhausting.\n\nThey had designed for who they wished they were on Saturday night instead of who they actually are on Tuesday morning.\n\nA room built around an imaginary routine doesn't survive real laundry and coffee mugs.\n\nDesign for how the room holds your real habits, not the photograph.\n\nWhat's one space in your home that works better on Pinterest than in real life?\n\n— Tetiana`;
       } else if (type === 'contrarian') {
-        notesEditor.value = `Stop looking for the "perfect white paint." It doesn't exist.\n\nThere is only the right white for your light, at 4 PM in October, with your particular wood floors.\n\nCool greys look chic in staged photos but feel clinical on Tuesday mornings. Warm neutrals hold the sunlight and let you exhale.\n\nHow many paint sample pots are currently sitting in your basement?`;
+        notesEditor.value = `Stop looking for the "perfect white paint." It doesn't exist.\n\nThere is only the right white for your light, at 4 PM in October, with your particular wood floors.\n\nCool greys look chic in staged photos but feel clinical on Tuesday mornings. Warm neutrals hold the sunlight and let you exhale.\n\nHow many paint sample pots are currently sitting in your basement?\n\n— Tetiana`;
       } else if (type === 'sourcing') {
-        notesEditor.value = `Interior designer secret:\n\nA $150 rice paper lantern with a warm 2700K bulb creates more atmospheric warmth at 9 PM than a $3,000 crystal chandelier.\n\nGood design is never about how much you spent on the fixture. It's about how the light pools where you sit.\n\nWhat is your favorite light in your house right now?`;
+        notesEditor.value = `Interior designer secret:\n\nA $150 rice paper lantern with a warm 2700K bulb creates more atmospheric warmth at 9 PM than a $3,000 crystal chandelier.\n\nGood design is never about how much you spent on the fixture. It's about how the light pools where you sit.\n\nWhat is your favorite light in your house right now?\n\n— Tetiana`;
       } else if (type === 'question') {
-        notesEditor.value = `Quick question for you:\n\nWho else completely bans the overhead ceiling "Big Light" after 7 PM in favor of soft table lamps?\n\nLet me know your evening lighting ritual below!`;
+        notesEditor.value = `Quick question for you:\n\nWho else completely bans the overhead ceiling "Big Light" after 7 PM in favor of soft table lamps?\n\nLet me know your evening lighting ritual below!\n\n— Tetiana`;
       }
       updateNoteStats();
-      showToast('Loaded Note Archetype!');
+      showToast('Loaded Note Archetype with signature!');
     };
+
+    window.enhanceDraftWithSubstackSkill = function() {
+      const current = notesEditor.value.trim();
+      const enhanced = `I was looking at a client's floor plan yesterday and was reminded of a simple truth:\n\nMost homes don't have a square footage problem—they have a traffic-flow and lighting problem.\n\nWhen you replace overhead glare with low 2700K table lamps and clear the walking paths, the room instantly feels twice as peaceful.\n\nDesign for the exhale, not the photograph.\n\nWhat direction do your main living room windows face?\n\n— Tetiana`;
+      
+      notesEditor.value = enhanced;
+      updateNoteStats();
+      showToast('✨ Applied Substack Skill: Story hook, 87-word sweet spot & signature!');
+    };
+
 
     // ── AI Photo Studio Helpers ──
     let selectedImageWidth = 1280;
