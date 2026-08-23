@@ -1075,16 +1075,22 @@
             <span>4. Substack Notes</span>
           </button>
 
+          <button class="nav-item" data-view="planning" id="nav-planning">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span>5. Planning & Editorial Board</span>
+          </button>
+
           <button class="nav-item" data-view="ai-photo" id="nav-ai-photo">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
-            <span>5. Free AI Photo Studio</span>
+            <span>6. Free AI Photo Studio</span>
           </button>
 
           <button class="nav-item" data-view="feed" id="nav-feed">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 11a9 9 0 019 9M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1"/></svg>
-            <span>6. Substack Archive</span>
+            <span>7. Substack Archive</span>
           </button>
         </nav>
+
 
         <div style="margin-top: 14px; padding-top: 14px; border-top: 2px solid var(--border-subtle);">
           <button class="btn btn-outline btn-sm" onclick="openGuideModal()" style="width: 100%; color: var(--brand-terracotta); border-color: var(--brand-terracotta);">
@@ -1322,6 +1328,169 @@
         </div>
       </section>
 
+      <!-- ── 5. EDITORIAL PLANNING & SUGGESTIONS BOARD ── -->
+      <section class="view-panel" id="panel-planning">
+        <div class="bento-hero-card">
+          <div class="bento-badge">Top Writer Strategy & Organization</div>
+          <h1>Editorial Planning, Content Matrix & Suggestions</h1>
+          <p>Organize your 4-week publishing calendar, evaluate high-open-rate subject lines, and manage your content matrix.</p>
+        </div>
+
+        <!-- ── Module 1: 4-Week Publishing Pipeline & Cadence Planner ── -->
+        <div class="superpower-box" style="margin-bottom: 24px;">
+          <div class="superpower-title">
+            <h3 style="font-size: 17px;">📅 4-Week Publishing Pipeline & Editorial Cadence</h3>
+            <span style="font-size: 12px; color: var(--brand-terracotta); font-weight: 700;">Curated for TE | INTERIOR & DECOR</span>
+          </div>
+          <p style="font-size: 14px; color: var(--text-body); margin-bottom: 16px; line-height: 1.5;">Top Substack publications alternate between diagnostic essays, sourcing deep dives, and reader discussions:</p>
+          
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px;" id="calendar-pipeline-grid">
+            <!-- Week 1 -->
+            <div style="background: var(--bg-subtle); border: 2px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 16px; display: flex; flex-direction: column; justify-content: space-between; gap: 12px;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                  <span style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--brand-terracotta);">Week 1 · Flagship Essay</span>
+                  <span style="font-size: 11px; font-weight: 700; background: var(--bg-accent-soft); color: var(--brand-terracotta); padding: 2px 8px; border-radius: var(--radius-full);">Ready</span>
+                </div>
+                <h4 style="font-family: var(--font-display); font-size: 16px; color: var(--text-main); line-height: 1.3; margin-bottom: 6px;">The Tuesday Morning Audit: 6 Space-Planning Questions</h4>
+                <p style="font-size: 13px; color: var(--text-body); line-height: 1.5;">Pillar: Load-Bearing Process · Real routines over Pinterest staging.</p>
+              </div>
+              <button class="btn btn-outline btn-sm" onclick="loadSuggestionIntoNewsletter('p1-audit'); switchView('newsletter-auto');" style="width: 100%;">
+                <span>🚀 Load into Studio</span>
+              </button>
+            </div>
+
+            <!-- Week 2 -->
+            <div style="background: var(--bg-subtle); border: 2px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 16px; display: flex; flex-direction: column; justify-content: space-between; gap: 12px;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                  <span style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--accent-green);">Week 2 · Brand & Lighting</span>
+                  <span style="font-size: 11px; font-weight: 700; background: rgba(56, 161, 105, 0.15); color: var(--accent-green); padding: 2px 8px; border-radius: var(--radius-full);">Scheduled</span>
+                </div>
+                <h4 style="font-family: var(--font-display); font-size: 16px; color: var(--text-main); line-height: 1.3; margin-bottom: 6px;">Behind The Brand: &Tradition & Emotional Architecture</h4>
+                <p style="font-size: 13px; color: var(--text-body); line-height: 1.5;">Pillar: Behind The Brand · Why 2700K ambient glow cures winter gloom.</p>
+              </div>
+              <button class="btn btn-outline btn-sm" onclick="loadSuggestionIntoNewsletter('p2-tradition'); switchView('newsletter-auto');" style="width: 100%;">
+                <span>🚀 Load into Studio</span>
+              </button>
+            </div>
+
+            <!-- Week 3 -->
+            <div style="background: var(--bg-subtle); border: 2px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 16px; display: flex; flex-direction: column; justify-content: space-between; gap: 12px;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                  <span style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--accent-purple);">Week 3 · Tactile Sourcing</span>
+                  <span style="font-size: 11px; font-weight: 700; background: rgba(142, 68, 173, 0.15); color: var(--accent-purple); padding: 2px 8px; border-radius: var(--radius-full);">In Outline</span>
+                </div>
+                <h4 style="font-family: var(--font-display); font-size: 16px; color: var(--text-main); line-height: 1.3; margin-bottom: 6px;">The Anti-Greige Manifesto: Why Your White Room Feels Cold</h4>
+                <p style="font-size: 13px; color: var(--text-body); line-height: 1.5;">Pillar: Warm Tactile Minimalism · Roman travertine & lime wash.</p>
+              </div>
+              <button class="btn btn-outline btn-sm" onclick="loadSuggestionIntoNewsletter('p3-antigreige'); switchView('newsletter-auto');" style="width: 100%;">
+                <span>🚀 Load into Studio</span>
+              </button>
+            </div>
+
+            <!-- Week 4 -->
+            <div style="background: var(--bg-subtle); border: 2px solid var(--border-subtle); border-radius: var(--radius-sm); padding: 16px; display: flex; flex-direction: column; justify-content: space-between; gap: 12px;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                  <span style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--brand-terracotta);">Week 4 · Reader Q&A & Audit</span>
+                  <span style="font-size: 11px; font-weight: 700; background: var(--bg-accent-soft); color: var(--brand-terracotta); padding: 2px 8px; border-radius: var(--radius-full);">Idea Bank</span>
+                </div>
+                <h4 style="font-family: var(--font-display); font-size: 16px; color: var(--text-main); line-height: 1.3; margin-bottom: 6px;">The 5-Minute Entryway Diagnostic & Sourcing Secrets</h4>
+                <p style="font-size: 13px; color: var(--text-body); line-height: 1.5;">Pillar: Subscriber Diagnostics · Troubleshooting reader spaces.</p>
+              </div>
+              <button class="btn btn-outline btn-sm" onclick="fillMindInput('Narrow entryway storage'); switchView('reach');" style="width: 100%;">
+                <span>✨ Generate Angles</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Module 2 & 3: Subject Line Scorer + Quality Pre-Flight Checklist ── -->
+        <div class="newsletter-builder-layout" style="margin-bottom: 24px;">
+          <!-- Subject Line Scorer -->
+          <div class="ai-controls-card">
+            <label style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: var(--brand-terracotta);">🎯 Subject Line Open-Rate Evaluator</label>
+            <p style="font-size: 13px; color: var(--text-body); line-height: 1.5;">Type two subject line ideas to compare their predicted open rate score:</p>
+            
+            <div style="margin-top: 8px;">
+              <span style="font-size: 12px; font-weight: 700; color: var(--text-main);">Option A:</span>
+              <input type="text" id="subj-opt-a" class="search-input" value="The Art of Quiet Rooms: Why Restraint Feels More Luxurious" style="margin-top: 4px; font-size: 14px;">
+            </div>
+
+            <div style="margin-top: 10px;">
+              <span style="font-size: 12px; font-weight: 700; color: var(--text-main);">Option B:</span>
+              <input type="text" id="subj-opt-b" class="search-input" value="Stop Buying Smooth White Furniture: The 2026 Tactile Manifesto" style="margin-top: 4px; font-size: 14px;">
+            </div>
+
+            <button class="btn btn-accent btn-sm" id="btn-score-subject-lines" style="margin-top: 10px;">
+              <span>⚡ Compare & Score Open Rates</span>
+            </button>
+
+            <!-- Score Result Box -->
+            <div id="subj-score-result" style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); border: 1.5px solid var(--border-strong); margin-top: 12px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+                <strong style="color: var(--accent-green); font-size: 14px;">Winner: Option B (Score: 94/100)</strong>
+              </div>
+              <p style="font-size: 12px; color: var(--text-body); line-height: 1.5;"><strong>Why:</strong> High curiosity trigger ("Stop buying"), contrarian stance, and specific timeline (2026).</p>
+            </div>
+          </div>
+
+          <!-- Pre-Publishing Quality Checklist -->
+          <div class="ai-controls-card">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <label style="font-size: 13px; font-weight: 800; text-transform: uppercase; color: var(--brand-terracotta);">✅ Top Writer Quality Checklist</label>
+              <span id="checklist-progress-text" style="font-size: 12px; font-weight: 800; color: var(--accent-green);">5/5 Complete (100%)</span>
+            </div>
+            <p style="font-size: 13px; color: var(--text-body); line-height: 1.5;">5 rules used by Substack Featured publications before sending:</p>
+
+            <div style="display: flex; flex-direction: column; gap: 10px; margin-top: 10px;">
+              <label style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-main); cursor: pointer;">
+                <input type="checkbox" class="quality-check" checked style="width: 18px; height: 18px; accent-color: var(--brand-terracotta);">
+                <span>1. Clear 1-sentence hook in first 3 lines</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-main); cursor: pointer;">
+                <input type="checkbox" class="quality-check" checked style="width: 18px; height: 18px; accent-color: var(--brand-terracotta);">
+                <span>2. Concrete material spec or temperature (e.g. 2700K)</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-main); cursor: pointer;">
+                <input type="checkbox" class="quality-check" checked style="width: 18px; height: 18px; accent-color: var(--brand-terracotta);">
+                <span>3. High-res editorial photo / banner attached</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-main); cursor: pointer;">
+                <input type="checkbox" class="quality-check" checked style="width: 18px; height: 18px; accent-color: var(--brand-terracotta);">
+                <span>4. Subscriber question/poll to prompt direct replies</span>
+              </label>
+              <label style="display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-main); cursor: pointer;">
+                <input type="checkbox" class="quality-check" checked style="width: 18px; height: 18px; accent-color: var(--brand-terracotta);">
+                <span>5. 1-sentence teaser drafted for Substack Notes</span>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- ── Module 4: Custom Idea Vault & Queue ── -->
+        <div class="superpower-box">
+          <div class="superpower-title">
+            <h3 style="font-size: 17px;">💡 Your Custom Idea Vault & Scratchpad</h3>
+            <span style="font-size: 12px; color: var(--text-muted); font-weight: 600;">Saved in Local Storage</span>
+          </div>
+          <p style="font-size: 14px; color: var(--text-body); margin-bottom: 12px;">Quickly jot down ideas whenever inspiration strikes:</p>
+          
+          <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 14px;">
+            <input type="text" id="new-idea-input" class="search-input" placeholder="e.g. The 3 lighting mistakes in modern condos..." style="flex: 1; min-width: 220px; font-size: 15px;">
+            <button class="btn btn-primary" id="btn-save-custom-idea" style="padding: 12px 22px;">
+              <span>+ Add to Idea Vault</span>
+            </button>
+          </div>
+
+          <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 12px;" id="custom-ideas-vault-grid">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </section>
+
       <!-- ── 6. SUBSTACK ARCHIVE ── -->
       <section class="view-panel" id="panel-feed">
         <div class="bento-hero-card">
@@ -1334,7 +1503,6 @@
           <!-- Populated by JS -->
         </div>
       </section>
-
 
     </main>
   </div>
@@ -1349,6 +1517,10 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
       <span>Creators</span>
     </button>
+    <button class="mobile-tab-btn" data-view="planning" id="m-nav-planning">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span>Plan</span>
+    </button>
     <button class="mobile-tab-btn" data-view="newsletter-auto" id="m-nav-newsletter">
       <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
       <span>Issue</span>
@@ -1362,6 +1534,7 @@
       <span>Photos</span>
     </button>
   </nav>
+
 
   <!-- ── Success Modal ── -->
   <div class="modal-backdrop" id="success-modal">
@@ -1968,15 +2141,126 @@
       if (e.key === 'Enter') generateFromCustomMind();
     });
 
+    // ── Subject Line Scorer ──
+    document.getElementById('btn-score-subject-lines').addEventListener('click', () => {
+      const optA = document.getElementById('subj-opt-a').value.trim();
+      const optB = document.getElementById('subj-opt-b').value.trim();
+
+      if (!optA || !optB) {
+        showToast('Please enter both subject lines to compare');
+        return;
+      }
+
+      function scoreTitle(t) {
+        let s = 65;
+        if (/why|how|stop|don't|secret|never|myth|reality|audit|truth/i.test(t)) s += 15;
+        if (/\d+/.test(t)) s += 10;
+        if (/:|—|-/.test(t)) s += 5;
+        if (t.length > 25 && t.length < 65) s += 5;
+        return Math.min(s, 98);
+      }
+
+      const scoreA = scoreTitle(optA);
+      const scoreB = scoreTitle(optB);
+      const winner = scoreA >= scoreB ? 'Option A' : 'Option B';
+      const winningScore = Math.max(scoreA, scoreB);
+
+      const resBox = document.getElementById('subj-score-result');
+      resBox.innerHTML = `
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
+          <strong style="color: var(--accent-green); font-size: 14px;">Winner: ${winner} (Score: ${winningScore}/100)</strong>
+          <span style="font-size: 12px; color: var(--text-muted);">${winner === 'Option A' ? `Option B: ${scoreB}/100` : `Option A: ${scoreA}/100`}</span>
+        </div>
+        <p style="font-size: 12px; color: var(--text-body); line-height: 1.5;">
+          <strong>Why this wins:</strong> Uses emotional curiosity triggers, clear diagnostic framing, and optimal character length for mobile inboxes.
+        </p>
+      `;
+      showToast(`Evaluated: ${winner} predicted to get higher open rate!`);
+    });
+
+    // ── Quality Checklist Progress ──
+    document.querySelectorAll('.quality-check').forEach(chk => {
+      chk.addEventListener('change', () => {
+        const total = document.querySelectorAll('.quality-check').length;
+        const checked = document.querySelectorAll('.quality-check:checked').length;
+        const pct = Math.round((checked / total) * 100);
+        const label = document.getElementById('checklist-progress-text');
+        label.textContent = `${checked}/${total} Complete (${pct}%)`;
+        label.style.color = pct === 100 ? 'var(--accent-green)' : 'var(--brand-terracotta)';
+      });
+    });
+
+    // ── Custom Idea Vault ──
+    let customIdeaVault = JSON.parse(localStorage.getItem('tete_idea_vault') || '[]');
+    if (customIdeaVault.length === 0) {
+      customIdeaVault = [
+        { id: 'v1', text: 'Why 90% of condo lighting feels depressing after 7 PM', date: 'Aug 23' },
+        { id: 'v2', text: 'The tactile power of unpolished Roman travertine coffee tables', date: 'Aug 22' },
+        { id: 'v3', text: '5 things I always thrift vs 2 things I buy new for clients', date: 'Aug 20' }
+      ];
+    }
+
+    function renderCustomIdeasVault() {
+      const container = document.getElementById('custom-ideas-vault-grid');
+      if (!container) return;
+      container.innerHTML = '';
+
+      customIdeaVault.forEach((idea, idx) => {
+        const card = document.createElement('div');
+        card.style.background = 'var(--bg-subtle)';
+        card.style.border = '1.5px solid var(--border-subtle)';
+        card.style.borderRadius = 'var(--radius-sm)';
+        card.style.padding = '14px';
+        card.style.display = 'flex';
+        card.style.flexDirection = 'column';
+        card.style.justifyContent = 'space-between';
+        card.style.gap = '10px';
+
+        card.innerHTML = `
+          <div>
+            <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);">${idea.date || 'Idea'}</span>
+            <p style="font-size: 14px; font-weight: 700; color: var(--text-main); line-height: 1.4; margin-top: 4px;">${idea.text}</p>
+          </div>
+          <div style="display: flex; gap: 6px;">
+            <button class="btn btn-outline btn-sm" onclick="fillMindInput('${idea.text.replace(/'/g, "\\'")}'); switchView('reach');" style="flex: 1; font-size: 11px; padding: 6px;">
+              <span>Generate</span>
+            </button>
+            <button class="btn btn-outline btn-sm" onclick="deleteCustomIdea(${idx})" style="padding: 6px 10px; color: var(--text-muted);" title="Remove">
+              &times;
+            </button>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    window.deleteCustomIdea = function(idx) {
+      customIdeaVault.splice(idx, 1);
+      localStorage.setItem('tete_idea_vault', JSON.stringify(customIdeaVault));
+      renderCustomIdeasVault();
+      showToast('Removed from Idea Vault');
+    };
+
+    document.getElementById('btn-save-custom-idea').addEventListener('click', () => {
+      const input = document.getElementById('new-idea-input');
+      const val = input.value.trim();
+      if (!val) return;
+      customIdeaVault.unshift({ id: 'v-' + Date.now(), text: val, date: 'Today' });
+      localStorage.setItem('tete_idea_vault', JSON.stringify(customIdeaVault));
+      input.value = '';
+      renderCustomIdeasVault();
+      showToast('Added to Idea Vault!');
+    });
+
     renderSuggestions(EDITORIAL_DATA);
-
-
     renderSuperCreators();
     renderArchiveFeed();
+    renderCustomIdeasVault();
     const saved = localStorage.getItem('tete_saved_note_draft');
     notesEditor.value = saved || EDITORIAL_DATA[0].noteText;
     updateNoteStats();
     loadSuggestionIntoNewsletter('p1-audit');
+
   </script>
 </body>
 </html>
