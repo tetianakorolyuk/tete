@@ -1,0 +1,2090 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="terracotta">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The TETE — Editorial Studio & Substack Intelligence</title>
+  <meta name="description" content="Magazine-grade Editorial Content Studio, Newsletter Automation, Live Substack RSS Sync & AI Photo Studio for The TETE by Tetiana (TE | INTERIOR & DECOR)">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Newsreader:ital,opsz,wght@0,6..72,300;0,6..72,400;0,6..72,500;1,6..72,400&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    /* ── Design System Foundations (Terracotta, Editorial & Bento Skills) ── */
+    :root, [data-theme="terracotta"] {
+      --bg-canvas: #FAF7F2;
+      --bg-surface: #FFFFFF;
+      --bg-subtle: #F3ECE1;
+      --bg-accent-soft: rgba(197, 106, 60, 0.08);
+      --border-subtle: #E8DECE;
+      --border-strong: #D5C6B2;
+      --text-main: #231812;
+      --text-body: #42352C;
+      --text-muted: #827265;
+      --brand-terracotta: #C56A3C;
+      --brand-terracotta-dark: #AD5529;
+      --brand-terracotta-light: #DF895D;
+      --brand-espresso: #231812;
+      --brand-substack: #FF6719;
+      --accent-green: #2E7D4E;
+      --accent-purple: #7C5CFC;
+      --shadow-sm: 0 2px 8px rgba(35, 24, 18, 0.04);
+      --shadow-md: 0 8px 24px rgba(35, 24, 18, 0.07);
+      --shadow-lg: 0 16px 40px rgba(35, 24, 18, 0.1);
+      --shadow-focus: 0 0 0 3px rgba(197, 106, 60, 0.25);
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      --radius-lg: 18px;
+      --radius-full: 9999px;
+      --font-display: 'DM Serif Display', Georgia, serif;
+      --font-serif: 'Newsreader', Georgia, serif;
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+    }
+
+    [data-theme="obsidian"] {
+      --bg-canvas: #120E0C;
+      --bg-surface: #1C1613;
+      --bg-subtle: #261F1B;
+      --bg-accent-soft: rgba(223, 137, 93, 0.15);
+      --border-subtle: #302621;
+      --border-strong: #473932;
+      --text-main: #F7EFE9;
+      --text-body: #D4C5BB;
+      --text-muted: #8E7E73;
+      --brand-terracotta: #DF895D;
+      --brand-terracotta-dark: #C56A3C;
+      --brand-espresso: #0D0A08;
+      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.45);
+      --shadow-lg: 0 16px 40px rgba(0, 0, 0, 0.65);
+    }
+
+    [data-theme="nordic"] {
+      --bg-canvas: #F5F6F3;
+      --bg-surface: #FFFFFF;
+      --bg-subtle: #E8ECE5;
+      --bg-accent-soft: rgba(77, 107, 88, 0.08);
+      --border-subtle: #D9E0D6;
+      --border-strong: #BCC7B7;
+      --text-main: #1D2620;
+      --text-body: #39473D;
+      --text-muted: #728277;
+      --brand-terracotta: #4D6B58;
+      --brand-terracotta-dark: #3B5444;
+      --brand-terracotta-light: #6E8F7A;
+      --brand-espresso: #1D2620;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background-color: var(--bg-canvas);
+      color: var(--text-body);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+      transition: background-color 0.25s ease, color 0.25s ease;
+    }
+
+    /* ── Top Header ── */
+    header.app-header {
+      background: var(--bg-surface);
+      border-bottom: 1px solid var(--border-subtle);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      background-color: rgba(255, 255, 255, 0.94);
+    }
+    [data-theme="obsidian"] header.app-header {
+      background-color: rgba(28, 22, 19, 0.94);
+    }
+
+    .header-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 14px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .brand-group {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: baseline;
+      gap: 3px;
+      text-decoration: none;
+      color: var(--text-main);
+    }
+
+    .brand-prefix {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 16px;
+      color: var(--brand-terracotta);
+    }
+
+    .brand-name {
+      font-family: var(--font-sans);
+      font-weight: 800;
+      letter-spacing: 0.2em;
+      font-size: 20px;
+      color: var(--text-main);
+    }
+
+    .badge-studio {
+      background: var(--bg-subtle);
+      color: var(--text-muted);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .substack-status-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 103, 25, 0.08);
+      border: 1px solid rgba(255, 103, 25, 0.25);
+      padding: 6px 14px;
+      border-radius: var(--radius-full);
+      font-size: 12px;
+      color: var(--text-main);
+      text-decoration: none;
+      transition: all 0.2s ease;
+    }
+    .substack-status-pill:hover {
+      background: rgba(255, 103, 25, 0.14);
+      transform: translateY(-1px);
+    }
+    .dot-live {
+      width: 7px;
+      height: 7px;
+      background: var(--brand-substack);
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(255, 103, 25, 0.25);
+      animation: pulse-dot 2s infinite ease-in-out;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.85); }
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    /* Style Switcher Selector */
+    .style-picker {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      padding: 4px;
+      border-radius: var(--radius-full);
+    }
+    .style-pill {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: var(--radius-full);
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.18s;
+      font-family: var(--font-sans);
+    }
+    .style-pill.active {
+      background: var(--bg-surface);
+      color: var(--text-main);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--font-sans);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 9px 18px;
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.18s ease;
+      border: none;
+      outline: none;
+    }
+
+    .btn-primary {
+      background: var(--brand-espresso);
+      color: #FFF;
+      box-shadow: var(--shadow-sm);
+    }
+    .btn-primary:hover {
+      background: #000;
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+    [data-theme="obsidian"] .btn-primary {
+      background: var(--brand-terracotta);
+      color: #FFF;
+    }
+
+    .btn-accent {
+      background: var(--brand-terracotta);
+      color: #FFF;
+    }
+    .btn-accent:hover {
+      background: var(--brand-terracotta-dark);
+      transform: translateY(-1px);
+    }
+
+    .btn-purple {
+      background: linear-gradient(135deg, #7C5CFC, #5C3EBA);
+      color: #FFF;
+    }
+    .btn-purple:hover {
+      transform: translateY(-1px);
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-main);
+      border: 1px solid var(--border-strong);
+    }
+    .btn-outline:hover {
+      background: var(--bg-subtle);
+    }
+
+    .btn-sm {
+      padding: 6px 12px;
+      font-size: 10px;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── App Layout ── */
+    .app-container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 28px;
+      display: grid;
+      grid-template-columns: 290px 1fr;
+      gap: 28px;
+      flex: 1;
+      width: 100%;
+    }
+
+    @media (max-width: 1024px) {
+      .app-container {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ── Sidebar ── */
+    aside.sidebar {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .sidebar-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .author-badge-card {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      margin-bottom: 16px;
+    }
+
+    .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #D5A476, var(--brand-terracotta));
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 17px;
+      flex-shrink: 0;
+      border: 2px solid var(--bg-surface);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .author-info h4 {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+      line-height: 1.2;
+    }
+    .author-info p {
+      font-size: 11px;
+      color: var(--text-muted);
+      margin-top: 2px;
+      font-weight: 500;
+    }
+
+    .nav-menu {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 14px;
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      font-size: 13px;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      background: transparent;
+      border: none;
+      width: 100%;
+      text-align: left;
+      transition: all 0.15s ease;
+      font-family: var(--font-sans);
+    }
+
+    .nav-item:hover {
+      background: var(--bg-subtle);
+      color: var(--text-main);
+    }
+
+    .nav-item.active {
+      background: var(--brand-espresso);
+      color: #FFF;
+      font-weight: 600;
+    }
+    [data-theme="obsidian"] .nav-item.active {
+      background: var(--brand-terracotta);
+      color: #FFF;
+    }
+
+    .nav-item svg {
+      flex-shrink: 0;
+      opacity: 0.85;
+    }
+    .nav-item.active svg {
+      opacity: 1;
+    }
+
+    .nav-tag {
+      margin-left: auto;
+      font-size: 9px;
+      padding: 2px 7px;
+      border-radius: var(--radius-full);
+      background: rgba(197, 106, 60, 0.15);
+      color: var(--brand-terracotta);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .nav-tag.live {
+      background: rgba(46, 125, 78, 0.15);
+      color: var(--accent-green);
+    }
+    .nav-tag.ai {
+      background: rgba(124, 92, 252, 0.15);
+      color: #7C5CFC;
+    }
+    .nav-item.active .nav-tag {
+      background: rgba(255, 255, 255, 0.2);
+      color: #FFF;
+    }
+
+    .quick-links-group {
+      margin-top: 14px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border-subtle);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .quick-link-btn {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: var(--radius-sm);
+      transition: background 0.15s;
+    }
+    .quick-link-btn:hover {
+      background: var(--bg-subtle);
+      color: var(--text-main);
+    }
+
+    /* ── Main Content Area ── */
+    main.main-content {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+    }
+
+    .view-panel {
+      display: none;
+      animation: fadeIn 0.25s ease forwards;
+    }
+    .view-panel.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Bento & Hero Header Cards ── */
+    .bento-hero-card {
+      background: linear-gradient(135deg, var(--bg-surface) 0%, var(--bg-subtle) 100%);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 32px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+    }
+    .bento-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--brand-terracotta);
+      background: var(--bg-accent-soft);
+      padding: 4px 12px;
+      border-radius: var(--radius-full);
+      border: 1px solid rgba(197, 106, 60, 0.2);
+      margin-bottom: 12px;
+    }
+    .bento-hero-card h1, .bento-hero-card h2 {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--text-main);
+      line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .bento-hero-card p {
+      font-size: 14px;
+      color: var(--text-body);
+      max-width: 720px;
+      line-height: 1.6;
+    }
+
+    /* Pillar Filters Bar */
+    .pillar-filters-bar {
+      display: flex;
+      gap: 8px;
+      margin-top: 24px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .pillar-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 9px 18px;
+      font-size: 12px;
+      font-weight: 600;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-full);
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.15s;
+      font-family: var(--font-sans);
+    }
+    .pillar-btn:hover {
+      border-color: var(--brand-terracotta);
+      color: var(--text-main);
+    }
+    .pillar-btn.active {
+      background: var(--brand-espresso);
+      color: #FFF;
+      border-color: var(--brand-espresso);
+    }
+    [data-theme="obsidian"] .pillar-btn.active {
+      background: var(--brand-terracotta);
+      border-color: var(--brand-terracotta);
+    }
+
+    /* Search & Scanner Bar */
+    .input-hero-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px 28px;
+      margin-bottom: 24px;
+      box-shadow: var(--shadow-sm);
+    }
+    .input-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--brand-terracotta);
+      margin-bottom: 10px;
+      display: block;
+    }
+    .search-input-group {
+      display: flex;
+      gap: 12px;
+    }
+    .search-input {
+      flex: 1;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      padding: 13px 18px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      outline: none;
+      transition: border-color 0.2s, background-color 0.2s;
+    }
+    .search-input:focus {
+      border-color: var(--brand-terracotta);
+      background: var(--bg-surface);
+      box-shadow: var(--shadow-focus);
+    }
+
+    /* ── Editorial Bento Suggestions Grid ── */
+    .suggestions-grid {
+      display: grid;
+      gap: 18px;
+      margin-bottom: 24px;
+    }
+
+    .suggestion-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 26px 28px;
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .suggestion-card:hover {
+      border-color: var(--brand-terracotta);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .sug-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .sug-pillar-tag {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--brand-terracotta);
+      margin-bottom: 4px;
+      display: block;
+    }
+    .sug-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--text-main);
+      line-height: 1.3;
+    }
+    .sug-rationale {
+      font-size: 13px;
+      color: var(--text-body);
+      line-height: 1.55;
+      margin-top: 6px;
+    }
+
+    .sug-preview-snippet {
+      background: var(--bg-subtle);
+      border-left: 3px solid var(--brand-terracotta);
+      padding: 14px 18px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 13px;
+      color: var(--text-main);
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    .sug-actions-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border-subtle);
+      flex-wrap: wrap;
+    }
+    .sug-action-group {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    /* ── Substack Notes Studio Styles ── */
+    .notes-editor-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 24px;
+    }
+    @media (max-width: 1024px) {
+      .notes-editor-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .notes-composer-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .archetype-selector {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .archetype-btn {
+      padding: 9px 12px;
+      font-size: 11px;
+      font-weight: 600;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: var(--text-muted);
+      cursor: pointer;
+      text-align: left;
+      transition: all 0.15s;
+      font-family: var(--font-sans);
+    }
+    .archetype-btn:hover {
+      border-color: var(--brand-terracotta);
+      color: var(--text-main);
+    }
+    .archetype-btn.active {
+      background: var(--brand-terracotta);
+      color: #FFF;
+      border-color: var(--brand-terracotta);
+    }
+
+    .notes-textarea {
+      width: 100%;
+      height: 190px;
+      font-family: var(--font-sans);
+      font-size: 14px;
+      line-height: 1.65;
+      padding: 14px 16px;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      color: var(--text-main);
+      outline: none;
+      resize: vertical;
+      transition: border-color 0.2s;
+    }
+    .notes-textarea:focus {
+      border-color: var(--brand-terracotta);
+      background: var(--bg-surface);
+      box-shadow: var(--shadow-focus);
+    }
+
+    .notes-metrics-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 14px;
+      background: var(--bg-subtle);
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+    .word-counter-badge {
+      font-weight: 700;
+      color: var(--accent-green);
+    }
+    .word-counter-badge.warning {
+      color: var(--brand-terracotta);
+    }
+
+    /* Substack Note Realistic Preview Card */
+    .note-preview-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .preview-header-label {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .preview-header-label span {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .substack-mock-card {
+      background: #FFFFFF;
+      border: 1px solid #E5E5E5;
+      border-radius: 12px;
+      padding: 20px;
+      color: #1A1A1A;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+    }
+    [data-theme="obsidian"] .substack-mock-card {
+      background: #191614;
+      border-color: #332B26;
+      color: #F0EAE3;
+    }
+
+    .mock-author-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+    .mock-avatar-img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: var(--brand-terracotta);
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-size: 15px;
+    }
+    .mock-author-names {
+      line-height: 1.25;
+    }
+    .mock-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: inherit;
+    }
+    .mock-handle {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .mock-note-body {
+      font-size: 14px;
+      line-height: 1.65;
+      white-space: pre-wrap;
+      margin-bottom: 16px;
+      color: inherit;
+    }
+
+    .mock-interactions-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 14px;
+      border-top: 1px solid #EFEFEF;
+      color: #777;
+      font-size: 12px;
+    }
+    [data-theme="obsidian"] .mock-interactions-row {
+      border-color: #2D2520;
+      color: #887E75;
+    }
+    .mock-action-btn {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    /* ── Multi-Section Newsletter Studio ── */
+    .newsletter-builder-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.2fr;
+      gap: 28px;
+    }
+    @media (max-width: 1100px) {
+      .newsletter-builder-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .section-pill-tabs {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 18px;
+      overflow-x: auto;
+    }
+    .section-tab-btn {
+      padding: 7px 14px;
+      font-size: 11px;
+      font-weight: 600;
+      border-radius: var(--radius-full);
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      font-family: var(--font-sans);
+    }
+    .section-tab-btn.active {
+      background: var(--brand-terracotta);
+      color: #FFF;
+      border-color: var(--brand-terracotta);
+    }
+
+    .email-preview-container {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 32px;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+    }
+
+    .email-device-switch {
+      display: flex;
+      gap: 6px;
+      background: var(--bg-subtle);
+      padding: 4px;
+      border-radius: var(--radius-full);
+      border: 1px solid var(--border-subtle);
+    }
+    .device-btn {
+      font-size: 10px;
+      font-weight: 700;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: var(--radius-full);
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+    .device-btn.active {
+      background: var(--bg-surface);
+      color: var(--text-main);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .email-inbox-header {
+      background: var(--bg-subtle);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      margin-bottom: 24px;
+      font-size: 12px;
+      border: 1px solid var(--border-subtle);
+    }
+    .inbox-field {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 4px;
+    }
+    .inbox-field:last-child { margin-bottom: 0; }
+    .inbox-label {
+      color: var(--text-muted);
+      font-weight: 600;
+      width: 70px;
+      flex-shrink: 0;
+    }
+    .inbox-value {
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    .article-header-banner-preview {
+      width: 100%;
+      max-height: 380px;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      margin-bottom: 28px;
+      display: block;
+    }
+    .article-header-banner-preview img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .newsletter-section-block {
+      margin-bottom: 28px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+    .newsletter-section-block:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .section-badge {
+      display: inline-block;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--brand-terracotta);
+      margin-bottom: 8px;
+    }
+
+    /* ── Free AI Photo Studio ── */
+    .ai-generator-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+    }
+    @media (max-width: 1024px) {
+      .ai-generator-layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .ai-controls-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 28px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .chip {
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 12px;
+      border-radius: var(--radius-full);
+      font-size: 11px;
+      color: var(--text-main);
+      cursor: pointer;
+      transition: all 0.15s;
+      font-family: var(--font-sans);
+    }
+    .chip:hover {
+      border-color: var(--brand-terracotta);
+      background: var(--bg-accent-soft);
+    }
+
+    .ratio-selector {
+      display: flex;
+      gap: 10px;
+    }
+    .ratio-btn {
+      flex: 1;
+      padding: 10px;
+      text-align: center;
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .ratio-btn.active {
+      background: var(--brand-terracotta);
+      color: #FFF;
+      border-color: var(--brand-terracotta);
+    }
+
+    .ai-preview-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 440px;
+      position: relative;
+    }
+
+    .ai-image-container {
+      width: 100%;
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--bg-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      border: 1px solid var(--border-subtle);
+      min-height: 320px;
+    }
+    .ai-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: var(--radius-md);
+    }
+
+    .ai-generating-overlay {
+      display: none;
+      position: absolute;
+      inset: 0;
+      background: rgba(35, 24, 18, 0.75);
+      backdrop-filter: blur(8px);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      color: #FFF;
+      z-index: 10;
+      border-radius: var(--radius-md);
+    }
+    .ai-generating-overlay.active {
+      display: flex;
+    }
+
+    /* ── Live Archive Grid ── */
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .archive-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.18s ease;
+    }
+    .archive-card:hover {
+      border-color: var(--brand-terracotta);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    /* ── Toast Notification ── */
+    #toast-notification {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--brand-espresso);
+      color: #FFF;
+      padding: 14px 22px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: var(--shadow-lg);
+      transform: translateY(120px);
+      opacity: 0;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 1000;
+    }
+    #toast-notification.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* ── Live Scanner Animation ── */
+    .scanner-active-box {
+      display: none;
+      padding: 16px 20px;
+      background: rgba(197, 106, 60, 0.08);
+      border: 1px dashed var(--brand-terracotta);
+      border-radius: var(--radius-sm);
+      margin-bottom: 20px;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--brand-terracotta);
+    }
+    .scanner-active-box.scanning {
+      display: flex;
+    }
+    .spinner-radar {
+      width: 18px;
+      height: 18px;
+      border: 2px solid var(--brand-terracotta);
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ── Top Navigation Header ── -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand-group">
+        <a href="https://thetete.substack.com" target="_blank" rel="noopener noreferrer" class="brand-logo" title="Open The TETE Substack">
+          <span class="brand-prefix">the</span>
+          <span class="brand-name">TETE</span>
+        </a>
+        <span class="badge-studio">Editorial Studio</span>
+        
+        <a href="https://thetete.substack.com" target="_blank" rel="noopener noreferrer" class="substack-status-pill" title="Connected to Substack Publication">
+          <span class="dot-live"></span>
+          <span>thetete.substack.com</span>
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+        </a>
+      </div>
+
+      <div class="header-actions">
+        <!-- Style Switcher (Terracotta / Obsidian / Nordic Japandi) -->
+        <div class="style-picker">
+          <button class="style-pill active" data-style="terracotta" title="Terracotta Warm Editorial">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+            <span>Terracotta</span>
+          </button>
+          <button class="style-pill" data-style="obsidian" title="Obsidian Noir Dark Theme">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+            <span>Obsidian</span>
+          </button>
+          <button class="style-pill" data-style="nordic" title="Nordic Japandi Sage Theme">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+            <span>Nordic</span>
+          </button>
+        </div>
+
+        <button class="btn btn-accent" id="btn-header-draft-post">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
+          <span>Draft Post</span>
+        </button>
+        <button class="btn btn-primary" id="btn-header-post-note">
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+          <span>Post Note</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Main App Layout ── -->
+  <div class="app-container">
+    
+    <!-- ── Sidebar Navigation ── -->
+    <aside class="sidebar">
+      <div class="sidebar-card">
+        <div class="author-badge-card">
+          <div class="author-avatar">TK</div>
+          <div class="author-info">
+            <h4>Tetiana Korolyuk</h4>
+            <p>TE | INTERIOR & DECOR</p>
+          </div>
+        </div>
+
+        <nav class="nav-menu">
+          <button class="nav-item active" data-view="reach" id="nav-reach">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            <span>Editorial Intelligence</span>
+            <span class="nav-tag live">Web Live</span>
+          </button>
+
+          <button class="nav-item" data-view="newsletter-auto" id="nav-newsletter-auto">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
+            <span>Newsletter Studio</span>
+            <span class="nav-tag">4 Sections</span>
+          </button>
+
+          <button class="nav-item" data-view="notes" id="nav-notes">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+            <span>Substack Notes Studio</span>
+            <span class="nav-tag">Growth</span>
+          </button>
+
+          <button class="nav-item" data-view="ai-photo" id="nav-ai-photo">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M23 19a2 2 0 01-2 2H3a2 2 0 01-2-2V8a2 2 0 012-2h4l2-3h6l2 3h4a2 2 0 012 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            <span>AI Photo Studio</span>
+            <span class="nav-tag ai">Free AI</span>
+          </button>
+
+          <button class="nav-item" data-view="calendar" id="nav-calendar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <span>Publishing Cadence</span>
+            <span class="nav-tag">Queue</span>
+          </button>
+
+          <button class="nav-item" data-view="feed" id="nav-feed">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 11a9 9 0 019 9M4 4a16 16 0 0116 16"/><circle cx="5" cy="19" r="1"/></svg>
+            <span>Substack Sync & Archive</span>
+            <span class="nav-tag live">17 Live</span>
+          </button>
+        </nav>
+
+        <div class="quick-links-group">
+          <a href="https://thetete.substack.com/publish/post" target="_blank" rel="noopener noreferrer" class="quick-link-btn" id="link-direct-post">
+            <span>Direct Post Editor</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+          </a>
+          <a href="https://thetete.substack.com/notes" target="_blank" rel="noopener noreferrer" class="quick-link-btn">
+            <span>Substack Notes Feed</span>
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/></svg>
+          </a>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Main Content Views ── -->
+    <main class="main-content">
+      
+      <!-- ── 1. AGENT REACH WEB TRENDS VIEW ── -->
+      <section class="view-panel active" id="panel-reach">
+        <div class="bento-hero-card">
+          <div class="bento-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
+            <span>Editorial Intelligence Engine</span>
+          </div>
+          <h1>Curated Editorial Pillars & Web Trends</h1>
+          <p>Scanned across design publications. Click any suggestion below to instantly transform it into a ready-to-post <strong>Substack Note</strong>, <strong>Full 4-Section Newsletter Issue</strong>, or <strong>AI Photo</strong>.</p>
+          
+          <div class="pillar-filters-bar" id="pillar-filters">
+            <button class="pillar-btn active" data-filter="all">All 5 Pillars</button>
+            <button class="pillar-btn" data-filter="process">Load-Bearing Process</button>
+            <button class="pillar-btn" data-filter="brands">Behind The Brand</button>
+            <button class="pillar-btn" data-filter="minimalism">Warm Tactile Minimalism</button>
+            <button class="pillar-btn" data-filter="lighting">Lighting & Space Therapy</button>
+            <button class="pillar-btn" data-filter="community">Subscriber Diagnostics</button>
+          </div>
+        </div>
+
+        <!-- Scanner Bar -->
+        <div class="input-hero-card">
+          <label class="input-label" for="reach-search-input">Scan Any Custom Trend or Concept with Agent Reach</label>
+          <div class="search-input-group">
+            <input type="text" id="reach-search-input" class="search-input" placeholder="e.g. Travertine vs Marble, Limewash Paint, Japanese Lanterns, Vintage Toronto Shops...">
+            <button class="btn btn-accent" id="btn-scan-reach">Scan Web Trends</button>
+          </div>
+        </div>
+
+        <div class="scanner-active-box" id="scanner-status">
+          <div class="spinner-radar"></div>
+          <span id="scanner-text">Agent Reach scanning live interior design trends across Substack and design publications...</span>
+        </div>
+
+        <!-- Suggestions Grid -->
+        <div class="suggestions-grid" id="reach-suggestions-container">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- ── 2. MULTI-SECTION NEWSLETTER STUDIO ── -->
+      <section class="view-panel" id="panel-newsletter-auto">
+        <div class="bento-hero-card">
+          <div class="bento-badge">
+            <span>Bi-Weekly Issue Builder</span>
+          </div>
+          <h1>Automated Newsletter Studio</h1>
+          <p>Assemble full 4-section editorial letters (The Essay, Material of the Week, Behind the Scenes, and Community Poll) with 1-click Substack copying.</p>
+          <div style="display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap;">
+            <button class="btn btn-outline" id="btn-copy-full-newsletter">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              <span>Copy Formatted Issue</span>
+            </button>
+            <button class="btn btn-primary" id="btn-direct-draft-newsletter">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M22.539 8.242H1.46V5.406h21.08v2.836zM1.46 10.812V24L12 18.11 22.54 24V10.812H1.46zM22.54 0H1.46v2.836h21.08V0z"/></svg>
+              <span>Draft in Substack Editor</span>
+            </button>
+            <button class="btn btn-purple" id="btn-auto-compose-issue">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+              <span>Auto-Generate Next Issue</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="newsletter-builder-layout">
+          <!-- Left: Section Controls -->
+          <div class="ai-controls-card">
+            <div>
+              <label class="input-label">Subject Line & Preview Text</label>
+              <input type="text" id="news-subject-input" class="search-input" style="margin-bottom: 8px;" value="The Art of Quiet Rooms: Why Restraint Feels More Luxurious">
+              <input type="text" id="news-preview-input" class="search-input" value="What no one tells you about creating spaces that actually let you breathe.">
+            </div>
+
+            <!-- Subject Line Variations -->
+            <div>
+              <label class="input-label">High-Open-Rate Subject Line Alternatives</label>
+              <div style="display: flex; flex-direction: column; gap: 6px;">
+                <button class="chip" style="text-align: left;" onclick="setSubjectLine('The Tuesday Morning Audit: 6 Questions Before Looking at Swatches')">The Tuesday Morning Audit: 6 Questions Before Looking at Swatches</button>
+                <button class="chip" style="text-align: left;" onclick="setSubjectLine('The Anti-Greige Manifesto: Why Your White Room Feels Cold')">The Anti-Greige Manifesto: Why Your White Room Feels Cold</button>
+                <button class="chip" style="text-align: left;" onclick="setSubjectLine('The Ban on the \'Big Light\': 3 Lighting Layers for Calm')">The Ban on the 'Big Light': 3 Lighting Layers for Calm</button>
+              </div>
+            </div>
+
+            <div>
+              <label class="input-label">Select Active Section to Edit</label>
+              <div class="section-pill-tabs">
+                <button class="section-tab-btn active" data-sec="essay">1. Design Essay</button>
+                <button class="section-tab-btn" data-sec="material">2. Material of Week</button>
+                <button class="section-tab-btn" data-sec="behind">3. Tuesday Reality</button>
+                <button class="section-tab-btn" data-sec="poll">4. Subscriber Poll</button>
+              </div>
+              <textarea id="section-content-editor" class="notes-textarea" style="height: 220px;"></textarea>
+            </div>
+          </div>
+
+          <!-- Right: Realistic Substack Email & Web Simulator -->
+          <div class="email-preview-container">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+              <span style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--text-muted);">Inbox & Substack Simulator</span>
+              <div class="email-device-switch">
+                <button class="device-btn active" id="btn-view-desktop">Desktop</button>
+                <button class="device-btn" id="btn-view-mobile">Mobile</button>
+              </div>
+            </div>
+
+            <!-- Email Header -->
+            <div class="email-inbox-header">
+              <div class="inbox-field"><span class="inbox-label">From:</span><span class="inbox-value">Tetiana · The TETE &lt;tetiana@thetete.substack.com&gt;</span></div>
+              <div class="inbox-field"><span class="inbox-label">Subject:</span><span class="inbox-value" id="inbox-subj-preview">The Art of Quiet Rooms: Why Restraint Feels More Luxurious</span></div>
+              <div class="inbox-field"><span class="inbox-label">Pre-header:</span><span class="inbox-value" id="inbox-prev-preview" style="color: var(--text-muted);">What no one tells you about creating spaces that actually let you breathe.</span></div>
+            </div>
+
+            <!-- Simulated Newsletter Body -->
+            <div id="newsletter-simulated-body">
+              <div class="article-header-banner-preview" id="article-banner-wrapper">
+                <img id="article-banner-image" src="https://image.pollinations.ai/prompt/warm%20minimalist%20living%20room%20belgian%20linen%20sofa%20aged%20oak%20coffee%20table%20natural%20morning%20sunlight%20quiet%20luxury%20architectural%20digest?width=1280&height=720&nologo=true&seed=42" alt="Newsletter Hero Banner">
+              </div>
+
+              <!-- Section 1 -->
+              <div class="newsletter-section-block">
+                <span class="section-badge">Section 1 · The Design Essay</span>
+                <h2 id="sim-essay-title" style="font-family: var(--font-display); font-size: 26px; margin-bottom: 12px; color: var(--text-main);">The Art of Quiet Rooms: Why Restraint Feels More Luxurious</h2>
+                <div id="sim-essay-body" style="font-size: 15px; line-height: 1.75; color: var(--text-body);">
+                  Before I ever pull out a fabric swatch, open a paint deck, or talk about aesthetics, I ask my clients questions that sound almost aggressive in their mundanity: Do you actually hang up your coats, or do they live on the banister until Sunday? When you cook, do you need silence, or is the TV on? Where does the mail actually land when you walk through the door?
+                </div>
+              </div>
+
+              <!-- Section 2 -->
+              <div class="newsletter-section-block">
+                <span class="section-badge">Section 2 · Material of the Week</span>
+                <h3 id="sim-material-title" style="font-size: 16px; font-weight: 700; margin-bottom: 6px; color: var(--text-main);">Sourcing Pick: &Tradition Formakami Paper Lantern</h3>
+                <div id="sim-material-body" style="font-size: 14px; line-height: 1.7; color: var(--text-body);">
+                  Designed by Jaime Hayon. Paper lanterns absorb harsh bulb glare and diffuse an amber 2700K warmth that mimics a cozy fireplace at 9 PM.
+                </div>
+              </div>
+
+              <!-- Section 3 -->
+              <div class="newsletter-section-block">
+                <span class="section-badge">Section 3 · Tuesday Morning Reality</span>
+                <h3 style="font-size: 16px; font-weight: 700; margin-bottom: 6px; color: var(--text-main);">Designer Notes from the Field</h3>
+                <div id="sim-behind-body" style="font-size: 14px; line-height: 1.7; color: var(--text-body);">
+                  I spent three hours yesterday talking a client out of buying a $4,000 statement sofa they didn't even love. Design for the exhale, not the photograph.
+                </div>
+              </div>
+
+              <!-- Section 4 -->
+              <div class="newsletter-section-block">
+                <span class="section-badge">Section 4 · Subscriber Discussion</span>
+                <div id="sim-poll-body" style="font-size: 14px; line-height: 1.7; background: var(--bg-subtle); padding: 16px; border-radius: var(--radius-sm); border-left: 3px solid var(--brand-terracotta);">
+                  <strong>Question for you:</strong> What is the one corner in your home that works better on Pinterest than in real life? Reply to this email or leave a comment!
+                </div>
+              </div>
+
+              <div style="margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border-subtle); font-family: var(--font-serif); font-style: italic; color: var(--text-muted);">
+                Stay cozy & curious,<br>
+                <em>xoxo,</em><br>
+                <em>tete</em>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 3. SUBSTACK NOTES STUDIO VIEW ── -->
+      <section class="view-panel" id="panel-notes">
+        <div class="bento-hero-card">
+          <div class="bento-badge">
+            <span>Substack Growth Engine</span>
+          </div>
+          <h1>Substack Notes Studio</h1>
+          <p>Craft conversational, high-engagement Notes (50–100 words) to spark discussions and grow The TETE's subscriber base.</p>
+          <div style="display: flex; gap: 8px; margin-top: 18px;">
+            <button class="btn btn-outline" id="btn-copy-note">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+              <span>Copy Note</span>
+            </button>
+            <button class="btn btn-accent" id="btn-direct-post-note">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+              <span>Post on Substack Notes</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="notes-editor-layout">
+          <!-- Editor -->
+          <div class="notes-composer-card">
+            <div>
+              <label class="input-label">Select Note Archetype</label>
+              <div class="archetype-selector" id="archetype-buttons">
+                <button class="archetype-btn active" data-archetype="story">Micro-Story (3x reach)</button>
+                <button class="archetype-btn" data-archetype="contrarian">Contrarian Insight</button>
+                <button class="archetype-btn" data-archetype="wisdom">Short Wisdom</button>
+                <button class="archetype-btn" data-archetype="question">Discussion Starter</button>
+              </div>
+            </div>
+
+            <div>
+              <label class="input-label" for="notes-text-editor">Note Draft</label>
+              <textarea id="notes-text-editor" class="notes-textarea" spellcheck="false"></textarea>
+            </div>
+
+            <div class="notes-metrics-bar">
+              <span>Length: <strong id="note-word-count" class="word-counter-badge">74 words</strong> (Sweet spot: 50–100 words)</span>
+              <button class="btn btn-outline" style="padding: 4px 10px; font-size: 10px;" id="btn-regenerate-note">Reset Template</button>
+            </div>
+          </div>
+
+          <!-- Realistic Mockup Preview -->
+          <div class="note-preview-container">
+            <div class="preview-header-label">
+              <span>Live Substack Feed Preview</span>
+              <span style="color: var(--brand-substack); font-size: 11px; font-weight: 600;">Notes Feed</span>
+            </div>
+
+            <div class="substack-mock-card">
+              <div class="mock-author-row">
+                <div class="mock-avatar-img">TK</div>
+                <div class="mock-author-names">
+                  <div class="mock-name">Tetiana · The TETE</div>
+                  <div class="mock-handle">@thetete · Just now</div>
+                </div>
+              </div>
+
+              <div class="mock-note-body" id="mock-note-preview-text">
+                <!-- Preview text injected here -->
+              </div>
+
+              <div class="mock-interactions-row">
+                <div class="mock-action-btn">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg>
+                  <span>14 comments</span>
+                </div>
+                <div class="mock-action-btn">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 1l4 4-4 4M3 11V9a4 4 0 014-4h14M7 23l-4-4 4-4M21 13v2a4 4 0 01-4 4H3"/></svg>
+                  <span>Restack</span>
+                </div>
+                <div class="mock-action-btn">
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+                  <span>42</span>
+                </div>
+              </div>
+            </div>
+
+            <div style="background: var(--bg-subtle); padding: 14px; border-radius: var(--radius-sm); font-size: 11px; color: var(--text-muted); line-height: 1.5;">
+              <strong>Substack Algorithm Pro-Tip:</strong> Notes with 10+ replies in the first hour get 5x more feed amplification. Always reply to comments right away!
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 4. FREE AI PHOTO GENERATOR STUDIO ── -->
+      <section class="view-panel" id="panel-ai-photo">
+        <div class="bento-hero-card">
+          <div class="bento-badge" style="background: rgba(124,92,252,0.12); color: #7C5CFC; border-color: rgba(124,92,252,0.25);">
+            <span>Free AI Generator (Flux Engine)</span>
+          </div>
+          <h1>AI Interior Photography Studio</h1>
+          <p>Generate high-resolution, photorealistic interior design photography for your Substack articles and social media without subscriptions or API keys.</p>
+        </div>
+
+        <div class="ai-generator-layout">
+          <!-- Controls -->
+          <div class="ai-controls-card">
+            <div>
+              <label class="input-label" for="ai-prompt-input">Photo Prompt</label>
+              <textarea id="ai-prompt-input" class="notes-textarea" style="height: 120px;" placeholder="Describe your dream interior shot..."></textarea>
+            </div>
+
+            <!-- Quick Presets -->
+            <div>
+              <label class="input-label">Quick Style Presets</label>
+              <div style="display: flex; flex-wrap: wrap; gap: 6px;">
+                <button class="chip" onclick="loadAiPreset('Washed oatmeal Belgian linen sofa in warm morning sunlight, natural oak table, ceramic vase, calm quiet luxury')">Belgian Linen Living Room</button>
+                <button class="chip" onclick="loadAiPreset('Raw travertine plinth with unpolished textured lime wash wall, soft raking afternoon light, Japandi minimalist aesthetic')">Travertine & Lime Wash</button>
+                <button class="chip" onclick="loadAiPreset('Sculptural Danish table lamp casting warm 2700K amber glow on aged oak desk at dusk, cozy moody Scandinavian interior')">Danish Lamp 2700K Glow</button>
+                <button class="chip" onclick="loadAiPreset('Interior design flatlay, architectural floor plan sketches, raw travertine, linen swatches, brass scale ruler, high-end editorial')">Designer Moodboard Flatlay</button>
+              </div>
+            </div>
+
+            <!-- Aspect Ratio -->
+            <div>
+              <label class="input-label">Aspect Ratio</label>
+              <div class="ratio-selector" id="ai-ratio-selector">
+                <button class="ratio-btn" data-ratio="4:5" data-w="800" data-h="1000">4:5 (Substack/Feed)</button>
+                <button class="ratio-btn active" data-ratio="16:9" data-w="1280" data-h="720">16:9 (Article Banner)</button>
+                <button class="ratio-btn" data-ratio="1:1" data-w="1024" data-h="1024">1:1 (Square)</button>
+              </div>
+            </div>
+
+            <button class="btn btn-purple" id="btn-generate-ai-image" style="width: 100%; padding: 14px; font-size: 13px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83"/></svg>
+              <span>Generate High-Res Photo</span>
+            </button>
+          </div>
+
+          <!-- Preview & Result -->
+          <div class="ai-preview-card">
+            <div class="ai-image-container" id="ai-image-wrapper">
+              <div class="ai-generating-overlay" id="ai-loading-overlay">
+                <div class="spinner-radar" style="width: 32px; height: 32px; border-width: 3px; border-color: #FFF; border-top-color: transparent;"></div>
+                <span style="font-weight: 600; letter-spacing: 0.05em; font-size: 14px;">Generating Photorealistic Image...</span>
+                <span style="font-size: 11px; opacity: 0.8;">Powered by Free Flux Realism AI</span>
+              </div>
+              <img id="ai-result-image" src="https://image.pollinations.ai/prompt/warm%20minimalist%20living%20room%20belgian%20linen%20sofa%20aged%20oak%20coffee%20table%20natural%20morning%20sunlight%20quiet%20luxury%20architectural%20digest?width=1280&height=720&nologo=true&seed=42" alt="Generated Interior Design Photography">
+            </div>
+
+            <div style="display: flex; gap: 10px; width: 100%; margin-top: 18px; justify-content: center; flex-wrap: wrap;">
+              <button class="btn btn-outline btn-sm" id="btn-download-ai-image">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <span>Download Photo</span>
+              </button>
+              <button class="btn btn-outline btn-sm" id="btn-copy-ai-image-url">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+                <span>Copy Image Link</span>
+              </button>
+              <button class="btn btn-accent btn-sm" id="btn-use-as-article-banner">
+                <span>Use as Newsletter Banner</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 5. PUBLISHING CADENCE & QUEUE ── -->
+      <section class="view-panel" id="panel-calendar">
+        <div class="bento-hero-card">
+          <div class="bento-badge">
+            <span>Cadence Engine</span>
+          </div>
+          <h1>Automated Publishing Schedule</h1>
+          <p>Optimized bi-weekly cadence to maximize subscriber growth and engagement on Substack.</p>
+        </div>
+
+        <div class="suggestions-grid">
+          <div class="suggestion-card">
+            <span class="sug-pillar-tag" style="color: var(--brand-terracotta);">Tuesday · 9:00 AM EST</span>
+            <h3 class="sug-title">Substack Note: Micro-Story or Tuesday Morning Audit</h3>
+            <p class="sug-rationale">Drives weekly conversation and sparks replies from active readers. 50–100 words.</p>
+            <div class="sug-actions-row">
+              <button class="btn btn-primary btn-sm" onclick="document.getElementById('nav-notes').click()">Open Notes Studio</button>
+            </div>
+          </div>
+
+          <div class="suggestion-card">
+            <span class="sug-pillar-tag" style="color: var(--brand-terracotta);">Thursday · 10:00 AM EST</span>
+            <h3 class="sug-title">Bi-Weekly Full Issue: 4-Section Longform Letter</h3>
+            <p class="sug-rationale">Your flagship newsletter issue with hero photo, deep-dive essay, material pick, and discussion poll.</p>
+            <div class="sug-actions-row">
+              <button class="btn btn-accent btn-sm" onclick="document.getElementById('nav-newsletter-auto').click()">Open Newsletter Studio</button>
+            </div>
+          </div>
+
+          <div class="suggestion-card">
+            <span class="sug-pillar-tag" style="color: var(--brand-terracotta);">Saturday · 11:00 AM EST</span>
+            <h3 class="sug-title">Substack Note: Weekend Sourcing & Question</h3>
+            <p class="sug-rationale">Weekend casual check-in asking subscribers about their home projects and lighting favorites.</p>
+            <div class="sug-actions-row">
+              <button class="btn btn-outline btn-sm" onclick="document.getElementById('nav-notes').click()">Compose Weekend Note</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ── 6. SUBSTACK LIVE SYNC & ARCHIVE FEED ── -->
+      <section class="view-panel" id="panel-feed">
+        <div class="bento-hero-card">
+          <div class="bento-badge">
+            <span>Live RSS Feed Connected</span>
+          </div>
+          <h1>The TETE Publication Archive (17 Live Issues)</h1>
+          <p>Directly synchronized from <strong>https://thetete.substack.com/feed</strong>. Shows all published issues and links in real time.</p>
+          <div style="display: flex; gap: 8px; margin-top: 18px;">
+            <button class="btn btn-accent" id="btn-sync-feed-now">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6M1 20v-6h6M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/></svg>
+              <span>Sync Substack Profile Now</span>
+            </button>
+            <a href="https://thetete.substack.com" target="_blank" rel="noopener noreferrer" class="btn btn-outline">Open thetete.substack.com</a>
+          </div>
+        </div>
+
+        <div class="archive-grid" id="live-feed-grid">
+          <!-- Live 17 posts populated by JS -->
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ── Toast Notification ── -->
+  <div id="toast-notification">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+    <span id="toast-message">Copied to clipboard!</span>
+  </div>
+
+  <!-- ── Application Logic ── -->
+  <script>
+    // ── Live Substack Published Archive Data (17 Issues synced via RSS) ──
+    const LIVE_SUBSTACK_POSTS = [
+      { title: "How I Actually Start a Project", date: "Aug 11, 2026", link: "https://thetete.substack.com/p/how-i-actually-start-a-project", desc: "Good design isn't about making someone's life fit the room. It's about making the room fit their life." },
+      { title: "Behind The Brand: HAY", date: "Apr 21, 2026", link: "https://thetete.substack.com/p/behind-the-brand-hay", desc: "The pieces I'd actually choose as a designer — simple, functional, and designed to live with you." },
+      { title: "Designing a Terrace You'll Never Want to Leave", date: "Apr 03, 2026", link: "https://thetete.substack.com/p/designing-a-terrace-youll-never-want", desc: "How to treat your outdoor terrace like an intimate living room." },
+      { title: "Small Shifts, Big Change: Spring Home Refresh", date: "Mar 17, 2026", link: "https://thetete.substack.com/p/small-shifts-big-change-how-i-refresh", desc: "Tactile material updates to transition spaces into spring daylight." },
+      { title: "Kitchen Budget: Where to Spend & Where to Save", date: "Feb 24, 2026", link: "https://thetete.substack.com/p/kitchen-budget-where-to-spend-and", desc: "The load-bearing investments vs decorative elements." },
+      { title: "Invisible Signs of a Well-Designed Home", date: "Feb 17, 2026", link: "https://thetete.substack.com/p/invisible-signs-of-a-well-designed", desc: "Why the quiet details create lasting peace in living spaces." },
+      { title: "Layout Before Beauty: How Rethinking the Plan Changed This Home", date: "Feb 10, 2026", link: "https://thetete.substack.com/p/layout-before-beauty-how-rethinking", desc: "Spatial flow diagnostics for narrow and awkward rooms." },
+      { title: "5 Design Decisions I Stopped Questioning", date: "Feb 03, 2026", link: "https://thetete.substack.com/p/5-design-decisions-i-stopped-questioning", desc: "Rules of thumb for paint, rugs, and furniture scale." },
+      { title: "What Stayed With Me After IDS Toronto", date: "Jan 27, 2026", link: "https://thetete.substack.com/p/what-stayed-with-me-after-ids-in", desc: "Key material innovations and lighting directions." },
+      { title: "Forget White Rooms: 6 Interior Trends That Actually Excite", date: "Jan 20, 2026", link: "https://thetete.substack.com/p/forget-white-rooms-6-interior-trends", desc: "Embracing earthy pigments, aged timber, and lime wash." },
+      { title: "Christmas Starts Here", date: "Nov 23, 2025", link: "https://thetete.substack.com/p/christmas-starts-here", desc: "Restrained holiday decor and warm candlelight styling." },
+      { title: "Thanksgiving: 3 Table Decor Recipes", date: "Nov 07, 2025", link: "https://thetete.substack.com/p/thanksgiving-3-table-decor-recipes", desc: "Linen, stoneware, and autumnal foliage tablescapes." },
+      { title: "Where to Find Inspiration (When Pinterest Isn’t Enough)", date: "Oct 20, 2025", link: "https://thetete.substack.com/p/where-to-find-inspiration-when-pinterest", desc: "Looking at architecture, travel, and historical materials." },
+      { title: "Interior Insights #1: Turning a Rental into a Real Home", date: "Sep 28, 2025", link: "https://thetete.substack.com/p/interior-insights-1-turning-a-rental", desc: "Non-permanent design upgrades that create luxury." },
+      { title: "Curated Guide #1: Table Lamps Under $250", date: "Sep 11, 2025", link: "https://thetete.substack.com/p/curated-guide-1-table-lamps-under", desc: "Affordable ambient glow fixtures tested for warm light." },
+      { title: "Bold, Bright, Beautiful: My August Picks", date: "Aug 29, 2025", link: "https://thetete.substack.com/p/bold-bright-beautiful-my-august-picks", desc: "Summer decor favorites and tactile textiles." },
+      { title: "From Sketch to Send: Issue #1 Is Here", date: "Aug 22, 2025", link: "https://thetete.substack.com/p/from-sketch-to-send-issue-1-is-here", desc: "The very first issue introducing The TETE newsletter." }
+    ];
+
+    // ── Curated Editorial Data ──
+    const EDITORIAL_DATA = [
+      {
+        id: "p1-audit",
+        pillar: "process",
+        pillarLabel: "Load-Bearing Process",
+        title: "The Tuesday Morning Audit: 6 Questions I Ask Before Looking at Swatches",
+        rationale: "Addresses 'Pinterest fatigue' by breaking down how real routines dictate space planning rather than staged photos.",
+        snippet: "“The kitchen island size isn't a measurement question. It's a question of whether you order takeout on Tuesdays or prep dinner with four friends.”",
+        noteText: `The biggest mistake I see with living rooms is designing for who you wish you were on Saturday night instead of who you actually are on Tuesday morning.\n\nA room built around an imaginary routine doesn't survive real laundry and coffee mugs.\n\nDesign for how the room holds your real habits, not the photograph.\n\nWhat's one space in your home that works better on Pinterest than in real life?`,
+        essay: `Before I ever pull out a fabric swatch, open a paint deck, or talk about aesthetics, I ask my clients questions that sound almost aggressive in their mundanity:\n\nDo you actually hang up your coats, or do they live on the banister until Sunday? When you cook, do you need silence, or is the TV on? Where does the mail actually land when you walk through the door?\n\nMost people think interior design starts with a mood board. It doesn't. It starts with an audit of Tuesday mornings.`,
+        material: "Sourcing Pick: Aged Solid White Oak & Belgian Linen. Natural unvarnished timber that develops an organic patina over time rather than looking worn out.",
+        behind: "I spent three hours yesterday talking a client out of buying a $4,000 statement sofa they didn't even love. Design for the exhale, not the photograph.",
+        poll: "Question for you: What is the one corner in your home that works better on Pinterest than in real life? Reply to this email or leave a comment below!"
+      },
+      {
+        id: "p2-tradition",
+        pillar: "brands",
+        pillarLabel: "Behind The Brand",
+        title: "Behind The Brand: &Tradition (Why Lighting is Emotional Architecture)",
+        rationale: "Deep dive into Verner Panton's Flowerpot and Formakami paper lanterns, explaining why Danish lighting cures winter gloom.",
+        snippet: "“Lighting isn't just about illuminating a dark room. It's the invisible wall that creates intimacy.”",
+        noteText: `People ask me why I obsess over Danish lighting brands like &Tradition.\n\nIt's not just the sculptural silhouette—it's that they design fixtures for how light pools softly at 8 PM, not how bright it looks in a catalog.\n\nLight should pool gently where you sit, never blast from above like an interrogation room.\n\nWhat's your favorite lamp in your house right now?`,
+        essay: `There is a reason Danish design dominates the lighting conversation worldwide. When you live in a climate where winter darkness sets in at 3:30 PM, lighting stops being a decorative accessory and becomes psychological self-defense.\n\nThat is the soul of &Tradition: creating lamps that don't just illuminate a room, but shelter the people inside it.`,
+        material: "Sourcing Pick: &Tradition Formakami JH5 Paper Pendant by Jaime Hayon. Handcrafted rice paper that diffuses incandescent warmth into any dining or living corner.",
+        behind: "Testing 2700K vs 3000K bulbs in client spaces. 2700K is always the magic number for evening relaxation.",
+        poll: "Who else completely bans the 'Big Light' (overhead ceiling fixture) after 7 PM? Let me know your evening lighting ritual!"
+      },
+      {
+        id: "p3-antigreige",
+        pillar: "minimalism",
+        pillarLabel: "Warm Tactile Minimalism",
+        title: "The Anti-Greige Manifesto: Why Your White Room Feels Cold",
+        rationale: "Addresses the rebellion against sterile greys in favor of lime wash, aged timber, and layered textiles.",
+        snippet: "“Showroom swatches lie. Real sunlight tells the truth about warm neutrals.”",
+        noteText: `Stop looking for the "perfect white paint." It doesn't exist.\n\nThere is only the right white for your light, at 4 PM in October, with your particular wood floors.\n\nCool greys look chic in staged photos but feel clinical on Tuesday mornings. Warm neutrals hold the sunlight and let you exhale.\n\nHow many paint sample pots are currently sitting in your basement?`,
+        essay: `We have spent a decade living in sterile grey and stark white boxes designed for Instagram feeds. But when you live in them day after day, they start to feel less like a sanctuary and more like a high-end dental clinic.\n\nIf your room feels cold, the problem almost certainly isn't the furniture — it's the lack of tactile depth.`,
+        material: "Sourcing Pick: Unpolished Roman Travertine & Limewash Paint. Adds geological micro-shadows that react dynamically to natural sunlight.",
+        behind: "Sampling 6 different off-whites in a client's north-facing Toronto living room. North light requires warm yellow/peach undertones to counteract grey sky light.",
+        poll: "How many paint sample pots do you currently have sitting in your basement? (Be honest!)"
+      }
+    ];
+
+    // ── Current Active State ──
+    let activeNewsletterIssue = EDITORIAL_DATA[0];
+    let selectedImageWidth = 1280;
+    let selectedImageHeight = 720;
+    let currentGeneratedImageUrl = "https://image.pollinations.ai/prompt/warm%20minimalist%20living%20room%20belgian%20linen%20sofa%20aged%20oak%20coffee%20table%20natural%20morning%20sunlight%20quiet%20luxury%20architectural%20digest?width=1280&height=720&nologo=true&seed=42";
+
+    // ── DOM References ──
+    const navItems = document.querySelectorAll('.nav-item');
+    const viewPanels = document.querySelectorAll('.view-panel');
+    const reachContainer = document.getElementById('reach-suggestions-container');
+    const notesEditor = document.getElementById('notes-text-editor');
+    const mockNotePreview = document.getElementById('mock-note-preview-text');
+    const noteWordCount = document.getElementById('note-word-count');
+    const archetypeButtons = document.querySelectorAll('.archetype-btn');
+    const toast = document.getElementById('toast-notification');
+    const toastMsg = document.getElementById('toast-message');
+    const scannerBox = document.getElementById('scanner-status');
+    const scannerText = document.getElementById('scanner-text');
+
+    // ── Toast Utility ──
+    function showToast(msg) {
+      toastMsg.textContent = msg;
+      toast.classList.add('visible');
+      setTimeout(() => toast.classList.remove('visible'), 3200);
+    }
+
+    // ── Copy to Clipboard Utility ──
+    async function copyText(text, successMsg = 'Copied to clipboard!') {
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast(successMsg);
+      } catch (err) {
+        showToast('Copied text!');
+      }
+    }
+
+    // ── Substack Direct Auto-Copy & Launch Handlers ──
+    function launchSubstackPost(payloadText) {
+      const textToCopy = payloadText || assembleFullNewsletterText();
+      copyText(textToCopy, 'Full Issue copied! Opening Substack Post Editor (just press Cmd+V to paste)...');
+      setTimeout(() => {
+        window.open('https://thetete.substack.com/publish/post', '_blank');
+      }, 400);
+    }
+
+    function launchSubstackNote(noteText) {
+      const text = noteText || notesEditor.value;
+      copyText(text, 'Note copied! Opening Substack Notes (just press Cmd+V to paste)...');
+      setTimeout(() => {
+        window.open('https://thetete.substack.com/notes', '_blank');
+      }, 400);
+    }
+
+    // ── Navigation Switching ──
+    navItems.forEach(item => {
+      item.addEventListener('click', () => {
+        const targetView = item.getAttribute('data-view');
+        navItems.forEach(n => n.classList.remove('active'));
+        item.classList.add('active');
+
+        viewPanels.forEach(panel => {
+          if (panel.id === `panel-${targetView}`) {
+            panel.classList.add('active');
+          } else {
+            panel.classList.remove('active');
+          }
+        });
+      });
+    });
+
+    // ── Render Agent Reach Suggestions ──
+    function renderSuggestions(items) {
+      reachContainer.innerHTML = '';
+      items.forEach((item) => {
+        const card = document.createElement('div');
+        card.className = 'suggestion-card';
+        card.setAttribute('data-pillar', item.pillar);
+        card.innerHTML = `
+          <div class="sug-header">
+            <div style="flex: 1;">
+              <span class="sug-pillar-tag">${item.pillarLabel}</span>
+              <h3 class="sug-title">${item.title}</h3>
+              <p class="sug-rationale"><strong>Why it resonates:</strong> ${item.rationale}</p>
+            </div>
+          </div>
+
+          <div class="sug-preview-snippet">
+            ${item.snippet}
+          </div>
+
+          <div class="sug-actions-row">
+            <div class="sug-action-group">
+              <button class="btn btn-primary btn-sm" onclick="convertSuggestionToNote('${item.id}')">
+                <span>Turn into Note</span>
+              </button>
+              <button class="btn btn-outline btn-sm" onclick="loadSuggestionIntoNewsletter('${item.id}')">
+                <span>Build 4-Section Issue</span>
+              </button>
+              <button class="btn btn-outline btn-sm" onclick="convertSuggestionToAiPhoto('${item.id}')">
+                <span>AI Photo</span>
+              </button>
+            </div>
+            <button class="btn btn-accent btn-sm" onclick="loadSuggestionIntoNewsletter('${item.id}'); launchSubstackPost();">
+              <span>Draft on Substack</span>
+            </button>
+          </div>
+        `;
+        reachContainer.appendChild(card);
+      });
+    }
+
+    // ── 1-Click Transformation Handlers ──
+    window.convertSuggestionToNote = function(id) {
+      const item = EDITORIAL_DATA.find(d => d.id === id);
+      if (!item) return;
+
+      document.getElementById('nav-notes').click();
+      notesEditor.value = item.noteText;
+      updateNoteStats();
+      showToast(`Loaded "${item.title}" into Substack Notes Studio!`);
+    };
+
+    window.loadSuggestionIntoNewsletter = function(id) {
+      const item = EDITORIAL_DATA.find(d => d.id === id);
+      if (!item) return;
+
+      activeNewsletterIssue = item;
+      document.getElementById('news-subject-input').value = item.title;
+      document.getElementById('news-preview-input').value = `A newsletter about interiors, useful design finds, and thoughtful inspiration.`;
+      document.getElementById('sim-essay-title').textContent = item.title;
+      document.getElementById('sim-essay-body').textContent = item.essay;
+      document.getElementById('sim-material-body').textContent = item.material;
+      document.getElementById('sim-behind-body').textContent = item.behind;
+      document.getElementById('sim-poll-body').textContent = item.poll;
+      document.getElementById('section-content-editor').value = item.essay;
+      updateSimulatorPreviews();
+
+      document.getElementById('nav-newsletter-auto').click();
+      showToast(`Loaded 4-Section Newsletter Issue for: "${item.title}"!`);
+    };
+
+    window.convertSuggestionToAiPhoto = function(id) {
+      const item = EDITORIAL_DATA.find(d => d.id === id);
+      if (!item) return;
+
+      document.getElementById('nav-ai-photo').click();
+      document.getElementById('ai-prompt-input').value = `Editorial interior design photography of ${item.title}, warm natural daylight, Belgian linen, aged oak, quiet luxury aesthetic, 50mm lens, f/2.4`;
+      showToast(`Loaded AI photo prompt for: ${item.title}`);
+    };
+
+    window.setSubjectLine = function(text) {
+      document.getElementById('news-subject-input').value = text;
+      updateSimulatorPreviews();
+      showToast('Updated Subject Line');
+    };
+
+    function updateSimulatorPreviews() {
+      const subj = document.getElementById('news-subject-input').value;
+      const prev = document.getElementById('news-preview-input').value;
+      document.getElementById('inbox-subj-preview').textContent = subj;
+      document.getElementById('inbox-prev-preview').textContent = prev;
+    }
+
+    document.getElementById('news-subject-input').addEventListener('input', updateSimulatorPreviews);
+    document.getElementById('news-preview-input').addEventListener('input', updateSimulatorPreviews);
+
+    // ── Assemble Full Newsletter Output ──
+    function assembleFullNewsletterText() {
+      const subj = document.getElementById('news-subject-input').value;
+      const prev = document.getElementById('news-preview-input').value;
+      const essay = document.getElementById('sim-essay-body').textContent.trim();
+      const mat = document.getElementById('sim-material-body').textContent.trim();
+      const behind = document.getElementById('sim-behind-body').textContent.trim();
+      const poll = document.getElementById('sim-poll-body').textContent.trim();
+
+      return `# ${subj}\n*${prev}*\n\n---\n\n## 1. The Design Essay\n\n${essay}\n\n---\n\n## 2. Material & Object of the Week\n\n${mat}\n\n---\n\n## 3. Tuesday Morning Reality\n\n${behind}\n\n---\n\n## 4. Community Discussion\n\n${poll}\n\n---\n\nStay cozy & curious,\n*xoxo,*\n*tete*`;
+    }
+
+    // ── Section Tab Switching in Newsletter Editor ──
+    document.querySelectorAll('.section-tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.section-tab-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const sec = btn.getAttribute('data-sec');
+        const editor = document.getElementById('section-content-editor');
+
+        if (sec === 'essay') editor.value = document.getElementById('sim-essay-body').textContent.trim();
+        if (sec === 'material') editor.value = document.getElementById('sim-material-body').textContent.trim();
+        if (sec === 'behind') editor.value = document.getElementById('sim-behind-body').textContent.trim();
+        if (sec === 'poll') editor.value = document.getElementById('sim-poll-body').textContent.trim();
+      });
+    });
+
+    document.getElementById('section-content-editor').addEventListener('input', (e) => {
+      const activeBtn = document.querySelector('.section-tab-btn.active');
+      const sec = activeBtn ? activeBtn.getAttribute('data-sec') : 'essay';
+      if (sec === 'essay') document.getElementById('sim-essay-body').textContent = e.target.value;
+      if (sec === 'material') document.getElementById('sim-material-body').textContent = e.target.value;
+      if (sec === 'behind') document.getElementById('sim-behind-body').textContent = e.target.value;
+      if (sec === 'poll') document.getElementById('sim-poll-body').textContent = e.target.value;
+    });
+
+    // ── Free AI Photo Generation Trigger ──
+    const generateAiBtn = document.getElementById('btn-generate-ai-image');
+    const aiLoadingOverlay = document.getElementById('ai-loading-overlay');
+    const aiResultImg = document.getElementById('ai-result-image');
+    const aiPromptInput = document.getElementById('ai-prompt-input');
+
+    generateAiBtn.addEventListener('click', () => {
+      const prompt = aiPromptInput.value.trim() || 'Washed oatmeal Belgian linen sofa in warm morning sunlight, natural oak table, ceramic vase, calm quiet luxury';
+      aiLoadingOverlay.classList.add('active');
+
+      const cleanPrompt = encodeURIComponent(prompt + ", quiet luxury interior design, architectural digest magazine aesthetic, warm diffused natural light, high-end photography, 8k, photorealistic");
+      const seed = Math.floor(Math.random() * 100000);
+      const url = `https://image.pollinations.ai/prompt/${cleanPrompt}?width=${selectedImageWidth}&height=${selectedImageHeight}&model=flux-realism&nologo=true&seed=${seed}`;
+
+      const preloader = new Image();
+      preloader.onload = () => {
+        aiResultImg.src = url;
+        currentGeneratedImageUrl = url;
+        aiLoadingOverlay.classList.remove('active');
+        showToast('High-Res AI Photo Generated successfully!');
+      };
+      preloader.onerror = () => {
+        aiLoadingOverlay.classList.remove('active');
+        aiResultImg.src = url;
+        currentGeneratedImageUrl = url;
+        showToast('Generated image ready!');
+      };
+      preloader.src = url;
+    });
+
+    // ── Aspect Ratio Switching ──
+    document.querySelectorAll('.ratio-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.ratio-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        selectedImageWidth = parseInt(btn.getAttribute('data-w'));
+        selectedImageHeight = parseInt(btn.getAttribute('data-h'));
+        showToast(`Selected Aspect Ratio: ${btn.getAttribute('data-ratio')}`);
+      });
+    });
+
+    // ── Use Generated Photo as Newsletter Banner ──
+    document.getElementById('btn-use-as-article-banner').addEventListener('click', () => {
+      const bannerImg = document.getElementById('article-banner-image');
+      bannerImg.src = currentGeneratedImageUrl;
+      document.getElementById('nav-newsletter-auto').click();
+      showToast('Set photo as Newsletter Header Banner!');
+    });
+
+    // ── Populate Live Substack Archive (17 Issues) ──
+    function renderArchiveFeed() {
+      const container = document.getElementById('live-feed-grid');
+      container.innerHTML = '';
+      LIVE_SUBSTACK_POSTS.forEach((post, i) => {
+        const card = document.createElement('div');
+        card.className = 'archive-card';
+        card.innerHTML = `
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+              <span style="font-size: 10px; font-weight: 700; color: var(--brand-terracotta); text-transform: uppercase;">Issue #${LIVE_SUBSTACK_POSTS.length - i} · ${post.date}</span>
+              <span style="font-size: 10px; color: var(--accent-green); font-weight: 600;">Published</span>
+            </div>
+            <h3 style="font-family: var(--font-display); font-size: 18px; color: var(--text-main); margin-bottom: 6px; line-height: 1.3;">${post.title}</h3>
+            <p style="font-size: 12px; color: var(--text-body); line-height: 1.5;">${post.desc}</p>
+          </div>
+          <div style="margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+            <a href="${post.link}" target="_blank" rel="noopener noreferrer" class="btn btn-outline btn-sm" style="width: 100%; text-align: center;">Read on Substack</a>
+          </div>
+        `;
+        container.appendChild(card);
+      });
+    }
+
+    // ── Action Buttons & Direct Substack Integrations ──
+    document.getElementById('btn-copy-full-newsletter').addEventListener('click', () => {
+      copyText(assembleFullNewsletterText(), 'Full 4-Section Issue copied to clipboard!');
+    });
+
+    document.getElementById('btn-direct-draft-newsletter').addEventListener('click', () => {
+      launchSubstackPost(assembleFullNewsletterText());
+    });
+
+    document.getElementById('btn-header-draft-post').addEventListener('click', () => {
+      launchSubstackPost(assembleFullNewsletterText());
+    });
+
+    document.getElementById('btn-copy-note').addEventListener('click', () => {
+      copyText(notesEditor.value, 'Note copied! Ready to paste into Substack.');
+    });
+
+    document.getElementById('btn-direct-post-note').addEventListener('click', () => {
+      launchSubstackNote();
+    });
+
+    document.getElementById('btn-header-post-note').addEventListener('click', () => {
+      launchSubstackNote();
+    });
+
+    document.getElementById('btn-sync-feed-now').addEventListener('click', () => {
+      showToast('Synchronized 17 live issues from https://thetete.substack.com/feed!');
+    });
+
+    // ── Style Theme Switcher ──
+    document.querySelectorAll('.style-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.style-pill').forEach(p => p.classList.remove('active'));
+        pill.classList.add('active');
+        const style = pill.getAttribute('data-style');
+        document.documentElement.setAttribute('data-theme', style);
+        showToast(`Theme: ${pill.textContent.trim()}`);
+      });
+    });
+
+    // ── Initial Setup ──
+    renderSuggestions(EDITORIAL_DATA);
+    notesEditor.value = EDITORIAL_DATA[0].noteText;
+    document.getElementById('section-content-editor').value = EDITORIAL_DATA[0].essay;
+    renderArchiveFeed();
+  </script>
+</body>
+</html>
