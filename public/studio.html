@@ -1564,50 +1564,159 @@
     </div>
   </div>
 
-  <!-- ── 📖 Complete How to Use & Publishing Guide Modal ── -->
+  <!-- ── 📖 Bespoke Step-by-Step Studio Onboarding & Guide Modal (Built for Tetiana) ── -->
   <div class="modal-backdrop" id="guide-modal">
-    <div class="success-modal-card" style="max-width: 680px; text-align: left; max-height: 85vh; overflow-y: auto;">
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--border-subtle); padding-bottom: 14px;">
+    <div class="success-modal-card" style="max-width: 780px; text-align: left; max-height: 88vh; overflow-y: auto; padding: 28px;">
+      
+      <!-- Modal Header -->
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; border-bottom: 2px solid var(--border-subtle); padding-bottom: 16px; margin-bottom: 18px;">
         <div>
-          <span style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--brand-terracotta); letter-spacing: 0.08em;">Studio Master Playbook</span>
-          <h2 style="font-family: var(--font-display); font-size: 24px; color: var(--text-main); margin-top: 2px;">How to Use Your Studio & Publishing Guide</h2>
+          <div style="display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 800; text-transform: uppercase; color: var(--brand-terracotta); background: var(--bg-accent-soft); padding: 3px 10px; border-radius: var(--radius-full); margin-bottom: 6px;">
+            <span>✨ Welcome to Your Editorial Studio, Tetiana!</span>
+          </div>
+          <h2 style="font-family: var(--font-display); font-size: 24px; color: var(--text-main); line-height: 1.25;">The TETE — Publishing Made Simple & Joyful</h2>
+          <p style="font-size: 13px; color: var(--text-body); margin-top: 4px; line-height: 1.5;">This studio was custom-built for <strong>The TETE</strong> to take whatever is in your head and turn it into published Substack Notes & Newsletters without writer's block.</p>
         </div>
-        <button onclick="closeGuideModal()" style="background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-muted); font-weight: 700; line-height: 1;">&times;</button>
+        <button onclick="closeGuideModal()" style="background: none; border: none; font-size: 28px; cursor: pointer; color: var(--text-muted); font-weight: 700; line-height: 1; padding: 0 4px;" title="Close Guide">&times;</button>
       </div>
 
-      <div style="display: flex; flex-direction: column; gap: 16px; margin-top: 8px;">
+      <!-- Quick Tab Navigation inside Modal -->
+      <div style="display: flex; gap: 8px; margin-bottom: 20px; overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 4px;">
+        <button class="btn btn-outline btn-sm guide-tab-btn active" onclick="switchGuideTab('routine')" id="gtab-routine" style="white-space: nowrap;">1. The 3-Click Routine</button>
+        <button class="btn btn-outline btn-sm guide-tab-btn" onclick="switchGuideTab('tour')" id="gtab-tour" style="white-space: nowrap;">2. Studio Feature Tour</button>
+        <button class="btn btn-outline btn-sm guide-tab-btn" onclick="switchGuideTab('rules')" id="gtab-rules" style="white-space: nowrap;">3. Top Writer Secrets</button>
+        <button class="btn btn-outline btn-sm guide-tab-btn" onclick="switchGuideTab('demos')" id="gtab-demos" style="white-space: nowrap;">4. Interactive Demos</button>
+      </div>
+
+      <!-- ── GUIDE TAB 1: The 3-Click Routine ── -->
+      <div class="guide-panel active" id="gpanel-routine" style="display: flex; flex-direction: column; gap: 14px;">
+        
         <!-- Step 1 -->
-        <div style="background: var(--bg-subtle); padding: 14px 16px; border-radius: var(--radius-sm); border-left: 4px solid var(--brand-terracotta);">
-          <strong style="display: block; font-size: 15px; color: var(--text-main); margin-bottom: 4px;">1️⃣ Tuesday 9:00 AM — The Discovery Note (2 Minutes)</strong>
-          <p style="font-size: 13px; color: var(--text-body); line-height: 1.55;">
-            Go to <strong>Ideas</strong> or <strong>Notes</strong> → Type your raw thought or tap an angle → Tap <strong>1. Copy & Open Substack Notes</strong> → Paste (<kbd>Cmd+V</kbd>) and hit post. Notes under 100 words with a question bring new subscribers to your profile every week.
+        <div style="background: var(--bg-subtle); border-left: 4px solid var(--brand-terracotta); border-radius: var(--radius-sm); padding: 16px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+            <strong style="font-size: 15px; color: var(--brand-terracotta);">Step 1: Start with Any Raw Thought</strong>
+            <span style="font-size: 11px; font-weight: 700; background: var(--bg-surface); padding: 2px 8px; border-radius: var(--radius-full); color: var(--text-main);">Takes 10 seconds</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-body); line-height: 1.6;">
+            Open the <strong>💡 Ideas</strong> tab. In the search box, type <em>any</em> room dilemma, material, or design thought on your mind (e.g. <em>"small bathrooms"</em>, <em>"dining chairs"</em>, <em>"limewash"</em>). Hit <strong>Generate</strong>. The studio immediately creates 3 publication angles tailored to your voice.
           </p>
         </div>
 
         <!-- Step 2 -->
-        <div style="background: var(--bg-subtle); padding: 14px 16px; border-radius: var(--radius-sm); border-left: 4px solid var(--accent-green);">
-          <strong style="display: block; font-size: 15px; color: var(--text-main); margin-bottom: 4px;">2️⃣ Thursday 10:00 AM — The Flagship Newsletter (5 Minutes)</strong>
-          <p style="font-size: 13px; color: var(--text-body); line-height: 1.55;">
-            Go to <strong>Issue</strong> → Your 4-part newsletter (Essay, Material Pick, Field Reality, Poll) is structured for you → Generate a free photo in <strong>Photos</strong> if needed → Click <strong>1. Copy & Open Substack Post</strong> → Paste and publish to inboxes!
+        <div style="background: var(--bg-subtle); border-left: 4px solid var(--accent-green); border-radius: var(--radius-sm); padding: 16px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+            <strong style="font-size: 15px; color: var(--accent-green);">Step 2: Choose: Post as a Note or as a Newsletter</strong>
+            <span style="font-size: 11px; font-weight: 700; background: var(--bg-surface); padding: 2px 8px; border-radius: var(--radius-full); color: var(--text-main);">Takes 1 minute</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-body); line-height: 1.6;">
+            • <strong>For Substack Notes (Tuesday mornings)</strong>: Click <em>"Turn into Note"</em>. It opens your 50–100 word composer with your signature <code>— Tetiana</code> and an engaging community question.<br>
+            • <strong>For Full Newsletters (Thursday mornings)</strong>: Click <em>"Draft as Full Newsletter"</em>. It loads a 4-part issue (Essay, Material Pick, Field Notes, Poll) ready to review.
           </p>
         </div>
 
         <!-- Step 3 -->
-        <div style="background: var(--bg-subtle); padding: 14px 16px; border-radius: var(--radius-sm); border-left: 4px solid var(--accent-purple);">
-          <strong style="display: block; font-size: 15px; color: var(--text-main); margin-bottom: 4px;">3️⃣ Superpower Remix & Instagram Exporter (1 Minute)</strong>
+        <div style="background: var(--bg-subtle); border-left: 4px solid var(--accent-purple); border-radius: var(--radius-sm); padding: 16px;">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 6px;">
+            <strong style="font-size: 15px; color: var(--accent-purple);">Step 3: 1-Click Copy & Post directly to Substack</strong>
+            <span style="font-size: 11px; font-weight: 700; background: var(--bg-surface); padding: 2px 8px; border-radius: var(--radius-full); color: var(--text-main);">Zero friction</span>
+          </div>
+          <p style="font-size: 13px; color: var(--text-body); line-height: 1.6;">
+            Click the big orange button: <strong>"Copy & Open Substack"</strong>. Your formatted text is copied to your clipboard, and Substack opens in a new tab. Simply paste (<kbd>Cmd + V</kbd>) and hit publish!
+          </p>
+        </div>
+
+      </div>
+
+      <!-- ── GUIDE TAB 2: Studio Feature Tour ── -->
+      <div class="guide-panel" id="gpanel-tour" style="display: none; flex-direction: column; gap: 12px;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px;">
+          <div style="background: var(--bg-subtle); padding: 12px; border-radius: var(--radius-sm); border: 1.5px solid var(--border-subtle);">
+            <strong style="font-size: 14px; color: var(--brand-terracotta);">💡 1. Ideas & Scanner</strong>
+            <p style="font-size: 12px; color: var(--text-body); margin-top: 4px; line-height: 1.5;">Type raw thoughts to generate instant publication angles and browse viral hooks.</p>
+          </div>
+
+          <div style="background: var(--bg-subtle); padding: 12px; border-radius: var(--radius-sm); border: 1.5px solid var(--border-subtle);">
+            <strong style="font-size: 14px; color: var(--brand-terracotta);">⚡ 2. Top Creators</strong>
+            <p style="font-size: 12px; color: var(--text-body); margin-top: 4px; line-height: 1.5;">1-Tap remix drafts using the proven tone of Kelly Wearstler, Amanda Hesser, or Eleanor.</p>
+          </div>
+
+          <div style="background: var(--bg-subtle); padding: 12px; border-radius: var(--radius-sm); border: 1.5px solid var(--border-subtle);">
+            <strong style="font-size: 14px; color: var(--brand-terracotta);">📰 3. Newsletter Studio</strong>
+            <p style="font-size: 12px; color: var(--text-body); margin-top: 4px; line-height: 1.5;">Complete 4-part magazine issues (Essay, Sourcing, Field Notes, Poll) with live preview.</p>
+          </div>
+
+          <div style="background: var(--bg-subtle); padding: 12px; border-radius: var(--radius-sm); border: 1.5px solid var(--border-subtle);">
+            <strong style="font-size: 14px; color: var(--brand-terracotta);">✍️ 4. Notes Studio</strong>
+            <p style="font-size: 12px; color: var(--text-body); margin-top: 4px; line-height: 1.5;">High-virality short posts with live word counter and the <em>✨ Apply Substack Skill</em> button.</p>
+          </div>
+
+          <div style="background: var(--bg-subtle); padding: 12px; border-radius: var(--radius-sm); border: 1.5px solid var(--border-subtle);">
+            <strong style="font-size: 14px; color: var(--brand-terracotta);">📅 5. Planning Board</strong>
+            <p style="font-size: 12px; color: var(--text-body); margin-top: 4px; line-height: 1.5;">4-week publishing calendar, Subject Line open-rate evaluator, and saved idea vault.</p>
+          </div>
+
+          <div style="background: var(--bg-subtle); padding: 12px; border-radius: var(--radius-sm); border: 1.5px solid var(--border-subtle);">
+            <strong style="font-size: 14px; color: var(--brand-terracotta);">📸 6. Free AI Photos</strong>
+            <p style="font-size: 12px; color: var(--text-body); margin-top: 4px; line-height: 1.5;">Generate bespoke 8K interior photography (Belgian Linen, Travertine, 2700K Glow) with zero fees.</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── GUIDE TAB 3: Top Writer Secrets ── -->
+      <div class="guide-panel" id="gpanel-rules" style="display: none; flex-direction: column; gap: 14px;">
+        <div style="background: var(--bg-subtle); padding: 14px 16px; border-radius: var(--radius-sm);">
+          <strong style="font-size: 14px; color: var(--text-main); display: block; margin-bottom: 4px;">📖 Secret 1: Story Openings Beat Generic Advice</strong>
           <p style="font-size: 13px; color: var(--text-body); line-height: 1.55;">
-            In <strong>Creators</strong>, tap <em>"✨ Remix Draft in Kelly/Amanda's Voice"</em> to sharpen your writing with viral hooks. In <strong>Issue</strong>, tap <em>"Instagram Pack"</em> to get 5 formatted slides for social media.
+            Don't start with <em>"Here are 3 tips to decorate"</em>. Start in the middle of a real studio moment: <em>"I was sitting in a client's living room at 4 PM yesterday when I realized why the space felt so exhausting..."</em> (3x higher engagement).
+          </p>
+        </div>
+
+        <div style="background: var(--bg-subtle); padding: 14px 16px; border-radius: var(--radius-sm);">
+          <strong style="font-size: 14px; color: var(--text-main); display: block; margin-bottom: 4px;">🎯 Secret 2: The 87-Word Sweet Spot</strong>
+          <p style="font-size: 13px; color: var(--text-body); line-height: 1.55;">
+            Keep Substack Notes between 50 and 100 words. Short paragraphs (1-2 sentences) with line breaks are effortless to read on phones.
+          </p>
+        </div>
+
+        <div style="background: var(--bg-subtle); padding: 14px 16px; border-radius: var(--radius-sm);">
+          <strong style="font-size: 14px; color: var(--text-main); display: block; margin-bottom: 4px;">💬 Secret 3: The First-Hour Community Boost</strong>
+          <p style="font-size: 13px; color: var(--text-body); line-height: 1.55;">
+            When someone comments on your Note in the first hour, reply back warmly! 5 to 10 active comment conversations triggers Substack's algorithm to recommend your note to thousands of new design lovers.
           </p>
         </div>
       </div>
 
-      <div style="margin-top: 10px; display: flex; gap: 10px;">
-        <button class="btn btn-primary" onclick="closeGuideModal()" style="width: 100%; font-size: 15px;">
-          Got It, Let's Create!
+      <!-- ── GUIDE TAB 4: Interactive Demos ── -->
+      <div class="guide-panel" id="gpanel-demos" style="display: none; flex-direction: column; gap: 12px;">
+        <p style="font-size: 13px; color: var(--text-body); line-height: 1.5;">Click any button below to jump straight to that feature and try it in action:</p>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <button class="btn btn-accent" onclick="closeGuideModal(); switchView('reach'); fillMindInput('Travertine coffee table vs marble');" style="padding: 12px; font-size: 13px; text-align: center;">
+            ✨ Demo 1: Generate Ideas
+          </button>
+          <button class="btn btn-primary" onclick="closeGuideModal(); switchView('notes'); loadArchetype('story');" style="padding: 12px; font-size: 13px; text-align: center;">
+            ✍️ Demo 2: Write a Note
+          </button>
+          <button class="btn btn-substack-orange" onclick="closeGuideModal(); switchView('newsletter-auto');" style="padding: 12px; font-size: 13px; text-align: center;">
+            📰 Demo 3: Newsletter Studio
+          </button>
+          <button class="btn btn-purple" onclick="closeGuideModal(); switchView('ai-photo'); loadAiPreset('Washed oatmeal Belgian linen sofa in warm morning sunlight, natural oak table, ceramic vase, calm quiet luxury');" style="padding: 12px; font-size: 13px; text-align: center;">
+            📸 Demo 4: Generate Photo
+          </button>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div style="margin-top: 20px; padding-top: 14px; border-top: 2px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+        <span style="font-size: 12px; color: var(--text-muted); font-weight: 600;">You can re-open this guide anytime by clicking <strong>📖 Guide</strong> in the top header.</span>
+        <button class="btn btn-primary" onclick="closeGuideModal()" style="padding: 10px 24px; font-size: 14px;">
+          Got It, Let's Write! 🚀
         </button>
       </div>
+
     </div>
   </div>
+
 
 
   <!-- ── Toast ── -->
@@ -1780,6 +1889,23 @@
     window.closeGuideModal = function() {
       guideModal.classList.remove('active');
     };
+
+    window.switchGuideTab = function(tabId) {
+      document.querySelectorAll('.guide-tab-btn').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.guide-panel').forEach(p => {
+        p.classList.remove('active');
+        p.style.display = 'none';
+      });
+
+      const activeBtn = document.getElementById(`gtab-${tabId}`);
+      const activePanel = document.getElementById(`gpanel-${tabId}`);
+      if (activeBtn) activeBtn.classList.add('active');
+      if (activePanel) {
+        activePanel.classList.add('active');
+        activePanel.style.display = 'flex';
+      }
+    };
+
 
 
     async function copyText(text, successMsg = 'Copied to clipboard!') {
